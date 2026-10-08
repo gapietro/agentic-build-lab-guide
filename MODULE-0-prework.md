@@ -78,28 +78,51 @@ at least three, and your instructor can give you a small set to load.
 
 ### Step 2 — The tools
 
-**Why this step:** Every later module uses these five tools. Checking each one prints a version now means a missing install shows up at home, not halfway through a build on the day.
+**Why this step:** Every later module uses these tools. Checking that each one prints a version now means a missing install shows up at home, not halfway through a build on the day.
 
-**⌨️ You** (in a terminal): install each of these, **in this order**, then
-run its check command. Node.js comes first because the next commands use
-`npm`, which comes with Node.js.
+**⌨️ You**: open the Terminal (see "Before you begin" above). You don't
+need to change folder: run each command right where the Terminal opens.
+
+For each tool, **first run its Check command** (the right-hand column) to see
+whether you already have it. If it prints a version that's new enough, move
+on. If it prints `command not found`, the tool isn't installed yet: install
+it with the middle column, then run the Check command again. Go **in this
+order**: Node.js first, because the next installs use `npm`, and `npm` comes
+with Node.js.
 
 | Tool | Install | Check |
 |---|---|---|
 | Node.js | Version **20.18 or later** (version 22 or 24 is fine). Download the **LTS** installer from https://nodejs.org and run it, or, if you use Homebrew, run `brew install node` | `node --version` shows `v20.18` or higher, for example `v22.11.0` |
-| ServiceNow SDK | `npm install -g @servicenow/sdk` | `now-sdk --version` |
+| npm | Comes with Node.js: nothing extra to install | `npm --version` prints a number, for example `10.9.0` |
+| ServiceNow SDK | `npm install -g @servicenow/sdk` (`-g` means "global": installed once for your whole computer, not inside one folder) | `now-sdk --version` |
 | GitHub CLI | Download from https://cli.github.com, or run `brew install gh` | `gh --version` |
 | git | Usually already installed | `git --version` |
 | Claude Code | `npm install -g @anthropic-ai/claude-code`. You need version **2.1.147 or later**: the first with the built-in `/code-review`. If yours is older, run `claude update` | `claude --version` shows `2.1.147` or higher |
 
-✅ **Check:** all five commands print a version, and Node.js and Claude Code
-are at least the versions above.
+✅ **Check:** all six Check commands print a version, and Node.js and Claude
+Code are at least the versions above.
+
+⚠️ **If you see…** *`command not found` for a tool you've just installed:*
+close the Terminal window and open a new one, then run the Check again (a new
+window picks up newly installed tools). Still not found? Run `echo $PATH`.
+The output should include `/usr/local/bin` (or `/opt/homebrew/bin` if you
+used Homebrew). If it doesn't, the installer will have told you how to add
+it; if you can't find that, tell your instructor.
 
 ⚠️ **If you see…** *`EACCES` or "permission denied" when you run
-`npm install -g`:* **don't** use `sudo` to get round it. Install Node.js
-again with the installer from https://nodejs.org or with Homebrew
-(`brew install node`), or with nvm if you already use it. Then run the
-`npm install -g` command again. If it still fails, tell your instructor.
+`npm install -g`:* your computer won't let you install for everyone without
+an administrator's password. Two ways round it:
+- **If you can**, reinstall Node.js with Homebrew (`brew install node`) or
+  nvm, then run the `npm install -g` command again. That avoids needing
+  administrator rights for every install.
+- **If you can't** (for example, your company manages your laptop), put
+  `sudo` in front of the same command, for example:
+  ```
+  sudo npm install -g @servicenow/sdk
+  ```
+  It asks for your **computer's** password (the one you log in to your Mac
+  with). Nothing appears while you type it: that's normal. Do the same for
+  `npm install -g @anthropic-ai/claude-code` if it fails the same way.
 
 ⚠️ **If you see…** *`git --version` opens a box asking to install the
 "command line developer tools":* click **Install**, wait for it to finish,
@@ -165,69 +188,32 @@ files and commands.
    blocks three things: web search is off; Claude can't run `now-sdk auth`,
    so your instance login stays out of Claude; and Claude's file reader
    can't open your notes folder (`~/projects/priority-guard-notes`, made
-   below) or this guide's folder. Copy it into place. **⌨️ You:**
-   ```
-   mkdir -p ~/.claude
-   cp -n ~/projects/agentic-build-lab-guide/files/claude-settings.json ~/.claude/settings.json
-   ```
-   `-n` never overwrites: if you already have a settings file, `cp` leaves it
-   alone (it may print `not overwritten`, or nothing at all; neither is an
-   error).
-   **If the file already exists, don't replace it**: open both files and
-   merge the pack's settings into yours by hand. Replacing it after Step 5
-   (where you install the kit) removes the kit.
+   below) or this guide's folder.
 
-   **How to merge by hand (✏️ Editor).** `.claude` is a hidden folder, so
-   open the file from the terminal. **⌨️ You:**
+   `~/.claude` is a hidden folder in your home folder, where Claude Code
+   keeps its settings. You don't need to find it: one command puts the
+   lab's settings there. **⌨️ You:**
    ```
-   open -a "Visual Studio Code" ~/.claude/settings.json
+   node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs
    ```
-   Copy in every setting from the pack's file that yours doesn't have, and
-   keep the settings you already had. If your file already has a `deny`
-   list, **add** the pack's five `deny` entries to the end of yours; don't
-   replace it.
-   For example, if your file was:
-   ```
-   {
-     "theme": "dark",
-     "permissions": {
-       "deny": ["Bash(rm -rf:*)"]
-     }
-   }
-   ```
-   after merging it becomes:
-   ```
-   {
-     "theme": "dark",
-     "disableClaudeAiConnectors": true,
-     "syncClaudeAiPlugins": false,
-     "syncClaudeAiSkills": false,
-     "autoMemoryEnabled": false,
-     "skillOverrides": { "claude-api": "off" },
-     "permissions": {
-       "defaultMode": "auto",
-       "deny": [
-         "Bash(rm -rf:*)",
-         "WebSearch",
-         "WebFetch",
-         "Bash(now-sdk auth:*)",
-         "Read(~/projects/priority-guard-notes/**)",
-         "Read(~/projects/agentic-build-lab-guide/**)"
-       ]
-     }
-   }
-   ```
-   The file can't hold comments. Watch the commas: one between items, none
-   after the last item in a list or a `{ }` block. If you're unsure, send
-   your file to your instructor before the day and they'll check it.
+   - **No settings file yet** (most people): it creates one.
+   - **You already use Claude Code:** it saves a copy of your file
+     (`settings.json.before-lab.bak`), then **adds** the lab's settings and
+     keeps all of yours, including any plugins you've installed. Nothing of
+     yours is removed.
+   - It ends by printing `Lab settings in place.`
 
    ✅ **Check:** **⌨️ You:**
    ```
-   diff ~/projects/agentic-build-lab-guide/files/claude-settings.json ~/.claude/settings.json && echo "settings in place"
+   node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check
    ```
-   prints `settings in place`. If you merged by hand, it prints the
-   differences instead. That's expected: check that every setting from the
-   pack's file is in yours.
+   prints `Lab settings in place.` It changes nothing; it only checks. You
+   can run it any time, for example if you think a setting was changed.
+
+   ⚠️ **If you see…** *"isn't valid JSON, so nothing was changed":* your
+   existing settings file has a mistake in it. Send it to your instructor
+   (`open -a "Visual Studio Code" ~/.claude/settings.json` opens it), or fix
+   the line it names, then run the command again.
 4. **Claude Code:** run `claude` once and complete sign-in. You need a paid
    Claude plan (Pro, Max, Team or Enterprise) or a Claude Console account.
    The free plan doesn't include Claude Code. **⌨️ You:** start it in your
@@ -281,6 +267,20 @@ brief
 
 /Users/<you>/projects/priority-guard/brief:
 ```
+
+Your `~/projects` folder now looks like this:
+```
+~/projects/
+├── agentic-build-lab-guide/      this guide (you read it; Claude never does)
+├── priority-guard/               your workspace: Claude works here
+│   └── brief/                    empty until Module 1
+└── priority-guard-notes/         your notes: Claude never reads these
+    ├── LOG.md                    empty for now
+    └── catches.md                empty for now
+```
+Later modules add to `priority-guard/` (the PRD, the consult, your app's
+code in `app/`), and Module 5 adds `prove-it-kit/` next to it. Each module
+says what it creates.
 
 ### Step 5 — Install the kit and the review command
 
@@ -408,12 +408,25 @@ incident but not the **System Definition** menu.
 **Why this step:** This list is your proof the bench is ready. Anything left unticked would cost you time on the day, so your instructor needs to hear about it before then.
 
 - [ ] Step 1: PDI with demo incidents and business services
-- [ ] Step 2: all five tools print a version
+- [ ] Step 2: all six tools print a version
 - [ ] Step 3: GitHub, Claude Code and the SDK login all work
 - [ ] Step 4: the workspace holds only an empty `brief/` folder
 - [ ] Step 5: the five kit commands and `/code-review`
 - [ ] Step 6: a clean bench
 - [ ] Step 7: the agent user in a second browser profile
+
+**Optional: let Claude double-check your bench.** Once everything above is
+ticked, Claude can run the version checks for you in one go and show you the
+raw results. **⌨️ You:** `cd ~/projects/priority-guard && claude`. Then
+**🔍 Check:**
+```
+Run exactly these, one after another, and show me the raw output of each,
+unedited: node --version; npm --version; now-sdk --version; gh --version;
+git --version; claude --version; gh auth status. Don't install, change or
+fix anything.
+```
+Compare each line with Step 2's table. Anything missing or too old: fix it
+yourself as Step 2 says, not through Claude. Then **🤖 Claude:** `/exit`.
 
 **Anything not ticked: tell your instructor before the day**, at least two
 days before, using the contact your instructor gave you in the workshop

@@ -75,7 +75,11 @@ never gets to be the only one who checks it.
 Do all of [Module 0](MODULE-0-prework.md) **before the day**. It has the
 details and a check for each item.
 
-- A ServiceNow Personal Developer Instance (PDI), with admin access.
+- A ServiceNow instance where you're an admin. A free **Personal Developer
+  Instance (PDI)** from https://developer.servicenow.com is easiest. Any other
+  **non-production** instance works too, as long as you're an admin, it has
+  the standard demo incidents and business services, and nobody minds you
+  installing a test app on it. **Never a production instance.**
 - A Mac or Linux computer. (Windows users: WSL works, but tell your instructor.)
 - A Claude Code account on a paid plan, or a Claude Console account.
 - A GitHub account and the GitHub CLI.
@@ -97,6 +101,29 @@ folder, `~/projects`: the guide, your workspace, your notes and the kit's
 clone. The only exception is Claude Code's own settings, which must stay in
 `~/.claude`.
 
+**You don't create any folders yet.** The folders this guide mentions
+(`priority-guard`, `priority-guard-notes`) don't exist when you start:
+Module 0 creates them, step by step. Before Module 0, `~/projects` holds only
+this guide:
+```
+~/projects/
+└── agentic-build-lab-guide/      this guide (README.md, LAB.html, the MODULE- files, files/)
+```
+
+After Module 0 it looks like this:
+```
+~/projects/
+├── agentic-build-lab-guide/      this guide (you read it; Claude never does)
+├── priority-guard/               your workspace: Claude works here
+│   └── brief/                    empty until Module 1
+└── priority-guard-notes/         your notes: Claude never reads these
+    ├── LOG.md                    empty for now
+    └── catches.md                empty for now
+```
+Later modules add to `priority-guard/` (the PRD, the consult, your app's
+code in `app/`), and Module 5 adds `prove-it-kit/` next to it. Each module
+says what it creates.
+
 **You don't need Now Assist.** The app is plain code. The AI in this lab is
 the one that writes the code, not one inside the app.
 
@@ -111,7 +138,7 @@ else (the checks, the "If you see…" notes, the explanations) stays with you.
 The kit and Claude do the work; you check it. If Claude sees the checks, they
 stop being checks.
 
-**2. Two folders, never mixed.**
+**2. Two folders, never mixed.** (You create both in Module 0 Step 4.)
 
 | Folder | What's in it | Does Claude see it? |
 |---|---|---|
@@ -128,8 +155,10 @@ instructor.
 
 ## 5. Words you'll type
 
-Some steps ask for one word. **Type it exactly.** The kit and your project
-instructions watch for these words.
+**Don't memorise this table.** Every step shows you exactly what to type, at
+the moment you need it. This is just a reference, so you know it's coming:
+some steps ask for one exact word or phrase, and the kit and your project
+instructions watch for that exact wording.
 
 | You type | When | What happens |
 |---|---|---|
@@ -264,6 +293,15 @@ check never depends on the AI's word.
 ```
 <module> | <what caught it> | <what it caught>
 ```
+For example:
+```
+1 | prd | The PRD asked for something no input mentioned; I took it out
+6 | review | The review found the rule didn't handle a missing value; fixed and merged
+```
+- **module** is the module number you were in.
+- **what caught it** is which check found the problem: one word from the list
+  below (`prd`, `review`, …), not a description.
+- **what it caught** is the problem, in your own words, and what was done.
 A **catch** is a real problem the process found **and that got fixed**, or
 that changed a decision, before it reached the app. Three things are **not**
 catches:

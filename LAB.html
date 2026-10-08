@@ -285,7 +285,11 @@ never gets to be the only one who checks it.</p>
 <p>Do all of <a href="#m0">Module 0</a> <strong>before the day</strong>. It has the
 details and a check for each item.</p>
 <ul>
-<li>A ServiceNow Personal Developer Instance (PDI), with admin access.</li>
+<li>A ServiceNow instance where you're an admin. A free <strong>Personal Developer
+Instance (PDI)</strong> from https://developer.servicenow.com is easiest. Any other
+<strong>non-production</strong> instance works too, as long as you're an admin, it has
+the standard demo incidents and business services, and nobody minds you
+installing a test app on it. <strong>Never a production instance.</strong></li>
 <li>A Mac or Linux computer. (Windows users: WSL works, but tell your instructor.)</li>
 <li>A Claude Code account on a paid plan, or a Claude Console account.</li>
 <li>A GitHub account and the GitHub CLI.</li>
@@ -306,6 +310,25 @@ to <code>~/projects/agentic-build-lab-guide</code>, <strong>outside</strong>
 folder, <code>~/projects</code>: the guide, your workspace, your notes and the kit's
 clone. The only exception is Claude Code's own settings, which must stay in
 <code>~/.claude</code>.</p>
+<p><strong>You don't create any folders yet.</strong> The folders this guide mentions
+(<code>priority-guard</code>, <code>priority-guard-notes</code>) don't exist when you start:
+Module 0 creates them, step by step. Before Module 0, <code>~/projects</code> holds only
+this guide:</p>
+<pre><code>~/projects/
+└── agentic-build-lab-guide/      this guide (README.md, LAB.html, the MODULE- files, files/)
+</code></pre>
+<p>After Module 0 it looks like this:</p>
+<pre><code>~/projects/
+├── agentic-build-lab-guide/      this guide (you read it; Claude never does)
+├── priority-guard/               your workspace: Claude works here
+│   └── brief/                    empty until Module 1
+└── priority-guard-notes/         your notes: Claude never reads these
+    ├── LOG.md                    empty for now
+    └── catches.md                empty for now
+</code></pre>
+<p>Later modules add to <code>priority-guard/</code> (the PRD, the consult, your app's
+code in <code>app/</code>), and Module 5 adds <code>prove-it-kit/</code> next to it. Each module
+says what it creates.</p>
 <p><strong>You don't need Now Assist.</strong> The app is plain code. The AI in this lab is
 the one that writes the code, not one inside the app.</p>
 <hr />
@@ -316,7 +339,7 @@ boxes: those are written for Claude, so type or paste them in. Everything
 else (the checks, the &quot;If you see…&quot; notes, the explanations) stays with you.
 The kit and Claude do the work; you check it. If Claude sees the checks, they
 stop being checks.</p>
-<p><strong>2. Two folders, never mixed.</strong></p>
+<p><strong>2. Two folders, never mixed.</strong> (You create both in Module 0 Step 4.)</p>
 <table>
 <thead>
 <tr>
@@ -345,8 +368,10 @@ words. If what you see is different, don't re-run the prompt to get a
 instructor.</p>
 <hr />
 <h2 id="home--5-words-youll-type">5. Words you'll type</h2>
-<p>Some steps ask for one word. <strong>Type it exactly.</strong> The kit and your project
-instructions watch for these words.</p>
+<p><strong>Don't memorise this table.</strong> Every step shows you exactly what to type, at
+the moment you need it. This is just a reference, so you know it's coming:
+some steps ask for one exact word or phrase, and the kit and your project
+instructions watch for that exact wording.</p>
 <table>
 <thead>
 <tr>
@@ -601,10 +626,18 @@ check never depends on the AI's word.</p>
 <code>~/projects/priority-guard-notes/catches.md</code>. Each catch gets one line:</p>
 <pre><code>&lt;module&gt; | &lt;what caught it&gt; | &lt;what it caught&gt;
 </code></pre>
-<p>A <strong>catch</strong> is a real problem the process found <strong>and that got fixed</strong>, or
-that changed a decision, before it reached the app. Three things are <strong>not</strong>
-catches:</p>
+<p>For example:</p>
+<pre><code>1 | prd | The PRD asked for something no input mentioned; I took it out
+6 | review | The review found the rule didn't handle a missing value; fixed and merged
+</code></pre>
 <ul>
+<li><strong>module</strong> is the module number you were in.</li>
+<li><strong>what caught it</strong> is which check found the problem: one word from the list
+below (<code>prd</code>, <code>review</code>, …), not a description.</li>
+<li><strong>what it caught</strong> is the problem, in your own words, and what was done.
+A <strong>catch</strong> is a real problem the process found <strong>and that got fixed</strong>, or
+that changed a decision, before it reached the app. Three things are <strong>not</strong>
+catches:</li>
 <li>A check firing on something you planted to test it (like the fake token in
 Module 5). That's the check working: write it in <code>LOG.md</code>.</li>
 <li>A finding nobody has fixed yet. It counts once the fix is merged.</li>
@@ -680,10 +713,15 @@ takes a few minutes. Then reload your instance's address.</p>
 <p>⚠️ <strong>If you see…</strong> <em>no business services:</em> tell your instructor. The lab needs
 at least three, and your instructor can give you a small set to load.</p>
 <h3 id="m0--step-2--the-tools">Step 2 — The tools</h3>
-<p><strong>Why this step:</strong> Every later module uses these five tools. Checking each one prints a version now means a missing install shows up at home, not halfway through a build on the day.</p>
-<p><strong>⌨️ You</strong> (in a terminal): install each of these, <strong>in this order</strong>, then
-run its check command. Node.js comes first because the next commands use
-<code>npm</code>, which comes with Node.js.</p>
+<p><strong>Why this step:</strong> Every later module uses these tools. Checking that each one prints a version now means a missing install shows up at home, not halfway through a build on the day.</p>
+<p><strong>⌨️ You</strong>: open the Terminal (see &quot;Before you begin&quot; above). You don't
+need to change folder: run each command right where the Terminal opens.</p>
+<p>For each tool, <strong>first run its Check command</strong> (the right-hand column) to see
+whether you already have it. If it prints a version that's new enough, move
+on. If it prints <code>command not found</code>, the tool isn't installed yet: install
+it with the middle column, then run the Check command again. Go <strong>in this
+order</strong>: Node.js first, because the next installs use <code>npm</code>, and <code>npm</code> comes
+with Node.js.</p>
 <table>
 <thead>
 <tr>
@@ -699,8 +737,13 @@ run its check command. Node.js comes first because the next commands use
 <td><code>node --version</code> shows <code>v20.18</code> or higher, for example <code>v22.11.0</code></td>
 </tr>
 <tr>
+<td>npm</td>
+<td>Comes with Node.js: nothing extra to install</td>
+<td><code>npm --version</code> prints a number, for example <code>10.9.0</code></td>
+</tr>
+<tr>
 <td>ServiceNow SDK</td>
-<td><code>npm install -g @servicenow/sdk</code></td>
+<td><code>npm install -g @servicenow/sdk</code> (<code>-g</code> means &quot;global&quot;: installed once for your whole computer, not inside one folder)</td>
 <td><code>now-sdk --version</code></td>
 </tr>
 <tr>
@@ -720,13 +763,28 @@ run its check command. Node.js comes first because the next commands use
 </tr>
 </tbody>
 </table>
-<p>✅ <strong>Check:</strong> all five commands print a version, and Node.js and Claude Code
-are at least the versions above.</p>
+<p>✅ <strong>Check:</strong> all six Check commands print a version, and Node.js and Claude
+Code are at least the versions above.</p>
+<p>⚠️ <strong>If you see…</strong> <em><code>command not found</code> for a tool you've just installed:</em>
+close the Terminal window and open a new one, then run the Check again (a new
+window picks up newly installed tools). Still not found? Run <code>echo $PATH</code>.
+The output should include <code>/usr/local/bin</code> (or <code>/opt/homebrew/bin</code> if you
+used Homebrew). If it doesn't, the installer will have told you how to add
+it; if you can't find that, tell your instructor.</p>
 <p>⚠️ <strong>If you see…</strong> <em><code>EACCES</code> or &quot;permission denied&quot; when you run
-<code>npm install -g</code>:</em> <strong>don't</strong> use <code>sudo</code> to get round it. Install Node.js
-again with the installer from https://nodejs.org or with Homebrew
-(<code>brew install node</code>), or with nvm if you already use it. Then run the
-<code>npm install -g</code> command again. If it still fails, tell your instructor.</p>
+<code>npm install -g</code>:</em> your computer won't let you install for everyone without
+an administrator's password. Two ways round it:</p>
+<ul>
+<li><strong>If you can</strong>, reinstall Node.js with Homebrew (<code>brew install node</code>) or
+nvm, then run the <code>npm install -g</code> command again. That avoids needing
+administrator rights for every install.</li>
+<li><strong>If you can't</strong> (for example, your company manages your laptop), put
+<code>sudo</code> in front of the same command, for example:<pre><code>sudo npm install -g @servicenow/sdk
+</code></pre>
+It asks for your <strong>computer's</strong> password (the one you log in to your Mac
+with). Nothing appears while you type it: that's normal. Do the same for
+<code>npm install -g @anthropic-ai/claude-code</code> if it fails the same way.</li>
+</ul>
 <p>⚠️ <strong>If you see…</strong> <em><code>git --version</code> opens a box asking to install the
 &quot;command line developer tools&quot;:</em> click <strong>Install</strong>, wait for it to finish,
 then run <code>git --version</code> again.</p>
@@ -789,62 +847,29 @@ each time, and still checks with you before anything risky. It also
 blocks three things: web search is off; Claude can't run <code>now-sdk auth</code>,
 so your instance login stays out of Claude; and Claude's file reader
 can't open your notes folder (<code>~/projects/priority-guard-notes</code>, made
-below) or this guide's folder. Copy it into place. <strong>⌨️ You:</strong></p>
-<pre><code>mkdir -p ~/.claude
-cp -n ~/projects/agentic-build-lab-guide/files/claude-settings.json ~/.claude/settings.json
+below) or this guide's folder.</p>
+<p><code>~/.claude</code> is a hidden folder in your home folder, where Claude Code
+keeps its settings. You don't need to find it: one command puts the
+lab's settings there. <strong>⌨️ You:</strong></p>
+<pre><code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs
 </code></pre>
-<p><code>-n</code> never overwrites: if you already have a settings file, <code>cp</code> leaves it
-alone (it may print <code>not overwritten</code>, or nothing at all; neither is an
-error).
-<strong>If the file already exists, don't replace it</strong>: open both files and
-merge the pack's settings into yours by hand. Replacing it after Step 5
-(where you install the kit) removes the kit.</p>
-<p><strong>How to merge by hand (✏️ Editor).</strong> <code>.claude</code> is a hidden folder, so
-open the file from the terminal. <strong>⌨️ You:</strong></p>
-<pre><code>open -a &quot;Visual Studio Code&quot; ~/.claude/settings.json
-</code></pre>
-<p>Copy in every setting from the pack's file that yours doesn't have, and
-keep the settings you already had. If your file already has a <code>deny</code>
-list, <strong>add</strong> the pack's five <code>deny</code> entries to the end of yours; don't
-replace it.
-For example, if your file was:</p>
-<pre><code>{
-  &quot;theme&quot;: &quot;dark&quot;,
-  &quot;permissions&quot;: {
-    &quot;deny&quot;: [&quot;Bash(rm -rf:*)&quot;]
-  }
-}
-</code></pre>
-<p>after merging it becomes:</p>
-<pre><code>{
-  &quot;theme&quot;: &quot;dark&quot;,
-  &quot;disableClaudeAiConnectors&quot;: true,
-  &quot;syncClaudeAiPlugins&quot;: false,
-  &quot;syncClaudeAiSkills&quot;: false,
-  &quot;autoMemoryEnabled&quot;: false,
-  &quot;skillOverrides&quot;: { &quot;claude-api&quot;: &quot;off&quot; },
-  &quot;permissions&quot;: {
-    &quot;defaultMode&quot;: &quot;auto&quot;,
-    &quot;deny&quot;: [
-      &quot;Bash(rm -rf:*)&quot;,
-      &quot;WebSearch&quot;,
-      &quot;WebFetch&quot;,
-      &quot;Bash(now-sdk auth:*)&quot;,
-      &quot;Read(~/projects/priority-guard-notes/**)&quot;,
-      &quot;Read(~/projects/agentic-build-lab-guide/**)&quot;
-    ]
-  }
-}
-</code></pre>
-<p>The file can't hold comments. Watch the commas: one between items, none
-after the last item in a list or a <code>{ }</code> block. If you're unsure, send
-your file to your instructor before the day and they'll check it.</p>
+<ul>
+<li><strong>No settings file yet</strong> (most people): it creates one.</li>
+<li><strong>You already use Claude Code:</strong> it saves a copy of your file
+(<code>settings.json.before-lab.bak</code>), then <strong>adds</strong> the lab's settings and
+keeps all of yours, including any plugins you've installed. Nothing of
+yours is removed.</li>
+<li>It ends by printing <code>Lab settings in place.</code></li>
+</ul>
 <p>✅ <strong>Check:</strong> <strong>⌨️ You:</strong></p>
-<pre><code>diff ~/projects/agentic-build-lab-guide/files/claude-settings.json ~/.claude/settings.json &amp;&amp; echo &quot;settings in place&quot;
+<pre><code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check
 </code></pre>
-<p>prints <code>settings in place</code>. If you merged by hand, it prints the
-differences instead. That's expected: check that every setting from the
-pack's file is in yours.</p>
+<p>prints <code>Lab settings in place.</code> It changes nothing; it only checks. You
+can run it any time, for example if you think a setting was changed.</p>
+<p>⚠️ <strong>If you see…</strong> <em>&quot;isn't valid JSON, so nothing was changed&quot;:</em> your
+existing settings file has a mistake in it. Send it to your instructor
+(<code>open -a &quot;Visual Studio Code&quot; ~/.claude/settings.json</code> opens it), or fix
+the line it names, then run the command again.</p>
 </li>
 <li>
 <p><strong>Claude Code:</strong> run <code>claude</code> once and complete sign-in. You need a paid
@@ -894,6 +919,18 @@ user name in place of <code>&lt;you&gt;</code>):</p>
 
 /Users/&lt;you&gt;/projects/priority-guard/brief:
 </code></pre>
+<p>Your <code>~/projects</code> folder now looks like this:</p>
+<pre><code>~/projects/
+├── agentic-build-lab-guide/      this guide (you read it; Claude never does)
+├── priority-guard/               your workspace: Claude works here
+│   └── brief/                    empty until Module 1
+└── priority-guard-notes/         your notes: Claude never reads these
+    ├── LOG.md                    empty for now
+    └── catches.md                empty for now
+</code></pre>
+<p>Later modules add to <code>priority-guard/</code> (the PRD, the consult, your app's
+code in <code>app/</code>), and Module 5 adds <code>prove-it-kit/</code> next to it. Each module
+says what it creates.</p>
 <h3 id="m0--step-5--install-the-kit-and-the-review-command">Step 5 — Install the kit and the review command</h3>
 <p><strong>Why this step:</strong> The kit is the set of commands that take you through the lab's stages, and <code>/code-review</code> checks code before it ships. Pinning the kit to one release means everyone in the room runs the same version, so results can be compared.</p>
 <ol>
@@ -1002,13 +1039,24 @@ incident but not the <strong>System Definition</strong> menu.</p>
 <p><strong>Why this step:</strong> This list is your proof the bench is ready. Anything left unticked would cost you time on the day, so your instructor needs to hear about it before then.</p>
 <ul>
 <li class="task"><span class="box" aria-hidden="true">☐</span> Step 1: PDI with demo incidents and business services</li>
-<li class="task"><span class="box" aria-hidden="true">☐</span> Step 2: all five tools print a version</li>
+<li class="task"><span class="box" aria-hidden="true">☐</span> Step 2: all six tools print a version</li>
 <li class="task"><span class="box" aria-hidden="true">☐</span> Step 3: GitHub, Claude Code and the SDK login all work</li>
 <li class="task"><span class="box" aria-hidden="true">☐</span> Step 4: the workspace holds only an empty <code>brief/</code> folder</li>
 <li class="task"><span class="box" aria-hidden="true">☐</span> Step 5: the five kit commands and <code>/code-review</code></li>
 <li class="task"><span class="box" aria-hidden="true">☐</span> Step 6: a clean bench</li>
 <li class="task"><span class="box" aria-hidden="true">☐</span> Step 7: the agent user in a second browser profile</li>
 </ul>
+<p><strong>Optional: let Claude double-check your bench.</strong> Once everything above is
+ticked, Claude can run the version checks for you in one go and show you the
+raw results. <strong>⌨️ You:</strong> <code>cd ~/projects/priority-guard &amp;&amp; claude</code>. Then
+<strong>🔍 Check:</strong></p>
+<pre><code>Run exactly these, one after another, and show me the raw output of each,
+unedited: node --version; npm --version; now-sdk --version; gh --version;
+git --version; claude --version; gh auth status. Don't install, change or
+fix anything.
+</code></pre>
+<p>Compare each line with Step 2's table. Anything missing or too old: fix it
+yourself as Step 2 says, not through Claude. Then <strong>🤖 Claude:</strong> <code>/exit</code>.</p>
 <p><strong>Anything not ticked: tell your instructor before the day</strong>, at least two
 days before, using the contact your instructor gave you in the workshop
 invite.</p>
