@@ -3,12 +3,13 @@
 //
 //   node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs          set up or merge
 //   node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check  only check, change nothing
+//   node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --restore  after the lab: put yours back
 //
 // No settings file yet: it writes the lab's file.
 // A settings file already: it saves a backup next to it, then adds the lab's
 // settings and keeps everything that was there. Lists (like "deny") are added
 // to, never replaced. If your file isn't valid JSON, it stops and changes nothing.
-import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,6 +18,33 @@ const here = dirname(fileURLToPath(import.meta.url));
 const lab = JSON.parse(readFileSync(join(here, 'claude-settings.json'), 'utf8'));
 const target = join(homedir(), '.claude', 'settings.json');
 const checkOnly = process.argv.includes('--check');
+const restore = process.argv.includes('--restore');
+const backup = `${target}.before-lab.bak`;
+
+if (restore) {
+  if (existsSync(backup)) {
+    if (existsSync(target)) copyFileSync(target, `${target}.lab.bak`);
+    copyFileSync(backup, target);
+    console.log(`Restored your own settings from ${backup}.`);
+    console.log(`The lab's version is kept as ${target}.lab.bak, in case you need it again.`);
+  } else if (existsSync(target)) {
+    // No backup: either there was no file before the lab, or the file already
+    // had every lab setting. Only remove it if it is exactly the lab's file.
+    let same = false;
+    try { same = JSON.stringify(JSON.parse(readFileSync(target, 'utf8'))) === JSON.stringify(lab); } catch {}
+    if (same) {
+      copyFileSync(target, `${target}.lab.bak`);
+      rmSync(target);
+      console.log('You had no settings file before the lab, so the lab one has been removed.');
+      console.log(`(A copy is kept as ${target}.lab.bak.)`);
+    } else {
+      console.log('No backup from the lab was found, and your settings file is not the lab\'s, so nothing was changed.');
+    }
+  } else {
+    console.log('Nothing to restore: there is no settings file.');
+  }
+  process.exit(0);
+}
 
 const isObj = (v) => v && typeof v === 'object' && !Array.isArray(v);
 
@@ -85,7 +113,6 @@ if (!current) {
   if (!gaps.length) {
     console.log(`${target} already has every lab setting. Nothing changed.`);
   } else {
-    const backup = `${target}.before-lab.bak`;
     copyFileSync(target, backup);
     writeFileSync(target, JSON.stringify(merge(current, lab), null, 2) + '\n');
     console.log(`Added the lab's settings to ${target}, keeping yours.`);

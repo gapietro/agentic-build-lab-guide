@@ -168,6 +168,9 @@ files and commands.
    mkdir -p ~/projects
    gh repo clone gapietro/agentic-build-lab-guide ~/projects/agentic-build-lab-guide
    ```
+   What these do: `mkdir -p ~/projects` makes the `projects` folder in your
+   home folder (if it isn't there already). `gh repo clone` downloads this
+   guide from GitHub into `~/projects/agentic-build-lab-guide`.
    ✅ **Check:** `ls ~/projects/agentic-build-lab-guide` shows `README.md`,
    `LAB.html`, the `MODULE-` files and `files/`. If your instructor says the
    guide was updated, get the changes with
@@ -192,6 +195,27 @@ files and commands.
    so your instance login stays out of Claude; and Claude's file reader
    can't open your notes folder (`~/projects/priority-guard-notes`, made
    below) or this guide's folder.
+
+   **Already use Claude Code? Read this first.** Changing these settings is
+   safe, and you can undo it completely after the lab:
+   - **It adds, it doesn't replace.** The command below saves a copy of
+     your own settings first, then adds the lab's settings next to yours.
+     Your plugins, your theme and your own rules stay.
+   - **Your past conversations and memories aren't touched.** Turning
+     memories off only stops Claude saving *new* memories during the lab.
+     Nothing already saved is deleted, and you can still resume your old
+     conversations. They'll behave as before once you've put your own
+     settings back.
+   - **Close every other Claude Code window first** (type `/exit` in each),
+     including the Code tab of the Claude desktop app if you use it. They
+     read the settings when they start, so one left open would keep running
+     with the old settings and could confuse you later.
+   - **Undo it after the lab** with one command. "Put your machine back", at
+     the end of Module 9, lists every step.
+
+   The cleanest option is still a separate user account on your computer
+   (see "Why a clean bench matters" at the top of this module): then there's
+   nothing to undo.
 
    `~/.claude` is a hidden folder in your home folder, where Claude Code
    keeps its settings. You don't need to find it: one command puts the
@@ -225,12 +249,19 @@ files and commands.
    cd ~
    claude
    ```
-   Follow its sign-in steps (it opens your browser). When it asks whether
-   you trust this folder, choose **Yes**. Then **🤖 Claude:** type `/exit`
-   and press **Enter** to quit Claude.
+   You're only signing in here, so your home folder is fine. Follow its
+   sign-in steps (it opens your browser). When it asks whether you trust
+   this folder, choose **Yes**. Then **🤖 Claude:** type `/exit` and press
+   **Enter** to quit Claude.
+
+   **How to tell you've left Claude:** Claude's input box (with `>` and a
+   frame around it) is gone, and you see your normal terminal prompt again,
+   usually ending in `%` or `$`. The next item must be typed there, never
+   inside Claude.
 5. **Your PDI, in private** (nobody watching your screen). Pick an
    **alias**: a short nickname you choose for this login, for example
-   `mypdi`. Write it in your values table as `<PDI_ALIAS>`. **⌨️ You:** run
+   `mypdi`. Write it in your values table as `<PDI_ALIAS>`. **⌨️ You**, in a
+   normal terminal (not inside Claude: see the end of item 4): run
    this, with your instance's address from Step 1 (for example
    `https://dev123456.service-now.com`) and your alias:
    ```
@@ -252,13 +283,23 @@ instance.
 
 **Why this step:** One folder is where the app gets built. The other holds your log and your list of catches. Keeping them apart means Claude doesn't read your notes as part of the project.
 
-Both go under `~/projects`, the base folder for everything in this lab.
+Both go in `~/projects`, the same folder that holds this guide: **next to**
+`agentic-build-lab-guide`, not inside it. (`~` means your home folder, so
+`~/projects` is the `projects` folder in your home folder.) You can run these
+from any folder: the full paths say exactly where things go.
 
 **⌨️ You:**
 ```
 mkdir -p ~/projects/priority-guard/brief ~/projects/priority-guard-notes
 touch ~/projects/priority-guard-notes/LOG.md ~/projects/priority-guard-notes/catches.md
 ```
+What these do:
+- `mkdir -p` makes folders: your workspace `priority-guard` with an empty
+  `brief` folder inside it, and your notes folder `priority-guard-notes`.
+  (`-p` means "make any missing folders on the way, and don't complain if
+  one is already there".)
+- `touch` makes two empty files in your notes folder: `LOG.md` for your
+  notes and `catches.md` for your list of catches.
 The `brief/` folder stays empty until Module 1, when your accepted PRD goes
 in.
 
@@ -334,34 +375,49 @@ shows how).
 **🤖 Claude:** run `/plugin`, then `/mcp`. Press **Esc** to close each
 one. Then quit Claude with `/exit`.
 
-**⌨️ You:**
+**⌨️ You:** the same checks from the terminal (use these if `/mcp` isn't
+recognised in your version):
 ```
+claude plugin list
+claude mcp list
 ls ~/.claude/CLAUDE.md
 ```
+- `claude plugin list` shows which plugins are installed and switched on.
+- `claude mcp list` shows connections to other tools (MCP servers).
+- `ls ~/.claude/CLAUDE.md` checks for a personal instruction file.
 
-✅ **Check:** `/plugin` lists only `prove-it`. `/mcp` shows no servers. `ls`
-says the file doesn't exist: it prints
+✅ **Check:** only `prove-it` is installed and switched on. No MCP servers
+are listed. `ls` says the file doesn't exist: it prints
 `ls: /Users/<you>/.claude/CLAUDE.md: No such file or directory`.
 
 ⚠️ **If you see…** *a personal `CLAUDE.md`, MCP servers or other plugins:*
 they'll shape what Claude does in the lab. Use a separate user account, or
-switch them off for the workshop like this, and note what you did:
+switch them off for the workshop like this. **Write each change in
+`~/projects/priority-guard-notes/LOG.md` as you make it**: you'll undo them
+after the lab ("Put your machine back", at the end of Module 9).
 - **A personal `CLAUDE.md`:** **⌨️ You:** rename it so Claude doesn't read it:
   ```
   mv ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.off
   ```
   After the workshop, put it back with
   `mv ~/.claude/CLAUDE.md.off ~/.claude/CLAUDE.md`.
-- **Other plugins:** **🤖 Claude:** type `/plugin`, open the list of
-  installed plugins, select each plugin other than `prove-it`, and choose
-  **Disable**.
-- **MCP servers:** **⌨️ You:** list them, then remove each one by its name:
+- **Other plugins:** **⌨️ You:** switch each one off (it stays installed,
+  so you can switch it back on later), using the name `claude plugin list`
+  shows:
   ```
-  claude mcp list
+  claude plugin disable <name>
+  ```
+  Or **🤖 Claude:** type `/plugin`, open the installed plugins, select each
+  one other than `prove-it`, and choose **Disable**.
+- **MCP servers:** **⌨️ You:** first save each one's settings, so you can
+  add it back after the lab, then remove it:
+  ```
+  claude mcp get <name> >> ~/projects/priority-guard-notes/mcp-before-lab.txt
   claude mcp remove <name>
   ```
-  Run `claude mcp list` again to check they've gone. If one won't go, tell
-  your instructor.
+  `claude mcp get` prints how the server was set up; `>>` adds that to a
+  file in your notes folder. Run `claude mcp list` again to check they've
+  gone. If one won't go, tell your instructor.
 
 Then run the checks at the top of this step again.
 

@@ -141,6 +141,10 @@ Later modules add to `priority-guard/` (the PRD, the consult, the inputs,
 the designs) and fill `app/` with your app's code. Each module says what it
 creates.
 
+**Using your own computer and Claude Code?** Module 0 changes a few Claude
+Code settings for the lab, safely and with a backup. "Put your machine back",
+at the end of Module 9, undoes all of it.
+
 **You don't need Now Assist.** The app is plain code. The AI in this lab is
 the one that writes the code, not one inside the app.
 

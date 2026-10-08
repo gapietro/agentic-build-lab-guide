@@ -92,3 +92,45 @@ Write one sentence for each:
 3. **Everything is written down.** Inputs, PRD, consult, LLD, signed design, plan,
    tests, grade, and after the workshop the runbook and verdict. Someone else
    could pick your app up tomorrow.
+
+---
+
+## After the lab: put your machine back
+
+**Why this step:** Module 0 changed a few things on your computer so every
+pair worked the same way. This puts them back, so Claude Code behaves the way
+it did before the lab. Skip it if you did the lab in a separate user account
+or a fresh machine: there, just delete that account when you're done.
+
+Close every Claude Code window first (type `/exit` in each). Then, in a
+normal terminal, **⌨️ You**:
+
+1. **Your Claude Code settings.** This puts your own settings file back,
+   exactly as it was (or removes the lab's one if you had none):
+   ```
+   node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --restore
+   ```
+   It keeps a copy of the lab's settings as `settings.json.lab.bak`, in case
+   you come back to the after-the-workshop track.
+2. **Anything you switched off in Module 0 Step 6.** Your `LOG.md` lists what
+   you changed:
+   - a personal `CLAUDE.md`: `mv ~/.claude/CLAUDE.md.off ~/.claude/CLAUDE.md`
+   - each plugin you disabled: `claude plugin enable <name>`
+   - each MCP server you removed: open
+     `~/projects/priority-guard-notes/mcp-before-lab.txt`, which holds how
+     each one was set up, and add it back the same way you first added it
+     (or ask Claude, once your settings are restored, to help you re-add it
+     from that file).
+3. **The kit (optional).** If you won't use it again:
+   **🤖 Claude:** `/plugin uninstall prove-it@prove-it`, then
+   `/plugin marketplace remove prove-it`.
+4. **The ServiceNow SDK login (optional).** If you won't use this instance
+   again: `now-sdk auth --delete <PDI_ALIAS>`.
+5. **The lab's folders (optional).** Your work lives in `~/projects` and on
+   GitHub. Keep it, or delete the folders when you no longer need them.
+
+✅ **Check:** `node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check`
+now says the lab settings are **not** in place (unless you already had them
+before the lab), and `claude plugin list` shows your plugins as they were.
+Your past conversations resume as before.
+
