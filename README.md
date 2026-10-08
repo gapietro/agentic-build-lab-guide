@@ -25,6 +25,44 @@ still clone the guide in Module 0: the steps copy files from it.
 
 ---
 
+## Who this lab is for
+
+This lab is for **ServiceNow admins, developers and architects** who want to
+build on the platform with a coding agent, safely. You don't need to be a
+programmer: Claude writes the code. You do need to be comfortable finding
+your way around ServiceNow as an admin.
+
+**You need working knowledge of:**
+
+| Area | "Working knowledge" means you can… |
+|---|---|
+| **ServiceNow, as an admin** | Log in as admin; open a table's list and a record; create a record; create a user and give it a role; find and change a system property. (The "ServiceNow basics" box below covers the exact clicks.) |
+| **Your own computer** | Install software (or get IT to); open a terminal and run a command you're given; open and edit a text file. |
+| **GitHub** | Have an account and sign in. You don't need to know git: the guide gives every command. |
+
+**Helpful, but not required:**
+
+| Area | Why it helps |
+|---|---|
+| ServiceNow development (business rules, script includes, scoped apps, access rules) | Modules 3–6 make more sense when you know where app logic runs on the platform |
+| Reading JavaScript or TypeScript | You can follow what Claude writes, not just whether it passes |
+| git basics (branch, commit, pull request) | Modules 5–8 move faster |
+| Having used Claude Code or another coding agent | Module 0 and the first hour feel familiar |
+
+**Not needed:** writing code yourself, the ServiceNow SDK or Fluent, Now
+Assist or any AI experience, or experience with this method.
+
+**Quick self-check.** If you can say yes to all four, you're ready:
+1. Can you log in to a ServiceNow instance as admin and open the incident list?
+2. Could you create a user and give it the `itil` role, given the menu path?
+3. Can you open a terminal on your computer and run a command you're given?
+4. Can you install software on your computer, or get it installed in time?
+
+A "no" isn't a blocker: tell your instructor before the day. They can pair
+you with someone, or help you with Module 0.
+
+---
+
 ## 1. What you'll learn
 
 By the end of the day you will have done most of these yourself, once. The
