@@ -1,6 +1,13 @@
 # Module 7 — Break it: tests prove only what the author thought to check
 
-*Day 3 · about 90 minutes · still the build stage*
+*Workshop · 14:45 · optional, 15 minutes*
+
+**In the workshop:** Part A only: predict, start the fresh reviewer, and
+compare its list with yours, in 15 minutes. The reviewer lists its attempts.
+Fixing what got through, Part B (your partner) and Part C (amending the
+design) are ⏭ after the workshop.
+
+**Short on time? Skip this module; nothing later depends on it.**
 
 [← Module 6](MODULE-6-build-loop.md) · [Lab home](README.md) · [Module 8 →](MODULE-8-grade-and-handoff.md)
 
@@ -34,7 +41,7 @@ would?
       check in Module 6 step 10 passed. (Building the whole app: the MERGE,
       INSTALL and DEMO counts are zero, from Module 6 step 12.)
 - [ ] `main` is clean and up to date.
-- [ ] Your partner is ready for Part B.
+- [ ] After the workshop only: your partner is ready for Part B.
 
 ---
 
@@ -91,6 +98,8 @@ into your log, with how many attempts got through.
 
 **Why this step:** A hole only stops mattering once it's fixed properly. A failing test first proves the hole is real, and keeps it closed. If the fix changes what the app should do, the design has to say so first.
 
+**In the workshop, do item 1 only, then stop** where it says so below.
+
 1. **Still in the reviewer session:** tick each of your predicted attacks
    the reviewer tried. For any it missed, ask it (**🤖 Claude**) for a test
    for that case too, and to commit it on `test/break-floor`.
@@ -101,6 +110,18 @@ into your log, with how many attempts got through.
    ```
    ✅ **Check:** the raw output is **empty**. If it lists any files, ask the
    reviewer to commit them on `test/break-floor` first, then check again.
+
+**In the workshop, stop here.** In `LOG.md`, write each attempt that got
+through as an **open finding**, with its failing test's name. It isn't a
+catch yet: a bypass becomes a catch once its fix is merged. Then leave the
+reviewer and go back to `main`, so Module 8 grades `main`, not the
+reviewer's branch. **🤖 Claude:** type `/exit`. **⌨️ You** (window 1):
+```
+cd ~/projects/priority-guard/app && git switch main
+```
+
+⏭ **After the workshop:** items 2 to 5 below, fixing what got through.
+
 2. **Leave the reviewer.** It was set up to attack, not to build.
    **🤖 Claude:** type `/exit`. **⌨️ You** (window 1): start a normal
    session:
@@ -131,7 +152,7 @@ into your log, with how many attempts got through.
      ```
      Read the bullets, type `confirm`, and watch the red, then green run.
      Then `ship it`, and read the review as in Module 6 step 6.
-4. **In the workshop, stop after one fix.** File the other attacks that got
+4. **Not building the whole app? Stop after one fix.** File the other attacks that got
    through as stories, so they aren't lost. **🤖 Claude:**
    ```
    File one GitHub issue per attempt that got through, each with the
@@ -156,12 +177,15 @@ into your log, with how many attempts got through.
 Never merge it.
 
 ✅ **Check:** you've written down how many attempts there were, how many got
-through, and what you fixed. A bypass counts as a catch once its fix is
-merged.
+through, and (after the workshop) what you fixed. A bypass counts as a catch
+once its fix is merged.
 
 ---
 
 ## Part B — Your partner attacks the live app
+
+⏭ **After the workshop:** all of Part B. It needs your partner, at your
+keyboard, for a full swap each way.
 
 ### Step 4 — Swap seats
 
@@ -206,9 +230,9 @@ Do the same on your partner's computer, as their agent user.
 
 ## Part C — If the design has to change
 
-**In the workshop, your instructor shows this once, for the room.** Follow
-these steps yourself only if a fix in Part A or B changes what the design
-says, for example a new rule about which changes the floor must survive.
+⏭ **After the workshop:** all of Part C. Follow these steps only if a fix
+in Part A or B changes what the design says, for example a new rule about
+which changes the floor must survive.
 
 ### Step 6 — Amend the design, then build
 
@@ -271,6 +295,8 @@ built **after** the amendment was merged, not before.
 7 | partner | <the attack that got through, now fixed>
 7 | review | <the reviewer's attack that got through, now fixed>
 ```
+Only once each fix is merged. In the workshop, the attempts that got through
+stay in `LOG.md` as open findings, not in `catches.md`.
 And in `LOG.md`: your three predictions against what actually worked.
 
 **Next:** [Module 8](MODULE-8-grade-and-handoff.md). Could someone else own

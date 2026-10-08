@@ -7,7 +7,8 @@ should feel like. This track runs the **same modules on your own use case**,
 and ends with one **slice** of your app, working on your development
 instance, graded and handed over.
 
-**Do the workshop first.** One run with known answers teaches you what a good
+**Do the workshop first**, including the parts each module marks **⏭ After
+the workshop**. One full run with known answers teaches you what a good
 result looks like, so you can judge your own results.
 
 ---
@@ -21,7 +22,7 @@ result looks like, so you can judge your own results.
 | Instance | Your PDI | **A development instance from the customer's own instance family** (section 2) |
 | What gets built | A teaching slice | **One slice you choose**, small enough to finish |
 | When it ends | When the clock runs out | When the slice is **done** (section 5) |
-| Time | Three days together | A kick-off half day, then about **two weeks** of sessions, with two check-ins |
+| Time | One day together, then the after-the-workshop parts | A kick-off half day, then about **two weeks** of sessions, with two check-ins |
 | Generative AI in the app | None | **None in the first slice** (section 2) |
 
 ---
@@ -136,6 +137,11 @@ and don't edit any file.
 
 The steps, commands and safety rules are the workshop's. This section lists
 **every** place a module assumes Priority Guard, and what to do instead.
+
+**Do every part of every module, including the parts marked ⏭ After the
+workshop.** Those marks are for the one-day workshop only. The workshop's
+timings, the lunch break and "optional" don't apply here: Module 7 is not
+optional on your own app.
 
 ### Module 2 — Consult
 
@@ -264,6 +270,7 @@ the slice, because the signed design does.
   logic run, what does it write, and does anything in this story let your
   central rule be broken?
 - Step 10: run **your live check** from SLICE.md, as your ordinary user.
+- Step 12 (marked after the workshop) is how you finish the slice's gates.
 - **Seed your demo data** as source in the app (`src/`). The grade checks for
   it. [PROMOTE.md](PROMOTE.md) covers keeping it out of production.
 
@@ -274,8 +281,9 @@ the slice, because the signed design does.
 - Step 2: in the reviewer prompt, replace the rule with **your central rule**,
   in one sentence. Keep the rest, including the branch `test/break-floor`,
   which step 3 uses.
-- Step 3: **don't stop after one fix.** On real work, repeat with a new
-  reviewer until a round finds nothing.
+- Step 3: do **every** item, not only item 1, and **don't stop after one
+  fix.** On real work, repeat with a new reviewer until a round finds
+  nothing.
 - Part B: a colleague who didn't build it attacks your live app, as your
   ordinary user. Their goal: break your central rule. The attack ideas
   become: change the record after your logic has run, change related

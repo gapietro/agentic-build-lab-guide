@@ -1,6 +1,8 @@
 # Module 4 — Design approval: nothing is built until you sign
 
-*Day 2 · about 1¾ hours · stage two of five*
+*Workshop · 11:15 · 45 minutes*
+
+**In the workshop:** do all six steps.
 
 [← Module 3](MODULE-3-research-and-lld.md) · [Lab home](README.md) · [Module 5 →](MODULE-5-fence-and-plan.md)
 

@@ -1,6 +1,8 @@
 # Module 2 — Consult: understand before building
 
-*Day 1 · about 90 minutes · the first stage of five*
+*Workshop · 09:30 · 30 minutes · the first stage of five*
+
+**In the workshop:** do Steps 1–6; Step 5 (push back) only if you need it.
 
 [← Module 1](MODULE-1-prd.md) · [Lab home](README.md) · [Module 3 →](MODULE-3-research-and-lld.md)
 
@@ -95,7 +97,7 @@ a few clarifying questions, asks you to reply `confirmed` or correct it, and
    - If a bullet contradicts the floor (for example, it lets AI change the
      priority freely), type, for example,
      `Bullet 3 contradicts capability 2. Correct it.`
-   - If it asks about size, type `About 8–10 stories, two build days.`
+   - If it asks about size, type `About 8–10 stories; we build the first few in one afternoon.`
    - If it asks whether your instance has Now Assist (or generative AI),
      type `No. Assume Now Assist isn't available.` The lab is built without
      it, so every pair gets the same consult.

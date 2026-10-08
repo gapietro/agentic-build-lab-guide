@@ -1,6 +1,8 @@
 # Module 1 — From inputs to a PRD
 
-*Day 1 · about 60 minutes · before the consult*
+*Workshop · 09:00 · 30 minutes · before the consult*
+
+**In the workshop:** do Steps 1–6. The customer answers the room at about 09:15.
 
 [← Module 0](MODULE-0-prework.md) · [Lab home](README.md) · [Module 2 →](MODULE-2-consult.md)
 
@@ -130,8 +132,9 @@ open decision.
 
 Your instructor plays the customer, and answers the room's open decisions
 together, once, so every pair builds the same thing. This happens at about
-**09:45**, for the whole room at once. If you finish Step 5 early, wait for
-it. If you missed it, ask your instructor: they have the answers written
+**09:15**, for the whole room at once. If you finish Step 5 early, wait for
+it. If you're still on Steps 4–5, listen anyway and write the answers down
+for when you get here. If you missed it, ask your instructor: they have the answers written
 down. Record each answer in
 the PRD, in the capability it affects, and remove it from Open decisions. If
 you found something the customer doesn't answer, ask before you accept.

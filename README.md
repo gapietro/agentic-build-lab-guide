@@ -1,6 +1,6 @@
 # Agentic Build Lab — build a ServiceNow app with a coding agent, and prove it works
 
-**A hands-on workshop.** In three days you build a small ServiceNow app,
+**A hands-on workshop.** In one day, 09:00–17:00, you build a small ServiceNow app,
 **Priority Guard**, the way real work arrives: from a use case, workshop
 notes and technical notes, through a PRD and an LLD, to a reviewed,
 installed, handed-over app. A coding agent (Claude Code) does the typing. You
@@ -47,15 +47,18 @@ By the end you will have done each of these yourself, once:
 | When | Module | What you do | Leaves behind |
 |---|---|---|---|
 | Before the day (60–90 min) | [0 · Pre-work](MODULE-0-prework.md) | Install the tools, connect your instance, pass the pre-flight checks | A ready bench |
-| Day 1, 09:00 | [1 · Inputs to PRD](MODULE-1-prd.md) | Review the PRD against the inputs; the customer accepts it | An accepted PRD |
-| Day 1, 10:00 | [2 · Consult](MODULE-2-consult.md) | The agent reads the PRD and recommends an architecture | `CONSULT.md` |
-| Day 1, 11:30 | [3 · Research and LLD](MODULE-3-research-and-lld.md) | Research the platform, check it on your instance, write the LLD (lunch in the middle) | A signed LLD |
-| Day 2, 09:00 | [4 · Challenge and sign](MODULE-4-design.md) | The agent challenges your design; you sign the contract | The signed design record |
-| Day 2, 10:45 | [5 · Fence and plan](MODULE-5-fence-and-plan.md) | The repo, the secret test, the plan | A repo and a plan |
-| Day 2, 13:30 → Day 3, 10:30 | [6 · Build loop](MODULE-6-build-loop.md) | Stories, test first, reviewed, installed, checked live | An installed app |
-| Day 3, 10:30 | [7 · Break it](MODULE-7-break-it.md) | A fresh reviewer and your partner attack your floor | Findings, fixed |
-| Day 3, 12:45 | [8 · Grade and handoff](MODULE-8-grade-and-handoff.md) | Grade it; write a runbook; your partner breaks your app | `GRADE.md`, `RUNBOOK.md`, a verdict |
-| Day 3, 15:15 | [9 · What the process caught](MODULE-9-debrief.md) | Count the catches; take it home | Your tally |
+| 09:00 (30 min) | [1 · Inputs to PRD](MODULE-1-prd.md) | Review the PRD against the inputs; the customer accepts it | An accepted PRD |
+| 09:30 (30 min) | [2 · Consult](MODULE-2-consult.md) | The agent reads the PRD and recommends an architecture | `CONSULT.md` |
+| 10:00 (75 min) | [3 · Research and LLD](MODULE-3-research-and-lld.md) | Research the platform; a background script checks the top facts on your instance; Claude drafts the LLD; a quick review; you sign. *After the workshop:* the full LLD review | A signed LLD |
+| 11:15 (45 min) | [4 · Challenge and sign](MODULE-4-design.md) | The agent challenges your design; you sign the contract | The signed design record |
+| 12:00 (45 min) | [5 · Fence and plan](MODULE-5-fence-and-plan.md) | The repo, the secret test, the plan | A repo and a plan |
+| 12:45 (30 min) | [6 · Build loop](MODULE-6-build-loop.md) | Your first story by hand, then start the sub-agent batch just before lunch. *After the workshop:* Step 12, building the whole app | A first story merged; a batch running |
+| 13:15 | Lunch | The batch runs while you eat | — |
+| 14:00 (45 min) | [6 · Build loop](MODULE-6-build-loop.md) (continued) | Read the batch's evidence, install, check it live, close | An installed app |
+| 14:45 (15 min) | [7 · Break it](MODULE-7-break-it.md) | **Optional:** the fresh reviewer attacks your floor. *After the workshop:* your partner's attack; amend the design | A list of attempts (fixes after the workshop) |
+| 15:00 (45 min) | [8 · Grade and handoff](MODULE-8-grade-and-handoff.md) | Run the grade and read it. *After the workshop:* the runbook, the drill, the verdict | `GRADE.md` (later `RUNBOOK.md` and a verdict) |
+| 15:45 (15 min) | [9 · What the process caught](MODULE-9-debrief.md) | Debrief: count the catches; take it home | Your tally |
+| 16:00–17:00 | Buffer | Catch up on slow installs or runs, or start the after-the-workshop track | — |
 | After the workshop | [Your own PRD track](OWN-PRD.md) | The same modules on your own use case: a kick-off half day, then about two weeks to finish one slice | A working slice on your development instance, graded and handed over |
 | When it's ready | [Getting it to production](PROMOTE.md) | The customer's change process, with your evidence attached | The app in production |
 
@@ -63,9 +66,16 @@ Times are a guide. Your instructor will keep the room together. If you fall
 behind, your instructor can give you a **checkpoint** to start the next
 module from, so you never miss one.
 
-**You work in pairs.** You each build your own app on your own instance, but
-twice you work on your partner's: in Module 7 you attack their safeguard, and
-in Module 8 you break their app for them to diagnose. Whoever built something
+**The after-the-workshop track.** One day isn't enough for every step, so
+each module marks the parts you skip on the day with **⏭ After the
+workshop**. Nothing is cut: do those parts later, in order, starting from
+where you stopped. They take you from the app you installed on the day to a
+fully built, graded and handed-over app.
+
+**You work in pairs.** You each build your own app on your own instance. On
+the day you work alone. Your partner is needed only in the after-the-workshop
+track, twice: in Module 7 you attack their safeguard, and in Module 8 you
+break their app for them to diagnose (the drill). Whoever built something
 never gets to be the only one who checks it.
 
 ---

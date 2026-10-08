@@ -1,6 +1,11 @@
 # Module 6 — The build loop
 
-*Day 2 afternoon and Day 3 morning · about 5 hours · stage three of five*
+*Workshop · 12:45 · first story by hand, then the batch runs over lunch · back at 14:00 for 45 minutes*
+
+**In the workshop:** Steps 1–7 at 12:45 (your first story by hand, about 30
+minutes). Start Step 8's batch just before lunch, at about 13:15. After lunch,
+at 14:00: read Step 8's evidence, then Steps 9–11. Step 12 is ⏭ after the
+workshop.
 
 [← Module 5](MODULE-5-fence-and-plan.md) · [Lab home](README.md) · [Module 7 →](MODULE-7-break-it.md)
 
@@ -37,10 +42,10 @@ this module is about:
   table that applies the floor and writes the work note.
 
 Other stories, such as a test harness or a table, may come first. Build
-them the same way. On Day 3 morning you install the app and check it live. In the workshop,
+them the same way. After lunch you install the app and check it live. In the workshop,
 the override (capability 4) and the weekly count (5) stay on the board for
 later. **If you're building the whole app**, step 12 takes you the rest of
-the way.
+the way, after the workshop.
 
 **The idea to watch for.** The floor is plain code that sees only plain
 data, and the ServiceNow parts are a thin layer around the outside. That's
@@ -248,6 +253,18 @@ loop on the next stories at the same time. The checks don't change: every
 story is still tested first, reviewed and merged on green. What changes is
 your job. You stop typing commands and start reading the evidence.
 
+**In the workshop: start it just before lunch, at about 13:15.** It runs
+while you eat.
+- **Leave your laptop open and plugged in.** Don't close the lid: closing it
+  puts the laptop to sleep, and the run stops.
+- **If Claude asks a permission question while you're away**, it waits for
+  you. That's fine. Nothing goes ahead without you. Answer it when you're
+  back, as the list further down says.
+- **Back at 14:00:** read its report and check the evidence (the numbered
+  checks after the prompts), then go on to step 9. **Still running at
+  14:00?** Let it finish. If it's far from done, ask your instructor for a
+  checkpoint to carry on from.
+
 1. **Start clean.** **🤖 Claude:** type `/clear` (or start a fresh session:
    **🤖 Claude:** type `/exit`, then **⌨️ You:** `claude`).
 2. **🤖 Claude:** step 1's prompt that brings `main` up to date, then the
@@ -399,8 +416,10 @@ the next gate's count is zero).
      session open.
   3. **🤖 Claude:** paste the **same** prompt as before.
   4. **✏️ Editor:** note in `LOG.md` that the run stopped, where, and why.
-- *a story stopped for a design change:* go to Module 7, Part C. Don't let it
-  change the design to get through.
+- *a story stopped for a design change:* don't let it change the design to
+  get through. Leave that story open, note it in `LOG.md`, and tell your
+  instructor. Changing the design is Module 7, Part C, which is after the
+  workshop.
 - *it runs much longer, or uses much more of your plan's limits, than you
   expected:* several sub-agents use usage faster than one session. Tell it to
   run one story at a time, and note it.
@@ -578,6 +597,9 @@ Run exactly this and show me the raw output, unedited: git -C ~/projects/priorit
 
 ### Step 12 — If you're building the whole app
 
+⏭ **After the workshop:** skip this step on the day. Do it later, starting
+from where you stopped, before Module 7's Part B and Module 8's Parts B and C.
+
 **Why this step:** A real handoff needs every story built, installed and shown,
 not just the floor. Going gate by gate, by the live count, keeps you on what's
 actually in the way. Each gate also needs evidence, or the grade can't count it.
@@ -672,5 +694,5 @@ INSTALL and DEMO stories are closed with their evidence.
   6 | test | <what went red for a real reason>
   ```
 
-**Next:** [Module 7](MODULE-7-break-it.md). Tomorrow, your partner tries to
-break what you built.
+**Next:** [Module 7](MODULE-7-break-it.md). A fresh reviewer tries to break
+what you built (optional in the workshop).

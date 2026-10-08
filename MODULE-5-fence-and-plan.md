@@ -1,6 +1,8 @@
 # Module 5 — The fence and the plan
 
-*Day 2 · about 2 hours · between design and build*
+*Workshop · 12:00 · 45 minutes*
+
+**In the workshop:** do all fourteen steps. Claude does the routine typing; don't skip the guard test (Step 4), the allow list (Step 2) or the file list check (Step 7).
 
 [← Module 4](MODULE-4-design.md) · [Lab home](README.md) · [Module 6 →](MODULE-6-build-loop.md)
 

@@ -1,6 +1,9 @@
 # Module 3 — Research, then the LLD
 
-*Day 1 · about 4 hours, including lunch · between the consult and the design challenge*
+*Workshop · 10:00 · 75 minutes*
+
+**In the workshop:** do Steps 1–7, with the quick review in Step 6. The full
+review in Step 6 is for after the workshop.
 
 [← Module 2](MODULE-2-consult.md) · [Lab home](README.md) · [Module 4 →](MODULE-4-design.md)
 
@@ -50,9 +53,10 @@ If a block doesn't start with a label, it belongs to the label just above it.
 
 ### How to look things up on your instance
 
-Steps 3 and 4 ask you to check facts on your instance. These screens cover
-most of them. **🌐 Browser**, in your **admin** profile: type each one in the
-filter navigator and press **Enter**. (New to lists and filtering? See
+Step 4 checks the most important facts with a short script. This box is the
+**second way**, by hand: use it for any fact the script couldn't check, or if
+the script page won't open for you. **🌐 Browser**, in your **admin**
+profile: type each one in the filter navigator and press **Enter**. (New to lists and filtering? See
 [ServiceNow basics you'll use](README.md#servicenow-basics-youll-use).)
 
 | To see | Type in the filter navigator | Then |
@@ -111,10 +115,11 @@ brief/PRD-PriorityGuard.md, CONSULT.md and inputs/TECH-NOTES.md. List every
 platform fact the design will rely on: the tables and fields, anything else
 that runs at the same point as this app's logic, roles and access
 controls, and what a scoped app needs to update incidents. For each fact, say
-how sure you are and exactly how I can check it on my instance, using
-read-only screens only: list views, record forms, the dictionary, a table's
-application access. No scripts. Mark the five facts the design depends on
-most. Don't design anything yet, and don't write any file.
+how sure you are and exactly how I can check it on my instance by reading
+records only: list views, record forms, the dictionary, a table's
+application access. Don't run anything on the instance yourself. Mark the
+five facts the design depends on most. Don't design anything yet, and don't
+write any file.
 ```
 
 ✅ **Check:** a numbered list of facts, each with a confidence level and a
@@ -123,43 +128,80 @@ design depends on most. The screens in
 [How to look things up on your instance](#how-to-look-things-up-on-your-instance)
 cover most of the checks it suggests.
 
-### Step 4 — Check the facts on your instance
+### Step 4 — Check the facts with a background script
 
-**Why this step:** Claude can sound sure and still be wrong. Looking on your
-own instance turns each claim into something you have seen for yourself,
-before you build anything on it.
+**Why this step:** Claude can sound sure and still be wrong. A short script
+that only **reads** from your instance checks the five most important facts
+in one go. Its output is something you see for yourself, not Claude's word.
 
-**🌐 Browser:** go through the list, in your **admin** browser profile. Check **at least the
-five facts Claude marked** as the ones the design depends on most, and mark
-the rest **not checked**. Use the screens in
+**🤖 Claude** (`~/projects/priority-guard`): type:
+```
+Write one read-only ServiceNow background script that checks the five facts
+you marked as the ones the design depends on most. Use GlideRecord reads
+only: no insert, update, deleteRecord, setValue or setWorkflow, no
+gs.setProperty, and no REST calls. For each fact, print one line with
+gs.print: the fact number, what the script looked up, and what it found. If
+a fact can't be checked by reading records, print a line that says so.
+Don't name those methods anywhere in the script, not even in comments.
+Don't run anything and don't write any file. Just show me the script.
+```
+
+**Read the script** in Claude's reply before you copy it. You don't need to
+understand every line. You're looking for anything that **changes** data.
+
+⚠️ **If you see…** *`insert(`, `update(`, `updateMultiple(`,
+`deleteRecord(`, `deleteMultiple(`, `setValue(`, `setProperty(`, or anything
+else that changes data:* don't run it. Type
+`Read-only, please.` and read the new script the same way.
+
+**🌐 Browser**, in your **admin** profile:
+1. Type `sys.scripts.do` in the filter navigator and press **Enter**. This
+   opens **Scripts - Background**, a page where you can run a script on the
+   instance. It runs as you, with full **admin** rights, which is why you
+   read the script first.
+2. Paste the script into the big box. Leave the other settings as they are.
+   Click **Run script**.
+3. The output appears on the page, one line per fact (each line usually
+   starts with `*** Script:`). Copy those lines.
+
+If the page won't open, or asks for a role you don't have, check the five
+facts by hand instead, using
 [How to look things up on your instance](#how-to-look-things-up-on-your-instance).
-For each fact:
-1. Do the check Claude described, or a better one if you know one.
-2. **✏️ Editor:** write the result in your log: **confirmed**, **contradicted** (what you
-   saw instead), or **couldn't check**.
-3. If a fact comes from the technical notes (the customer's production) and
-   your instance doesn't have it, write **"production only, not on dev"**.
-   It still matters to the design. You just can't test it here.
 
-Some facts can't be confirmed before the app exists, such as when your own
-logic will run, or what cross-scope access it will need. **Couldn't check**
-is a valid result for those. Say so, and the LLD carries them as risks.
+**🤖 Claude** (`~/projects/priority-guard`): type this, then paste the
+output lines underneath it in the same message (press **Shift+Enter** for a
+new line), and send:
+```
+Here is the raw output of the script on my instance. Mark each fact
+confirmed, contradicted or couldn't check, from this output only.
+```
+**No URLs and no instance names**: delete any from the output before you
+send it. These results end up in the LLD, which goes into the code repo.
 
-**🤖 Claude** (`~/projects/priority-guard`): tell Claude what you found, one line per fact, for example:
-`Fact 3: contradicted. My instance shows <what you saw>.`
-Describe what you saw in words. **No URLs and no instance names**: these
-results end up in the LLD, which goes into the code repo.
+Read Claude's marks against the output lines yourself. The output is the
+evidence; Claude's marks are only a summary of it.
 
-✅ **Check:** every fact has a result: confirmed, contradicted, production
-only, couldn't check, or not checked.
+- If a fact comes from the technical notes (the customer's production) and
+  your instance doesn't have it, tell Claude, for example:
+  `Fact 3: production only, not on dev.` It still matters to the design. You
+  just can't test it here.
+- Some facts can't be confirmed before the app exists, such as when your own
+  logic will run, or what cross-scope access it will need. **Couldn't check**
+  is a valid result for those. The LLD carries them as risks.
+- If you check a fact by hand, tell Claude what you saw in words, for
+  example: `Fact 3: contradicted. My instance shows <what you saw>.`
+- Any fact that wasn't in the script, and that you didn't check by hand, is
+  **not checked**. Tell Claude so.
 
-> **In a real project** you'd usually run these checks through a read-only
-> MCP server connected to the instance, instead of clicking through screens.
-> The rule doesn't change: the evidence is the **raw query result**, which you
-> read yourself, not Claude's summary of it. If Claude makes a claim and then
-> "checks" it for you, it's still a claim. This lab does the checks by hand
-> because the bench has no MCP servers (Module 0 step 6), and so you see what
-> each fact looks like on the platform.
+✅ **Check:** every one of the five facts has a result: confirmed,
+contradicted, production only, or couldn't check. Every other fact has a
+result too, or is marked **not checked**.
+
+> **Faster ways, if your instructor has set them up:** a read-only MCP server
+> connected to the instance, or the Claude browser extension reading the
+> instance pages. The rule doesn't change: the evidence is the **raw result**
+> you read yourself, not Claude's summary. The workshop bench has no MCP
+> servers (Module 0 Step 6), so by default use the background script.
 
 ### Step 5 — Draft the LLD
 
@@ -181,13 +223,30 @@ asks to create `docs/LLD-PriorityGuard.md`, choose **1. Yes**).
 
 ✅ **Check:** `docs/LLD-PriorityGuard.md` exists, with all nine sections.
 
-### Step 6 — Review the LLD like a reviewer
+### Step 6 — A quick review of the LLD
 
 **Why this step:** Claude wrote the draft, so a person has to read it with
 fresh eyes, and that person is you. A gap found here takes minutes to fix.
 The same gap found later, in the code, takes much longer.
 
-**🤖 Claude:** type `/exit` to quit Claude. **✏️ Editor:** open the LLD in a text editor and check:
+**🤖 Claude:** type `/exit` to quit Claude. **✏️ Editor:** open the LLD in a text editor and check three things:
+
+1. **§1 traceability:** every PRD capability is either built, or deferred
+   with a reason.
+2. **§7 research log:** matches what the script showed in Step 4 (and
+   anything you checked by hand), including the contradicted and
+   production-only facts.
+3. **No `<…>` placeholders** are left anywhere.
+
+Fix anything wrong **by hand** (**✏️ Editor**), or start Claude again
+(**⌨️ You**: `claude` in `~/projects/priority-guard`) and ask it to fix one
+named section (**🤖 Claude**).
+
+✅ **Check:** all three are true. Write in `LOG.md` what you had to fix.
+
+#### ⏭ **After the workshop:** the full review
+
+Go through the LLD again with all six checks:
 
 1. **§1 traceability:** every PRD capability is either built, or deferred
    with a reason. Capability 6 matches what your consult decided.
@@ -202,12 +261,11 @@ The same gap found later, in the code, takes much longer.
    before you invent an answer.
 4. **§5 failure modes:** at least one for the floor, and one for the override.
 5. **§6 test plan:** includes checks **as an ordinary agent**, on the instance.
-6. **§7 research log:** matches what you actually found in step 4, including
+6. **§7 research log:** matches what you actually found in Step 4, including
    the contradicted and production-only facts.
 
-Fix anything wrong **by hand** (**✏️ Editor**), or start Claude again
-(**⌨️ You**: `claude` in `~/projects/priority-guard`) and ask it to fix one
-named section (**🤖 Claude**).
+Fix anything wrong the same way. If you change the LLD after you signed it
+in Step 7, update the date in §9.
 
 ✅ **Check:** all six are true. Write in `LOG.md` what you had to fix.
 

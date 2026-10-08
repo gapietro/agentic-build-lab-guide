@@ -1,6 +1,11 @@
 # Module 8 — Grade and handoff: could someone else own this?
 
-*Day 3 · about 2½ hours · stages four and five*
+*Workshop · 15:00 · 45 minutes*
+
+**In the workshop:** Part A: predict, allow the secrets scan, run the grade,
+read it, file its findings and merge `GRADE.md`. Parts B and C (the
+runbook, the drill and the verdict) and steps 10–11 are ⏭ after the
+workshop.
 
 [← Module 7](MODULE-7-break-it.md) · [Lab home](README.md) · [Module 9 →](MODULE-9-debrief.md)
 
@@ -32,7 +37,8 @@ who wrote it. Does yours get you to the cause, from the symptom alone?
 
 ## Before you start
 
-- [ ] Module 7 is done, and `main` is clean.
+- [ ] Module 6 is done (Module 7 is optional). You're on `main`, and it's
+      clean: if you did Module 7, you're back from `test/break-floor`.
 - [ ] Your app is installed on your PDI, from the latest `main`.
 - [ ] No Claude session is open yet: you start one in step 2. If a Claude
       session is still open, type `/exit`.
@@ -162,11 +168,16 @@ today, so most aren't catches yet.
 
 ## Part B — The runbook
 
+⏭ **After the workshop:** all of Part B. The drill in Part C needs a
+runbook that's frozen before anyone plants a failure, so write and freeze it
+first.
+
 ### Step 5 — Write it
 
 **Why this step:** The runbook is the instructions for whoever looks after the app next. If something breaks when you're not around, it's what they'll have to go on.
 
-**🤖 Claude** (same session):
+**🤖 Claude** (the session from step 3; coming back after the workshop,
+start one as in step 2 and run the session open):
 ```
 /prove-it:handoff
 ```
@@ -215,6 +226,9 @@ runbook doesn't change until the drill is over.
 ---
 
 ## Part C — The drill (swap with your partner)
+
+⏭ **After the workshop:** all of Part C. It needs your partner, to plant a
+failure while you're away, and the runbook you froze in Part B.
 
 ### Step 7 — Your partner plants, while you're away
 
@@ -329,6 +343,8 @@ has **Restored on** filled in.
 
 ### Step 10 — If you built the whole app: close the HANDOFF stories
 
+⏭ **After the workshop:** this step follows the drill and the verdict.
+
 **Why this step:** Open stories make the board say the handoff isn't done. Closing each one with its evidence records what proved it, so anyone reading later can check.
 
 The plan filed stories on the HANDOFF gate back in Module 5, from your
@@ -361,6 +377,8 @@ Run exactly this and show me the raw output, unedited: gh issue list --state ope
 ```
 
 ### Step 11 — If you built the whole app: grade again at HANDOFF
+
+⏭ **After the workshop:** this step follows step 10.
 
 **Why this step:** The first grade came before the handoff work. Grading again at the end says whether the finished app could be owned by someone else.
 
