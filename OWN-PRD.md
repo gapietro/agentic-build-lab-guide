@@ -254,9 +254,12 @@ the slice, because the signed design does.
 - Step 2: take whatever is top, always. The floor-story expectations don't
   apply: expect the bullets to match your central rule.
 - Step 4: the example test name becomes one from **your** central rule.
-- Step 8: the bullet questions become: **when** does your logic run, what
-  does it write, and does anything in this story let your central rule be
-  broken?
+- Step 8: in the batch prompt, the first **Stop when** line becomes your
+  slice's key story (the one that wires your logic into the platform), and
+  `docs/DESIGN-PriorityGuard.md` becomes your design record. When you read
+  that story's pull request, the bullet questions become: **when** does your
+  logic run, what does it write, and does anything in this story let your
+  central rule be broken?
 - Step 10: run **your live check** from SLICE.md, as your ordinary user.
 - **Seed your demo data** as source in the app (`src/`). The grade checks for
   it. [PROMOTE.md](PROMOTE.md) covers keeping it out of production.

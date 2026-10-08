@@ -24,6 +24,10 @@ You run **the build loop**, one story at a time:
    fixes the findings once, and merges when green.
 5. **Reset:** `/clear`, and the next story starts clean, from the files.
 
+You run that loop **by hand once**, on the first story, so you see every
+check happen. Then you hand the next stories to Claude, which runs the same
+loop with several **sub-agents** at once, while you read the evidence (step 8).
+
 You take stories **in the order your plan ranks them**, never the one you
 expected. Somewhere in the first few you'll meet these two, and they're what
 this module is about:
@@ -191,26 +195,103 @@ leak into the next one.
 
 ## The next stories, to the wiring
 
-### Step 8 — The same loop, until the floor is wired in
+### Step 8 — Accelerate: let sub-agents run the loop to the gate
 
-**Why this step:** Every story goes through the same steps, so every piece of
-code gets tests and a review, not just the first one. This story is where the
-floor meets real incidents, so you check Claude's plan against the design
-before it writes any code.
+**Why this step:** You've now run the loop once by hand, so you know what each
+check is for. Typing the same steps for every story teaches nothing new. Here
+Claude coordinates several helpers, called **sub-agents**, that run the same
+loop on the next stories at the same time. The checks don't change: every
+story is still tested first, reviewed and merged on green. What changes is
+your job. You stop typing commands and start reading the evidence.
 
-Run steps 1, 2, 4, 5, 6 and 7 again for each story the plan ranks next,
-until the story that wires the floor into ServiceNow is merged: the
-critical services list, and the rule on the incident table that applies the
-floor and writes the work note. If you stop for lunch or a break, run step
-11's session close first, and start again from step 1.
+**⌨️ Shell:** `git switch main && git pull`.
 
-Before you type `confirm` (**🤖 Claude**), check the five bullets answer these. If one
-doesn't, say so:
-- **When** does the rule run: before the incident is saved?
-- What does it write in the work note?
-- Does **anything** in this story let the priority go lower than the floor?
+**🤖 Claude:** run `/clear` (or start a fresh session), then the session open
+from step 1. Then type this prompt. Choose the **Stop when** line that fits,
+and delete the other:
 
-✅ **Check:** merged, after a review, with tests green.
+```
+Run the build loop on the next stories for me, using sub-agents to go faster.
+You are the coordinator: plan, delegate, merge and report. Don't write
+feature code yourself.
+
+Scope: open stories on the next gate, in the order the live board and
+BACKLOG.md rank them.
+Stop when: the story that wires the floor into the incident table is merged.
+Stop when: no open stories are left on the next gate.
+
+Give each story to one sub-agent, working in its own git worktree on its own
+branch. Each sub-agent must:
+1. Read CLAUDE.md, the story's issue, and the design terms it implements in
+   docs/DESIGN-PriorityGuard.md.
+2. Restate the story in five bullets, and put them at the top of the pull
+   request description.
+3. Write the tests first. Start each test's name with the design term it
+   proves ("C<n>: ..."), using the term's real number. Run them and save the
+   failing output.
+4. Write the code until the tests pass, run the whole test suite, and save the
+   passing output.
+5. ship it, exactly as CLAUDE.md defines it. The pull request description
+   holds the five bullets, the failing run, the passing run, and every review
+   finding with what was done about it.
+
+Rules:
+- Run stories at the same time only if they don't change the same files and
+  neither needs the other. Otherwise run them one after another.
+- Merge one pull request at a time. Before each merge, update the branch from
+  the latest main and run the tests again.
+- Never merge with a failing test, and never skip /code-review.
+- If a story fails the same step three times, stop that story, leave its pull
+  request open, and tell me why.
+- Stop everything and ask me if a story needs a design change, a business
+  decision, or anything on the instance. Never run now-sdk install.
+- Don't create, close or re-label issues by hand. A story closes when its
+  pull request merges.
+
+When you're done, give me one table: story, pull request, failing and passing
+test counts, review findings and what was done, merged or stopped (and why).
+Then the live count of open stories on the next gate.
+```
+
+Use the first **Stop when** in the workshop. Use the second if you're
+building the whole app (step 12).
+
+While it runs, watch rather than type. Claude may ask you to approve
+something. Read it first, and decline anything that touches your instance or
+your credentials.
+
+When it reports, read the table, then check the evidence yourself:
+
+1. **🌐 Browser:** open **every** merged pull request on GitHub. Each one shows
+   the five bullets, a failing run before a passing run, and the review's
+   findings.
+2. For the story that wires the floor in, check its five bullets answer these:
+   - **When** does the rule run: before the incident is saved?
+   - What does it write in the work note?
+   - Does **anything** in this story let the priority go lower than the floor?
+3. **⌨️ Shell:** `git switch main && git pull`, then `npm test`. Everything passes.
+
+✅ **Check:** every story in scope is merged, each through its own pull request
+with a review. Nothing merged with a failing test. Stopped stories, if any, are
+listed with a reason. The wiring story is merged (or, building the whole app,
+the next gate's count is zero).
+
+⚠️ **If you see…**
+- *a pull request with no review findings section, or no failing run:* that
+  story skipped a check. Run `/code-review` on it yourself (**🤖 Claude**),
+  and note it in `LOG.md`. A check that was skipped proves nothing.
+- *two sub-agents changed the same file and a merge conflicts:* that's the
+  "one at a time" rule doing its job. Let the coordinator rebase and re-test,
+  or tell it to run the remaining stories one after another.
+- *a story stopped for a design change:* go to Module 7, Part C. Don't let it
+  change the design to get through.
+- *it runs much longer, or uses much more of your plan's limits, than you
+  expected:* several sub-agents use usage faster than one session. Tell it to
+  run one story at a time, and note it.
+
+**Catches:** each real review finding that got fixed and merged is a catch for
+`review`, exactly as in step 6. Read the findings yourself before you count
+them.
 
 ### Step 9 — Build and install
 
@@ -270,9 +351,12 @@ seen work on the instance, correct it.
 not just the floor. Going gate by gate, by the live count, keeps you on what's
 actually in the way. Each gate also needs evidence, or the grade can't count it.
 
-**🤖 Claude:** keep running the loop, steps 1–7, one story at a time, **in the plan's order**,
-until the **MERGE, INSTALL and DEMO** counts are all zero. Leave the
-`gate:handoff` stories open: Module 8 closes them.
+**🤖 Claude:** work gate by gate, **in the plan's order**, until the **MERGE,
+INSTALL and DEMO** counts are all zero. For each gate, run step 8's prompt
+with the second **Stop when** line, then read its evidence as step 8 says.
+Stories that need the instance (an install, a live check, the demo) stop and
+come back to you: do those by hand, as below. Leave the `gate:handoff`
+stories open: Module 8 closes them.
 
 **Which gate is next.** The gates go in order: `merge`, `install`, `demo`,
 `handoff`. The next one is the **first whose count isn't zero**. Run this
@@ -297,10 +381,10 @@ override as `im.demo`, an approval as `owner.demo`. On your own, log in as
 each in turn, or impersonate them from your admin profile.
 
 Along the way:
-- **The override with Tier 1 approval** is the hardest story. Before you type
-  `confirm`, its five bullets must say who approves, where the approval is
-  recorded, and what the incident does while it waits. If one is missing,
-  say so.
+- **The override with Tier 1 approval** is the hardest story. Its five
+  bullets (at the top of its pull request) must say who approves, where the
+  approval is recorded, and what the incident does while it waits. If one is
+  missing, tell the coordinator before the next gate's run.
 - **Every design term needs a test** whose name carries its id, including
   **boundary and posture terms**. For example: a test that the app's source
   makes no AI calls, and doesn't touch the priority lookup or the SLA
