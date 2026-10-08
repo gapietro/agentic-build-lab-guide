@@ -20,7 +20,8 @@ Two checks that only make sense once there's something to hand over:
    nothing else.
 
 **The rules that keep the drill honest:**
-- Whoever plants the failure doesn't diagnose it.
+- Whoever plants the failure doesn't diagnose it. (Option B in step 7 is
+  the weaker exception, for when you have no partner.)
 - The runbook is frozen **before** anyone chooses what to break. Edit it
   afterwards, and you'd be writing it to the answer.
 
@@ -33,7 +34,8 @@ who wrote it. Does yours get you to the cause, from the symptom alone?
 
 - [ ] Module 7 is done, and `main` is clean.
 - [ ] Your app is installed on your PDI, from the latest `main`.
-- [ ] No Claude session is open yet: you start one in step 2.
+- [ ] No Claude session is open yet: you start one in step 2. If a Claude
+      session is still open, type `/exit`.
 
 ### Where each step happens
 
@@ -63,25 +65,28 @@ think it will find.
 
 ### Step 2 — Allow the grade's secrets scan
 
-**Why this step:** The grade only gives credit for what it can actually check. Giving it this access first lets it really look for leaked passwords and keys, instead of skipping that check.
+**Why this step:** The grade only gives credit for what it can actually check. Letting its scan run lets it really look for leaked passwords and keys, instead of skipping that check.
 
-Part of the grade scans the repo for secrets. That needs a few more
-permissions than the build and tests: reading the repo's guard script,
-writing temporary files outside the repo, and running `git ls-files`,
-`git log -p` and `grep`.
+Part of the grade scans the repo for secrets. It runs read-only commands
+such as `git ls-files`, `git log -p`, `grep` and `sed`, and writes a few
+temporary files outside the repo.
 
-1. **⌨️ You:** start Claude in the repo:
-   ```
-   cd ~/projects/priority-guard/app
-   claude
-   ```
-2. **🤖 Claude:** type `/permissions` and add the rules. **Your instructor
-   shows you the exact rules** for your Claude Code version. When it asks
-   where to save each rule, choose **User settings**, never a project
-   setting: project settings live in a file inside the repo.
+In **auto mode** (set by the settings file you installed in Module 0), the
+scan runs without stopping to ask you. You don't need to add any rules.
 
-Without them the scan is marked **unverified**, and that caps the score.
-Keep this Claude session open for step 3.
+**⌨️ You:** start Claude in the repo:
+```
+cd ~/projects/priority-guard/app
+claude
+```
+
+⚠️ **If you see…** *Claude asks permission for a read-only command like
+`git ls-files`, `git log`, `grep` or `sed` during the grade:* choose **1**
+(**Yes**). **Never** choose "don't ask again": that saves a lasting rule,
+and it can land in a settings file inside the repo.
+
+If the scan can't run, it's marked **unverified**, and that caps the
+score. Keep this Claude session open for step 3.
 
 ### Step 3 — Run the grade
 
@@ -92,7 +97,8 @@ Keep this Claude session open for step 3.
 /prove-it:grade
 ```
 With no milestone named, it lists your milestones and asks which one to
-grade. Choose the one your stories so far belong to.
+grade. **In the workshop, choose MERGE.** (Building the whole app: see
+below.)
 
 **In a workshop, not every story is done.** If it says the milestone isn't
 reached and asks whether to grade anyway, answer **yes**, and write in your
@@ -108,6 +114,11 @@ Before it installs, it asks *"Which alias should I install to?"* Reply with
 ```
 <PDI_ALIAS>
 ```
+When Claude then asks permission to run `now-sdk install --auth <PDI_ALIAS>`,
+this is the **one exception** to the permission box in
+[Lab home](README.md), section 7: check the command names **your** alias,
+then choose **1** (yes, once). Never choose 2. If it asks to run
+`now-sdk auth`, or to install with a different alias: choose 3 (No).
 
 **In the workshop, expect a capped score.** You haven't built the override
 or the weekly count, so the design terms behind them have no tests. The grade
@@ -138,8 +149,8 @@ Then put the grade into the repo. The grade added `GRADE.md`'s allow line but
 didn't commit anything. **✏️ Editor:** read `.gitignore` first: it should now
 end with `!/GRADE.md`, and nothing else should be new. **🤖 Claude:**
 ```
-Commit GRADE.md, .gitignore and BACKLOG.md together on a new branch,
-chore/grade, never on main, then ship it.
+Commit GRADE.md, .gitignore and BACKLOG.md in ~/projects/priority-guard/app
+together on a new branch, chore/grade, never on main, then ship it.
 ```
 
 ✅ **Check:** the findings are on your board, each naming the gate it holds
@@ -168,13 +179,25 @@ must send the reader only to things an on-call person really has: the
 platform's own screens, and your app's own lists and logs. Never "ask the
 builder" or "check the code".
 
+**Fix any row that breaks this before step 6.** Either change it by hand
+(**✏️ Editor**), or **🤖 Claude:**
+```
+In ~/projects/priority-guard/app/RUNBOOK.md, rewrite the symptom → cause
+index row for "<the row's symptom>" so it points only to platform screens
+and the app's own lists and logs. Change nothing else.
+```
+Read the row again afterwards.
+
 ### Step 6 — Freeze it
 
 **Why this step:** Freezing the runbook means it can't change once the drill starts. If you could edit it after seeing the problem, you'd be writing the answer in, and the drill would prove nothing.
 
-**🤖 Claude:**
+The handoff added two allow lines and committed nothing. **✏️ Editor:**
+read `.gitignore` first: it should now end with `!/RUNBOOK.md` and
+`!/HANDOFF.md`, and nothing else should be new. **🤖 Claude:**
 ```
-ship it
+Commit RUNBOOK.md, HANDOFF.md and .gitignore in ~/projects/priority-guard/app
+on a new branch docs/runbook, never on main, then ship it.
 ```
 When it's merged, **🤖 Claude:**
 ```
@@ -197,6 +220,18 @@ runbook doesn't change until the drill is over.
 
 **Why this step:** Real failures turn up without warning, from someone else's change. Having your partner choose and plant the problem means you can't know the answer in advance.
 
+**Two ways to run the drill.**
+- **Option A, the normal one:** your partner plants the failure on your
+  app, and you diagnose it. Follow the steps below.
+- **Option B, no partner:** you plant the failure yourself, following the
+  same steps, then diagnose it, and write `builder` in **Planted by**.
+  It's a **weaker** drill, because you know the answer. Say so in your log, and in the handoff comment if you close
+  the HANDOFF stories (step 10).
+
+**The order.** Your partner plants yours only after you've finished
+diagnosing theirs, or while you're out of the room. Never while you can see
+the screen.
+
 Before you leave, quit the session from step 2. **🤖 Claude:** type `/exit`.
 
 **You leave the room** (or at least turn away from the screen). Your partner
@@ -209,9 +244,13 @@ partner's**, not yours:
    /prove-it:handoff plant
    ```
 2. **Your partner** reads the proposal. The kit suggests **one** realistic failure and writes a
-   **drill card** in the workspace, outside the repo, with the steps to plant
+   **drill card** in the workspace, outside the repo, at
+   `~/projects/priority-guard/drill-card.md`, with the steps to plant
    it, the symptom, and the exact steps to restore it. The kit never changes
    the instance itself.
+   **Not realistic?** Before anyone fills in **Planted by**, run
+   `/prove-it:handoff plant` again: it replaces a card that was never
+   planted.
 3. **✏️ Editor (your partner):** writes down the **before** state of whatever they're about to change, on
    the card, so the restore can be checked.
 4. **🌐 Browser (your partner)**, in your **admin** profile: plants it, exactly as the card says.
@@ -220,7 +259,8 @@ partner's**, not yours:
 5. **🤖 Claude (your partner types):** `/exit`, to quit Claude. Then your
    partner writes you a one-line **symptom report**, the
    way a real user would: what they saw, not why. For example: "I logged an
-   incident on Payroll at P4 and it stayed at P4."
+   incident on <your critical service> at P4 and it stayed at P4." (Use the
+   service you marked critical in Module 6 step 10, for example Email.)
 
 Then do the same on your partner's computer.
 
@@ -231,20 +271,22 @@ Then do the same on your partner's computer.
 Back at your own computer, with **no** Claude session open:
 
 1. **⌨️ You**, in the window you'll use for Claude: start a **fresh** session
-   with no memory of the build. The last line starts **🤖 Claude**:
+   with no memory of the build. Type these three lines; the last line,
+   `claude`, starts Claude:
    ```
    cd ~/projects/priority-guard/app
    git switch main && git pull
    CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 claude
    ```
-2. **🤖 Claude:** the **first and only** thing you type is this, with your partner's symptom
+2. **🤖 Claude:** the **first** thing you type is this, with your partner's symptom
    report in place of `<SYMPTOM_REPORT>`:
    ```
    /prove-it:handoff diagnose <SYMPTOM_REPORT>
    ```
 3. It reads only `RUNBOOK.md`, matches the symptom to a row, and tells you
-   where to look. **🌐 Browser:** open each screen it asks for, and read out what it shows,
-   **word for word**. Don't summarise, and don't point at the answer, even if
+   where to look. **🌐 Browser** (your **admin** profile): open each screen
+   it asks for, and type into Claude exactly what the screen shows, **word
+   for word**. Don't summarise, and don't point at the answer, even if
    you've guessed it.
 
 ✅ **Check:** it names a cause, and your partner confirms whether it's the one
@@ -270,9 +312,13 @@ the runbook fix is merged, it's a catch for `drill`.
    /prove-it:handoff verdict
    ```
 4. **✏️ Editor:** open `HANDOFF.md` and find the verdict: **READY** or **NOT READY**.
-5. **🤖 Claude:** ship it, verdict and all:
+   Then read `.gitignore`: it should still end with `!/RUNBOOK.md` and
+   `!/HANDOFF.md`, and nothing else should be new.
+5. **🤖 Claude:** commit the verdict and ship it, verdict and all:
    ```
-   ship it
+   Commit HANDOFF.md, and .gitignore only if it changed, on a new branch
+   docs/verdict in ~/projects/priority-guard/app, never on main, then
+   ship it.
    ```
 
 **NOT READY is a valid result.** It means the check found something real.
@@ -292,12 +338,20 @@ Run exactly this and show me the raw output, unedited: gh issue list --state ope
 ```
 Close each one with a comment that records the evidence: the **frozen runbook
 commit** (step 6), the drill's result (step 8), and the verdict (step 9). If
-you planted the failure yourself (option B), say so in the comment: it's a
+you planted the failure yourself (option B, step 7), say so in the comment: it's a
 weaker test of "someone else can diagnose it". **🤖 Claude**, with the
 numbers from the raw output and your own comment:
 ```
 Close issues <NUMBERS> with gh issue close, each with exactly this
 comment, and nothing else: "<EVIDENCE>". Don't close any other issue.
+```
+For example, if the raw output listed issues 14 and 17, you'd type:
+```
+Close issues 14 17 with gh issue close, each with exactly this
+comment, and nothing else: "Handoff evidence. Frozen runbook: commit
+a1b2c3d. Drill (option A, planted by partner): the diagnose session found
+the planted cause from RUNBOOK.md alone. Verdict: READY, in HANDOFF.md on
+main." Don't close any other issue.
 ```
 
 ✅ **Check:** the `gate:handoff` count (Module 6 step 12's command) is zero.

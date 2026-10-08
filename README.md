@@ -105,15 +105,18 @@ the one that writes the code, not one inside the app.
 ## 4. Three rules for the whole lab
 
 **1. The guide is your checklist, not the agent's instructions.** Never paste
-this guide into Claude. The kit and Claude do the work; you check it. If
-Claude sees the checks, they stop being checks.
+this guide into Claude. The one exception is the prompts in the **🤖 Claude**
+boxes: those are written for Claude, so type or paste them in. Everything
+else (the checks, the "If you see…" notes, the explanations) stays with you.
+The kit and Claude do the work; you check it. If Claude sees the checks, they
+stop being checks.
 
 **2. Two folders, never mixed.**
 
 | Folder | What's in it | Does Claude see it? |
 |---|---|---|
 | `~/projects/priority-guard/` | Your workspace: the accepted PRD, the consult, the customer's notes, then your app's repo | Yes. Run Claude here. |
-| `~/projects/priority-guard-notes/` | Your notes: your log and your catch list | Never |
+| `~/projects/priority-guard-notes/` | Your notes: your log and your catch list | No. Your settings stop Claude's file reader from opening it (and this guide's folder), but a shell command could still reach it. So never ask Claude to read it, and choose **No** if Claude asks to. |
 
 **3. Follow what really happens.** Claude won't word things the way this
 guide does. The checks describe what a good result looks like, not exact
@@ -135,6 +138,8 @@ instructions watch for these words.
 | `Not agreed yet.` | Module 4, after a read-back you don't accept | It asks for your correction |
 | `approve`, then `dry run`, then `apply` | Module 5, after the plan preview | Shows, then files, the plan on GitHub |
 | `approve`, then `Dry run first.`, then `apply` | Module 8, after the grade's findings | Shows, then files, the findings as stories |
+| `Take issue #<n>.` | Module 6 and Module 7, when a step names an issue to build (for example, a defect you just filed) | Starts that issue instead of the top one |
+| `apply now` | Module 7 Part C, when it asks "Dry run first (recommended), or apply now?" | Files the amended plan straight away |
 | `Take the top one.` | Module 6, after the session open | Starts whatever is really at the top, not the story you expected |
 | `confirm` | Modules 5–8, after Claude proposes something | Accepts it (for example, a story's five bullets) |
 | `ship it` | Modules 5–8 | Push, open a pull request, review, fix once, merge when green |
@@ -193,7 +198,7 @@ type your own value.
 |---|---|---|---|
 | `<PDI_ALIAS>` | The name your SDK login is saved under | `mypdi` | |
 | `<APP_REPO>` | Your app's GitHub repo, `owner/name` | `you/priority-guard` | |
-| `<SCOPE>` | Your app's scope: vendor prefix + `pg_` + your initials, 18 characters at most | `x_123456_pg_ga` | |
+| `<SCOPE>` | Your app's scope: vendor prefix + `pg_` + your initials, 18 characters at most. Module 5 shows you where your instance's vendor prefix comes from: the system property `glide.appcreator.company.code` | `x_123456_pg_ga` | |
 | `<AGENT_USER>` | The ordinary service desk agent you test as | `agent.demo` | |
 | `<OVERRIDE_ROLE>` | The app role that may override the floor | *(from your design)* | |
 | `<PARTNER>` | Your partner's first name | | |
@@ -216,9 +221,38 @@ Each module has the same parts:
 |---|---|---|
 | **🤖 Claude** | Type the prompt into Claude Code, or `/exit` to quit it. Claude runs the commands | Routine work: folders, branches, commits, builds. The AI does the typing |
 | **⌨️ You** | Type the command yourself, in a normal terminal | Passwords and sign-ins, starting Claude, the guide and notes folders, the instance, and the few checks that must not go through Claude. One exception for the instance: `/prove-it:grade` (Module 8) installs through Claude, after asking you to type the alias |
-| **🔍 Check** | Claude runs a check; **you read its raw output** | Checking work. The evidence is what the tool printed, not Claude's summary of it |
-| **✏️ Editor** | Open the file in your text editor and change it yourself | Signatures and allow lines. Allow lines are your decision: Claude may propose or add one, but none goes in unread. You read `.gitignore` before each commit that changes it |
+| **🔍 Check** | Claude runs a check; **you read its raw output** (see below) | Checking work. The evidence is what the tool printed, not Claude's summary of it |
+| **✏️ Editor** | Open the file in your text editor (VS Code, which you install in Module 0) and change it yourself | Signatures and allow lines. Allow lines are your decision: Claude may propose or add one, but none goes in unread. You read `.gitignore` before each commit that changes it |
 | **🌐 Browser** | Use the browser profile the step names | Your instance and GitHub |
+
+**The terminal.** The terminal is the window where you type commands. On a
+Mac, press **Cmd+Space**, type `Terminal`, and press **Enter**. When Claude
+is running in one Terminal window, that window belongs to Claude. For a
+**⌨️ You** step, open a second Terminal window with **Cmd+N** and type the
+command there.
+
+**What raw output looks like.** When Claude runs a command, Claude Code
+shows it as a line starting with **⏺**, followed by the command it ran. The
+command's own output is underneath, on lines starting with **⎿**. That
+output is the raw result: read that, not the sentences Claude writes
+afterwards. If the output is long, Claude Code folds it and shows
+`… +N lines` instead (N is a number). Press **Ctrl+O** to see all of it.
+
+**When Claude asks permission.** Auto mode lets Claude do routine work
+without asking, but sometimes it stops and shows a box like *Do you want to
+proceed?* with numbered choices. Read the command in the box, then:
+
+| The command is… | Choose |
+|---|---|
+| `git`, `gh`, `npm` or `now-sdk build` work, reading or writing files under `~/projects/priority-guard`, or reading (only reading) files under `~/projects/prove-it-kit` | **1. Yes** |
+| Writing a temporary file (in `/tmp` or a folder `mktemp` made) during the grade in Module 8 | **1. Yes**. The secrets scan keeps its patterns there |
+| `now-sdk install --auth <PDI_ALIAS>` with **your** alias, asked by `/prove-it:grade` (Module 8 step 3, and the re-grade in step 11) | **1. Yes**. This is the only install Claude runs, after asking you to type the alias |
+| Any other `now-sdk install`, any `now-sdk auth`, anything that names your instance (`service-now.com`), or anything under `~/projects/priority-guard-notes` or `~/projects/agentic-build-lab-guide` (your settings block Claude's file reader there, but a shell command such as `cat` could still reach them) | **No** (the last choice). Then do that step yourself if the guide says to, as a ⌨️ You step |
+| Anything you don't understand | **No**, and ask Claude in one line what it was trying to do and why |
+
+**Never choose "Yes, and don't ask again"** (usually choice 2). It stops
+Claude asking about that kind of command for the rest of the lab, and the
+asking is the safety check.
 
 **Why the split.** The lab's idea is that the AI types and people decide.
 So Claude does the routine typing. You keep three things: your passwords,

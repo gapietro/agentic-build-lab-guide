@@ -18,18 +18,20 @@ work.
 
 **Why this step:** Memory makes some catches feel bigger and forgets others. Counting from your notes gives you numbers you can show and stand behind.
 
-**⌨️ You** (any folder):
+**⌨️ You** (any folder): count your catches. This counts the lines that
+contain a `|`, so a stray heading or blank line isn't counted:
 ```
-wc -l ~/projects/priority-guard-notes/catches.md
+grep -c '|' ~/projects/priority-guard-notes/catches.md
 ```
-Then count them by what caught them:
+Then count them by what caught them. `cut` takes the middle part of each
+line, `tr` removes the spaces around it (so `review` and ` review ` count as
+one), and `sort | uniq -c` counts each kind:
 ```
-cut -d'|' -f2 ~/projects/priority-guard-notes/catches.md | sort | uniq -c
+grep '|' ~/projects/priority-guard-notes/catches.md | cut -d'|' -f2 | tr -d ' ' | sort | uniq -c
 ```
 
 ✅ **Check:** two numbers you can stand behind: your total, and your biggest
-single source of catches. (`wc -l` counts every line, so `catches.md` must
-hold catch lines only.)
+single source of catches.
 
 ## Step 2 — The room's board
 
@@ -54,8 +56,10 @@ Look at the board together. Three questions:
 In `LOG.md`, write three short lists about **your** Priority Guard:
 - **Real:** what you saw work on the instance, as an ordinary agent.
 - **Staged:** what only ran on demo data, or only in tests.
-- **Not built:** capability 6, plus 4 (the override) and 5 if you stopped at
-  the workshop slice, and anything your grade or verdict left open.
+- **Not built:** capability 6 (smart urgency: the AI piece), plus
+  capability 4 (the override) and capability 5 (the weekly count) if you
+  stopped at the workshop slice, and anything your grade or verdict left
+  open.
 
 ## Step 4 — Take it home
 

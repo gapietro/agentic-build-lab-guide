@@ -29,7 +29,10 @@ right. Which of its claims does your instance contradict, or not support?
 ## Before you start
 
 - [ ] `~/projects/priority-guard` holds `brief/PRD-PriorityGuard.md` and `CONSULT.md`.
-- [ ] Your **admin** browser profile is logged in to your PDI.
+- [ ] Your **admin** browser profile is logged in to your PDI. If you see a
+      page saying the instance is hibernating (asleep), sign in at
+      https://developer.servicenow.com and wake it from there. Waking takes a
+      few minutes.
 
 ### Where each step happens
 
@@ -40,10 +43,25 @@ quit it in step 6. Every action is labelled with **where** you do it:
 |---|---|---|
 | **⌨️ You** | You type it yourself, in a normal terminal: `mkdir`, `cp`, `cd` and `ls` (never in Claude), and `claude` to start Claude | Any (step 1 uses full paths) |
 | **🤖 Claude** | Claude Code, started with `claude`. Type prompts here, never shell commands, or `/exit` to quit Claude. Claude runs any commands | `~/projects/priority-guard` |
-| **✏️ Editor** | Your text editor, for `LOG.md` and changes you make **by hand** | — |
+| **✏️ Editor** | Your text editor (VS Code), for `LOG.md` and changes you make **by hand** | — |
 | **🌐 Browser** | Your **admin** browser profile, for checks on the instance | — |
 
 If a block doesn't start with a label, it belongs to the label just above it.
+
+### How to look things up on your instance
+
+Steps 3 and 4 ask you to check facts on your instance. These screens cover
+most of them. **🌐 Browser**, in your **admin** profile: type each one in the
+filter navigator and press **Enter**. (New to lists and filtering? See
+[ServiceNow basics you'll use](README.md#servicenow-basics-youll-use).)
+
+| To see | Type in the filter navigator | Then |
+|---|---|---|
+| The fields on the incident table | `sys_dictionary.list` | Filter the **Table** column to `incident` |
+| The business rules on the incident table | `sys_script.list` | Filter the **Table** column to `incident`. Look at the **When** and **Order** columns |
+| A table's application access | `sys_db_object.list` | Find the table in the **Name** column (for example `incident`), open its record, and click the **Application Access** tab |
+| The roles on your instance | `sys_user_role.list` | Filter the **Name** column, or scroll |
+| The priority lookup | `dl_u_priority.list` | Read the rows |
 
 ---
 
@@ -95,12 +113,15 @@ that runs at the same point as this app's logic, roles and access
 controls, and what a scoped app needs to update incidents. For each fact, say
 how sure you are and exactly how I can check it on my instance, using
 read-only screens only: list views, record forms, the dictionary, a table's
-application access. No scripts. Don't design anything yet, and don't write
-any file.
+application access. No scripts. Mark the five facts the design depends on
+most. Don't design anything yet, and don't write any file.
 ```
 
 ✅ **Check:** a numbered list of facts, each with a confidence level and a
-way to check it on your instance.
+way to check it on your instance, with five of them marked as the ones the
+design depends on most. The screens in
+[How to look things up on your instance](#how-to-look-things-up-on-your-instance)
+cover most of the checks it suggests.
 
 ### Step 4 — Check the facts on your instance
 
@@ -109,7 +130,9 @@ own instance turns each claim into something you have seen for yourself,
 before you build anything on it.
 
 **🌐 Browser:** go through the list, in your **admin** browser profile. Check **at least the
-five facts the design depends on most**, and mark the rest **not checked**.
+five facts Claude marked** as the ones the design depends on most, and mark
+the rest **not checked**. Use the screens in
+[How to look things up on your instance](#how-to-look-things-up-on-your-instance).
 For each fact:
 1. Do the check Claude described, or a better one if you know one.
 2. **✏️ Editor:** write the result in your log: **confirmed**, **contradicted** (what you
@@ -153,7 +176,7 @@ result for it, exactly as I reported it. Anything not decided goes in section
 8, Open decisions. Never invent a business decision. Show me a summary first.
 Don't write the file yet.
 ```
-Read the summary. If it's right, say so and let it write the file (if it
+Read the summary. If it's right, type `Looks right. Write the file.` and let it write it (if it
 asks to create `docs/LLD-PriorityGuard.md`, choose **1. Yes**).
 
 ✅ **Check:** `docs/LLD-PriorityGuard.md` exists, with all nine sections.
@@ -169,10 +192,14 @@ The same gap found later, in the code, takes much longer.
 1. **§1 traceability:** every PRD capability is either built, or deferred
    with a reason. Capability 6 matches what your consult decided.
 2. **§3 logic:** the floor is **plain code**, and §3 says **when** it runs,
-   backed by the research log.
+   backed by the research log. A good "when" answer reads something like:
+   *a before business rule on incident, on insert and update.*
 3. **§4 security:** who can edit the critical services list, who can override,
    how approval works for Tier 1 services (from your accepted PRD), and the
-   cross-scope access the app needs.
+   cross-scope access the app needs. If your PRD has nothing to answer a
+   line, check the PRD against the inputs again
+   ([Module 1 Step 4](MODULE-1-prd.md#step-4--check-the-evidence-yourself))
+   before you invent an answer.
 4. **§5 failure modes:** at least one for the floor, and one for the override.
 5. **§6 test plan:** includes checks **as an ordinary agent**, on the instance.
 6. **§7 research log:** matches what you actually found in step 4, including
@@ -191,7 +218,10 @@ behind it. Without it, the LLD is only a draft Claude wrote, and the design
 challenge in the next module has nothing firm to test.
 
 **✏️ Editor:** in **§9 Sign-off**, fill in all four cells, **by hand**: your name, your role,
-today's date (YYYY-MM-DD), and your name again as the signature.
+today's date (YYYY-MM-DD), and your name again as the signature. You sign as
+the designer, so your role is, for example, `developer`. Type between the
+bars of the existing empty row `| | | | |`; don't add a row. (The customer
+signs only once, in Module 1's PRD acceptance.)
 
 ✅ **Check:** the LLD is signed by you, and has no `<…>` placeholders left.
 `ls ~/projects/priority-guard/docs` shows `LLD-PriorityGuard.md` and `LLD-TEMPLATE.md`.

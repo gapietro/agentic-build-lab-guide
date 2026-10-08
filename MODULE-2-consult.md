@@ -39,10 +39,15 @@ each other?
 
 - [ ] Module 0's pre-flight checks are all ticked.
 - [ ] Module 1 is done: `ls -R ~/projects/priority-guard` shows only
-      `brief/PRD-PriorityGuard.md`, accepted by the customer. It lists
-      capabilities **1–6**, says `None.` under Open decisions, and has a
-      signed acceptance row (Module 1, step 6).
-- [ ] Your PDI is awake (log in to it in your admin browser profile).
+      `brief/PRD-PriorityGuard.md`, accepted by the customer. It has every
+      customer answer from Module 1 Step 6 applied, says `None.` under Open
+      decisions, and has a signed acceptance row.
+      If your PRD doesn't match this, it isn't finished: go back to
+      [Module 1 Step 4](MODULE-1-prd.md#step-4--check-the-evidence-yourself),
+      check the evidence again, and finish Steps 5 and 6.
+
+This module doesn't use your instance, so it doesn't matter if your PDI is
+asleep.
 
 ---
 
@@ -83,10 +88,13 @@ a few clarifying questions, asks you to reply `confirmed` or correct it, and
    - Answer any clarifying question in **one line**. If only the brief's owner
      could answer it, type `Unknown. Record it as an open decision.` **Never
      invent a business fact** to keep things moving.
-   - If a bullet says something the brief doesn't, type
-     `Bullet [n] isn't in the brief. Drop it.`
+   - To name a bullet, count the bullets from the top: the first is 1. Type
+     the number with no brackets.
+   - If a bullet says something the brief doesn't, type, for example,
+     `Bullet 3 isn't in the brief. Drop it.`
    - If a bullet contradicts the floor (for example, it lets AI change the
-     priority freely), type `Bullet [n] contradicts capability 2. Correct it.`
+     priority freely), type, for example,
+     `Bullet 3 contradicts capability 2. Correct it.`
    - If it asks about size, type `About 8–10 stories, two build days.`
    - If it asks whether your instance has Now Assist (or generative AI),
      type `No. Assume Now Assist isn't available.` The lab is built without
@@ -116,6 +124,10 @@ When it's finished, check it wrote only that one file.
 Run exactly this and show me the raw output, unedited: ls -A ~/projects/priority-guard
 ```
 Read the command's own output (the tool result), not Claude's summary of it.
+In Claude Code, that's the line starting with **⏺** that shows the command,
+and the lines starting with **⎿** under it. If you see `… +N lines`, press
+**Ctrl+O** to see all of it. (More in
+[the README, section 7](README.md#7-how-to-read-a-module).)
 You should see `brief` and `CONSULT.md`. A `.claude` folder is fine too: that's
 Claude Code's own. Anything else, note it.
 
@@ -123,8 +135,8 @@ Claude Code's own. Anything else, note it.
 has a row for each of the **six** capabilities, each marked plain code, AI
 skill or agent, with a reason. It has a cost line and a readiness verdict.
 
-⚠️ **If you see…** *an error or a stall:* retry once and note it. If the same
-thing fails a third time, stop and ask your instructor. That's the "error
+⚠️ **If you see…** *an error or a stall:* retry up to twice, and note each
+retry. On the third failure, stop and ask your instructor. That's the "error
 brake": three failures on one approach means stop and find out why.
 
 ### Step 4 — Read it like a reviewer
@@ -178,7 +190,8 @@ priority, or that capability 6 is deferred or reworked.
 **Why this step:** `CONSULT.md` is the record of what the consult advised, and Module 4 reads it later. Leaving it as it is keeps that record honest.
 
 1. **🤖 Claude:** type `/exit` to quit Claude.
-2. Don't edit `CONSULT.md`. Module 4 reads it as it is.
+2. Don't hand-edit `CONSULT.md`. Module 4 reads it as it is. A change
+   Claude made at your request in Step 5 is fine.
 
 ---
 

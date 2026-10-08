@@ -86,7 +86,7 @@ settle them **at the kick-off** and write the answers in `LOG.md`:
 |---|---|
 | The `now-sdk init` template, and whether it accepts a folder after `git init` | Module 5, steps 1 and 5 |
 | Your scope prefix and `<SCOPE>` | Module 5, before you start |
-| The exact `/permissions` rules for the grade's secrets scan, for your Claude Code version | Module 8, step 2. Without them, the scan is unverified and the grade is capped at 49 |
+| That the grade's secrets scan runs in auto mode without permission prompts on your machine (Module 0's settings file sets auto mode; Claude Code 2.1.147 or later) | Module 8, step 2. If the scan can't run, it's unverified and the grade is capped at 49 |
 | Whether to build the top story when it isn't the one you expected | Module 6, step 2: yes, always |
 
 ---
@@ -145,7 +145,8 @@ The steps, commands and safety rules are the workshop's. This section lists
   `brief/`.
 - Step 2's reply about "contradicts capability 2" is Priority Guard's. Use
   your own: if a bullet contradicts a rule your PRD states, type
-  `Bullet [n] contradicts capability [m]. Correct it.`
+  for example `Bullet 3 contradicts capability 1. Correct it.`, with your
+  own bullet and capability numbers, no brackets.
 - Step 4: instead of capabilities 6, 2 and 4, read **every** row marked AI skill
   or agent (its reason), the **ownership** table (one owner per table), every
   **VERIFY** item, and the **readiness** verdict.
@@ -255,8 +256,9 @@ the slice, because the signed design does.
 - Step 2: take whatever is top, always. The floor-story expectations don't
   apply: expect the bullets to match your central rule.
 - Step 4: the example test name becomes one from **your** central rule.
-- Step 8: in the batch prompt, the first **Stop when** line becomes your
-  slice's key story (the one that wires your logic into the platform), and
+- Step 8: use the **Workshop prompt**, with its **Stop when** line changed to
+  your slice's key story (the one that wires your logic into the platform),
+  or the **Whole app prompt** once that story is merged. In both,
   `docs/DESIGN-PriorityGuard.md` becomes your design record. When you read
   that story's pull request, the bullet questions become: **when** does your
   logic run, what does it write, and does anything in this story let your
@@ -270,7 +272,8 @@ the slice, because the signed design does.
 **Why this step:** Real users will try things you didn't plan for, so keep looking for holes until a round finds none.
 
 - Step 2: in the reviewer prompt, replace the rule with **your central rule**,
-  in one sentence. Keep the rest.
+  in one sentence. Keep the rest, including the branch `test/break-floor`,
+  which step 3 uses.
 - Step 3: **don't stop after one fix.** On real work, repeat with a new
   reviewer until a round finds nothing.
 - Part B: a colleague who didn't build it attacks your live app, as your
@@ -286,7 +289,9 @@ The order changes. See section 5: grade at **DEMO**, hand off, then grade
 again at **HANDOFF**.
 - Step 9.2: re-run **your** live check.
 - The drill needs a colleague who plants a failure realistic **for your app**,
-  while you're out of the room.
+  while you're out of the room (step 7's option A). The drill card is
+  written at `~/projects/<app>/drill-card.md`.
+- Step 7's symptom example names your own app's records, not an incident.
 
 ### Module 9 — What the process caught
 
@@ -397,7 +402,7 @@ counting, and its plan keys need a different prefix. Instead:
 
 | Module and step | Priority Guard's wording | Yours |
 |---|---|---|
-| 2, step 2 | "Bullet [n] contradicts capability 2" | The capability your rule comes from |
+| 2, step 2 | "Bullet 3 contradicts capability 2" | The capability your rule comes from |
 | 2, step 5 | "Capability 2 says an incident on a critical service…" | Your push-back on every AI or agent row |
 | 3, step 3 | "what a scoped app needs to update incidents" | The tables your slice reads and writes |
 | 4, step 1 | the whole positions list | Section 4's list above |

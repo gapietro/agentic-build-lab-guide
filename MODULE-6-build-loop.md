@@ -126,9 +126,17 @@ them all, in the plan's order.)
 Claude restates the story in **five bullets**. Read them against the design.
 If they're right, type `confirm`. If not, say what's wrong in one line.
 
-✅ **Check:** Claude starts on a **new branch**, not on `main`. When this is
+Once it has started, **🔍 Check** which branch it's on:
+```
+Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app branch --show-current
+```
+
+✅ **Check:** the raw output is a **new branch** name, never `main`. When this is
 the floor story, the bullets mention your central rule, and one says the
 floor's logic makes **no platform calls**.
+
+⚠️ **If you see…** *it prints `main`:* stop. Tell Claude "Never work on main.
+Create a new branch for this story first." and run the check again.
 
 ### Step 3 — 🔮 Predict it
 
@@ -136,9 +144,8 @@ floor's logic makes **no platform calls**.
 you something to compare against. If you look at Claude's first, its list
 quietly becomes yours, and you lose the chance to see what either of you missed.
 
-**✏️ Editor:** in `LOG.md`, list three test cases **you** would write for the floor. Think
-about the edges: a priority exactly at the floor, a service with no floor, a
-priority already higher than the floor.
+**✏️ Editor:** in `LOG.md`, list three test cases **you** would write for the floor.
+Include at least one unusual case, not only the obvious one.
 
 ### Step 4 — Tests first, red
 
@@ -156,8 +163,13 @@ Show me them failing before any implementation.
 **Why the names matter:** in Module 8, the grade counts a design term as
 tested only if a test's name includes its id.
 
-If the project has no `test` script yet, this story must add one. Ask Claude
-(**🤖 Claude**) if you don't see one in `package.json` (**✏️ Editor**).
+**The test script.** `npm test` runs your tests, but only if `package.json`
+says how. **✏️ Editor:** open `~/projects/priority-guard/app/package.json`
+and look under `"scripts"` for a line that starts with `"test"`. **None
+there?** **🤖 Claude:** type:
+```
+This story must add a test script; include it.
+```
 
 ✅ **Check:** the tests run and **fail**, because the code doesn't exist yet.
 Compare them with your three predicted cases. Which did Claude miss? Which
@@ -169,8 +181,13 @@ did you?
 Looking at its shape checks the design idea: logic that works on plain values,
 with ServiceNow kept outside it, can be tested in seconds with no instance.
 
-**🤖 Claude:** let Claude write the code until the tests pass. Then, in
-**✏️ Editor**, open the code file and look: does the floor function call ServiceNow anywhere?
+**🤖 Claude:** let Claude write the code until the tests pass. Then ask:
+```
+Give me the path of the file that holds the floor function.
+```
+**✏️ Editor:** open that file and look: does the floor function call
+ServiceNow anywhere? (A platform call looks like `GlideRecord`, `gs.` or
+`current.`.)
 
 ✅ **Check:** the tests pass, and the floor logic takes plain values and
 returns plain values. No platform calls inside it.
@@ -186,8 +203,20 @@ every finding yourself is how you tell a real problem from noise.
 ```
 ship it
 ```
-**🌐 Browser:** open the pull request on GitHub. If Claude doesn't run `/code-review`
-itself, type it (**🤖 Claude**). **Read every finding.**
+**🌐 Browser:** open the pull request on GitHub (Claude prints its link;
+or open your repo and click the **Pull requests** tab).
+
+**🤖 Claude** (window 1): **How to tell the review ran:** `/code-review`
+reports in your Claude session, not on the pull request. Look in Claude's
+output for the `/code-review` run and its list of findings (or "no issues
+found"). If it never ran, type `/code-review` yourself. **Read every
+finding.**
+
+- **No findings** is a valid result. Write "review clean" in `LOG.md`. It
+  isn't a catch.
+- **You disagree with a finding?** Say so to Claude in one line, for example
+  "Finding 2 is wrong: <why, in one sentence>." A finding you
+  disagree with isn't a catch.
 
 A **catch** is a finding that is real **and gets fixed**. Style nits and
 wrong findings don't count.
@@ -219,24 +248,27 @@ loop on the next stories at the same time. The checks don't change: every
 story is still tested first, reviewed and merged on green. What changes is
 your job. You stop typing commands and start reading the evidence.
 
-**🤖 Claude:** run `/clear` (or start a fresh session: **🤖 Claude:** type
-`/exit`, then **⌨️ You:** `claude`), then step 1's prompt
-that brings `main` up to date, then the session open from step 1. Then type
-this prompt. Choose the **Stop when** line that fits,
-and delete the other:
+1. **Start clean.** **🤖 Claude:** type `/clear` (or start a fresh session:
+   **🤖 Claude:** type `/exit`, then **⌨️ You:** `claude`).
+2. **🤖 Claude:** step 1's prompt that brings `main` up to date, then the
+   session open from step 1.
+3. **🤖 Claude:** paste **one** of the two prompts below. They are the same
+   except for the **Stop when** line. **Copy the one you need**, whole:
+   - **Workshop:** stop once the wiring story is merged.
+   - **Whole app** (step 12): stop when the next gate has no open stories.
 
+**Workshop prompt:**
 ```
 Run the build loop on the next stories for me, using sub-agents to go faster.
 You are the coordinator: plan, delegate, merge and report. Don't write
-feature code yourself.
+feature code yourself. The repo is ~/projects/priority-guard/app.
 
 Scope: open stories on the next gate, in the order the live board and
 BACKLOG.md rank them.
 Stop when: the story that wires the floor into the incident table is merged.
-Stop when: no open stories are left on the next gate.
 
 Give each story to one sub-agent, working in its own git worktree on its own
-branch. Each sub-agent must:
+branch, never on main. Each sub-agent must:
 1. Read CLAUDE.md, the story's issue, and the design terms it implements in
    docs/DESIGN-PriorityGuard.md.
 2. Restate the story in five bullets, and put them at the top of the pull
@@ -251,6 +283,7 @@ branch. Each sub-agent must:
    finding with what was done about it.
 
 Rules:
+- Never commit to main. Every change goes through a pull request.
 - Run stories at the same time only if they don't change the same files and
   neither needs the other. Otherwise run them one after another.
 - Merge one pull request at a time. Before each merge, update the branch from
@@ -259,7 +292,10 @@ Rules:
 - If a story fails the same step three times, stop that story, leave its pull
   request open, and tell me why.
 - Stop everything and ask me if a story needs a design change, a business
-  decision, or anything on the instance. Never run now-sdk install.
+  decision, or anything on the instance. Never run now-sdk install or
+  now-sdk auth.
+- Don't read or change anything outside ~/projects/priority-guard and
+  ~/projects/prove-it-kit.
 - Don't create, close or re-label issues by hand. A story closes when its
   pull request merges.
 
@@ -268,12 +304,63 @@ test counts, review findings and what was done, merged or stopped (and why).
 Then the live count of open stories on the next gate.
 ```
 
-Use the first **Stop when** in the workshop. Use the second if you're
-building the whole app (step 12).
+**Whole app prompt:**
+```
+Run the build loop on the next stories for me, using sub-agents to go faster.
+You are the coordinator: plan, delegate, merge and report. Don't write
+feature code yourself. The repo is ~/projects/priority-guard/app.
+
+Scope: open stories on the next gate, in the order the live board and
+BACKLOG.md rank them.
+Stop when: no open stories are left on the next gate.
+
+Give each story to one sub-agent, working in its own git worktree on its own
+branch, never on main. Each sub-agent must:
+1. Read CLAUDE.md, the story's issue, and the design terms it implements in
+   docs/DESIGN-PriorityGuard.md.
+2. Restate the story in five bullets, and put them at the top of the pull
+   request description.
+3. Write the tests first. Start each test's name with the design term it
+   proves ("C<n>: ..."), using the term's real number. Run them and save the
+   failing output.
+4. Write the code until the tests pass, run the whole test suite, and save the
+   passing output.
+5. ship it, exactly as CLAUDE.md defines it. The pull request description
+   holds the five bullets, the failing run, the passing run, and every review
+   finding with what was done about it.
+
+Rules:
+- Never commit to main. Every change goes through a pull request.
+- Run stories at the same time only if they don't change the same files and
+  neither needs the other. Otherwise run them one after another.
+- Merge one pull request at a time. Before each merge, update the branch from
+  the latest main and run the tests again.
+- Never merge with a failing test, and never skip /code-review.
+- If a story fails the same step three times, stop that story, leave its pull
+  request open, and tell me why.
+- Stop everything and ask me if a story needs a design change, a business
+  decision, or anything on the instance. Never run now-sdk install or
+  now-sdk auth.
+- Don't read or change anything outside ~/projects/priority-guard and
+  ~/projects/prove-it-kit.
+- Don't create, close or re-label issues by hand. A story closes when its
+  pull request merges.
+
+When you're done, give me one table: story, pull request, failing and passing
+test counts, review findings and what was done, merged or stopped (and why).
+Then the live count of open stories on the next gate.
+```
+
+A **git worktree** is a separate working copy of the repo, in its own
+folder, so two sub-agents can work at once without touching each other's
+files.
 
 While it runs, watch rather than type. Claude may ask you to approve
-something. Read it first, and decline anything that touches your instance or
-your credentials.
+something. Read it first, and answer as the box in [Lab home](README.md),
+section 7, *When Claude asks permission* says. For example:
+- **approve** (choose 1): `git worktree add …`, `npm test`, `gh pr merge …`;
+- **decline** (choose 3, No): `now-sdk install`, `now-sdk auth`, or anything
+  containing `service-now.com`.
 
 When it reports, read the table, then check the evidence yourself:
 
@@ -301,8 +388,17 @@ the next gate's count is zero).
   story skipped a check. Run `/code-review` on it yourself (**🤖 Claude**),
   and note it in `LOG.md`. A check that was skipped proves nothing.
 - *two sub-agents changed the same file and a merge conflicts:* that's the
-  "one at a time" rule doing its job. Let the coordinator rebase and re-test,
-  or tell it to run the remaining stories one after another.
+  "one at a time" rule doing its job. Let the coordinator **rebase** (replay
+  that branch's changes on top of the latest `main`) and re-test, or tell it
+  to run the remaining stories one after another.
+- *the run stopped before its **Stop when** was reached* (it ended, crashed,
+  or hit a usage limit): nothing is lost. Open pull requests and merged
+  stories stay on GitHub, and the next run carries on from them.
+  1. **🤖 Claude:** type `/exit`. **⌨️ You** (window 1): `claude`.
+  2. **🤖 Claude:** step 1's prompt that brings `main` up to date, then the
+     session open.
+  3. **🤖 Claude:** paste the **same** prompt as before.
+  4. **✏️ Editor:** note in `LOG.md` that the run stopped, where, and why.
 - *a story stopped for a design change:* go to Module 7, Part C. Don't let it
   change the design to get through.
 - *it runs much longer, or uses much more of your plan's limits, than you
@@ -336,6 +432,19 @@ app goes to whatever instance is the default.
 ✅ **Check:** the build succeeds, then the install succeeds and prints a link
 to your app.
 
+⚠️ **If you see…** *the install fails, times out, or says unauthorized
+(401):* your PDI is often asleep.
+1. **🌐 Browser** (your **admin** profile): log in to your PDI.
+2. If it says the instance is **hibernating**, wake it: go to
+   https://developer.servicenow.com, sign in, and start your instance from
+   there. Waking takes a few minutes.
+3. Wait until you can open a list in the PDI, for example `incident.list`.
+4. **⌨️ You** (window 2): run the same `now-sdk install --auth <PDI_ALIAS>`
+   command again.
+
+Never ask Claude to run `now-sdk auth` to fix it. If it still fails, write
+the error in `LOG.md` and ask your instructor.
+
 ### Step 10 — Try it live, as an ordinary agent
 
 **Why this step:** Passing tests on your laptop don't prove the app works on
@@ -359,6 +468,16 @@ All in **🌐 Browser**:
       switch: skip to item 2.
    4. Click its name to open it. Change **Value** from `false` to `true`, and
       click **Update**.
+
+   ⚠️ **If you see…** *the form is read-only, with a banner at the top
+   saying the record belongs to another application:* ServiceNow only lets
+   you edit an app's records while you're working "in" that app (its
+   **scope**). Click the link in the banner that switches you to your app
+   (or choose your app in the **application picker**, the globe icon at
+   the top right). Then change **Value**, click **Update**, and switch back
+   to **Global** the same way. This wasn't confirmed on every release: if
+   there's no banner or no link, write what you see in `LOG.md` and tell
+   your instructor.
 2. **Mark one business service as critical.** Your app keeps its list of
    critical services in its own table. In your **admin** profile:
    1. Find the table's name: in the filter navigator, type
@@ -370,9 +489,10 @@ All in **🌐 Browser**:
       `x_123456_pg_ga_critical_service.list`, and press **Enter**. The list
       is empty: that's expected.
    3. Click **New**. In **Service**, click the 🔍 and choose a business
-      service, for example **Email**. Write its name down: you need it in
-      item 3. Set **Floor** to **2** (it may show as **P2**). Make sure
-      **Active** is ticked. Leave anything else as it is.
+      service, for example **Email**. Write its name in `LOG.md` as **your
+      critical service**: you need it in item 3, in step 12, and in
+      Modules 7 and 8. Set **Floor** to **2** (it may show as **P2**). Make sure
+      **Active** is ticked. Set only these two: leave anything else as it is.
    4. Click **Submit**. The list now shows your one row.
 3. **Create an incident as an ordinary agent.** In your **agent** profile,
    logged in as `<AGENT_USER>`:
@@ -386,8 +506,9 @@ All in **🌐 Browser**:
       shows **Priority 5 - Planning**. That's what you'd get without your app.
    5. Click **Submit**, then open the incident again from the list.
 
-✅ **Check:** the saved priority is **P1 or P2**, and the incident has a work
-note explaining the raise.
+✅ **Check:** the saved incident's **Priority** shows **1 - Critical** or
+**2 - High**. Scroll down to the **Activity** stream (the history under the
+form): there's an entry under **Work notes** explaining the raise.
 
 ⚠️ **If you see…** *Submit refused on the critical services list (item 2),
 or no **New** button:* your design may let only a service's owner edit its
@@ -402,14 +523,30 @@ this order. None of them is a defect:
 3. your critical services list has that service, **active**, with a floor.
 
 If all three are right and it still stayed low, that's a real defect found on
-the instance. Once it's fixed and merged, it's a **catch** for `test`. Describe what you saw to Claude in one
-sentence (**🤖 Claude**), and let it fix it through the loop (a story, tests, `ship it`).
-Don't fix it by hand on the instance.
+the instance. Once it's fixed and merged, it's a **catch** for `test`.
+Don't fix it by hand on the instance. Fix it through the loop:
+1. **🤖 Claude:** describe what you saw in one sentence, and have it filed:
+   ```
+   File one GitHub issue for this defect in <APP_REPO>, in plain words:
+   <what you saw, in one sentence>. Label it like the plan's other stories:
+   the gate label for the gate it holds up, that gate's milestone,
+   and a priority label (p0, p1 or p2). Show me the issue first; file it
+   only after I say yes. Change no code yet.
+   ```
+   Without the gate label and milestone, the board and the grade don't
+   count the issue. (Step 8's rule "Don't create, close or re-label issues by
+   hand." is only for the coordinator's batch run.)
+2. **🤖 Claude:** `Take the top one.` (or `Take issue #<n>.`, with the new
+   issue's number). Read the five bullets, then `confirm`.
+3. Tests first (red), then the fix (green), as in steps 4 and 5. Then
+   `ship it`, and read the review as in step 6.
+4. Build and install again (step 9), then redo item 3 above.
 
 ⚠️ **If you see…** *the priority went up, but there's no work note:* that's a
 real defect too, and a **catch** for `test` once fixed. Work notes are a
 special kind of field, so describe exactly that to Claude: "the raise saved
-but no work note appeared on the incident".
+but no work note appeared on the incident". Then follow the same four steps
+as above: file the issue, take it, tests, `ship it`, install, check again.
 
 ### Step 11 — Close the session
 
@@ -422,8 +559,22 @@ claim nobody checked from being written down as fact.
 We're stopping here. Update SESSION-NOTE.md: what's proven, what's
 open, the exact next step, and the top three next items.
 ```
-Read what it wrote. If it says something is "verified" that you haven't
-seen work on the instance, correct it.
+**✏️ Editor:** open `~/projects/priority-guard/app/SESSION-NOTE.md` and read
+what it wrote. If it says something is "verified" that you haven't seen
+work on the instance, tell Claude in one line to correct it.
+
+The note is now changed on `main`. It goes through review like everything
+else. **🤖 Claude:**
+```
+Commit only SESSION-NOTE.md in ~/projects/priority-guard/app on a new
+branch docs/session-note, never on main, then ship it.
+```
+Once it's merged, **🔍 Check:**
+```
+Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull && git -C ~/projects/priority-guard/app status --short
+```
+✅ **Check:** the pull request is merged, and `git status --short` prints
+**nothing** after the pull: `main` is clean.
 
 ### Step 12 — If you're building the whole app
 
@@ -432,8 +583,8 @@ not just the floor. Going gate by gate, by the live count, keeps you on what's
 actually in the way. Each gate also needs evidence, or the grade can't count it.
 
 **🤖 Claude:** work gate by gate, **in the plan's order**, until the **MERGE,
-INSTALL and DEMO** counts are all zero. For each gate, run step 8's prompt
-with the second **Stop when** line, then read its evidence as step 8 says.
+INSTALL and DEMO** counts are all zero. For each gate, run step 8 with the
+**Whole app prompt**, then read its evidence as step 8 says.
 Stories that need the instance (an install, a live check, the demo) stop and
 come back to you: do those by hand, as below. Leave the `gate:handoff`
 stories open: Module 8 closes them.
@@ -450,22 +601,41 @@ doesn't update it, so it goes stale. **The live count is the truth.**
 
 **Two more users, after the first install.** The first install creates the
 app's own roles. Then, as admin (**🌐 Browser**, admin profile):
-- create `im.demo`, an incident manager: `itil` plus the app's override role
-  (from your design), and write the role in your values table as
-  `<OVERRIDE_ROLE>`;
-- create `owner.demo`, a service owner: `itil` only, and set it as **Owned
-  by** on the Payroll business service;
-- set a password for both.
+1. **Create the two users.** In the filter navigator, type `sys_user.list`
+   and press **Enter**. Click **New**. Fill in **User ID** `im.demo`, a
+   **First name** and **Last name**, and click **Submit**. Do the same for
+   `owner.demo`.
+2. **Give them roles.** Open `im.demo` from the list (filter the **User ID**
+   column). Scroll down to the **Roles** tab at the bottom, and click
+   **Edit…**. Find `itil` and the app's override role (its name is in your
+   design; it starts with your `<SCOPE>`), move both to the right-hand list,
+   and click **Save**. Write the override role in your values table as
+   `<OVERRIDE_ROLE>`. Then do the same for `owner.demo`, with `itil` only.
+3. **Set a password for each.** On each user's form, click **Set Password**
+   (top right of the form), set one, and save it. Note it in `LOG.md`, never
+   in the repo or in Claude.
+4. **Make `owner.demo` the service's owner.** In the filter navigator, type
+   `cmdb_ci_service.list` and press **Enter**. Open **your critical service**
+   (the one you marked in step 10). In **Owned by**, click the 🔍 and choose
+   `owner.demo`. Click **Update**.
 
 Run each live check (**🌐 Browser**) as the right person: the floor as `<AGENT_USER>`, an
 override as `im.demo`, an approval as `owner.demo`. On your own, log in as
-each in turn, or impersonate them from your admin profile.
+each in turn in your **agent** profile, or **impersonate** them from your
+admin profile: click your name or picture at the top right, choose
+**Impersonate user**, and pick the user. To stop, do the same and choose
+**End impersonation**.
 
 Along the way:
 - **The override with Tier 1 approval** is the hardest story. Its five
   bullets (at the top of its pull request) must say who approves, where the
   approval is recorded, and what the incident does while it waits. If one is
   missing, tell the coordinator before the next gate's run.
+- **Before the Tier 1 override checks**, mark your critical service as
+  Tier 1. In your **admin** profile, open your critical service's row in
+  the critical services list (step 10, item 2), tick **Tier 1** (if your
+  design has a Tier 1 field), and click **Update**. Use the same service
+  for every check.
 - **Every design term needs a test** whose name carries its id, including
   **boundary and posture terms**. For example: a test that the app's source
   makes no AI calls, and doesn't touch the priority lookup or the SLA
@@ -484,8 +654,8 @@ Along the way:
     as an ordinary agent, then close the story with a comment recording who
     saw what, as which user, and when.
 - **Between stories,** a session close updates `SESSION-NOTE.md` on `main`.
-  Commit it as the first commit on the next story's branch, so `main` stays
-  clean.
+  Commit it exactly as in step 11: on its own branch `docs/session-note`,
+  then `ship it`, so `main` stays clean.
 
 ✅ **Check:** the MERGE, INSTALL and DEMO counts are zero, the app is installed
 from the latest `main`, every live check passes as the right user, and the

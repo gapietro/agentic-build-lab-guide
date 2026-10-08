@@ -33,7 +33,13 @@ everything important in the inputs in the PRD?
 **Why this step:** This module needs a working bench and an empty workspace. If something is already in the workspace, it gets mixed in with the PRD you accept later.
 
 - [ ] Module 0's pre-flight checks are all ticked.
-- [ ] `ls -R ~/projects/priority-guard` shows only an empty `brief/` folder.
+- [ ] `ls -R ~/projects/priority-guard` shows only an empty `brief/` folder,
+      exactly like this (with your own user name in place of `<you>`):
+      ```
+      brief
+
+      /Users/<you>/projects/priority-guard/brief:
+      ```
 
 ---
 
@@ -112,8 +118,8 @@ Write in `LOG.md` any finding you rejected, and why.
   works): write it under **7. Open decisions**. Never pick a side, or invent
   the detail, for the customer.
 
-Edit `~/projects/priority-guard-prd-review/PRD-PriorityGuard.md` in a text editor, **by
-hand**. Keep the capability numbers of anything you don't remove.
+**✏️ Editor:** edit `~/projects/priority-guard-prd-review/PRD-PriorityGuard.md` in your text
+editor (VS Code), **by hand**. Keep the capability numbers of anything you don't remove.
 
 ✅ **Check:** every gap you found is either fixed in the PRD or listed as an
 open decision.
@@ -123,7 +129,10 @@ open decision.
 **Why this step:** The PRD is the agreement the rest of the lab builds from. The customer's sign-off turns your draft into that agreement, and one set of answers for the whole room means every pair builds the same thing.
 
 Your instructor plays the customer, and answers the room's open decisions
-together, once, so every pair builds the same thing. Record each answer in
+together, once, so every pair builds the same thing. This happens at about
+**09:45**, for the whole room at once. If you finish Step 5 early, wait for
+it. If you missed it, ask your instructor: they have the answers written
+down. Record each answer in
 the PRD, in the capability it affects, and remove it from Open decisions. If
 you found something the customer doesn't answer, ask before you accept.
 
@@ -136,7 +145,14 @@ again as the signature. Then move the PRD into your workspace.
 cp ~/projects/priority-guard-prd-review/PRD-PriorityGuard.md ~/projects/priority-guard/brief/
 ```
 
-✅ **Check:** `ls -R ~/projects/priority-guard` shows only `brief/PRD-PriorityGuard.md`.
+✅ **Check:** `ls -R ~/projects/priority-guard` shows only `brief/PRD-PriorityGuard.md`,
+exactly like this (with your own user name in place of `<you>`):
+```
+brief
+
+/Users/<you>/projects/priority-guard/brief:
+PRD-PriorityGuard.md
+```
 In that PRD:
 - **3. Capabilities requested** has every customer answer applied: anything
   the customer said to remove is gone, anything they said to keep is still

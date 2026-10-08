@@ -53,6 +53,7 @@ reviewer's in step 3.
 **Why this step:** You know what you meant the code to do, so you tend to test what you meant. A reviewer with no history knows only the rule, so it tries things you didn't think to try.
 
 **🤖 Claude:** if a session is open, type `/exit`.
+
 **⌨️ You** (`~/projects/priority-guard/app`): start a new one:
 ```
 cd ~/projects/priority-guard/app && claude
@@ -60,44 +61,99 @@ cd ~/projects/priority-guard/app && claude
 **🤖 Claude:** **don't** run the session open. This reviewer shouldn't know
 what you intended, only what must hold. Type:
 ```
-You are reviewing someone else's work. One rule must hold: an incident on a
-critical service can never be saved below that service's floor. Try to
-break it. Don't read the summary; re-run the checks yourself. Look at the
+You are reviewing someone else's work in ~/projects/priority-guard/app.
+One rule must hold: an incident on a critical service can never be saved
+below that service's floor. Try to break it. Don't rely on SESSION-NOTE.md
+or pull request descriptions; re-run the checks yourself. Look at the
 floor, the rule that applies it, every way priority can change on an
 incident, and any error path. List every attempt.
-Turn each one into a failing test before any fix, its name starting with the
-design term it tests. Where the inputs are a finite set, try all of them.
+Before writing anything, create a new branch test/break-floor from main
+and work only there; never commit to main. Never run now-sdk install or
+now-sdk auth. Turn each attempt into a test,
+its name starting with the design term it tests, before any fix. An
+attempt that gets through shows as a failing test. Where the inputs are a
+finite set, try all of them. Commit the tests on test/break-floor. Don't
+fix anything, don't push, and don't read or change anything outside
+~/projects/priority-guard and ~/projects/prove-it-kit.
 ```
 
-**If you built the override:** in the prompt's second line, write `…below that
-service's floor, except by a recorded override that follows the design's
-approval rules.` and add `the override` to the list of places to look.
+**If you built the override:** in the sentence that starts `One rule must
+hold`, end it with `…below that service's floor, except by a recorded
+override that follows the design's approval rules.` and add `the override`
+to the list of places to look. Make these changes in your editor before you
+paste the prompt.
 
 ✅ **Check:** the reviewer re-runs the tests itself, and lists every attempt.
-Copy the list into your log, with how many attempts got through.
+Its tests are committed on `test/break-floor`, not on `main`. Copy the list
+into your log, with how many attempts got through.
 
 ### Step 3 — Compare, then deal with what got through
 
 **Why this step:** A hole only stops mattering once it's fixed properly. A failing test first proves the hole is real, and keeps it closed. If the fix changes what the app should do, the design has to say so first.
 
-1. Tick each of your predicted attacks the reviewer tried. For any it
-   missed, ask it for a failing test for that case too.
-2. For **each** attack that got through:
-   - It's a **catch**. Log it.
+1. **Still in the reviewer session:** tick each of your predicted attacks
+   the reviewer tried. For any it missed, ask it (**🤖 Claude**) for a test
+   for that case too, and to commit it on `test/break-floor`.
+
+   Before you leave this branch, **🔍 Check** nothing is left uncommitted:
+   ```
+   Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app status --short
+   ```
+   ✅ **Check:** the raw output is **empty**. If it lists any files, ask the
+   reviewer to commit them on `test/break-floor` first, then check again.
+2. **Leave the reviewer.** It was set up to attack, not to build.
+   **🤖 Claude:** type `/exit`. **⌨️ You** (window 1): start a normal
+   session:
+   ```
+   cd ~/projects/priority-guard/app && claude
+   ```
+   **🤖 Claude:** bring `main` up to date (Module 6 step 1's prompt), then
+   run the session open.
+3. For **each** attack that got through:
+   - It's a **catch** once its fix is merged. Log it.
    - **Does fixing it need a design change?** For example, the reviewer asks
      whether an incident manager may override below the floor without a
      reason. That's a decision, not code. Go to Part C.
-   - Otherwise: failing test first, then the fix, then `ship it`.
-3. **In the workshop, stop after one fix.** Write any other attempts that got
-   through on your board as stories, each naming the gate it holds up. On a
-   real project you'd repeat with a new reviewer until a round finds nothing.
-4. **Building the whole app:** fix **every** attempt that got through, through
-   the loop (or Part C if it changes the design). Don't file new stories by
-   hand: a fix is a branch and `ship it`. Then reinstall (Module 6 step 9:
+   - Otherwise, build the fix as a story, through the loop (Module 6 steps
+     4–7). Its branch starts from `main`, and copies in **only** that
+     attack's failing test, never the whole of `test/break-floor`. Nothing
+     red is ever merged: the fix makes that test pass first.
+     **🤖 Claude** (replace `<short-name>` with a few words, for example
+     `service-change`):
+     ```
+     Create a new branch fix/<short-name> from main in
+     ~/projects/priority-guard/app, never on main. Restate the fix in five
+     bullets and wait for my confirm. Then copy in only the failing test
+     for <the attack, in a few words> from the branch test/break-floor,
+     and show me it failing. Then fix the code until the whole suite
+     passes. Don't merge test/break-floor and don't push it. Never run
+     now-sdk install or now-sdk auth.
+     ```
+     Read the bullets, type `confirm`, and watch the red, then green run.
+     Then `ship it`, and read the review as in Module 6 step 6.
+4. **In the workshop, stop after one fix.** File the other attacks that got
+   through as stories, so they aren't lost. **🤖 Claude:**
+   ```
+   File one GitHub issue per attempt that got through, each with the
+   failing test's name. Label each like the plan's other stories: a
+   gate:<gate> label, the milestone for that gate, and a priority label
+   (p0, p1 or p2). Show me the list first; file only after I say yes.
+   ```
+   Replace `<gate>` with the gate each one holds up, in lower case. Without
+   the gate label and milestone, the board and the grade don't count them.
+   (Module 6 step 8's rule "Don't create, close or re-label issues by
+   hand." is only for the coordinator's batch run.) Read the list, then say yes. On a real project
+   you'd repeat with a new reviewer until a round finds nothing.
+5. **Building the whole app:** fix **every** attempt that got through, through
+   the loop, as in item 3 (or Part C if it changes the design). A fix doesn't
+   need an issue filed by hand: a fix is a branch and `ship it`. Then reinstall (Module 6 step 9:
    **🤖 Claude** builds, **⌨️ You** install), re-run your live checks, and
    add a fresh comment to the closed DEMO story saying what changed and that
    the checks pass again. Any open issue on the DEMO gate
    turns Module 8's grade into a preview.
+
+`test/break-floor` stays on your computer only, as the reviewer's record.
+Never merge it.
 
 ✅ **Check:** you've written down how many attempts there were, how many got
 through, and what you fixed. A bypass counts as a catch once its fix is
@@ -116,7 +172,8 @@ logged in as `<AGENT_USER>`. You watch and write. **Don't help.** Your
 partner's goal: an incident on your critical service, saved at priority 3, 4
 or 5, without an override.
 
-Things worth trying, if your partner runs out of ideas:
+**Only if your partner has been stuck for 10 minutes:** some things worth
+trying.
 - Create the incident on a non-critical service, then change the service.
 - Edit the incident again after it's been raised, changing any field an
   agent can change.
@@ -127,9 +184,17 @@ Things worth trying, if your partner runs out of ideas:
 
 ⚠️ **If you see…** *an attempt gets through:* that's a **catch**, found by your
 partner on a live instance. Write the exact steps. Swap back, and fix it in
-Part A's way: a failing test that reproduces it, then the fix, through the
-loop, then re-install (Module 6 step 9: **🤖 Claude** builds, **⌨️ You**
-install) and re-try the same steps.
+Part A's way, in a normal session (step 3, item 2). **🤖 Claude:**
+```
+Create a new branch fix/<short-name> from main in
+~/projects/priority-guard/app, never on main. Restate the fix in five
+bullets and wait for my confirm. Then write a test that reproduces these
+steps, its name starting with the design term it tests, and show me it
+failing: <the exact steps>. Then fix the code until the whole suite passes.
+Never run now-sdk install or now-sdk auth.
+```
+Then `ship it`, re-install (Module 6 step 9: **🤖 Claude** builds, **⌨️ You**
+install), and re-try the same steps.
 
 ### Step 5 — Swap back, and attack theirs
 
@@ -149,9 +214,9 @@ says, for example a new rule about which changes the floor must survive.
 
 **Why this step:** The signed design is the agreement about what the app does. If a fix changes that, the design changes first and you sign it, so the code never quietly drifts from what was agreed.
 
-1. Leave the reviewer session first: it was set up to attack, not to build.
-   **🤖 Claude:** type `/exit`. **⌨️ You** (`~/projects/priority-guard/app`):
-   start a fresh project session:
+1. Start from a fresh project session, never the reviewer's: it was set up
+   to attack, not to build. **🤖 Claude:** type `/exit`. **⌨️ You**
+   (`~/projects/priority-guard/app`): start a fresh project session:
    ```
    cd ~/projects/priority-guard/app && claude
    ```
@@ -170,17 +235,29 @@ says, for example a new rule about which changes the floor must survive.
    log has one row per added or changed term, with **Signed by** left blank.
    Fill in each **Signed by** cell yourself. The kit never signs, and the
    build plan refuses an unsigned row.
-6. **🤖 Claude:** `ship it` to merge the amendment.
-7. **🤖 Claude:** turn the amendment into a story:
+6. **🤖 Claude:** commit the signed amendment and merge it:
+   ```
+   Commit only docs/DESIGN-PriorityGuard.md in ~/projects/priority-guard/app
+   on the branch docs/amend-floor, never on main, then ship it.
+   ```
+7. **🤖 Claude:** once it's merged, bring `main` up to date (Module 6 step
+   1's prompt). Then turn the amendment into a story:
    ```
    /prove-it:build-plan docs/DESIGN-PriorityGuard.md
    ```
-   Type `approve` at the preview, then `apply now`.
+   Type `approve` at the preview. When it asks "Dry run first, or apply
+   now?", type `apply now`. Note the new story's issue number.
 8. **✏️ Editor:** read `.gitignore`. The build plan may have added allow
-   lines: check each one before it's committed.
-   **🤖 Claude:** **then** build the fix as a normal story, through the loop. The build plan
-   left `BACKLOG.md` and `.gitignore` changed on `main`: commit them as the
-   first commit on that story's branch.
+   lines: check each one before it's committed. The build plan left
+   `BACKLOG.md` (and maybe `.gitignore`) changed on `main`. **🤖 Claude:**
+   ```
+   Commit BACKLOG.md, and .gitignore if it changed, in
+   ~/projects/priority-guard/app on a new branch docs/amend-plan, never on
+   main, then ship it.
+   ```
+9. **🤖 Claude:** **then** build the fix as a normal story, through the loop
+   (Module 6 steps 2–7): `Take issue #<n>.`, with the new story's number,
+   then `confirm`, tests first, `ship it`.
 
 ✅ **Check:** the design has a new or changed term, numbered, and every new
 drift row is signed by you. Nothing was renumbered or deleted. The fix was

@@ -30,7 +30,9 @@ can't answer. That's a gap that would otherwise have shown up in the code.
 
 ## Before you start
 
-- [ ] `~/projects/priority-guard/CONSULT.md` exists, and you haven't edited it.
+- [ ] `~/projects/priority-guard/CONSULT.md` exists, and you haven't
+      hand-edited it. A change Claude made at your request in Module 2
+      Step 5 is fine.
 - [ ] `~/projects/priority-guard` holds `brief/`, `CONSULT.md`, `inputs/` and `docs/`,
       with `docs/LLD-PriorityGuard.md` signed by you (Module 3).
 
@@ -57,17 +59,23 @@ doesn't answer a line, that's worth knowing before the challenge starts.
   each. For example: "Only plain code sets the priority floor." "The floor
   can raise a priority, never lower it." "Only an override can go below the
   floor."
-- **When the floor runs, and what it must survive:** ______ (LLD §3 and §7)
+- **When the floor runs, and what it must survive:** ______ (copy it from
+  LLD §3 and §7 in your own words).
 - **Who can change the critical services list:** ______
 - **Who can override, and what an override must record:** ______
 - **Can an override be edited or deleted afterwards?** ______
-- **How approval works for Tier 1 services:** ______ (PRD capability 4, LLD §3–§4)
+- **How approval works for Tier 1 services:** ______ (PRD capability 4, LLD §3–§4).
+  If your PRD has nothing to answer a line, check the PRD against the inputs
+  again ([Module 1 Step 4](MODULE-1-prd.md#step-4--check-the-evidence-yourself))
+  before you invent an answer.
 - **What happens to capability 6 (smart urgency):** ______ (from your consult,
   and the customer's decision if the consult asked for one)
 - **What the app must never do:** for example, change the priority matrix,
   or touch SLA definitions.
 - **Who can see the weekly count:** ______
-- **Demo data:** which seed records show the app working: ______
+- **Demo data:** which seed records show the app working: ______. Start
+  from the test plan in your LLD §6. For example: two or three critical
+  services, each with a floor, and an incident below the floor on each.
 - **Milestones this feature must pass:**
 
   | Milestone | Passes when |
@@ -114,6 +122,11 @@ record consistent.
 Answer each question from your list. When it asks how something fails, or
 about security, answer from LLD §3, §5 and §7.
 
+**Typing answers in Claude.** Pressing **Enter** sends your message. For an
+answer of several lines, write it in your editor first and paste the whole
+answer in at once, or press **Shift+Enter** for a new line. If Shift+Enter
+doesn't make a new line in your terminal, type `\` and then press **Enter**.
+
 When it asks about a capability the customer **deferred**, answer
 `Out of scope for this record; deferred to a later release.` Never answer
 `Not decided` for a deferred capability: that writes an OPEN term, and an
@@ -127,6 +140,12 @@ challenge exists for.
 
 ✅ **Check:** at some point it has asked about failure, security, cost and
 milestones.
+
+⚠️ **If you see…** *it's about to read the terms back, but it never asked
+about one of those topics:* type, with the topic in place of `<topic>`:
+```
+You haven't asked about <topic>. Ask before the read-back.
+```
 
 ### Step 4 — Check the read-back
 
@@ -181,13 +200,13 @@ means a person, not the AI, takes responsibility for it.
 2. Find the **rejected alternatives**. Is "let AI adjust the priority" there,
    with a reason, if you rejected it?
 3. Sign it **yourself, in the editor**. Never ask Claude to. In **§9
-   Approval**, fill in the one blank row, all four cells:
-   ```
-   | <your signing name> | <your role> | <today's date, YYYY-MM-DD> | <your signing name typed again> |
-   ```
-   Replace **every** `<…>`, including the angle brackets. A finished row looks
-   like `| Sam Lee | incident manager (acting) | 2026-10-14 | Sam Lee |`. Save
-   the file.
+   Approval**, find the existing empty row, `| | | | |`, and type your
+   values between its bars, all four cells: your signing name, your role,
+   today's date (YYYY-MM-DD), and your signing name typed again. **Don't
+   add a new row.** You sign as the designer, so your role is, for example,
+   `developer`. (The customer signs only once, in Module 1's PRD
+   acceptance.) A finished row looks like
+   `| Sam Lee | developer | 2026-10-14 | Sam Lee |`. Save the file.
 
 ✅ **Check:** all four §9 cells hold real values. Placeholders such as `TBD`,
 `-` or anything in `<…>` count as empty, and Module 5's build plan refuses a

@@ -89,15 +89,21 @@ command. Don't create any other file, and don't commit or push anything.
 Don't read anything outside ~/projects/priority-guard and
 ~/projects/prove-it-kit.
 ```
-(Use your GitHub noreply address, from GitHub → Settings → Emails, so a
-personal email never enters the history.)
+**Your GitHub noreply email** keeps a personal email out of the history.
+To find it (**🌐 Browser**): on GitHub, open **Settings → Emails** and tick
+**Keep my email addresses private**. GitHub then shows your noreply
+address. It looks like `12345678+your-account@users.noreply.github.com`.
+Copy it exactly.
+
+**When Claude asks permission** to run a command, follow the box in
+[Lab home](README.md), section 7, *When Claude asks permission*.
 
 ✅ **Check:** git's output says it created an empty repository in `.../priority-guard/app/.git/`.
 
-⚠️ **If your instructor says your SDK version refuses a folder that isn't
-empty:** they'll give you the reordered steps: `now-sdk init` first (**⌨️ You**, in
-window 2), then `git init` and the allow list. The allow list must still come **before the
-first commit**.
+⚠️ **If your instructor tells you, before you start, that `now-sdk init`
+needs an empty folder:** use the order in step 5.1's ⚠️ from the start:
+make the empty folder and run `now-sdk init` first (items 1 and 2 of that ⚠️),
+then steps 1–4, then step 5 from item 5.2 on.
 
 ### Step 2 — An allow list, before the first commit
 
@@ -170,9 +176,11 @@ git add README.md
 git commit -m "chore: initial scaffold"
 ```
 
-✅ **Check:** the commit is **blocked**, and the guard says why. `git log`
-shows no commits. That's **the check working**, not a catch: nothing real
-was stopped. Write it in `LOG.md`.
+✅ **Check:** the commit is **blocked**, and the guard says why. Then type
+`git log`. It prints `fatal: your current branch 'main' does not have any
+commits yet`. That error is **the good result**: nothing got in. This is
+**the check working**, not a catch: nothing real was stopped. Write it in
+`LOG.md`.
 
 ⚠️ **If you see…** *the commit went through:* that's the most important
 finding of the day, and a real **catch**. The guard can't be trusted. Tell
@@ -217,6 +225,26 @@ nothing you add to it will.
 
    ⚠️ **If you see…** *it still asks questions:* answer with the values in
    the table above. If it asks for a template, choose **typescript.basic**.
+
+   ⚠️ **If you see…** *`init` refuses to run, with an error saying the
+   folder isn't empty:* your SDK version wants an empty folder. Start the
+   folder again, in this order, and keep the allow list **before the first
+   commit**:
+   1. **⌨️ You** (window 2): delete the app folder and make it again, empty.
+      Nothing has been pushed, and the only commit is the step 4 scaffold,
+      which you redo:
+      ```
+      cd ~/projects/priority-guard
+      rm -rf ~/projects/priority-guard/app
+      mkdir -p ~/projects/priority-guard/app
+      ```
+   2. **⌨️ You** (window 2): the `cd` and `now-sdk init` lines above.
+   3. **🤖 Claude:** step 1's prompt (`git init -b main`, your name and
+      email), then step 2 (the allow list) and step 3 (the guard).
+   4. **⌨️ You:** step 4 (beat the guard, then the clean commit).
+   5. Carry on from item 5.2 below.
+
+   If anything else goes wrong, stop and ask your instructor.
 2. **Restore the allow list.** `now-sdk init` writes its own short
    `.gitignore` over yours (SDK 4.12 does this every time). Put the kit's
    allow list back.
@@ -275,8 +303,13 @@ nothing you add to it will.
    commit or push anything. Don't read anything outside
    ~/projects/priority-guard and ~/projects/prove-it-kit.
    ```
-   Read the proposal. It's **your** decision. If you agree, type `confirm`
-   (in Claude).
+   Read the proposal. It's **your** decision. A reasonable proposal is
+   usually **nothing** (the kit's list already covers the SDK's files), or
+   `!/.vscode/` (the editor's settings folder). Say **no** to anything
+   under `dist`, `node_modules` or `.snc`, and to any name containing
+   `auth`, `env`, `cred` or `secret`. If you agree with all of it, type
+   `confirm` (in Claude). If not, say in one line which line to drop, and
+   check the new list before you type `confirm`.
 4. **🤖 Claude** (`~/projects/priority-guard/app`):
    ```
    Install the packages and build the empty project. This session runs in
@@ -300,6 +333,24 @@ nothing you add to it will.
 ✅ **Check:** the build finishes without errors. `git status --short` shows
 no `dist/` and no `node_modules/`. Both `check-ignore` lines name a rule
 that hides them.
+
+⚠️ **If you see…** *the build fails:*
+1. **✏️ Editor:** copy the **first** error line into `LOG.md`.
+2. **🤖 Claude:**
+   ```
+   Explain this build error in plain words. Don't change any file.
+   ```
+3. If it says a file (often an `index` file under `src/`) still **imports**
+   one of the example files you deleted, let Claude remove **only that
+   import line**:
+   ```
+   Remove only the import of the deleted example file from that file in
+   ~/projects/priority-guard/app/src. Show me the change before you save
+   it. Change nothing else. Stay on main; don't stage, commit or push
+   anything.
+   ```
+   Read the change, then run the build again (the prompt in item 4).
+4. Any other error: stop and ask your instructor.
 
 ### Step 6 — The project's rules
 
@@ -335,9 +386,11 @@ do.
 ✅ **Check:** `CLAUDE.md` has your scope and alias, no host name and no
 password, and a Ship ritual section.
 
-⚠️ **If you see…** *the install command in `CLAUDE.md` says `--alias`:* change
-it to `--auth`. On `now-sdk install`, `--alias` is silently ignored, and the
-app goes to whatever instance is the default. That's a real **catch**.
+⚠️ **If you see…** *a `now-sdk install` line in `CLAUDE.md` that says
+`--alias`:* change it to `--auth`. On `now-sdk install`, `--alias` is
+silently ignored, and the app goes to whatever instance is the default.
+That's a real **catch**. This applies only to `now-sdk install` lines: a
+`now-sdk auth --add … --alias` line is correct, so leave it as it is.
 
 ### Step 7 — Read the file list, then go private on GitHub
 
@@ -353,9 +406,18 @@ Run exactly this and show me the raw output, unedited:
 git -C ~/projects/priority-guard/app add -n .
 ```
 (`-n` is a dry run: it only prints the names.) Read **every** file name in
-the raw output. If a file shouldn't go in, stop and tell Claude which one;
-fix `.gitignore` by hand (**✏️ Editor**) before going on, then run the check
-again.
+the raw output. You should see only names from this list:
+- `.gitignore`, `CLAUDE.md`, `README.md`
+- `now.config.json`, `package.json`, `package-lock.json`
+- `tsconfig.json`, `now.dev.mjs`, `now.prebuild.mjs`, `.eslintrc`, if the
+  SDK created them
+- files under `src/`, for example `src/fluent/index.now.ts`
+- anything you agreed to in step 5.3, for example files under `.vscode/`
+
+Not every name has to appear: a file committed in step 4 and not changed
+since won't show. **Any other name: stop.** Tell Claude which one, fix
+`.gitignore` by hand (**✏️ Editor**) before going on, then run the check
+again. Nothing under `dist/` or `node_modules/` may ever appear.
 
 **🤖 Claude** (`~/projects/priority-guard/app`), only once you've read the list:
 ```
@@ -422,6 +484,12 @@ First check the LLD has no instance names in it. **🔍 Check**
 Run exactly this and show me the raw output, unedited:
 grep -n -i 'service-now' ~/projects/priority-guard/docs/LLD-PriorityGuard.md
 ```
+⚠️ **If you see…** *`grep` prints a line:* the LLD names your instance.
+**✏️ Editor:** open `~/projects/priority-guard/docs/LLD-PriorityGuard.md`,
+go to that line number, and replace the host name (for example
+`dev12345.service-now.com`) with `<instance>`, by hand. Note it in
+`LOG.md`. Then run the check again: it must print nothing before you go on.
+
 **✏️ Editor:** open `.gitignore` and add `!/docs/` at the very end, by hand.
 
 Then **🤖 Claude** (`~/projects/priority-guard/app`):
@@ -472,6 +540,11 @@ Check the preview, and write yes or no for each:
 4. Each story says what passing it **doesn't** prove.
 5. There's a story whose tests prove your central rule.
 
+**Any "no"?** Before you type `approve`, tell Claude in **one line** what's
+wrong, for example "Story 4 has no done-when you could check." It redrafts
+and shows a new preview. Answer the five questions again. **Never approve
+a preview you answered no to.**
+
 ### Step 11 — Approve, dry run, apply
 
 **Why this step:** Each word is a decision you make on purpose. A dry run
@@ -491,8 +564,12 @@ apply
 ```
 
 ✅ **Check:** on GitHub, the **Issues** tab shows your stories, with
-milestones and labels. `BACKLOG.md` exists in the repo, and `.gitignore` now
-ends with `!/BACKLOG.md`.
+milestones and labels. `BACKLOG.md` exists in the repo.
+
+**✏️ Editor:** read `.gitignore`. The build plan added one allow line and
+committed nothing. The file should now end with `!/BACKLOG.md`, and nothing
+else should be new. If another line was added, ask Claude why before you go
+on. `BACKLOG.md` and `.gitignore` are committed in step 13, on `docs/plan`.
 
 ### Step 12 — Your first honest count
 
@@ -509,6 +586,8 @@ head -5 BACKLOG.md
 ```
 
 ✅ **Check:** the number from GitHub and the count in `BACKLOG.md` agree.
+In `BACKLOG.md`, the count is the number after **Blockers:**, on the line
+that starts with **Next gate:**.
 That number is **what stands between you and the next gate**. It leaves out
 register items, because they hold up nothing. It's the only progress number
 this lab uses.
@@ -531,8 +610,8 @@ so the next session, or a teammate, starts from a file instead of from memory.
 3. **🤖 Claude** (`~/projects/priority-guard/app`):
    ```
    On branch docs/plan in ~/projects/priority-guard/app, stage only
-   .gitignore and SESSION-NOTE.md, and commit with the message
-   "docs: first session note". Don't commit to main, and don't push. Don't
+   .gitignore, BACKLOG.md and SESSION-NOTE.md, and commit with the message
+   "docs: backlog and first session note". Don't commit to main, and don't push. Don't
    read anything outside ~/projects/priority-guard and
    ~/projects/prove-it-kit.
    ```
@@ -542,7 +621,8 @@ step and the top three.
 
 ⚠️ **If you see…** *Claude already committed it:* don't commit again. Check
 the commit is on `docs/plan`, and that `.gitignore` ends with
-`!/SESSION-NOTE.md`.
+`!/BACKLOG.md` and `!/SESSION-NOTE.md`. If `BACKLOG.md` was left out of
+that commit, have Claude commit it on `docs/plan` too.
 
 ### Step 14 — Ship the plan
 

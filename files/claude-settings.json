@@ -6,6 +6,12 @@
   "skillOverrides": { "claude-api": "off" },
   "permissions": {
     "defaultMode": "auto",
-    "deny": ["WebSearch", "WebFetch", "Bash(now-sdk auth:*)"]
+    "deny": [
+      "WebSearch",
+      "WebFetch",
+      "Bash(now-sdk auth:*)",
+      "Read(~/projects/priority-guard-notes/**)",
+      "Read(~/projects/agentic-build-lab-guide/**)"
+    ]
   }
 }
