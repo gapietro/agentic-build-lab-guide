@@ -10,6 +10,10 @@ You're not here to learn this app. You're here to learn **the method**, so
 you can use it on your own work next week. Every module has a moment where
 the process catches something. Those moments are the lesson.
 
+**Read it online:** https://claude.ai/artifact/LLZPgYakMRU9hWxmhughrQ (the same guide as one page,
+with a menu on the left; your instructor shares the link with you). You
+still clone the guide in Module 0: the steps copy files from it.
+
 **The one idea:** the AI does the typing. People and checks do the deciding.
 
 **The path, and the document each step leaves:**
@@ -80,7 +84,8 @@ details and a check for each item.
 - **This lab guide**: it lives in the private GitHub repo
   `gapietro/agentic-build-lab-guide`. Your instructor invites you: **accept
   the invite** (check your GitHub email or https://github.com/notifications).
-  Until Module 0 you can read it on GitHub. In Module 0 Step 3 you clone it
+  Until Module 0 you can read it on GitHub, or online at
+  https://claude.ai/artifact/LLZPgYakMRU9hWxmhughrQ. In Module 0 Step 3 you clone it
   to `~/projects/agentic-build-lab-guide`, **outside**
   `~/projects/priority-guard`.
   (Can't use git? Your instructor can send the same guide as a zip,

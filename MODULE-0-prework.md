@@ -77,6 +77,11 @@ Install each of these, then run the check command:
    ⚠️ **If you see…** *`Could not resolve to a Repository`:* you haven't
    accepted the invite yet, or you're signed in to a different GitHub
    account (`gh auth status`).
+
+   **Reading the guide:** open `LAB.html` from this folder in your browser,
+   or use the online copy at https://claude.ai/artifact/LLZPgYakMRU9hWxmhughrQ (it's
+   the same guide; your instructor shares the link). The commands still copy
+   files from this folder, so keep the clone either way.
 3. **Claude Code settings, before the first `claude` run.** The guide ships
    the settings file ready to use: `files/claude-settings.json`. It turns off
    the extras that would make your sessions differ from everyone else's:
