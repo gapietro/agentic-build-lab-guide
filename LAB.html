@@ -80,7 +80,7 @@ p.notes{background:var(--note);padding:6px 12px;border-radius:6px;font-size:14px
   <header><div class="t">Agentic Build Lab</div><div class="s">Build a ServiceNow app with a coding agent, and prove it works</div></header>
   <input id="filter" type="search" placeholder="Filter steps…" aria-label="Filter navigation">
   <nav><ul>
-<li class="navdoc" data-doc="home"><details><summary><a href="#home">Start here</a></summary><ul class="sub"><li><a href="#home--1-what-youll-learn">1. What you&#x27;ll learn</a><ul></ul></li><li><a href="#home--2-the-schedule">2. The schedule</a><ul></ul></li><li><a href="#home--3-what-you-need">3. What you need</a><ul></ul></li><li><a href="#home--4-three-rules-for-the-whole-lab">4. Three rules for the whole lab</a><ul></ul></li><li><a href="#home--5-words-youll-type">5. Words you&#x27;ll type</a><ul></ul></li><li><a href="#home--6-your-values">6. Your values</a><ul></ul></li><li><a href="#home--7-how-to-read-a-module">7. How to read a module</a><ul></ul></li></ul></details></li>
+<li class="navdoc" data-doc="home"><details><summary><a href="#home">Start here</a></summary><ul class="sub"><li><a href="#home--1-what-youll-learn">1. What you&#x27;ll learn</a><ul></ul></li><li><a href="#home--2-the-schedule">2. The schedule</a><ul></ul></li><li><a href="#home--3-what-you-need">3. What you need</a><ul></ul></li><li><a href="#home--4-three-rules-for-the-whole-lab">4. Three rules for the whole lab</a><ul></ul></li><li><a href="#home--5-words-youll-type">5. Words you&#x27;ll type</a><ul></ul></li><li><a href="#home--servicenow-basics-youll-use">ServiceNow basics you&#x27;ll use</a><ul></ul></li><li><a href="#home--6-your-values">6. Your values</a><ul></ul></li><li><a href="#home--7-how-to-read-a-module">7. How to read a module</a><ul></ul></li></ul></details></li>
 <li class="navdoc" data-doc="m0"><details><summary><a href="#m0">0 · Pre-work</a></summary><ul class="sub"><li><a href="#m0--what-youll-do">What you&#x27;ll do</a><ul></ul></li><li><a href="#m0--steps">Steps</a><ul><li class="h3"><a href="#m0--step-1--a-servicenow-developer-instance">Step 1 — A ServiceNow developer instance</a></li><li class="h3"><a href="#m0--step-2--the-tools">Step 2 — The tools</a></li><li class="h3"><a href="#m0--step-3--sign-in">Step 3 — Sign in</a></li><li class="h3"><a href="#m0--step-4--your-two-folders">Step 4 — Your two folders</a></li><li class="h3"><a href="#m0--step-5--install-the-kit-and-the-review-command">Step 5 — Install the kit and the review command</a></li><li class="h3"><a href="#m0--step-6--check-the-bench-is-clean">Step 6 — Check the bench is clean</a></li><li class="h3"><a href="#m0--step-7--a-second-browser-profile">Step 7 — A second browser profile</a></li></ul></li><li><a href="#m0--pre-flight-all-seven-before-the-day">Pre-flight: all seven before the day</a><ul></ul></li></ul></details></li>
 <li class="navdoc" data-doc="m1"><details><summary><a href="#m1">1 · Inputs to PRD</a></summary><ul class="sub"><li><a href="#m1--what-youll-do">What you&#x27;ll do</a><ul></ul></li><li><a href="#m1--before-you-start">Before you start</a><ul></ul></li><li><a href="#m1--steps">Steps</a><ul><li class="h3"><a href="#m1--step-1--read-the-inputs-yourself">Step 1 — Read the inputs yourself</a></li><li class="h3"><a href="#m1--step-2---predict-it">Step 2 — 🔮 Predict it</a></li><li class="h3"><a href="#m1--step-3--trace-the-prd-with-claude">Step 3 — Trace the PRD with Claude</a></li><li class="h3"><a href="#m1--step-4--check-the-evidence-yourself">Step 4 — Check the evidence yourself</a></li><li class="h3"><a href="#m1--step-5--decide-what-to-do-with-each-gap">Step 5 — Decide what to do with each gap</a></li><li class="h3"><a href="#m1--step-6--customer-acceptance">Step 6 — Customer acceptance</a></li></ul></li><li><a href="#m1--log-it">Log it</a><ul></ul></li></ul></details></li>
 <li class="navdoc" data-doc="m2"><details><summary><a href="#m2">2 · Consult</a></summary><ul class="sub"><li><a href="#m2--what-youll-do">What you&#x27;ll do</a><ul></ul></li><li><a href="#m2--before-you-start">Before you start</a><ul></ul></li><li><a href="#m2--steps">Steps</a><ul><li class="h3"><a href="#m2--step-1---predict-it">Step 1 — 🔮 Predict it</a></li><li class="h3"><a href="#m2--step-2--run-the-consult">Step 2 — Run the consult</a></li><li class="h3"><a href="#m2--step-3--let-it-run">Step 3 — Let it run</a></li><li class="h3"><a href="#m2--step-4--read-it-like-a-reviewer">Step 4 — Read it like a reviewer</a></li><li class="h3"><a href="#m2--step-5--push-back-if-you-need-to">Step 5 — Push back if you need to</a></li><li class="h3"><a href="#m2--step-6--close">Step 6 — Close</a></li></ul></li><li><a href="#m2--log-it">Log it</a><ul></ul></li></ul></details></li>
@@ -407,6 +407,29 @@ blocker they mention. Then tell me the top three items by gate distance.
 <pre><code>We're stopping here. Update SESSION-NOTE.md: what's proven, what's
 open, the exact next step, and the top three next items.
 </code></pre>
+<hr />
+<h2 id="home--servicenow-basics-youll-use">ServiceNow basics you'll use</h2>
+<p>You don't need to know ServiceNow well. These four moves cover every step:</p>
+<ul>
+<li><strong>The filter navigator</strong> is the search box at the top left of every
+ServiceNow page (click <strong>All</strong> if you don't see it). Type a table name
+followed by <code>.list</code>, for example <code>incident.list</code>, and press <strong>Enter</strong> to
+open that table as a list. Every step that says &quot;type … in the filter
+navigator&quot; means this box.</li>
+<li><strong>Filtering a list:</strong> at the top of each column there's a small search box
+(if you don't see it, click the 🔍 icon at the top left of the list). Type
+in a column's box and press <strong>Enter</strong> to show only matching rows.</li>
+<li><strong>Making a record:</strong> on a list, click <strong>New</strong> at the top right, fill in the
+form, then click <strong>Submit</strong>.</li>
+<li><strong>A reference field</strong> (one with a 🔍 icon beside it, such as Service) points
+to another record. Click the 🔍 and pick from the list that opens, or start
+typing a name and choose from the suggestions.</li>
+</ul>
+<p><strong>Your app's tables.</strong> Everything your app stores lives in tables whose names
+start with your <code>&lt;SCOPE&gt;</code>, for example <code>x_123456_pg_ga_critical_service</code>. To
+see them all, type <code>sys_db_object.list</code> in the filter navigator, then type
+your <code>&lt;SCOPE&gt;</code> in the <strong>Name</strong> column's search box and press <strong>Enter</strong>. To
+open one, type its name followed by <code>.list</code> in the filter navigator.</p>
 <hr />
 <h2 id="home--6-your-values">6. Your values</h2>
 <p>Fill this in as you go. Wherever a module shows a name in angle brackets,
@@ -2285,23 +2308,64 @@ to your app.</p>
 the instance. You test as an ordinary agent, not as admin, because an admin
 can do things real users can't, and that can hide problems.</p>
 <p>All in <strong>🌐 Browser</strong>:</p>
+<p>(New to ServiceNow screens? Read &quot;ServiceNow basics you'll use&quot; in the
+<a href="#home">Lab home</a> first. It takes two minutes.)</p>
 <ol>
 <li><strong>Switch the app on, if it has a switch.</strong> Many designs give the app an
 on/off switch that <strong>installs off</strong>, so an admin turns it on on purpose
 (look in your design record for &quot;switched off&quot; or a master switch). While
-it's off, the floor does nothing at all. In your <strong>admin</strong> profile, type
-<code>sys_properties.list</code> in the filter navigator and filter <strong>Name</strong> starts
-with <code>&lt;SCOPE&gt;</code>. If there's a property that switches the floor on (its
-description says so; its name often ends in <code>.floor.enabled</code>), set
-<strong>Value</strong> to <code>true</code> and save. No such property: skip this item.</li>
-<li>In your <strong>admin</strong> profile, mark one business service as critical, with
-a floor of 2, using your app's list.</li>
-<li>In your <strong>agent</strong> profile, logged in as <code>&lt;AGENT_USER&gt;</code>, create an incident.
-<strong>Set Service to that business service</strong> (the floor only acts on an
-incident whose Service is on your list), impact 3, urgency 3, and save.</li>
+it's off, the floor does nothing at all. In your <strong>admin</strong> profile:
+<ol>
+<li>In the filter navigator, type <code>sys_properties.list</code> and press <strong>Enter</strong>.</li>
+<li>In the <strong>Name</strong> column's search box, type <code>&lt;SCOPE&gt;</code> and press <strong>Enter</strong>.
+You now see only your app's settings.</li>
+<li>Look for the one whose <strong>Description</strong> says it switches the floor on.
+Its name often ends in <code>.floor.enabled</code>. <strong>None there?</strong> Your app has no
+switch: skip to item 2.</li>
+<li>Click its name to open it. Change <strong>Value</strong> from <code>false</code> to <code>true</code>, and
+click <strong>Update</strong>.</li>
+</ol>
+</li>
+<li><strong>Mark one business service as critical.</strong> Your app keeps its list of
+critical services in its own table. In your <strong>admin</strong> profile:
+<ol>
+<li>Find the table's name: in the filter navigator, type
+<code>sys_db_object.list</code> and press <strong>Enter</strong>. In the <strong>Name</strong> column's
+search box, type <code>&lt;SCOPE&gt;</code> and press <strong>Enter</strong>. You see your app's
+tables. Find the one whose <strong>Label</strong> is like &quot;Critical service&quot;, and
+note its <strong>Name</strong>, for example <code>x_123456_pg_ga_critical_service</code>.</li>
+<li>In the filter navigator, type that name followed by <code>.list</code>, for example
+<code>x_123456_pg_ga_critical_service.list</code>, and press <strong>Enter</strong>. The list
+is empty: that's expected.</li>
+<li>Click <strong>New</strong>. In <strong>Service</strong>, click the 🔍 and choose a business
+service, for example <strong>Email</strong>. Write its name down: you need it in
+item 3. Set <strong>Floor</strong> to <strong>2</strong> (it may show as <strong>P2</strong>). Make sure
+<strong>Active</strong> is ticked. Leave anything else as it is.</li>
+<li>Click <strong>Submit</strong>. The list now shows your one row.</li>
+</ol>
+</li>
+<li><strong>Create an incident as an ordinary agent.</strong> In your <strong>agent</strong> profile,
+logged in as <code>&lt;AGENT_USER&gt;</code>:
+<ol>
+<li>In the filter navigator, type <code>incident.list</code> and press <strong>Enter</strong>, then
+click <strong>New</strong>.</li>
+<li>Fill in <strong>Caller</strong> (any user) and <strong>Short description</strong> (anything).</li>
+<li>In <strong>Service</strong>, choose <strong>the same business service</strong> you marked in
+item 2. This matters: the floor only acts on an incident whose Service
+is on your list.</li>
+<li>Set <strong>Impact</strong> to <strong>3 - Low</strong> and <strong>Urgency</strong> to <strong>3 - Low</strong>. The form
+shows <strong>Priority 5 - Planning</strong>. That's what you'd get without your app.</li>
+<li>Click <strong>Submit</strong>, then open the incident again from the list.</li>
+</ol>
+</li>
 </ol>
 <p>✅ <strong>Check:</strong> the saved priority is <strong>P1 or P2</strong>, and the incident has a work
 note explaining the raise.</p>
+<p>⚠️ <strong>If you see…</strong> <em>Submit refused on the critical services list (item 2),
+or no <strong>New</strong> button:</em> your design may let only a service's owner edit its
+row. Note the message, and tell your instructor, or ask Claude (<strong>🤖
+Claude</strong>) &quot;which users can add a row to the critical services list, and
+why?&quot;. Don't change the app's rules by hand.</p>
 <p>⚠️ <strong>If you see…</strong> <em>the priority stayed low:</em> check these three first, in
 this order. None of them is a defect:</p>
 <ol>

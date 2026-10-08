@@ -158,6 +158,32 @@ open, the exact next step, and the top three next items.
 
 ---
 
+## ServiceNow basics you'll use
+
+You don't need to know ServiceNow well. These four moves cover every step:
+
+- **The filter navigator** is the search box at the top left of every
+  ServiceNow page (click **All** if you don't see it). Type a table name
+  followed by `.list`, for example `incident.list`, and press **Enter** to
+  open that table as a list. Every step that says "type … in the filter
+  navigator" means this box.
+- **Filtering a list:** at the top of each column there's a small search box
+  (if you don't see it, click the 🔍 icon at the top left of the list). Type
+  in a column's box and press **Enter** to show only matching rows.
+- **Making a record:** on a list, click **New** at the top right, fill in the
+  form, then click **Submit**.
+- **A reference field** (one with a 🔍 icon beside it, such as Service) points
+  to another record. Click the 🔍 and pick from the list that opens, or start
+  typing a name and choose from the suggestions.
+
+**Your app's tables.** Everything your app stores lives in tables whose names
+start with your `<SCOPE>`, for example `x_123456_pg_ga_critical_service`. To
+see them all, type `sys_db_object.list` in the filter navigator, then type
+your `<SCOPE>` in the **Name** column's search box and press **Enter**. To
+open one, type its name followed by `.list` in the filter navigator.
+
+---
+
 ## 6. Your values
 
 Fill this in as you go. Wherever a module shows a name in angle brackets,

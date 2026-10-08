@@ -344,22 +344,56 @@ can do things real users can't, and that can hide problems.
 
 All in **🌐 Browser**:
 
+(New to ServiceNow screens? Read "ServiceNow basics you'll use" in the
+[Lab home](README.md) first. It takes two minutes.)
+
 1. **Switch the app on, if it has a switch.** Many designs give the app an
    on/off switch that **installs off**, so an admin turns it on on purpose
    (look in your design record for "switched off" or a master switch). While
-   it's off, the floor does nothing at all. In your **admin** profile, type
-   `sys_properties.list` in the filter navigator and filter **Name** starts
-   with `<SCOPE>`. If there's a property that switches the floor on (its
-   description says so; its name often ends in `.floor.enabled`), set
-   **Value** to `true` and save. No such property: skip this item.
-2. In your **admin** profile, mark one business service as critical, with
-   a floor of 2, using your app's list.
-3. In your **agent** profile, logged in as `<AGENT_USER>`, create an incident.
-   **Set Service to that business service** (the floor only acts on an
-   incident whose Service is on your list), impact 3, urgency 3, and save.
+   it's off, the floor does nothing at all. In your **admin** profile:
+   1. In the filter navigator, type `sys_properties.list` and press **Enter**.
+   2. In the **Name** column's search box, type `<SCOPE>` and press **Enter**.
+      You now see only your app's settings.
+   3. Look for the one whose **Description** says it switches the floor on.
+      Its name often ends in `.floor.enabled`. **None there?** Your app has no
+      switch: skip to item 2.
+   4. Click its name to open it. Change **Value** from `false` to `true`, and
+      click **Update**.
+2. **Mark one business service as critical.** Your app keeps its list of
+   critical services in its own table. In your **admin** profile:
+   1. Find the table's name: in the filter navigator, type
+      `sys_db_object.list` and press **Enter**. In the **Name** column's
+      search box, type `<SCOPE>` and press **Enter**. You see your app's
+      tables. Find the one whose **Label** is like "Critical service", and
+      note its **Name**, for example `x_123456_pg_ga_critical_service`.
+   2. In the filter navigator, type that name followed by `.list`, for example
+      `x_123456_pg_ga_critical_service.list`, and press **Enter**. The list
+      is empty: that's expected.
+   3. Click **New**. In **Service**, click the 🔍 and choose a business
+      service, for example **Email**. Write its name down: you need it in
+      item 3. Set **Floor** to **2** (it may show as **P2**). Make sure
+      **Active** is ticked. Leave anything else as it is.
+   4. Click **Submit**. The list now shows your one row.
+3. **Create an incident as an ordinary agent.** In your **agent** profile,
+   logged in as `<AGENT_USER>`:
+   1. In the filter navigator, type `incident.list` and press **Enter**, then
+      click **New**.
+   2. Fill in **Caller** (any user) and **Short description** (anything).
+   3. In **Service**, choose **the same business service** you marked in
+      item 2. This matters: the floor only acts on an incident whose Service
+      is on your list.
+   4. Set **Impact** to **3 - Low** and **Urgency** to **3 - Low**. The form
+      shows **Priority 5 - Planning**. That's what you'd get without your app.
+   5. Click **Submit**, then open the incident again from the list.
 
 ✅ **Check:** the saved priority is **P1 or P2**, and the incident has a work
 note explaining the raise.
+
+⚠️ **If you see…** *Submit refused on the critical services list (item 2),
+or no **New** button:* your design may let only a service's owner edit its
+row. Note the message, and tell your instructor, or ask Claude (**🤖
+Claude**) "which users can add a row to the critical services list, and
+why?". Don't change the app's rules by hand.
 
 ⚠️ **If you see…** *the priority stayed low:* check these three first, in
 this order. None of them is a defect:
