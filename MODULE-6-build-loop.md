@@ -344,18 +344,38 @@ can do things real users can't, and that can hide problems.
 
 All in **🌐 Browser**:
 
-1. In your **admin** profile, mark one business service as critical, with
+1. **Switch the app on, if it has a switch.** Many designs give the app an
+   on/off switch that **installs off**, so an admin turns it on on purpose
+   (look in your design record for "switched off" or a master switch). While
+   it's off, the floor does nothing at all. In your **admin** profile, type
+   `sys_properties.list` in the filter navigator and filter **Name** starts
+   with `<SCOPE>`. If there's a property that switches the floor on (its
+   description says so; its name often ends in `.floor.enabled`), set
+   **Value** to `true` and save. No such property: skip this item.
+2. In your **admin** profile, mark one business service as critical, with
    a floor of 2, using your app's list.
-2. In your **agent** profile, logged in as `<AGENT_USER>`, create an incident
-   on that service with impact 3 and urgency 3, and save.
+3. In your **agent** profile, logged in as `<AGENT_USER>`, create an incident.
+   **Set Service to that business service** (the floor only acts on an
+   incident whose Service is on your list), impact 3, urgency 3, and save.
 
 ✅ **Check:** the saved priority is **P1 or P2**, and the incident has a work
 note explaining the raise.
 
-⚠️ **If you see…** *the priority stayed low:* that's a real defect found on
+⚠️ **If you see…** *the priority stayed low:* check these three first, in
+this order. None of them is a defect:
+1. the switch from item 1, if your app has one, is `true`;
+2. the incident's **Service** is set, and it's the service on your list;
+3. your critical services list has that service, **active**, with a floor.
+
+If all three are right and it still stayed low, that's a real defect found on
 the instance. Once it's fixed and merged, it's a **catch** for `test`. Describe what you saw to Claude in one
 sentence (**🤖 Claude**), and let it fix it through the loop (a story, tests, `ship it`).
 Don't fix it by hand on the instance.
+
+⚠️ **If you see…** *the priority went up, but there's no work note:* that's a
+real defect too, and a **catch** for `test` once fixed. Work notes are a
+special kind of field, so describe exactly that to Claude: "the raise saved
+but no work note appeared on the incident".
 
 ### Step 11 — Close the session
 

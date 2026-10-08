@@ -236,6 +236,27 @@ nothing you add to it will.
    ```
    `grep` must print **exactly one line**, the `/*`. Nothing was committed
    with the SDK's version, so nothing leaked.
+
+   **Remove the template's examples.** The `typescript.basic` template ships
+   two sample files that are not part of your app: a business rule on the
+   incident table and a client script that shows "Table loaded
+   successfully!!" on every incident form. Left in, they install with your
+   app and run on every incident.
+
+   **🤖 Claude:**
+   ```
+   Delete the example files the now-sdk template created in
+   ~/projects/priority-guard/app: src/fluent/example.now.ts and
+   src/server/script.ts. If the template created different example files,
+   list them and ask me before deleting anything. Keep the tsconfig files.
+   Don't delete anything else. Don't stage, commit or push anything.
+   ```
+   **🔍 Check:**
+   ```
+   Run exactly this and show me the raw output, unedited:
+   grep -rn -e "my_client_script" -e "LogStateChange" -e "Table loaded" ~/projects/priority-guard/app/src
+   ```
+   It prints **nothing**: no example rule or script is left.
 3. **Move Claude into the repo.** **🤖 Claude** (window 1): type `/exit`.
    Then **⌨️ You** (window 1): start Claude again **in the repo**. From now on,
    Claude always runs here:

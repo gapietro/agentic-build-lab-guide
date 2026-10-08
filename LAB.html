@@ -1700,6 +1700,23 @@ grep -n '^/\*' ~/projects/priority-guard/app/.gitignore
 </code></pre>
 <p><code>grep</code> must print <strong>exactly one line</strong>, the <code>/*</code>. Nothing was committed
 with the SDK's version, so nothing leaked.</p>
+<p><strong>Remove the template's examples.</strong> The <code>typescript.basic</code> template ships
+two sample files that are not part of your app: a business rule on the
+incident table and a client script that shows &quot;Table loaded
+successfully!!&quot; on every incident form. Left in, they install with your
+app and run on every incident.</p>
+<p><strong>🤖 Claude:</strong></p>
+<pre><code>Delete the example files the now-sdk template created in
+~/projects/priority-guard/app: src/fluent/example.now.ts and
+src/server/script.ts. If the template created different example files,
+list them and ask me before deleting anything. Keep the tsconfig files.
+Don't delete anything else. Don't stage, commit or push anything.
+</code></pre>
+<p><strong>🔍 Check:</strong></p>
+<pre><code>Run exactly this and show me the raw output, unedited:
+grep -rn -e &quot;my_client_script&quot; -e &quot;LogStateChange&quot; -e &quot;Table loaded&quot; ~/projects/priority-guard/app/src
+</code></pre>
+<p>It prints <strong>nothing</strong>: no example rule or script is left.</p>
 </li>
 <li>
 <p><strong>Move Claude into the repo.</strong> <strong>🤖 Claude</strong> (window 1): type <code>/exit</code>.
@@ -2269,17 +2286,37 @@ the instance. You test as an ordinary agent, not as admin, because an admin
 can do things real users can't, and that can hide problems.</p>
 <p>All in <strong>🌐 Browser</strong>:</p>
 <ol>
+<li><strong>Switch the app on, if it has a switch.</strong> Many designs give the app an
+on/off switch that <strong>installs off</strong>, so an admin turns it on on purpose
+(look in your design record for &quot;switched off&quot; or a master switch). While
+it's off, the floor does nothing at all. In your <strong>admin</strong> profile, type
+<code>sys_properties.list</code> in the filter navigator and filter <strong>Name</strong> starts
+with <code>&lt;SCOPE&gt;</code>. If there's a property that switches the floor on (its
+description says so; its name often ends in <code>.floor.enabled</code>), set
+<strong>Value</strong> to <code>true</code> and save. No such property: skip this item.</li>
 <li>In your <strong>admin</strong> profile, mark one business service as critical, with
 a floor of 2, using your app's list.</li>
-<li>In your <strong>agent</strong> profile, logged in as <code>&lt;AGENT_USER&gt;</code>, create an incident
-on that service with impact 3 and urgency 3, and save.</li>
+<li>In your <strong>agent</strong> profile, logged in as <code>&lt;AGENT_USER&gt;</code>, create an incident.
+<strong>Set Service to that business service</strong> (the floor only acts on an
+incident whose Service is on your list), impact 3, urgency 3, and save.</li>
 </ol>
 <p>✅ <strong>Check:</strong> the saved priority is <strong>P1 or P2</strong>, and the incident has a work
 note explaining the raise.</p>
-<p>⚠️ <strong>If you see…</strong> <em>the priority stayed low:</em> that's a real defect found on
+<p>⚠️ <strong>If you see…</strong> <em>the priority stayed low:</em> check these three first, in
+this order. None of them is a defect:</p>
+<ol>
+<li>the switch from item 1, if your app has one, is <code>true</code>;</li>
+<li>the incident's <strong>Service</strong> is set, and it's the service on your list;</li>
+<li>your critical services list has that service, <strong>active</strong>, with a floor.</li>
+</ol>
+<p>If all three are right and it still stayed low, that's a real defect found on
 the instance. Once it's fixed and merged, it's a <strong>catch</strong> for <code>test</code>. Describe what you saw to Claude in one
 sentence (<strong>🤖 Claude</strong>), and let it fix it through the loop (a story, tests, <code>ship it</code>).
 Don't fix it by hand on the instance.</p>
+<p>⚠️ <strong>If you see…</strong> <em>the priority went up, but there's no work note:</em> that's a
+real defect too, and a <strong>catch</strong> for <code>test</code> once fixed. Work notes are a
+special kind of field, so describe exactly that to Claude: &quot;the raise saved
+but no work note appeared on the incident&quot;.</p>
 <h3 id="m6--step-11--close-the-session">Step 11 — Close the session</h3>
 <p><strong>Why this step:</strong> Claude forgets everything when the session ends, so the note
 is how the next session knows where you stopped. Reading it yourself stops a
