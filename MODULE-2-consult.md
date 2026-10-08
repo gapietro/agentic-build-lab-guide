@@ -40,8 +40,10 @@ each other?
 **Why this step:** The consult reads your accepted PRD and nothing else. If the PRD isn't finished and signed, the advice you get is about the wrong brief.
 
 - [ ] Module 0's pre-flight checks are all ticked.
-- [ ] Module 1 is done: `ls -R ~/projects/priority-guard` shows only
-      `brief/PRD-PriorityGuard.md`, accepted by the customer. It has every
+- [ ] Module 1 is done: `ls ~/projects/priority-guard` shows only `app`
+      (your app's repo, from pre-work) and `brief`, and
+      `ls ~/projects/priority-guard/brief` shows only `PRD-PriorityGuard.md`,
+      accepted by the customer. It has every
       customer answer from Module 1 Step 6 applied, says `None.` under Open
       decisions, and has a signed acceptance row.
       If your PRD doesn't match this, it isn't finished: go back to
@@ -130,8 +132,9 @@ In Claude Code, that's the line starting with **⏺** that shows the command,
 and the lines starting with **⎿** under it. If you see `… +N lines`, press
 **Ctrl+O** to see all of it. (More in
 [the README, section 7](README.md#7-how-to-read-a-module).)
-You should see `brief` and `CONSULT.md`. A `.claude` folder is fine too: that's
-Claude Code's own. Anything else, note it.
+You should see `app`, `brief` and `CONSULT.md`. (`app` is your app's repo,
+from pre-work.) A `.claude` folder is fine too: that's Claude Code's own.
+Anything else, note it.
 
 ✅ **Check:** `CONSULT.md` exists in `~/projects/priority-guard`, next to `brief/`. It
 has a row for each of the **six** capabilities, each marked plain code, AI

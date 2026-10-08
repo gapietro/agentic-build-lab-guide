@@ -1,11 +1,11 @@
 # Module 8 — Grade and handoff: could someone else own this?
 
-*Workshop · 15:00 · 45 minutes*
+*Workshop · 15:10 · 45 minutes*
 
 **In the workshop:** Part A: predict, allow the secrets scan, run the grade,
-read it, file its findings and merge `GRADE.md`. Parts B and C (the
-runbook, the drill and the verdict) and steps 10–11 are ⏭ after the
-workshop.
+read it, file its findings and merge `GRADE.md`. The real grade (Part A
+again), Parts B and C (the runbook, the drill and the verdict) and steps
+10–11 are ⏭ after the workshop.
 
 [← Module 7](MODULE-7-break-it.md) · [Lab home](README.md) · [Module 9 →](MODULE-9-debrief.md)
 
@@ -37,8 +37,10 @@ who wrote it. Does yours get you to the cause, from the symptom alone?
 
 ## Before you start
 
-- [ ] Module 6 is done (Module 7 is optional). You're on `main`, and it's
-      clean: if you did Module 7, you're back from `test/break-floor`.
+- [ ] Module 6 is done (Module 7 is optional on the day).
+- [ ] You're on `main`, and it's clean: if you did Module 7, you're back
+      from `test/break-floor`. You check this in step 2, once Claude is
+      open.
 - [ ] Your app is installed on your PDI, from the latest `main`.
 - [ ] No Claude session is open yet: you start one in step 2. If a Claude
       session is still open, type `/exit`.
@@ -86,6 +88,14 @@ cd ~/projects/priority-guard/app
 claude
 ```
 
+**🔍 Check** that you're on a clean `main`:
+```
+Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app branch --show-current && git -C ~/projects/priority-guard/app status --short
+```
+✅ **Check:** it prints `main` and nothing else. If it prints another branch,
+or lists files, stop, and get back to a clean `main` first: Module 7
+step 3 ("In the workshop, stop here") shows how.
+
 ⚠️ **If you see…** *Claude asks permission for a read-only command like
 `git ls-files`, `git log`, `grep` or `sed` during the grade:* choose **1**
 (**Yes**). **Never** choose "don't ask again": that saves a lasting rule,
@@ -130,11 +140,9 @@ then choose **1** (yes, once). Never choose 2. If it asks to run
 or the weekly count, so the design terms behind them have no tests. The grade
 says so, and caps the score. That's the grade being honest, not you failing.
 
-**If you built the whole app** (Module 6 step 12): choose the **DEMO**
-milestone. Every gate up to DEMO is at zero, so this is a **real** grade, not a
-preview. Its findings get filed as stories, and some may re-open an earlier
-gate. Work them through the loop until those counts are zero again, before
-Part B.
+**The real grade comes after the workshop.** On the day, the grade is a
+preview. The first after-the-workshop item, after step 4, runs Part A again
+as a real grade.
 
 ✅ **Check:** `GRADE.md` has a score, the arithmetic behind it, every
 **unverified** item, and any problem that **caps** the score.
@@ -159,10 +167,45 @@ Commit GRADE.md, .gitignore and BACKLOG.md in ~/projects/priority-guard/app
 together on a new branch, chore/grade, never on main, then ship it.
 ```
 
+Once it's merged, go back to an up-to-date `main`. **🔍 Check:**
+```
+Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull && git -C ~/projects/priority-guard/app status --short
+```
+
 ✅ **Check:** the findings are on your board, each naming the gate it holds
-up, and the pull request with `GRADE.md` is merged. **A finding becomes a
+up, and the pull request with `GRADE.md` is merged. `git status --short`
+prints **nothing** after the pull: `main` is clean. **A finding becomes a
 catch only once it's fixed and merged.** Most grade findings won't be fixed
 today, so most aren't catches yet.
+
+#### ⏭ **After the workshop:** the real grade
+
+This is the first after-the-workshop part of this module. Do it before
+Part B.
+
+**Why this step:** The grade on the day was a preview: not every story was
+built. A grade only counts when the milestone it grades has really been
+reached.
+
+**When:**
+- **If you built the whole app** (Module 6 step 12): once the MERGE, INSTALL
+  and DEMO counts are zero. Choose the **DEMO** milestone in step 3. Every
+  gate up to DEMO is at zero, so this is a **real** grade, not a preview.
+- **Otherwise:** once your Module 7 fixes are merged. Choose the same
+  milestone as on the day. If it still says the milestone isn't reached,
+  answer **yes** and note in your log that it's a preview again, as in
+  step 3: it only becomes real once every story on that milestone is built.
+
+Run steps 1 to 4 again, starting a fresh session as in step 2, with one
+change: in step 4, commit on a new branch named **`chore/grade-demo`** in
+place of `chore/grade`.
+
+Its findings get filed as stories, and some may re-open an earlier gate.
+Work them through the loop until those counts are zero again, before
+Part B.
+
+✅ **Check:** the real grade's `GRADE.md` is merged from `chore/grade-demo`,
+and `main` is clean and up to date (the same 🔍 Check as above).
 
 ---
 
@@ -176,8 +219,13 @@ first.
 
 **Why this step:** The runbook is the instructions for whoever looks after the app next. If something breaks when you're not around, it's what they'll have to go on.
 
-**🤖 Claude** (the session from step 3; coming back after the workshop,
-start one as in step 2 and run the session open):
+**🤖 Claude:** first bring `main` up to date. Coming back after the
+workshop, start a session as in step 2 first. Then type Module 6 step 1's
+prompt:
+```
+Run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+```
+Then run the session open, and type:
 ```
 /prove-it:handoff
 ```
@@ -382,8 +430,10 @@ Run exactly this and show me the raw output, unedited: gh issue list --state ope
 
 **Why this step:** The first grade came before the handoff work. Grading again at the end says whether the finished app could be owned by someone else.
 
-1. Record the **DEMO grade's commit** first: the next grade
-   rewrites `GRADE.md`, so the first one survives only in the history.
+1. Record the **DEMO grade's commit** first: the real grade you merged
+   from `chore/grade-demo`. The next grade rewrites `GRADE.md`, so the
+   DEMO grade survives only in the history. Run this on an up-to-date
+   `main`, before the next grade.
    **🔍 Check:**
    ```
    Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app log -1 --format=%h -- GRADE.md

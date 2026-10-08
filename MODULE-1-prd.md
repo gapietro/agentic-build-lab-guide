@@ -2,7 +2,7 @@
 
 *Workshop · 09:00 · 30 minutes · before the consult*
 
-**In the workshop:** do Steps 1–6. The customer answers the room at about 09:15.
+**In the workshop:** do Steps 1–6. The customer answers the room at about 09:25.
 
 [← Module 0](MODULE-0-prework.md) · [Lab home](README.md) · [Module 2 →](MODULE-2-consult.md)
 
@@ -32,16 +32,13 @@ everything important in the inputs in the PRD?
 
 ## Before you start
 
-**Why this step:** This module needs a working bench and an empty workspace. If something is already in the workspace, it gets mixed in with the PRD you accept later.
+**Why this step:** This module needs a working bench and a workspace with nothing in it yet but your app's folder. If something else is already in the workspace, it gets mixed in with the PRD you accept later.
 
-- [ ] Module 0's pre-flight checks are all ticked.
-- [ ] `ls -R ~/projects/priority-guard` shows only an empty `brief/` folder,
-      exactly like this (with your own user name in place of `<you>`):
-      ```
-      brief
-
-      /Users/<you>/projects/priority-guard/brief:
-      ```
+- [ ] Module 0's pre-flight checks are all ticked, including Step 8 (your
+      app's repo).
+- [ ] `ls ~/projects/priority-guard` shows exactly two folders: `app` (your
+      app's repo, from Module 0 Step 8) and `brief`, and nothing else.
+- [ ] `ls ~/projects/priority-guard/brief` shows nothing: `brief/` is empty.
 
 ---
 
@@ -132,10 +129,9 @@ open decision.
 
 Your instructor plays the customer, and answers the room's open decisions
 together, once, so every pair builds the same thing. This happens at about
-**09:15**, for the whole room at once. If you finish Step 5 early, wait for
-it. If you're still on Steps 4–5, listen anyway and write the answers down
-for when you get here. If you missed it, ask your instructor: they have the answers written
-down. Record each answer in
+**09:25**, for the whole room at once. If you finish Step 5 early, wait for
+it. Not ready yet when the instructor answers? Carry on; ask the instructor
+for the answers when you reach Step 6. Record each answer in
 the PRD, in the capability it affects, and remove it from Open decisions. If
 you found something the customer doesn't answer, ask before you accept.
 
@@ -148,12 +144,9 @@ again as the signature. Then move the PRD into your workspace.
 cp ~/projects/priority-guard-prd-review/PRD-PriorityGuard.md ~/projects/priority-guard/brief/
 ```
 
-✅ **Check:** `ls -R ~/projects/priority-guard` shows only `brief/PRD-PriorityGuard.md`,
-exactly like this (with your own user name in place of `<you>`):
+✅ **Check:** `ls ~/projects/priority-guard` still shows only `app` and
+`brief`, and `ls ~/projects/priority-guard/brief` shows only the PRD:
 ```
-brief
-
-/Users/<you>/projects/priority-guard/brief:
 PRD-PriorityGuard.md
 ```
 In that PRD:

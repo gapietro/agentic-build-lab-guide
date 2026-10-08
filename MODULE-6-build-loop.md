@@ -1,9 +1,9 @@
 # Module 6 — The build loop
 
-*Workshop · 12:45 · first story by hand, then the batch runs over lunch · back at 14:00 for 45 minutes*
+*Workshop · 12:40 · 30 minutes, then the batch runs over lunch · 14:00 · 45 minutes*
 
-**In the workshop:** Steps 1–7 at 12:45 (your first story by hand, about 30
-minutes). Start Step 8's batch just before lunch, at about 13:15. After lunch,
+**In the workshop:** Steps 1–7 at 12:40 (your first story by hand, about 30
+minutes). Start Step 8's batch at 13:10, just before lunch. After lunch,
 at 14:00: read Step 8's evidence, then Steps 9–11. Step 12 is ⏭ after the
 workshop.
 
@@ -124,9 +124,9 @@ bullets are your chance to fix a misunderstanding before any code is written.
 ```
 Take the top one.
 ```
-If the top story isn't the floor, build it anyway: your instructor tells you
-whether to build another before the floor. (Building the whole app: build
-them all, in the plan's order.)
+If the top story isn't the floor, build it anyway: build only the top
+story by hand. Step 8's batch builds the next ones (and, building the whole
+app, Step 12 builds the rest, in the plan's order).
 
 Claude restates the story in **five bullets**. Read them against the design.
 If they're right, type `confirm`. If not, say what's wrong in one line.
@@ -253,17 +253,26 @@ loop on the next stories at the same time. The checks don't change: every
 story is still tested first, reviewed and merged on green. What changes is
 your job. You stop typing commands and start reading the evidence.
 
-**In the workshop: start it just before lunch, at about 13:15.** It runs
-while you eat.
-- **Leave your laptop open and plugged in.** Don't close the lid: closing it
-  puts the laptop to sleep, and the run stops.
+**In the workshop: start it at 13:10, just before lunch.** It runs while
+you eat.
+- **Keep the laptop awake.** Leave it open and plugged in. Don't close the
+  lid: closing it puts the laptop to sleep, and the run stops. On a Mac,
+  also type this in **⌨️ You** (window 2) once the batch has started:
+  ```
+  caffeinate -i
+  ```
+  It prints nothing and keeps the Mac awake while it runs. After lunch,
+  click window 2 and press **Ctrl+C** to stop it.
+- **Stay about 5 minutes after you start it.** Wait until the first
+  sub-agent's failing test run appears, and answer any first permission
+  question (as the list further down says). Then go to lunch.
 - **If Claude asks a permission question while you're away**, it waits for
   you. That's fine. Nothing goes ahead without you. Answer it when you're
-  back, as the list further down says.
+  back.
 - **Back at 14:00:** read its report and check the evidence (the numbered
   checks after the prompts), then go on to step 9. **Still running at
-  14:00?** Let it finish. If it's far from done, ask your instructor for a
-  checkpoint to carry on from.
+  14:00? Keep going**: let it finish, then carry on from step 9. Module 7 is
+  what gets cut to make the time.
 
 1. **Start clean.** **🤖 Claude:** type `/clear` (or start a fresh session:
    **🤖 Claude:** type `/exit`, then **⌨️ You:** `claude`).
@@ -419,7 +428,10 @@ the next gate's count is zero).
 - *a story stopped for a design change:* don't let it change the design to
   get through. Leave that story open, note it in `LOG.md`, and tell your
   instructor. Changing the design is Module 7, Part C, which is after the
-  workshop.
+  workshop. **If it's the story that wires the floor in:** still build and
+  install what did merge (step 9), skip step 10's live check for now (do it
+  after the design is amended, after the workshop), and close the session
+  (step 11).
 - *it runs much longer, or uses much more of your plan's limits, than you
   expected:* several sub-agents use usage faster than one session. Tell it to
   run one story at a time, and note it.

@@ -2,8 +2,9 @@
 
 *Workshop · 10:00 · 75 minutes*
 
-**In the workshop:** do Steps 1–7, with the quick review in Step 6. The full
-review in Step 6 is for after the workshop.
+**In the workshop:** do Steps 1–8, with the quick review in Step 6. The
+module ends with writing your Module 4 positions (Step 8). The full review in
+Step 6 is for after the workshop.
 
 [← Module 2](MODULE-2-consult.md) · [Lab home](README.md) · [Module 4 →](MODULE-4-design.md)
 
@@ -31,7 +32,8 @@ right. Which of its claims does your instance contradict, or not support?
 
 ## Before you start
 
-- [ ] `~/projects/priority-guard` holds `brief/PRD-PriorityGuard.md` and `CONSULT.md`.
+- [ ] `~/projects/priority-guard` holds `brief/PRD-PriorityGuard.md`,
+      `CONSULT.md`, and the `app/` folder from pre-work.
 - [ ] Your **admin** browser profile is logged in to your PDI. If you see a
       page saying the instance is hibernating (asleep), sign in at
       https://developer.servicenow.com and wake it from there. Waking takes a
@@ -40,7 +42,7 @@ right. Which of its claims does your instance contradict, or not support?
 ### Where each step happens
 
 This module uses one terminal window: you start Claude in it in step 3, and
-quit it in step 6. Every action is labelled with **where** you do it:
+quit it in step 6. Steps 7 and 8 are in your editor. Every action is labelled with **where** you do it:
 
 | Label | What it is | Folder |
 |---|---|---|
@@ -137,32 +139,51 @@ in one go. Its output is something you see for yourself, not Claude's word.
 **🤖 Claude** (`~/projects/priority-guard`): type:
 ```
 Write one read-only ServiceNow background script that checks the five facts
-you marked as the ones the design depends on most. Use GlideRecord reads
-only: no insert, update, deleteRecord, setValue or setWorkflow, no
-gs.setProperty, and no REST calls. For each fact, print one line with
-gs.print: the fact number, what the script looked up, and what it found. If
-a fact can't be checked by reading records, print a line that says so.
-Don't name those methods anywhere in the script, not even in comments.
-Don't run anything and don't write any file. Just show me the script.
+you marked as the ones the design depends on most. Use only these calls:
+new GlideRecord, new GlideAggregate, addQuery, addEncodedQuery, setLimit,
+query, next, get, getValue, getDisplayValue, getRowCount, getTableName and
+gs.print. No other calls at all. Write it as plain statements, with no
+functions of your own. For each fact, print one line with
+gs.print: the fact number, what the script looked up (the table and the
+query), and the raw values it found. Print raw values only; never print
+confirmed or contradicted. If a fact can't be checked by reading records,
+print a line that says so. Don't run anything and don't write any file.
+Just show me the script.
 ```
 
 **Read the script** in Claude's reply before you copy it. You don't need to
-understand every line. You're looking for anything that **changes** data.
+understand every line. You're checking that it only **reads**.
 
-⚠️ **If you see…** *`insert(`, `update(`, `updateMultiple(`,
-`deleteRecord(`, `deleteMultiple(`, `setValue(`, `setProperty(`, or anything
-else that changes data:* don't run it. Type
-`Read-only, please.` and read the new script the same way.
+**The allow list.** Look at every word that comes right before a `(`, and
+every word after `new`. Each one must be on this list:
+- `GlideRecord`, `GlideAggregate` (after `new`)
+- `addQuery`, `addEncodedQuery`, `setLimit`, `query`, `next`, `get`
+- `getValue`, `getDisplayValue`, `getRowCount`, `getTableName`
+- `gs.print`
+
+`if (`, `while (` and `for (` are fine: they're part of how any script is
+written, not calls to the instance.
+
+⚠️ **If you see…** *any other word before a `(`:* don't run it, even if it
+looks harmless. Type
+`Read-only, please: use only the allowed calls.` and check the new script
+the same way.
 
 **🌐 Browser**, in your **admin** profile:
 1. Type `sys.scripts.do` in the filter navigator and press **Enter**. This
    opens **Scripts - Background**, a page where you can run a script on the
    instance. It runs as you, with full **admin** rights, which is why you
-   read the script first.
-2. Paste the script into the big box. Leave the other settings as they are.
+   check the script first.
+2. Paste the script into the big box. Leave the other settings as they are,
+   except one: if your instructor tells you to, tick **Execute in sandbox**.
    Click **Run script**.
 3. The output appears on the page, one line per fact (each line usually
    starts with `*** Script:`). Copy those lines.
+4. Read each line against the fact it names: **does each printed line
+   actually look up the fact it names?** For example, a line about a field
+   on the incident table should come from the incident table's dictionary,
+   not from some other table. A line that looked in the wrong place hasn't
+   checked its fact: treat that fact as **not checked**, or check it by hand.
 
 If the page won't open, or asks for a role you don't have, check the five
 facts by hand instead, using
@@ -173,7 +194,8 @@ output lines underneath it in the same message (press **Shift+Enter** for a
 new line), and send:
 ```
 Here is the raw output of the script on my instance. Mark each fact
-confirmed, contradicted or couldn't check, from this output only.
+confirmed, contradicted, couldn't check, or production only (the fact comes
+from inputs/TECH-NOTES.md), from this output only.
 ```
 **No URLs and no instance names**: delete any from the output before you
 send it. These results end up in the LLD, which goes into the code repo.
@@ -264,10 +286,16 @@ Go through the LLD again with all six checks:
 6. **§7 research log:** matches what you actually found in Step 4, including
    the contradicted and production-only facts.
 
-Fix anything wrong the same way. If you change the LLD after you signed it
-in Step 7, update the date in §9.
+**Don't edit the signed LLD.** By now it's signed, and your design record is
+built from it. Write down each finding instead:
+- **A finding that changes what the app does** (a behaviour): take it to
+  [Module 7 Part C](MODULE-7-break-it.md#part-c--if-the-design-has-to-change),
+  which amends the signed design.
+- **Any other finding** (wording, a missing detail that changes nothing):
+  note it in `LOG.md`.
 
-✅ **Check:** all six are true. Write in `LOG.md` what you had to fix.
+✅ **Check:** you've gone through all six. Every finding is either in
+`LOG.md` or on its way to Module 7 Part C.
 
 ### Step 7 — Sign the LLD
 
@@ -284,6 +312,57 @@ signs only once, in Module 1's PRD acceptance.)
 ✅ **Check:** the LLD is signed by you, and has no `<…>` placeholders left.
 `ls ~/projects/priority-guard/docs` shows `LLD-PriorityGuard.md` and `LLD-TEMPLATE.md`.
 
+### Step 8 — Write your Module 4 positions
+
+**Why this step:** In Module 4 the design challenge asks one question at a
+time. Answers made up on the spot can contradict each other. Writing your
+positions now, while the LLD you just signed is fresh, keeps your answers
+steady, and shows you early where the LLD has nothing to say.
+
+**✏️ Editor:** copy this list into `LOG.md`. The lines marked *fixed* are
+already filled in: copy them as they are. **Fill in every other line
+yourself, from your signed LLD.** Where the LLD doesn't answer a line, that's
+worth knowing before the challenge starts.
+
+- **Feature name** *(fixed)*: `PriorityGuard` (letters only; it becomes a
+  file name).
+- **Your design in your own words:** three or four sentences, from LLD
+  §1–§3. What gets built, which tables it uses, and which code owns each write.
+- **The central rule:** write it as **separate short sentences**, one idea
+  each. For example: "Only plain code sets the priority floor." "The floor
+  can raise a priority, never lower it." "Only an override can go below the
+  floor."
+- **When the floor runs, and what it must survive:** ______ (copy it from
+  LLD §3 and §7 in your own words).
+- **Who can change the critical services list:** ______
+- **Who can override, and what an override must record:** ______
+- **Can an override be edited or deleted afterwards?** ______
+- **How approval works for Tier 1 services:** ______ (PRD capability 4, LLD §3–§4).
+  If your PRD has nothing to answer a line, check the PRD against the inputs
+  again ([Module 1 Step 4](MODULE-1-prd.md#step-4--check-the-evidence-yourself))
+  before you invent an answer.
+- **What happens to capability 6 (smart urgency):** ______ (from your consult,
+  and the customer's decision if the consult asked for one)
+- **What the app must never do** *(fixed, add to it from your LLD if you
+  like)*: it never changes the priority matrix, and never touches SLA
+  definitions. ______
+- **Who can see the weekly count:** ______
+- **Demo data:** which seed records show the app working: ______. Start
+  from the test plan in your LLD §6. For example: two or three critical
+  services, each with a floor, and an incident below the floor on each.
+- **Milestones this feature must pass** *(fixed)*:
+
+  | Milestone | Passes when |
+  |---|---|
+  | MERGE | Every change reviewed, all checks green |
+  | INSTALL | The app installs cleanly on your PDI and a live check passes |
+  | DEMO | The floor works live, as an ordinary agent |
+  | HANDOFF | Someone else can diagnose a failure from the runbook alone |
+
+✅ **Check:** every line has an answer. The central rule is at least two
+separate sentences. Not finished when the module ends? Finish it at the start
+of Module 4.
+
 ---
 
 ## Log it
@@ -296,5 +375,5 @@ signs only once, in Module 1's PRD acceptance.)
   3 | research | <the claim, and what your instance showed>
   ```
 
-**Next:** [Module 4](MODULE-4-design.md). The AI challenges the design, and you
-sign the contract.
+**Next:** [Module 4](MODULE-4-design.md). The AI challenges the design, you
+answer from the positions you just wrote, and you sign the contract.

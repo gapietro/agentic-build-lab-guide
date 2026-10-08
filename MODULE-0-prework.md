@@ -1,6 +1,6 @@
 # Module 0 — Pre-work: get your bench ready
 
-*Before the workshop. About 60–90 minutes. Do it at least two days early, so
+*Before the workshop. About 90–120 minutes. Do it at least two days early, so
 there's time to fix anything that fails.*
 
 [Lab home](README.md) · [Module 1 →](MODULE-1-prd.md)
@@ -9,9 +9,9 @@ there's time to fix anything that fails.*
 
 ## What you'll do
 
-Install the tools, connect your instance, and pass **seven pre-flight
-checks**. On the day there's no time to debug an install, so this module
-moves every likely problem to before the day.
+Install the tools, connect your instance, set up your app's code repo, and
+pass **eight pre-flight checks**. On the day there's no time to debug an
+install, so this module moves every likely problem to before the day.
 
 **Why a clean bench matters.** A coding agent reads everything it's given:
 your other plugins, your personal instruction files, your saved logins. For
@@ -31,6 +31,9 @@ Every action below starts with a label (the full list is in the
 - **⌨️ You**: type it yourself, in a normal terminal.
 - **🤖 Claude**: type it inside Claude Code, after you've started it with
   `claude`. Commands that start with `/`, like `/plugin`, only work there.
+- **🔍 Check**: a prompt, typed inside Claude, that asks Claude to run one
+  check command. Read the **raw output** of the command itself, not
+  Claude's summary of it.
 - **🌐 Browser**: do it in your web browser.
 - **✏️ Editor**: change a file by hand in your text editor.
 
@@ -278,9 +281,10 @@ Your `~/projects` folder now looks like this:
     ├── LOG.md                    empty for now
     └── catches.md                empty for now
 ```
-Later modules add to `priority-guard/` (the PRD, the consult, your app's
-code in `app/`), and Module 5 adds `prove-it-kit/` next to it. Each module
-says what it creates.
+Step 8 adds your app's code repo, `app/`, inside `priority-guard/`, and a
+copy of the kit, `prove-it-kit/`, next to it. Later modules add the PRD,
+the consult and the design to `priority-guard/`. Each module says what it
+creates.
 
 ### Step 5 — Install the kit and the review command
 
@@ -401,19 +405,379 @@ need two: one called **Admin**, where you log in as admin, and one called
 ✅ **Check:** in the second profile, as `<AGENT_USER>`, you can open an
 incident but not the **System Definition** menu.
 
+### Step 8 — Set up your app's repo
+
+**Why this step:** Your app's code gets its own folder and its own history of
+saved changes: a **repo**. Before any real code goes in, the repo gets a
+**fence**: it rejects every file by default, and a guard checks every commit
+for secrets. Setting this up at home leaves the workshop free for the build.
+It stays on your computer until Module 5, when it goes to GitHub.
+
+**The idea to watch for.** A check only counts if it could have failed.
+You've never seen the guard fire. In 8.4 you try to beat it.
+
+**Two Terminal windows.** This step uses two, side by side. **Window 1** is
+for Claude. **Window 2** is a normal terminal, for the commands you type
+yourself (open it with **Cmd+N**, as in "Before you begin"). Every action
+says which window to use.
+
+**Claude's shell goes back to the folder Claude was started in** after every
+command, so every prompt below uses full paths. **Allow lines are your
+decision:** Claude may propose one, but none goes in unread. If a block
+doesn't start with a label, it belongs to the label just above it.
+
+**When Claude asks permission** to run a command, follow the box in
+[Lab home](README.md), section 7, *When Claude asks permission*.
+
+#### 8.1 — Choose your scope, and create the app folder
+
+**Why this step:** The **scope** is your app's unique name on the instance;
+every part of the app starts with it. Your name and a GitHub noreply email
+on the repo mean every change says who made it, without putting your
+personal email online.
+
+1. **🌐 Browser** (your **Admin** profile, logged in as admin): choose
+   `<SCOPE>`. Type `sys_properties.list` in the filter navigator and press
+   **Enter**. In the **Name** column's search box, type
+   `glide.appcreator.company.code` and press **Enter**. Its **Value** is your
+   instance's vendor prefix, for example `123456`. Your scope is
+   `x_<that value>_pg_<your initials>`, for example `x_123456_pg_ga`.
+   **18 characters at most** (the SDK refuses longer). Your initials keep it
+   unique if two people ever share an instance. Write it in your values
+   table as `<SCOPE>`.
+2. **🌐 Browser:** find your **GitHub noreply email**. On GitHub, open
+   **Settings → Emails** and tick **Keep my email addresses private**. GitHub
+   then shows your noreply address. It looks like
+   `12345678+your-account@users.noreply.github.com`. Copy it exactly.
+3. **⌨️ You** (window 1): start Claude in the workspace. It does 8.1–8.3
+   from here.
+   ```
+   cd ~/projects/priority-guard
+   claude
+   ```
+4. **🤖 Claude:** type this prompt (with your values):
+   ```
+   Create the folder ~/projects/priority-guard/app and make it a new git
+   repository whose first branch is main: git init -b main. Then, for that
+   repository only (not --global), set user.name to "<your name or handle>"
+   and user.email to "<your GitHub noreply email>". Use full paths in every
+   command. Don't create any other file, and don't commit or push anything.
+   Don't read anything outside ~/projects/priority-guard and
+   ~/projects/prove-it-kit.
+   ```
+
+✅ **Check:** `<SCOPE>` is in your values table and is 18 characters or
+fewer. Git's output says it created an empty repository in
+`.../priority-guard/app/.git/`.
+
+⚠️ **If your instructor tells you, in the workshop invite, that `now-sdk init`
+needs an empty folder:** use the order in 8.5's ⚠️ from the start: make the
+empty folder and run `now-sdk init` first (items 1 and 2 of that ⚠️), then
+8.1–8.4, then 8.5 from item 2 on.
+
+#### 8.2 — An allow list, before the first commit
+
+**Why this step:** Most `.gitignore` files (the file that tells git what to
+leave out) ban things they've seen before, but sensitive material has no fixed
+shape. An **allow list** only has to know what the repo is for: everything
+else is invisible to git. It must be in place before the first commit, because
+once a file is committed it stays in the history.
+
+1. **🤖 Claude:** get a local copy of the kit, at the version you installed
+   in Step 5, outside the workspace, then copy the allow list and start a
+   README:
+   ```
+   Clone the public repo gapietro/prove-it-kit to ~/projects/prove-it-kit
+   with gh repo clone, then detach it at the tag v0.1.3:
+   git -C ~/projects/prove-it-kit switch --detach v0.1.3
+   Then copy ~/projects/prove-it-kit/templates/gitignore.allowlist to
+   ~/projects/priority-guard/app/.gitignore, and create
+   ~/projects/priority-guard/app/README.md containing exactly one line:
+   # Priority Guard
+   Use full paths. The app repo stays on main: don't stage, commit or push
+   anything. Don't read anything outside ~/projects/priority-guard and
+   ~/projects/prove-it-kit.
+   ```
+2. **✏️ Editor:** open `~/projects/priority-guard/app/.gitignore` and read
+   it. Find the line `/*`. That line hides everything; the `!` lines let
+   things back in.
+
+✅ **Check:** you can point to the line that hides everything, and to the
+lines that admit `README.md` and `.gitignore`.
+
+#### 8.3 — Install the guard
+
+**Why this step:** The allow list decides which files get in, but not what's
+written inside them. The guard is a small script git runs before every commit
+(every saved snapshot of your work), and it looks for things like passwords
+and tokens. Without it, a secret typed into an allowed file would go straight
+in.
+
+**🤖 Claude:**
+```
+Install the kit's commit guard in the app repo. Run exactly this, as one
+command:
+cd ~/projects/priority-guard/app && cp ~/projects/prove-it-kit/hooks/pre-commit-guard.sh "$(git rev-parse --git-path hooks)/pre-commit" && chmod +x "$(git rev-parse --git-path hooks)/pre-commit"
+Don't edit the script. Stay on main; don't stage, commit or push anything.
+Don't read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
+```
+
+✅ **Check:** `.git/hooks/pre-commit` exists. It runs before every commit.
+
+#### 8.4 — 🔮 Try to beat the guard
+
+**Why this step:** A check only counts if it could have failed. Writing your
+prediction down first shows you what you really expected, not what you
+remember expecting once you've seen the result. Then you try to get a fake
+secret past the guard, so you know how it behaves before you trust it with
+real code.
+
+First predict, in `LOG.md` (**✏️ Editor**,
+`~/projects/priority-guard-notes/LOG.md`): will the guard stop a commit that
+contains a token? Then, in **⌨️ You** (window 2), go to the repo:
+```
+cd ~/projects/priority-guard/app
+```
+and **type** these (don't paste):
+```
+git add .gitignore README.md
+echo 'FAKE_TOKEN=do-not-use-0000' >> README.md
+git add README.md
+git commit -m "chore: initial scaffold"
+```
+
+✅ **Check:** the commit is **blocked**, and the guard says why. Then type
+`git log`. It prints `fatal: your current branch 'main' does not have any
+commits yet`. That error is **the good result**: nothing got in. This is
+**the check working**, not a catch: nothing real was stopped. Write it in
+`LOG.md`.
+
+⚠️ **If you see…** *the commit went through:* that's the most important
+finding of the day, and a real **catch**. The guard can't be trusted. Stop
+here and tell your instructor, using the contact in the workshop invite.
+Don't push anything until it's understood.
+
+Now remove the fake token and commit cleanly, still in **⌨️ You**
+(window 2):
+```
+echo "# Priority Guard" > README.md
+git add README.md
+git commit -m "chore: initial scaffold"
+```
+
+✅ **Check:** this commit succeeds. The guard ran and passed.
+
+#### 8.5 — The SDK project, and prove it builds
+
+**Why this step:** This sets up the ServiceNow app itself and proves it
+compiles before you write any real code. Setup tools can change your files, so
+you also check the fence is still in place and that build output and
+downloaded packages stay out of git. If the empty project doesn't build,
+nothing you add to it will.
+
+1. **⌨️ You** (window 2, `~/projects/priority-guard/app`): create the
+   ServiceNow project. `init` signs in to your instance, so you run it
+   yourself, not Claude. Your PDI must be awake (see Step 1's ⚠️), and
+   `<PDI_ALIAS>` is the alias from Step 3. `init` gets every answer as a
+   flag, so it asks nothing:
+   ```
+   cd ~/projects/priority-guard/app
+   now-sdk init --appName "Priority Guard" --packageName priority-guard --scopeName <SCOPE> --template typescript.basic --auth <PDI_ALIAS>
+   ```
+
+   | Flag | Answer | Why |
+   |---|---|---|
+   | `--appName` | `Priority Guard` | The app's display name |
+   | `--packageName` | `priority-guard` | npm package name: lower case, no spaces |
+   | `--scopeName` | `<SCOPE>`, for example `x_123456_pg_ga` | The scope you chose in 8.1: your instance's vendor prefix, then `pg_` and your initials. **18 characters at most** (the SDK refuses longer) |
+   | `--template` | `typescript.basic` | Plain TypeScript, no front end. The app has no UI of its own, so it needs no React or Vue |
+   | `--auth` | `<PDI_ALIAS>` | Always name your instance. Without it, `init` uses whichever alias is the default |
+
+   ✅ **Check:** it ends with `Application created successfully.` and the
+   folder now has `now.config.json`, `package.json` and `src/`. A warning
+   that a newer SDK version is available is fine: don't upgrade mid-lab.
+
+   ⚠️ **If you see…** *it still asks questions:* answer with the values in
+   the table above. If it asks for a template, choose **typescript.basic**.
+
+   ⚠️ **If you see…** *`init` refuses to run, with an error saying the
+   folder isn't empty:* your SDK version wants an empty folder. Start the
+   folder again, in this order, and keep the allow list **before the first
+   commit**:
+   1. **⌨️ You** (window 2): delete the app folder and make it again, empty.
+      Nothing has been pushed, and the only commit is the 8.4 scaffold,
+      which you redo:
+      ```
+      cd ~/projects/priority-guard
+      rm -rf ~/projects/priority-guard/app
+      mkdir -p ~/projects/priority-guard/app
+      ```
+   2. **⌨️ You** (window 2): the `cd` and `now-sdk init` lines above.
+   3. **🤖 Claude:** 8.1's prompt (`git init -b main`, your name and
+      email), then 8.2 (the allow list) and 8.3 (the guard).
+   4. **⌨️ You:** 8.4 (beat the guard, then the clean commit).
+   5. Carry on from item 2 below.
+
+   If anything else goes wrong, stop and tell your instructor, using the
+   contact in the workshop invite.
+2. **Restore the allow list.** `now-sdk init` writes its own short
+   `.gitignore` over yours (SDK 4.12 does this every time). Put the kit's
+   allow list back.
+
+   **🤖 Claude** (window 1, still in `~/projects/priority-guard`):
+   ```
+   now-sdk init replaced ~/projects/priority-guard/app/.gitignore with its
+   own. Copy ~/projects/prove-it-kit/templates/gitignore.allowlist over it
+   again. Change nothing else. Stay on main; don't stage, commit or push
+   anything. Don't read anything outside ~/projects/priority-guard and
+   ~/projects/prove-it-kit.
+   ```
+   **🔍 Check:**
+   ```
+   Run exactly this and show me the raw output, unedited:
+   grep -n '^/\*' ~/projects/priority-guard/app/.gitignore
+   ```
+   `grep` must print **exactly one line**, the `/*`. Nothing was committed
+   with the SDK's version, so nothing leaked.
+
+   **Remove the template's examples.** The `typescript.basic` template ships
+   two sample files that are not part of your app: a business rule on the
+   incident table and a client script that shows "Table loaded
+   successfully!!" on every incident form. Left in, they install with your
+   app and run on every incident.
+
+   **🤖 Claude:**
+   ```
+   Delete the example files the now-sdk template created in
+   ~/projects/priority-guard/app: src/fluent/example.now.ts and
+   src/server/script.ts. If the template created different example files,
+   list them and ask me before deleting anything. Keep the tsconfig files.
+   Don't delete anything else. Don't stage, commit or push anything.
+   ```
+   **🔍 Check:**
+   ```
+   Run exactly this and show me the raw output, unedited:
+   grep -rn -e "my_client_script" -e "LogStateChange" -e "Table loaded" ~/projects/priority-guard/app/src
+   ```
+   It prints **nothing**: no example rule or script is left.
+3. **Move Claude into the repo.** **🤖 Claude** (window 1): type `/exit`.
+   Then **⌨️ You** (window 1): start Claude again **in the repo**. From now on,
+   Claude always runs here:
+   ```
+   cd ~/projects/priority-guard/app
+   claude
+   ```
+   When it asks whether you trust this folder, choose **Yes**.
+
+   **🤖 Claude** (`~/projects/priority-guard/app`): type this prompt:
+   ```
+   now-sdk init just created files in ~/projects/priority-guard/app.
+   Compare them with the allow lines already in
+   ~/projects/priority-guard/app/.gitignore. Propose any allow line to
+   append at the end: only what belongs in source control for this SDK
+   project. Not dist, not node_modules, nothing that holds credentials.
+   Show me the list first. Don't write it yet. Stay on main; don't stage,
+   commit or push anything. Don't read anything outside
+   ~/projects/priority-guard and ~/projects/prove-it-kit.
+   ```
+   Read the proposal. It's **your** decision. A reasonable proposal is
+   usually **nothing** (the kit's list already covers the SDK's files), or
+   `!/.vscode/` (the editor's settings folder). Say **no** to anything
+   under `dist`, `node_modules` or `.snc`, and to any name containing
+   `auth`, `env`, `cred` or `secret`. If you agree with all of it, type
+   `confirm` (in Claude). If not, say in one line which line to drop, and
+   check the new list before you type `confirm`.
+4. **🤖 Claude** (`~/projects/priority-guard/app`):
+   ```
+   Install the packages and build the empty project. This session runs in
+   ~/projects/priority-guard/app, so run, from there:
+   npm install
+   then
+   now-sdk build
+   If the build fails, show me the error and stop: don't change any file to
+   fix it. Never run now-sdk auth. Stay on main; don't stage, commit or push
+   anything. Don't read anything outside ~/projects/priority-guard and
+   ~/projects/prove-it-kit.
+   ```
+   **🔍 Check:**
+   ```
+   Run exactly this and show me the raw output, unedited:
+   git -C ~/projects/priority-guard/app status --short
+   git -C ~/projects/priority-guard/app check-ignore -v dist
+   git -C ~/projects/priority-guard/app check-ignore -v node_modules
+   ```
+
+   ✅ **Check:** the build finishes without errors. `git status --short`
+   shows no `dist/` and no `node_modules/`. Both `check-ignore` lines name
+   a rule that hides them.
+
+   ⚠️ **If you see…** *the build fails:*
+   1. **✏️ Editor:** copy the **first** error line into `LOG.md`.
+   2. **🤖 Claude:**
+      ```
+      Explain this build error in plain words. Don't change any file.
+      ```
+   3. If it says a file (often an `index` file under `src/`) still
+      **imports** one of the example files you deleted, let Claude remove
+      **only that import line**:
+      ```
+      Remove only the import of the deleted example file from that file in
+      ~/projects/priority-guard/app/src. Show me the change before you save
+      it. Change nothing else. Stay on main; don't stage, commit or push
+      anything.
+      ```
+      Read the change, then run the build again (the prompt in item 4).
+   4. Any other error: stop and tell your instructor, using the contact in
+      the workshop invite.
+5. **Quit Claude.** **🤖 Claude** (window 1): type `/exit`. The SDK's files
+   stay uncommitted for now: in Module 5 you read the list of every file
+   before it's committed and goes to GitHub.
+
+✅ **Check:** **⌨️ You** (window 2):
+```
+git -C ~/projects/priority-guard/app log --oneline
+git -C ~/projects/priority-guard/app status --short
+```
+- `git log --oneline` prints **exactly one line**, ending
+  `chore: initial scaffold`.
+- `git status --short` lists only the SDK's new files, each on a line
+  starting `??` (for example `?? now.config.json`, `?? package.json`,
+  `?? src/`). That's expected: they're committed in Module 5. Nothing names
+  `dist` or `node_modules`.
+- Only if you agreed to `!/.vscode/` in item 3, you also see
+  ` M .gitignore` and `?? .vscode/`. That's expected too.
+
+Your `~/projects` folder now looks like this:
+```
+~/projects/
+├── agentic-build-lab-guide/      this guide (you read it; Claude never does)
+├── priority-guard/               your workspace: Claude works here
+│   ├── brief/                    empty until Module 1
+│   └── app/                      your app's code repo: one commit, guard installed
+├── priority-guard-notes/         your notes: Claude never reads these
+│   ├── LOG.md                    your guard prediction and result
+│   └── catches.md                empty for now
+└── prove-it-kit/                 a copy of the kit at v0.1.3 (Claude only reads it)
+```
+
 ---
 
-## Pre-flight: all seven before the day
+## Pre-flight: all eight before the day
 
 **Why this step:** This list is your proof the bench is ready. Anything left unticked would cost you time on the day, so your instructor needs to hear about it before then.
 
 - [ ] Step 1: PDI with demo incidents and business services
 - [ ] Step 2: all six tools print a version
 - [ ] Step 3: GitHub, Claude Code and the SDK login all work
-- [ ] Step 4: the workspace holds only an empty `brief/` folder
+- [ ] Step 4: the workspace holds an empty `brief/` folder and, after
+      Step 8, your `app/` repo, and nothing else
 - [ ] Step 5: the five kit commands and `/code-review`
 - [ ] Step 6: a clean bench
 - [ ] Step 7: the agent user in a second browser profile
+- [ ] Step 8: your app's repo: `<SCOPE>` chosen, the guard blocked the fake
+      token, one `chore: initial scaffold` commit, and the empty project
+      builds
 
 **Optional: let Claude double-check your bench.** Once everything above is
 ticked, Claude can run the version checks for you in one go and show you the

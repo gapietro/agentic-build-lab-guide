@@ -3,7 +3,8 @@
 **A hands-on workshop.** In one day, 09:00–17:00, you build a small ServiceNow app,
 **Priority Guard**, the way real work arrives: from a use case, workshop
 notes and technical notes, through a PRD and an LLD, to a reviewed,
-installed, handed-over app. A coding agent (Claude Code) does the typing. You
+installed app. The after-the-workshop track then finishes it and hands it
+over. A coding agent (Claude Code) does the typing. You
 make the decisions, and checks decide whether each piece of work may go on.
 
 You're not here to learn this app. You're here to learn **the method**, so
@@ -20,24 +21,26 @@ still clone the guide in Module 0: the steps copy files from it.
 
 | Inputs | → PRD | → Consult | → Research and LLD | → Challenge and sign | → Plan | → Build | → Grade and handoff |
 |---|---|---|---|---|---|---|---|
-| Use case, workshop notes (tech notes join at research) | Accepted PRD | `CONSULT.md` | Signed LLD | Signed design record | The board | Merged, installed code | `GRADE.md`, `RUNBOOK.md`, a verdict |
+| Use case, workshop notes (tech notes join at research) | Accepted PRD | `CONSULT.md` | Signed LLD | Signed design record | The board | Merged, installed code | On the day: `GRADE.md`. After the workshop: `RUNBOOK.md` and a verdict |
 
 ---
 
 ## 1. What you'll learn
 
-By the end you will have done each of these yourself, once:
+By the end of the day you will have done most of these yourself, once. The
+parts marked **⏭** you do in the after-the-workshop track.
 
 | You'll be able to… | Module |
 |---|---|
+| Build a repo that refuses secrets, and prove it does | 0 (pre-work) |
 | Review a PRD against the inputs it came from, and get it accepted | 1 |
 | Turn a PRD into an architecture, and push back on AI where it doesn't belong | 2 |
 | Research the platform, check every fact on your instance, and write an LLD | 3 |
 | Let the AI challenge your design, and sign the contract the code is held to | 4 |
-| Build a repo that refuses secrets, and turn a signed design into a plan | 5 |
-| Run the build loop: tests first, one word to ship, review before merge | 6 |
-| Attack your own safeguard, and check the app as an ordinary user | 7 |
-| Grade the app like a stranger, and prove a runbook works by breaking the app | 8 |
+| Turn a signed design into a plan | 5 |
+| Run the build loop: tests first, one word to ship, review before merge, and check the app live as an ordinary agent | 6 |
+| Attack your own safeguard with a fresh reviewer (optional on the day). ⏭ Have your partner attack the live app | 7 |
+| Grade the app like a stranger. ⏭ Prove a runbook works by breaking the app | 8 |
 | Count what the process caught | 9 |
 
 ---
@@ -46,19 +49,21 @@ By the end you will have done each of these yourself, once:
 
 | When | Module | What you do | Leaves behind |
 |---|---|---|---|
-| Before the day (60–90 min) | [0 · Pre-work](MODULE-0-prework.md) | Install the tools, connect your instance, pass the pre-flight checks | A ready bench |
+| Before the day (90–120 min) | [0 · Pre-work](MODULE-0-prework.md) | Install the tools, connect your instance, set up your app's repo (and prove it refuses a secret), pass the pre-flight checks | A ready bench and your app's repo |
 | 09:00 (30 min) | [1 · Inputs to PRD](MODULE-1-prd.md) | Review the PRD against the inputs; the customer accepts it | An accepted PRD |
 | 09:30 (30 min) | [2 · Consult](MODULE-2-consult.md) | The agent reads the PRD and recommends an architecture | `CONSULT.md` |
-| 10:00 (75 min) | [3 · Research and LLD](MODULE-3-research-and-lld.md) | Research the platform; a background script checks the top facts on your instance; Claude drafts the LLD; a quick review; you sign. *After the workshop:* the full LLD review | A signed LLD |
-| 11:15 (45 min) | [4 · Challenge and sign](MODULE-4-design.md) | The agent challenges your design; you sign the contract | The signed design record |
-| 12:00 (45 min) | [5 · Fence and plan](MODULE-5-fence-and-plan.md) | The repo, the secret test, the plan | A repo and a plan |
-| 12:45 (30 min) | [6 · Build loop](MODULE-6-build-loop.md) | Your first story by hand, then start the sub-agent batch just before lunch. *After the workshop:* Step 12, building the whole app | A first story merged; a batch running |
-| 13:15 | Lunch | The batch runs while you eat | — |
+| 10:00 (75 min) | [3 · Research and LLD](MODULE-3-research-and-lld.md) | Research the platform; a background script checks the top facts on your instance; Claude drafts the LLD; a quick review; you sign; you write your Module 4 positions. *After the workshop:* the full LLD review | A signed LLD and your positions |
+| 11:15 (10 min) | Break | — | — |
+| 11:25 (45 min) | [4 · Challenge and sign](MODULE-4-design.md) | The agent challenges your design; you sign the contract | The signed design record |
+| 12:10 (30 min) | [5 · Fence and plan](MODULE-5-fence-and-plan.md) | The project's rules, the private GitHub repo, the plan | A plan on GitHub |
+| 12:40 (30 min) | [6 · Build loop](MODULE-6-build-loop.md) | Your first story by hand, then start the sub-agent batch at 13:10. *After the workshop:* Step 12, building the whole app | A first story merged; a batch running |
+| 13:10 | Lunch | The batch runs while you eat (back at 14:00) | — |
 | 14:00 (45 min) | [6 · Build loop](MODULE-6-build-loop.md) (continued) | Read the batch's evidence, install, check it live, close | An installed app |
-| 14:45 (15 min) | [7 · Break it](MODULE-7-break-it.md) | **Optional:** the fresh reviewer attacks your floor. *After the workshop:* your partner's attack; amend the design | A list of attempts (fixes after the workshop) |
-| 15:00 (45 min) | [8 · Grade and handoff](MODULE-8-grade-and-handoff.md) | Run the grade and read it. *After the workshop:* the runbook, the drill, the verdict | `GRADE.md` (later `RUNBOOK.md` and a verdict) |
-| 15:45 (15 min) | [9 · What the process caught](MODULE-9-debrief.md) | Debrief: count the catches; take it home | Your tally |
-| 16:00–17:00 | Buffer | Catch up on slow installs or runs, or start the after-the-workshop track | — |
+| 14:45 (15 min) | [7 · Break it](MODULE-7-break-it.md) | **Optional:** the fresh reviewer attacks your floor. *After the workshop:* fix what got through; your partner's attack; amend the design | A list of attempts (fixes after the workshop) |
+| 15:00 (10 min) | Break | — | — |
+| 15:10 (45 min) | [8 · Grade and handoff](MODULE-8-grade-and-handoff.md) | Run the grade and read it. *After the workshop:* the real grade, the runbook, the drill, the verdict | `GRADE.md` (later `RUNBOOK.md` and a verdict) |
+| 15:55 (15 min) | [9 · What the process caught](MODULE-9-debrief.md) | Debrief: count the catches; take it home | Your tally |
+| 16:10–17:00 | Buffer | Catch up on slow installs or runs, or start the after-the-workshop track | — |
 | After the workshop | [Your own PRD track](OWN-PRD.md) | The same modules on your own use case: a kick-off half day, then about two weeks to finish one slice | A working slice on your development instance, graded and handed over |
 | When it's ready | [Getting it to production](PROMOTE.md) | The customer's change process, with your evidence attached | The app in production |
 
@@ -125,14 +130,16 @@ After Module 0 it looks like this:
 ~/projects/
 ├── agentic-build-lab-guide/      this guide (you read it; Claude never does)
 ├── priority-guard/               your workspace: Claude works here
+│   ├── app/                      your app's repo (Module 0 Step 8)
 │   └── brief/                    empty until Module 1
-└── priority-guard-notes/         your notes: Claude never reads these
-    ├── LOG.md                    empty for now
-    └── catches.md                empty for now
+├── priority-guard-notes/         your notes: Claude never reads these
+│   ├── LOG.md                    your log
+│   └── catches.md                empty for now
+└── prove-it-kit/                 a local copy of the kit, v0.1.3 (Module 0 Step 8)
 ```
-Later modules add to `priority-guard/` (the PRD, the consult, your app's
-code in `app/`), and Module 5 adds `prove-it-kit/` next to it. Each module
-says what it creates.
+Later modules add to `priority-guard/` (the PRD, the consult, the inputs,
+the designs) and fill `app/` with your app's code. Each module says what it
+creates.
 
 **You don't need Now Assist.** The app is plain code. The AI in this lab is
 the one that writes the code, not one inside the app.
@@ -152,7 +159,7 @@ stop being checks.
 
 | Folder | What's in it | Does Claude see it? |
 |---|---|---|
-| `~/projects/priority-guard/` | Your workspace: the accepted PRD, the consult, the customer's notes, then your app's repo | Yes. Run Claude here. |
+| `~/projects/priority-guard/` | Your workspace: your app's repo (from pre-work), then the accepted PRD, the consult and the customer's notes | Yes. Run Claude here. |
 | `~/projects/priority-guard-notes/` | Your notes: your log and your catch list | No. Your settings stop Claude's file reader from opening it (and this guide's folder), but a shell command could still reach it. So never ask Claude to read it, and choose **No** if Claude asks to. |
 
 **3. Follow what really happens.** Claude won't word things the way this
@@ -180,7 +187,7 @@ instructions watch for that exact wording.
 | `Take issue #<n>.` | Module 6 and Module 7, when a step names an issue to build (for example, a defect you just filed) | Starts that issue instead of the top one |
 | `apply now` | Module 7 Part C, when it asks "Dry run first (recommended), or apply now?" | Files the amended plan straight away |
 | `Take the top one.` | Module 6, after the session open | Starts whatever is really at the top, not the story you expected |
-| `confirm` | Modules 5–8, after Claude proposes something | Accepts it (for example, a story's five bullets) |
+| `confirm` | Module 0 Step 8, and Modules 5–8, after Claude proposes something | Accepts it (for example, a story's five bullets) |
 | `ship it` | Modules 5–8 | Push, open a pull request, review, fix once, merge when green |
 
 **Gates.** The kit calls milestones **gates**: MERGE, INSTALL, DEMO,
@@ -237,7 +244,7 @@ type your own value.
 |---|---|---|---|
 | `<PDI_ALIAS>` | The name your SDK login is saved under | `mypdi` | |
 | `<APP_REPO>` | Your app's GitHub repo, `owner/name` | `you/priority-guard` | |
-| `<SCOPE>` | Your app's scope: vendor prefix + `pg_` + your initials, 18 characters at most. Module 5 shows you where your instance's vendor prefix comes from: the system property `glide.appcreator.company.code` | `x_123456_pg_ga` | |
+| `<SCOPE>` | Your app's scope: vendor prefix + `pg_` + your initials, 18 characters at most. Module 0 Step 8 shows you where your instance's vendor prefix comes from: the system property `glide.appcreator.company.code` | `x_123456_pg_ga` | |
 | `<AGENT_USER>` | The ordinary service desk agent you test as | `agent.demo` | |
 | `<OVERRIDE_ROLE>` | The app role that may override the floor | *(from your design)* | |
 | `<PARTNER>` | Your partner's first name | | |
@@ -285,7 +292,7 @@ proceed?* with numbered choices. Read the command in the box, then:
 |---|---|
 | `git`, `gh`, `npm` or `now-sdk build` work, reading or writing files under `~/projects/priority-guard`, or reading (only reading) files under `~/projects/prove-it-kit` | **1. Yes** |
 | Writing a temporary file (in `/tmp` or a folder `mktemp` made) during the grade in Module 8 | **1. Yes**. The secrets scan keeps its patterns there |
-| `now-sdk install --auth <PDI_ALIAS>` with **your** alias, asked by `/prove-it:grade` (Module 8 step 3, and the re-grade in step 11) | **1. Yes**. This is the only install Claude runs, after asking you to type the alias |
+| `now-sdk install --auth <PDI_ALIAS>` with **your** alias, asked by `/prove-it:grade` (Module 8 step 3, the real grade after the workshop, and the re-grade in step 11) | **1. Yes**. This is the only install Claude runs, after asking you to type the alias |
 | Any other `now-sdk install`, any `now-sdk auth`, anything that names your instance (`service-now.com`), or anything under `~/projects/priority-guard-notes` or `~/projects/agentic-build-lab-guide` (your settings block Claude's file reader there, but a shell command such as `cat` could still reach them) | **No** (the last choice). Then do that step yourself if the guide says to, as a ⌨️ You step |
 | Anything you don't understand | **No**, and ask Claude in one line what it was trying to do and why |
 
@@ -316,7 +323,7 @@ A **catch** is a real problem the process found **and that got fixed**, or
 that changed a decision, before it reached the app. Three things are **not**
 catches:
 - A check firing on something you planted to test it (like the fake token in
-  Module 5). That's the check working: write it in `LOG.md`.
+  Module 0 Step 8). That's the check working: write it in `LOG.md`.
 - A finding nobody has fixed yet. It counts once the fix is merged.
 - A style nit, or a finding that turns out to be wrong.
 

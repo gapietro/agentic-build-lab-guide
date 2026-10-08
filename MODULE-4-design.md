@@ -1,6 +1,6 @@
 # Module 4 — Design approval: nothing is built until you sign
 
-*Workshop · 11:15 · 45 minutes*
+*Workshop · 11:25 · 45 minutes*
 
 **In the workshop:** do all six steps.
 
@@ -13,8 +13,8 @@
 `CONSULT.md` is **advice**. Nobody has pushed back on it, asked how it fails,
 or signed it. In this module you do all three:
 
-1. **You design.** You write your design positions before the challenge
-   starts. The kit doesn't design anything.
+1. **You design.** You wrote your design positions at the end of Module 3,
+   before the challenge starts. The kit doesn't design anything.
 2. **The AI challenges.** `/prove-it:design-challenge` asks **one question
    per turn**: how it fails, security, cost, boundaries, then milestones.
 3. **It reads every numbered term back.** You correct them until they're
@@ -35,57 +35,25 @@ can't answer. That's a gap that would otherwise have shown up in the code.
 - [ ] `~/projects/priority-guard/CONSULT.md` exists, and you haven't
       hand-edited it. A change Claude made at your request in Module 2
       Step 5 is fine.
-- [ ] `~/projects/priority-guard` holds `brief/`, `CONSULT.md`, `inputs/` and `docs/`,
-      with `docs/LLD-PriorityGuard.md` signed by you (Module 3).
+- [ ] `~/projects/priority-guard` holds `app/` (from pre-work), `brief/`,
+      `CONSULT.md`, `inputs/` and `docs/`, with `docs/LLD-PriorityGuard.md`
+      signed by you (Module 3).
+- [ ] Your positions list is in `LOG.md` (Module 3 Step 8).
 
 ---
 
 ## Steps
 
-### Step 1 — Write your positions
+### Step 1 — Get your positions ready
 
 **Why this step:** Answers made up on the spot can contradict each other.
-Writing your positions down first, from your LLD, keeps your answers steady,
-and shows you early where the LLD has nothing to say.
+Answering from the list you wrote at the end of Module 3 keeps your answers
+steady.
 
-The challenge asks one question at a time. Answer from a list you prepared,
-not on the spot, so your answers stay consistent. Copy this list into
-`LOG.md` and **fill in every line yourself, from your signed LLD**. The LLD
-is your design; the challenge is there to find its weak points. Where the LLD
-doesn't answer a line, that's worth knowing before the challenge starts.
-
-- **Feature name:** `PriorityGuard` (letters only; it becomes a file name).
-- **Your design in your own words:** three or four sentences, from LLD
-  §1–§3. What gets built, which tables it uses, and which code owns each write.
-- **The central rule:** write it as **separate short sentences**, one idea
-  each. For example: "Only plain code sets the priority floor." "The floor
-  can raise a priority, never lower it." "Only an override can go below the
-  floor."
-- **When the floor runs, and what it must survive:** ______ (copy it from
-  LLD §3 and §7 in your own words).
-- **Who can change the critical services list:** ______
-- **Who can override, and what an override must record:** ______
-- **Can an override be edited or deleted afterwards?** ______
-- **How approval works for Tier 1 services:** ______ (PRD capability 4, LLD §3–§4).
-  If your PRD has nothing to answer a line, check the PRD against the inputs
-  again ([Module 1 Step 4](MODULE-1-prd.md#step-4--check-the-evidence-yourself))
-  before you invent an answer.
-- **What happens to capability 6 (smart urgency):** ______ (from your consult,
-  and the customer's decision if the consult asked for one)
-- **What the app must never do:** for example, change the priority matrix,
-  or touch SLA definitions.
-- **Who can see the weekly count:** ______
-- **Demo data:** which seed records show the app working: ______. Start
-  from the test plan in your LLD §6. For example: two or three critical
-  services, each with a floor, and an incident below the floor on each.
-- **Milestones this feature must pass:**
-
-  | Milestone | Passes when |
-  |---|---|
-  | MERGE | Every change reviewed, all checks green |
-  | INSTALL | The app installs cleanly on your PDI and a live check passes |
-  | DEMO | The floor works live, as an ordinary agent |
-  | HANDOFF | Someone else can diagnose a failure from the runbook alone |
+**✏️ Editor:** open `LOG.md` and find the positions list you wrote in
+[Module 3 Step 8](MODULE-3-research-and-lld.md#step-8--write-your-module-4-positions).
+Read it through once. Any line still blank? Fill it in now, from your signed
+LLD.
 
 ✅ **Check:** every line has your answer. The central rule is at least two
 separate sentences.
@@ -111,7 +79,7 @@ attention instead of getting lost in a pile.
    PriorityGuard
    ```
 4. It asks you to describe the design in your own words. Type your sentences
-   from step 1.
+   from your positions list.
 
 ✅ **Check:** from now on, **every turn ends with exactly one question.**
 
@@ -121,8 +89,9 @@ attention instead of getting lost in a pile.
 still on paper, where it is cheap to fix. Answering from your list keeps the
 record consistent.
 
-Answer each question from your list. When it asks how something fails, or
-about security, answer from LLD §3, §5 and §7.
+Answer each question from your positions list. **Keep each answer to one
+line or two.** When it asks how something fails, or about security, answer
+from LLD §3, §5 and §7.
 
 **Typing answers in Claude.** Pressing **Enter** sends your message. For an
 answer of several lines, write it in your editor first and paste the whole
@@ -132,7 +101,7 @@ doesn't make a new line in your terminal, type `\` and then press **Enter**.
 When it asks about a capability the customer **deferred**, answer
 `Out of scope for this record; deferred to a later release.` Never answer
 `Not decided` for a deferred capability: that writes an OPEN term, and an
-OPEN term fails the grade. Keep answers short. If it asks
+OPEN term fails the grade. If it asks
 something your list doesn't cover:
 - If it's a real decision, make it, and add it to your list.
 - If only the business can decide, say `Not decided. Record it as open.`

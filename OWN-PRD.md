@@ -8,8 +8,9 @@ and ends with one **slice** of your app, working on your development
 instance, graded and handed over.
 
 **Do the workshop first**, including the parts each module marks **⏭ After
-the workshop**. One full run with known answers teaches you what a good
-result looks like, so you can judge your own results.
+the workshop**. (Skipped Module 7 on the day? Its Part A is the first
+after-the-workshop part of that module.) One full run with known answers
+teaches you what a good result looks like, so you can judge your own results.
 
 ---
 
@@ -67,7 +68,8 @@ workshop's `CONSULT.md`, would confuse the kit.
    says `~/projects/priority-guard-notes`, use `~/projects/<app>-notes`.
 2. Run Module 0's checks again for **this** instance: the SDK sign-in under a
    new alias (by the platform team's approved method), a clean bench, and
-   two browser profiles.
+   two browser profiles. Then do Module 0 Step 8 (your app's repo) again,
+   in `~/projects/<app>/app`, with your own `<SCOPE>`.
 3. **Your ordinary user is your app's real user.** Not `itil`. Create a test
    user with only the roles your real users will have. Your app's own role
    doesn't exist until the first install: assign it to the test user then,
@@ -85,8 +87,8 @@ settle them **at the kick-off** and write the answers in `LOG.md`:
 
 | Decision | Where it's used |
 |---|---|
-| The `now-sdk init` template, and whether it accepts a folder after `git init` | Module 5, steps 1 and 5 |
-| Your scope prefix and `<SCOPE>` | Module 5, before you start |
+| The `now-sdk init` template, and whether it accepts a folder after `git init` | Module 0, Step 8 |
+| Your scope prefix and `<SCOPE>` | Module 0, Step 8 |
 | That the grade's secrets scan runs in auto mode without permission prompts on your machine (Module 0's settings file sets auto mode; Claude Code 2.1.147 or later) | Module 8, step 2. If the scan can't run, it's unverified and the grade is capped at 49 |
 | Whether to build the top story when it isn't the one you expected | Module 6, step 2: yes, always |
 
@@ -203,7 +205,8 @@ deferred, not dropped.
   4. §5 has a failure mode for each component;
   5. §6 tests your central rule off the instance, and your live check on it;
   6. §7 matches what you found.
-- Before the LLD goes into the repo (Module 5 step 9), grep it for the
+- Before the LLD goes into the repo (Module 5 Step 4, bringing the signed
+  design in), grep it for the
   customer's name and its instance host names too, not only `service-now`.
 
 **Integrations.** If your slice calls another system:
@@ -219,7 +222,8 @@ deferred, not dropped.
 
 **Why this step:** The signed design is the contract for your slice, so the real owner has to agree to every line.
 
-Use this positions list instead of step 1's. Fill every line from your LLD:
+Use this positions list instead of the one in Module 3 Step 8 (write it at
+the end of Module 3, as the workshop does). Fill every line from your LLD:
 
 - **Feature name:** letters only.
 - **Your design in your own words:** three or four sentences from LLD §1–§3,
@@ -278,6 +282,7 @@ the slice, because the signed design does.
 
 **Why this step:** Real users will try things you didn't plan for, so keep looking for holes until a round finds none.
 
+- Do **Part A first**.
 - Step 2: in the reviewer prompt, replace the rule with **your central rule**,
   in one sentence. Keep the rest, including the branch `test/break-floor`,
   which step 3 uses.
@@ -341,9 +346,10 @@ truth.**
 **Why this step:** Grading before the handoff finds problems while they're still cheap to fix.
 
 1. Close every gate up to and including **DEMO**.
-2. **Grade at DEMO, for real.** That's Module 8 Part A, with the
-   `/permissions` you settled at the kick-off. It isn't a preview, because
-   the milestone is reached.
+2. **Grade at DEMO, for real.** That's Module 8's after-the-workshop real
+   grade: Part A again, choosing DEMO, merged on the branch
+   `chore/grade-demo`. It isn't a preview, because the milestone is
+   reached.
 3. The grade files its findings as stories. Some may re-open an earlier
    gate. **Work them until every gate up to DEMO is back to zero.**
 4. **Hand off:** Module 8 Parts B and C, including the drill and the verdict.
@@ -413,7 +419,7 @@ counting, and its plan keys need a different prefix. Instead:
 | 2, step 2 | "Bullet 3 contradicts capability 2" | The capability your rule comes from |
 | 2, step 5 | "Capability 2 says an incident on a critical service…" | Your push-back on every AI or agent row |
 | 3, step 3 | "what a scoped app needs to update incidents" | The tables your slice reads and writes |
-| 4, step 1 | the whole positions list | Section 4's list above |
+| 3, step 8 | the whole positions list (Module 4 answers from it) | Section 4's list above |
 | 6, step 4 | `C<n>: the floor can raise a priority, never lower it` | An example from your central rule |
 | 6, step 10 | Create an incident at impact 3, urgency 3… | Your live check from SLICE.md |
 | 7, step 2 | "an incident on a critical service can never be saved below that service's floor" | Your central rule, in one sentence |

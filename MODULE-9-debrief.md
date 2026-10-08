@@ -1,6 +1,6 @@
 # Module 9 — What the process caught
 
-*Workshop · 15:45 · 15 minutes*
+*Workshop · 15:55 · 15 minutes*
 
 **In the workshop:** Step 1 (count) and Step 2 (the room's board), kept
 short. Steps 3 and 4 are quick: do them in the room, but if time is short,

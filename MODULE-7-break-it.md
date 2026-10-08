@@ -7,7 +7,9 @@ compare its list with yours, in 15 minutes. The reviewer lists its attempts.
 Fixing what got through, Part B (your partner) and Part C (amending the
 design) are ⏭ after the workshop.
 
-**Short on time? Skip this module; nothing later depends on it.**
+**Short on time? Skip this module; nothing later in the day depends on
+it.** Skipped this module on the day? Part A is the first after-the-workshop
+part of this module: do it before items 2 to 5, Part B and Part C.
 
 [← Module 6](MODULE-6-build-loop.md) · [Lab home](README.md) · [Module 8 →](MODULE-8-grade-and-handoff.md)
 
@@ -58,6 +60,13 @@ reviewer's in step 3.
 ### Step 2 — Start a reviewer with no context
 
 **Why this step:** You know what you meant the code to do, so you tend to test what you meant. A reviewer with no history knows only the rule, so it tries things you didn't think to try.
+
+⚠️ **Doing Part A again, after the workshop?** If the branch
+`test/break-floor` already exists (from the day), rename it first, so the
+new reviewer starts clean. **⌨️ You** (window 2):
+```
+git -C ~/projects/priority-guard/app branch -m test/break-floor test/break-floor-day
+```
 
 **🤖 Claude:** if a session is open, type `/exit`.
 
@@ -113,12 +122,23 @@ into your log, with how many attempts got through.
 
 **In the workshop, stop here.** In `LOG.md`, write each attempt that got
 through as an **open finding**, with its failing test's name. It isn't a
-catch yet: a bypass becomes a catch once its fix is merged. Then leave the
-reviewer and go back to `main`, so Module 8 grades `main`, not the
-reviewer's branch. **🤖 Claude:** type `/exit`. **⌨️ You** (window 1):
+catch yet: a bypass becomes a catch once its fix is merged. Then go back to
+`main`, so Module 8 grades `main`, not the reviewer's branch.
+
+**🤖 Claude** (still the reviewer session):
 ```
-cd ~/projects/priority-guard/app && git switch main
+Run git -C ~/projects/priority-guard/app switch main and show me the output. Change nothing else.
 ```
+**🔍 Check:**
+```
+Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app status --short
+```
+✅ **Check:** it prints **nothing**: you're on a clean `main`. If it lists
+files, they're leftovers from the reviewer. Ask the reviewer (**🤖
+Claude**) to switch back to `test/break-floor` and commit them there, then
+do these two again. Never commit them on `main`.
+
+Then leave the reviewer. **🤖 Claude:** type `/exit`.
 
 ⏭ **After the workshop:** items 2 to 5 below, fixing what got through.
 
@@ -230,9 +250,12 @@ Do the same on your partner's computer, as their agent user.
 
 ## Part C — If the design has to change
 
-⏭ **After the workshop:** all of Part C. Follow these steps only if a fix
-in Part A or B changes what the design says, for example a new rule about
-which changes the floor must survive.
+⏭ **After the workshop:** all of Part C. Follow these steps only if
+something changes what the design says, for example a new rule about which
+changes the floor must survive. That something is one of:
+- a fix in Part A or B;
+- a finding from Module 3's full LLD review that changes what the app does;
+- a story Module 6's batch stopped for a design change.
 
 ### Step 6 — Amend the design, then build
 
