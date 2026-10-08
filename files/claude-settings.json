@@ -1,0 +1,11 @@
+{
+  "disableClaudeAiConnectors": true,
+  "syncClaudeAiPlugins": false,
+  "syncClaudeAiSkills": false,
+  "autoMemoryEnabled": false,
+  "skillOverrides": { "claude-api": "off" },
+  "permissions": {
+    "defaultMode": "auto",
+    "deny": ["WebSearch", "WebFetch", "Bash(now-sdk auth:*)"]
+  }
+}
