@@ -86,12 +86,12 @@ separate sentences.
 about your design. It asks one at a time, so each answer gets your full
 attention instead of getting lost in a pile.
 
-1. Start Claude in the workspace:
+1. **⌨️ You** (`~/projects/priority-guard`): start Claude in the workspace:
    ```
    cd ~/projects/priority-guard
    claude
    ```
-2. Type exactly this, **with nothing after it** (anything after it is read as
+2. **🤖 Claude:** type exactly this, **with nothing after it** (anything after it is read as
    a file path):
    ```
    /prove-it:design-challenge
@@ -175,7 +175,7 @@ number of terms you wrote down.
 every term first means you know what you are agreeing to. Signing by hand
 means a person, not the AI, takes responsibility for it.
 
-Quit Claude (`/exit`). Open `docs/DESIGN-PriorityGuard.md` in a text editor.
+**🤖 Claude:** type `/exit` to quit Claude. Open `docs/DESIGN-PriorityGuard.md` in a text editor.
 
 1. Read every term. Is each one something you agreed?
 2. Find the **rejected alternatives**. Is "let AI adjust the priority" there,

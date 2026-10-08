@@ -56,7 +56,8 @@ platform team.
 **Never reuse the workshop's folders.** A second brief in `brief/`, or the
 workshop's `CONSULT.md`, would confuse the kit.
 
-1. Choose a short name for your app, for example `access-review`. Then:
+1. Choose a short name for your app, for example `access-review`. Then,
+   **⌨️ You** (any folder):
    ```
    mkdir -p ~/projects/<app>/brief ~/projects/<app>-notes
    touch ~/projects/<app>-notes/LOG.md ~/projects/<app>-notes/catches.md
@@ -116,7 +117,7 @@ consult and a design challenge too long to review properly.
 **Why this step:** Every line should trace back to something the customer said, so you don't build guesses.
 
 Put your inputs and your PRD in a review folder and run Module 1's steps,
-with this trace prompt:
+with this trace prompt (**🤖 Claude**, in the review folder):
 ```
 Trace <your PRD file> against the input files here. For every capability
 and requirement in the PRD, quote the input sentence that supports it, or
@@ -159,7 +160,7 @@ Most real PRDs are 20 to 40 stories. You'll finish one **slice**: the
 thinnest piece a real user can use from start to finish. Everything else is
 deferred, not dropped.
 
-1. In Claude, in `~/projects/<app>`:
+1. **🤖 Claude** (`~/projects/<app>`):
    ```
    Read brief/ and CONSULT.md. Propose two or three end-to-end slices. Each
    slice must: let a real user do one complete thing; be about 5 to 8
@@ -172,7 +173,7 @@ deferred, not dropped.
 2. Choose one. Prefer the slice that **tests your riskiest assumption first**,
    not the easiest one. **Keep it small now:** cutting it later is costly
    (section 5).
-3. Write `SLICE.md` in `~/projects/<app>`, **by hand**: the capabilities in the slice,
+3. **✏️ Editor:** write `SLICE.md` in `~/projects/<app>`, **by hand**: the capabilities in the slice,
    the ones deferred, the one thing a real user will be able to do, and your
    **live check**, the steps an ordinary user follows to see it work.
 4. Get the real owner's OK on what's deferred, in writing.
@@ -304,9 +305,9 @@ grade or verdict left open. Add one line: what you'll build next.
 
 The plan files one milestone per gate: **MERGE → INSTALL → DEMO → HANDOFF**.
 The next gate is the one `BACKLOG.md` names at the top. Count what stands in
-its way, swapping in its name:
+its way, swapping in its name. **🔍 Check:**
 ```
-gh issue list --state open --label "gate:<next gate>" --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != "register"))] | length'
+Run exactly this and show me the raw output, unedited: gh issue list --state open --label "gate:<next gate>" --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != "register"))] | length'
 ```
 Keep running the build loop, one story at a time, until it's zero. Then
 move to the next gate. Nothing closes milestones for you. **The count is the
@@ -381,7 +382,7 @@ counting, and its plan keys need a different prefix. Instead:
    workspace) before running anything that rewrites it.
 2. Add an **LLD addendum** for the new slice: research and the same LLD
    sections, for the new capabilities only.
-3. Extend the **same** design:
+3. Extend the **same** design, **🤖 Claude:**
    ```
    /prove-it:design-challenge amend docs/DESIGN-<Feature>.md
    ```

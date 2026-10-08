@@ -38,8 +38,8 @@ quit it in step 6. Every action is labelled with **where** you do it:
 
 | Label | What it is | Folder |
 |---|---|---|
-| **⌨️ Shell** | A normal terminal, for `mkdir`, `cp`, `cd` and `ls`. Never Claude | Any (step 1 uses full paths) |
-| **🤖 Claude** | Claude Code, started with `claude`. Type prompts here, never shell commands | `~/projects/priority-guard` |
+| **⌨️ You** | You type it yourself, in a normal terminal: `mkdir`, `cp`, `cd` and `ls` (never in Claude), and `claude` to start Claude | Any (step 1 uses full paths) |
+| **🤖 Claude** | Claude Code, started with `claude`. Type prompts here, never shell commands, or `/exit` to quit Claude. Claude runs any commands | `~/projects/priority-guard` |
 | **✏️ Editor** | Your text editor, for `LOG.md` and changes you make **by hand** | — |
 | **🌐 Browser** | Your **admin** browser profile, for checks on the instance | — |
 
@@ -59,7 +59,7 @@ The technical notes are customer material, like the PRD. They go in the
 workspace, but **not** in `brief/`, because the consult expects exactly one
 file there.
 
-**⌨️ Shell** (any folder):
+**⌨️ You** (any folder):
 ```
 mkdir -p ~/projects/priority-guard/inputs ~/projects/priority-guard/docs
 cp ~/projects/agentic-build-lab-guide/files/inputs/TECH-NOTES.md ~/projects/priority-guard/inputs/
@@ -81,7 +81,7 @@ most.
 Claude lists those facts and says how to check each one. Without that list,
 guesses can slip into the design looking like facts.
 
-**⌨️ Shell** (any folder):
+**⌨️ You** (any folder):
 ```
 cd ~/projects/priority-guard
 claude
@@ -164,7 +164,7 @@ asks to create `docs/LLD-PriorityGuard.md`, choose **1. Yes**).
 fresh eyes, and that person is you. A gap found here takes minutes to fix.
 The same gap found later, in the code, takes much longer.
 
-**🤖 Claude:** quit Claude (`/exit`). **✏️ Editor:** open the LLD in a text editor and check:
+**🤖 Claude:** type `/exit` to quit Claude. **✏️ Editor:** open the LLD in a text editor and check:
 
 1. **§1 traceability:** every PRD capability is either built, or deferred
    with a reason. Capability 6 matches what your consult decided.
@@ -179,8 +179,8 @@ The same gap found later, in the code, takes much longer.
    the contradicted and production-only facts.
 
 Fix anything wrong **by hand** (**✏️ Editor**), or start Claude again
-(**🤖 Claude**, `~/projects/priority-guard`) and ask it to fix one named
-section.
+(**⌨️ You**: `claude` in `~/projects/priority-guard`) and ask it to fix one
+named section (**🤖 Claude**).
 
 ✅ **Check:** all six are true. Write in `LOG.md` what you had to fix.
 

@@ -179,6 +179,21 @@ Each module has the same parts:
   - ⚠️ **If you see…**: what to do when it goes differently.
 - **Log it**: one line for your notes. Module 9 counts them.
 
+**Who runs each command.** Every action in a step starts with a label:
+
+| Label | What you do | Used for |
+|---|---|---|
+| **🤖 Claude** | Type the prompt into Claude Code, or `/exit` to quit it. Claude runs the commands | Routine work: folders, branches, commits, builds. The AI does the typing |
+| **⌨️ You** | Type the command yourself, in a normal terminal | Passwords and sign-ins, starting Claude, the guide and notes folders, the instance, and the few checks that must not go through Claude. One exception for the instance: `/prove-it:grade` (Module 8) installs through Claude, after asking you to type the alias |
+| **🔍 Check** | Claude runs a check; **you read its raw output** | Checking work. The evidence is what the tool printed, not Claude's summary of it |
+| **✏️ Editor** | Open the file in your text editor and change it yourself | Signatures and allow lines. Allow lines are your decision: Claude may propose or add one, but none goes in unread. You read `.gitignore` before each commit that changes it |
+| **🌐 Browser** | Use the browser profile the step names | Your instance and GitHub |
+
+**Why the split.** The lab's idea is that the AI types and people decide.
+So Claude does the routine typing. You keep three things: your passwords,
+your signature, and a few checks done without Claude, so at least one
+check never depends on the AI's word.
+
 **Your log.** Keep one file, `~/projects/priority-guard-notes/LOG.md`, plus
 `~/projects/priority-guard-notes/catches.md`. Each catch gets one line:
 ```

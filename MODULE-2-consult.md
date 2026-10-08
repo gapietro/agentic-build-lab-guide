@@ -65,12 +65,12 @@ There are no wrong answers. You'll compare them with the consult's in step 4.
 
 **Why this step:** The consult first plays the brief back to you in a few lines, so you can check it understood before it spends time on advice. A misunderstanding fixed here costs one line. Left in, it shapes everything the consult writes after.
 
-1. Start Claude in the workspace:
+1. **⌨️ You** (any folder): start Claude in the workspace:
    ```
    cd ~/projects/priority-guard
    claude
    ```
-2. Type the command. It takes no arguments: it reads the one brief in `brief/`.
+2. **🤖 Claude** (`~/projects/priority-guard`): type the command. It takes no arguments: it reads the one brief in `brief/`.
    ```
    /prove-it:consult
    ```
@@ -109,10 +109,13 @@ without asking. If Claude Code does ask *Do you want to create CONSULT.md?*,
 choose **1. Yes**. If it asks to use your instance or your credentials,
 decline: the consult never needs them.
 
-When it's finished, check it wrote only that one file:
+When it's finished, check it wrote only that one file.
+
+**🔍 Check** (`~/projects/priority-guard`): type:
 ```
-ls -A ~/projects/priority-guard
+Run exactly this and show me the raw output, unedited: ls -A ~/projects/priority-guard
 ```
+Read the command's own output (the tool result), not Claude's summary of it.
 You should see `brief` and `CONSULT.md`. A `.claude` folder is fine too: that's
 Claude Code's own. Anything else, note it.
 
@@ -174,7 +177,7 @@ priority, or that capability 6 is deferred or reworked.
 
 **Why this step:** `CONSULT.md` is the record of what the consult advised, and Module 4 reads it later. Leaving it as it is keeps that record honest.
 
-1. Quit Claude: `/exit`.
+1. **🤖 Claude:** type `/exit` to quit Claude.
 2. Don't edit `CONSULT.md`. Module 4 reads it as it is.
 
 ---

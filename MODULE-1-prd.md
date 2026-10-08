@@ -63,14 +63,16 @@ you found one.
 **Why this step:** Claude can check every line of the PRD, the written list of what gets built, against the inputs much faster than you can by hand. The scratch folder holds only these three files, so nothing else gets into its answer.
 
 Make a scratch folder for the review, so the review doesn't mix with your
-workspace:
+workspace.
+
+**⌨️ You** (any folder):
 ```
 mkdir -p ~/projects/priority-guard-prd-review
 cp ~/projects/agentic-build-lab-guide/files/inputs/USE-CASE.md ~/projects/agentic-build-lab-guide/files/inputs/WORKSHOP-NOTES.md ~/projects/agentic-build-lab-guide/files/PRD-PriorityGuard.md ~/projects/priority-guard-prd-review/
 cd ~/projects/priority-guard-prd-review
 claude
 ```
-Type:
+**🤖 Claude** (`~/projects/priority-guard-prd-review`): type:
 ```
 Trace PRD-PriorityGuard.md against the two input files here. For every
 capability and requirement in the PRD, quote the input sentence that
@@ -101,7 +103,7 @@ Write in `LOG.md` any finding you rejected, and why.
 
 **Why this step:** Each kind of gap has its own fix, and the rules stop you making decisions that belong to the customer. Editing by hand means you know exactly what changed and why.
 
-Quit Claude (`/exit`). For each real gap, decide:
+**🤖 Claude:** type `/exit` to quit Claude. For each real gap, decide:
 - **The PRD says something no input asked for:** take it out, unless the
   customer confirms they want it.
 - **An input asks for something the PRD dropped:** put it back, **inside the
@@ -127,7 +129,9 @@ you found something the customer doesn't answer, ask before you accept.
 
 When nothing is open, fill in **8. Acceptance** with the customer's name and
 role as your instructor gives them, today's date, and the customer's name
-again as the signature. Then move the PRD into your workspace:
+again as the signature. Then move the PRD into your workspace.
+
+**⌨️ You** (any folder):
 ```
 cp ~/projects/priority-guard-prd-review/PRD-PriorityGuard.md ~/projects/priority-guard/brief/
 ```

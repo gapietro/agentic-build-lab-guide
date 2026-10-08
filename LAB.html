@@ -469,6 +469,47 @@ type your own value.</p>
 </li>
 <li><strong>Log it</strong>: one line for your notes. Module 9 counts them.</li>
 </ul>
+<p><strong>Who runs each command.</strong> Every action in a step starts with a label:</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>What you do</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>🤖 Claude</strong></td>
+<td>Type the prompt into Claude Code, or <code>/exit</code> to quit it. Claude runs the commands</td>
+<td>Routine work: folders, branches, commits, builds. The AI does the typing</td>
+</tr>
+<tr>
+<td><strong>⌨️ You</strong></td>
+<td>Type the command yourself, in a normal terminal</td>
+<td>Passwords and sign-ins, starting Claude, the guide and notes folders, the instance, and the few checks that must not go through Claude. One exception for the instance: <code>/prove-it:grade</code> (Module 8) installs through Claude, after asking you to type the alias</td>
+</tr>
+<tr>
+<td><strong>🔍 Check</strong></td>
+<td>Claude runs a check; <strong>you read its raw output</strong></td>
+<td>Checking work. The evidence is what the tool printed, not Claude's summary of it</td>
+</tr>
+<tr>
+<td><strong>✏️ Editor</strong></td>
+<td>Open the file in your text editor and change it yourself</td>
+<td>Signatures and allow lines. Allow lines are your decision: Claude may propose or add one, but none goes in unread. You read <code>.gitignore</code> before each commit that changes it</td>
+</tr>
+<tr>
+<td><strong>🌐 Browser</strong></td>
+<td>Use the browser profile the step names</td>
+<td>Your instance and GitHub</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the split.</strong> The lab's idea is that the AI types and people decide.
+So Claude does the routine typing. You keep three things: your passwords,
+your signature, and a few checks done without Claude, so at least one
+check never depends on the AI's word.</p>
 <p><strong>Your log.</strong> Keep one file, <code>~/projects/priority-guard-notes/LOG.md</code>, plus
 <code>~/projects/priority-guard-notes/catches.md</code>. Each catch gets one line:</p>
 <pre><code>&lt;module&gt; | &lt;what caught it&gt; | &lt;what it caught&gt;
@@ -737,13 +778,14 @@ you found one.</p>
 <h3 id="m1--step-3--trace-the-prd-with-claude">Step 3 — Trace the PRD with Claude</h3>
 <p><strong>Why this step:</strong> Claude can check every line of the PRD, the written list of what gets built, against the inputs much faster than you can by hand. The scratch folder holds only these three files, so nothing else gets into its answer.</p>
 <p>Make a scratch folder for the review, so the review doesn't mix with your
-workspace:</p>
+workspace.</p>
+<p><strong>⌨️ You</strong> (any folder):</p>
 <pre><code>mkdir -p ~/projects/priority-guard-prd-review
 cp ~/projects/agentic-build-lab-guide/files/inputs/USE-CASE.md ~/projects/agentic-build-lab-guide/files/inputs/WORKSHOP-NOTES.md ~/projects/agentic-build-lab-guide/files/PRD-PriorityGuard.md ~/projects/priority-guard-prd-review/
 cd ~/projects/priority-guard-prd-review
 claude
 </code></pre>
-<p>Type:</p>
+<p><strong>🤖 Claude</strong> (<code>~/projects/priority-guard-prd-review</code>): type:</p>
 <pre><code>Trace PRD-PriorityGuard.md against the two input files here. For every
 capability and requirement in the PRD, quote the input sentence that
 supports it, or say &quot;no source&quot;. Then list every input statement that
@@ -767,7 +809,7 @@ yourself before you believe it.</li>
 Write in <code>LOG.md</code> any finding you rejected, and why.</p>
 <h3 id="m1--step-5--decide-what-to-do-with-each-gap">Step 5 — Decide what to do with each gap</h3>
 <p><strong>Why this step:</strong> Each kind of gap has its own fix, and the rules stop you making decisions that belong to the customer. Editing by hand means you know exactly what changed and why.</p>
-<p>Quit Claude (<code>/exit</code>). For each real gap, decide:</p>
+<p><strong>🤖 Claude:</strong> type <code>/exit</code> to quit Claude. For each real gap, decide:</p>
 <ul>
 <li><strong>The PRD says something no input asked for:</strong> take it out, unless the
 customer confirms they want it.</li>
@@ -789,7 +831,8 @@ the PRD, in the capability it affects, and remove it from Open decisions. If
 you found something the customer doesn't answer, ask before you accept.</p>
 <p>When nothing is open, fill in <strong>8. Acceptance</strong> with the customer's name and
 role as your instructor gives them, today's date, and the customer's name
-again as the signature. Then move the PRD into your workspace:</p>
+again as the signature. Then move the PRD into your workspace.</p>
+<p><strong>⌨️ You</strong> (any folder):</p>
 <pre><code>cp ~/projects/priority-guard-prd-review/PRD-PriorityGuard.md ~/projects/priority-guard/brief/
 </code></pre>
 <p>✅ <strong>Check:</strong> <code>ls -R ~/projects/priority-guard</code> shows only <code>brief/PRD-PriorityGuard.md</code>.
@@ -871,11 +914,11 @@ need AI?</li>
 <h3 id="m2--step-2--run-the-consult">Step 2 — Run the consult</h3>
 <p><strong>Why this step:</strong> The consult first plays the brief back to you in a few lines, so you can check it understood before it spends time on advice. A misunderstanding fixed here costs one line. Left in, it shapes everything the consult writes after.</p>
 <ol>
-<li>Start Claude in the workspace:<pre><code>cd ~/projects/priority-guard
+<li><strong>⌨️ You</strong> (any folder): start Claude in the workspace:<pre><code>cd ~/projects/priority-guard
 claude
 </code></pre>
 </li>
-<li>Type the command. It takes no arguments: it reads the one brief in <code>brief/</code>.<pre><code>/prove-it:consult
+<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard</code>): type the command. It takes no arguments: it reads the one brief in <code>brief/</code>.<pre><code>/prove-it:consult
 </code></pre>
 </li>
 </ol>
@@ -911,10 +954,12 @@ again, and confirm when it asks. Log it.</p>
 without asking. If Claude Code does ask <em>Do you want to create CONSULT.md?</em>,
 choose <strong>1. Yes</strong>. If it asks to use your instance or your credentials,
 decline: the consult never needs them.</p>
-<p>When it's finished, check it wrote only that one file:</p>
-<pre><code>ls -A ~/projects/priority-guard
+<p>When it's finished, check it wrote only that one file.</p>
+<p><strong>🔍 Check</strong> (<code>~/projects/priority-guard</code>): type:</p>
+<pre><code>Run exactly this and show me the raw output, unedited: ls -A ~/projects/priority-guard
 </code></pre>
-<p>You should see <code>brief</code> and <code>CONSULT.md</code>. A <code>.claude</code> folder is fine too: that's
+<p>Read the command's own output (the tool result), not Claude's summary of it.
+You should see <code>brief</code> and <code>CONSULT.md</code>. A <code>.claude</code> folder is fine too: that's
 Claude Code's own. Anything else, note it.</p>
 <p>✅ <strong>Check:</strong> <code>CONSULT.md</code> exists in <code>~/projects/priority-guard</code>, next to <code>brief/</code>. It
 has a row for each of the <strong>six</strong> capabilities, each marked plain code, AI
@@ -962,7 +1007,7 @@ priority, or that capability 6 is deferred or reworked.</p>
 <h3 id="m2--step-6--close">Step 6 — Close</h3>
 <p><strong>Why this step:</strong> <code>CONSULT.md</code> is the record of what the consult advised, and Module 4 reads it later. Leaving it as it is keeps that record honest.</p>
 <ol>
-<li>Quit Claude: <code>/exit</code>.</li>
+<li><strong>🤖 Claude:</strong> type <code>/exit</code> to quit Claude.</li>
 <li>Don't edit <code>CONSULT.md</code>. Module 4 reads it as it is.</li>
 </ol>
 <hr />
@@ -1018,13 +1063,13 @@ quit it in step 6. Every action is labelled with <strong>where</strong> you do i
 </thead>
 <tbody>
 <tr>
-<td><strong>⌨️ Shell</strong></td>
-<td>A normal terminal, for <code>mkdir</code>, <code>cp</code>, <code>cd</code> and <code>ls</code>. Never Claude</td>
+<td><strong>⌨️ You</strong></td>
+<td>You type it yourself, in a normal terminal: <code>mkdir</code>, <code>cp</code>, <code>cd</code> and <code>ls</code> (never in Claude), and <code>claude</code> to start Claude</td>
 <td>Any (step 1 uses full paths)</td>
 </tr>
 <tr>
 <td><strong>🤖 Claude</strong></td>
-<td>Claude Code, started with <code>claude</code>. Type prompts here, never shell commands</td>
+<td>Claude Code, started with <code>claude</code>. Type prompts here, never shell commands, or <code>/exit</code> to quit Claude. Claude runs any commands</td>
 <td><code>~/projects/priority-guard</code></td>
 </tr>
 <tr>
@@ -1049,7 +1094,7 @@ the research and the design start from the same material everyone else uses.</p>
 <p>The technical notes are customer material, like the PRD. They go in the
 workspace, but <strong>not</strong> in <code>brief/</code>, because the consult expects exactly one
 file there.</p>
-<p><strong>⌨️ Shell</strong> (any folder):</p>
+<p><strong>⌨️ You</strong> (any folder):</p>
 <pre><code>mkdir -p ~/projects/priority-guard/inputs ~/projects/priority-guard/docs
 cp ~/projects/agentic-build-lab-guide/files/inputs/TECH-NOTES.md ~/projects/priority-guard/inputs/
 cp ~/projects/agentic-build-lab-guide/files/LLD-TEMPLATE.md ~/projects/priority-guard/docs/
@@ -1064,7 +1109,7 @@ most.</p>
 <p><strong>Why this step:</strong> The design will rest on facts about the platform. Here
 Claude lists those facts and says how to check each one. Without that list,
 guesses can slip into the design looking like facts.</p>
-<p><strong>⌨️ Shell</strong> (any folder):</p>
+<p><strong>⌨️ You</strong> (any folder):</p>
 <pre><code>cd ~/projects/priority-guard
 claude
 </code></pre>
@@ -1133,7 +1178,7 @@ asks to create <code>docs/LLD-PriorityGuard.md</code>, choose <strong>1. Yes</st
 <p><strong>Why this step:</strong> Claude wrote the draft, so a person has to read it with
 fresh eyes, and that person is you. A gap found here takes minutes to fix.
 The same gap found later, in the code, takes much longer.</p>
-<p><strong>🤖 Claude:</strong> quit Claude (<code>/exit</code>). <strong>✏️ Editor:</strong> open the LLD in a text editor and check:</p>
+<p><strong>🤖 Claude:</strong> type <code>/exit</code> to quit Claude. <strong>✏️ Editor:</strong> open the LLD in a text editor and check:</p>
 <ol>
 <li><strong>§1 traceability:</strong> every PRD capability is either built, or deferred
 with a reason. Capability 6 matches what your consult decided.</li>
@@ -1148,8 +1193,8 @@ cross-scope access the app needs.</li>
 the contradicted and production-only facts.</li>
 </ol>
 <p>Fix anything wrong <strong>by hand</strong> (<strong>✏️ Editor</strong>), or start Claude again
-(<strong>🤖 Claude</strong>, <code>~/projects/priority-guard</code>) and ask it to fix one named
-section.</p>
+(<strong>⌨️ You</strong>: <code>claude</code> in <code>~/projects/priority-guard</code>) and ask it to fix one
+named section (<strong>🤖 Claude</strong>).</p>
 <p>✅ <strong>Check:</strong> all six are true. Write in <code>LOG.md</code> what you had to fix.</p>
 <h3 id="m3--step-7--sign-the-lld">Step 7 — Sign the LLD</h3>
 <p><strong>Why this step:</strong> Your signature says you have read this design and stand
@@ -1293,11 +1338,11 @@ separate sentences.</p>
 about your design. It asks one at a time, so each answer gets your full
 attention instead of getting lost in a pile.</p>
 <ol>
-<li>Start Claude in the workspace:<pre><code>cd ~/projects/priority-guard
+<li><strong>⌨️ You</strong> (<code>~/projects/priority-guard</code>): start Claude in the workspace:<pre><code>cd ~/projects/priority-guard
 claude
 </code></pre>
 </li>
-<li>Type exactly this, <strong>with nothing after it</strong> (anything after it is read as
+<li><strong>🤖 Claude:</strong> type exactly this, <strong>with nothing after it</strong> (anything after it is read as
 a file path):<pre><code>/prove-it:design-challenge
 </code></pre>
 </li>
@@ -1362,7 +1407,7 @@ number of terms you wrote down.</p>
 <p><strong>Why this step:</strong> From here on, the code is held to this signed design. Reading
 every term first means you know what you are agreeing to. Signing by hand
 means a person, not the AI, takes responsibility for it.</p>
-<p>Quit Claude (<code>/exit</code>). Open <code>docs/DESIGN-PriorityGuard.md</code> in a text editor.</p>
+<p><strong>🤖 Claude:</strong> type <code>/exit</code> to quit Claude. Open <code>docs/DESIGN-PriorityGuard.md</code> in a text editor.</p>
 <ol>
 <li>Read every term. Is each one something you agreed?</li>
 <li>Find the <strong>rejected alternatives</strong>. Is &quot;let AI adjust the priority&quot; there,
@@ -1422,13 +1467,13 @@ the signed <code>LLD-PriorityGuard.md</code> and <code>DESIGN-PriorityGuard.md</
 <strong>must not exist yet</strong>.</li>
 <li><code>&lt;SCOPE&gt;</code>: your app's scope: your instance's vendor prefix, then <code>pg_</code>
 and your initials, for example <code>x_123456_pg_ga</code>. <strong>18 characters at
-most.</strong> Find the prefix in your admin profile: type
+most.</strong> Find the prefix in your admin profile (<strong>🌐 Browser</strong>): type
 <code>sys_properties.list</code> in the filter navigator and look up
 <code>glide.appcreator.company.code</code>. The scope is <code>x_&lt;that value&gt;_pg_&lt;initials&gt;</code>.</li>
 </ul>
 </li>
-<li class="task"><span class="box" aria-hidden="true">☐</span> You have <strong>two terminal windows</strong> open, side by side. Name them in
-your head as below; every step says which one to use.</li>
+<li class="task"><span class="box" aria-hidden="true">☐</span> You have <strong>two terminal windows</strong> open, side by side. Window 1 is for
+Claude, window 2 is a normal terminal. Every step says which one to use.</li>
 </ul>
 <h3 id="m5--where-each-step-happens">Where each step happens</h3>
 <p>This module switches between Claude and your own commands a lot. Every
@@ -1443,24 +1488,39 @@ action is labelled with <strong>where</strong> you do it:</p>
 </thead>
 <tbody>
 <tr>
-<td><strong>⌨️ Shell</strong></td>
-<td>Terminal window 2: a normal terminal for <code>git</code>, <code>gh</code>, <code>now-sdk</code>, <code>npm</code> and <code>cp</code>. Never Claude</td>
-<td><code>~/projects/priority-guard/app</code> (from step 1 on)</td>
+<td><strong>🤖 Claude</strong></td>
+<td>Terminal window 1: Claude Code, started with <code>claude</code>. Type the prompt or kit command shown, or <code>/exit</code> to quit Claude; Claude runs the commands</td>
+<td><code>~/projects/priority-guard</code> in steps 1–5.2, then <code>~/projects/priority-guard/app</code></td>
 </tr>
 <tr>
-<td><strong>🤖 Claude</strong></td>
-<td>Terminal window 1: Claude Code, started with <code>claude</code>. Type prompts and kit commands here, never shell commands</td>
-<td><code>~/projects/priority-guard/app</code> (from step 5 on)</td>
+<td><strong>🔍 Check</strong></td>
+<td>Terminal window 1: a prompt that asks Claude to run one check command. Read the <strong>raw output</strong> of the command itself, not Claude's summary of it</td>
+<td>Same as 🤖 Claude</td>
+</tr>
+<tr>
+<td><strong>⌨️ You</strong></td>
+<td>A normal terminal where <strong>you</strong> type the command yourself, never Claude: window 2, or window 1 when you start Claude</td>
+<td>The folder in brackets</td>
 </tr>
 <tr>
 <td><strong>✏️ Editor</strong></td>
-<td>Your text editor, for changes you make <strong>by hand</strong></td>
+<td>Your text editor, for changes you make <strong>by hand</strong>, such as allow lines and <code>LOG.md</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>🌐 Browser</strong></td>
+<td>GitHub, and your PDI in your <strong>admin</strong> browser profile</td>
 <td>—</td>
 </tr>
 </tbody>
 </table>
-<p>Claude isn't used in steps 1–4. If a block doesn't start with a label, it
-belongs to the label just above it.</p>
+<p>Claude does the routine typing from step 1 on. Its shell goes back to the
+folder Claude was started in after every command, so every prompt uses full
+paths. You type the guard test (step 4), the SDK project setup (step 5.1)
+and the first honest count (step 12) yourself. Allow lines are your
+decision: Claude may propose or add one, but none goes in unread. You read
+<code>.gitignore</code> before each commit that changes it. If a block doesn't start
+with a label, it belongs to the label just above it.</p>
 <hr />
 <h2 id="m5--steps">Steps</h2>
 <h3 id="m5--step-1--create-the-app-folder">Step 1 — Create the app folder</h3>
@@ -1468,19 +1528,26 @@ belongs to the label just above it.</p>
 saved changes, kept apart from the customer's material one folder up. Setting
 your name and a GitHub noreply email now means every change says who made it,
 without putting your personal email online.</p>
-<p><strong>⌨️ Shell</strong> (start in <code>~/projects/priority-guard</code>):</p>
+<p><strong>⌨️ You</strong> (window 1, <code>~/projects/priority-guard</code>): start Claude in the
+workspace. It does steps 1–3 from here.</p>
 <pre><code>cd ~/projects/priority-guard
-mkdir app &amp;&amp; cd app
-git init -b main
-git config user.name &quot;&lt;your name or handle&gt;&quot;
-git config user.email &quot;&lt;your GitHub noreply email&gt;&quot;
+claude
+</code></pre>
+<p><strong>🤖 Claude:</strong> type this prompt (with your values):</p>
+<pre><code>Create the folder ~/projects/priority-guard/app and make it a new git
+repository whose first branch is main: git init -b main. Then, for that
+repository only (not --global), set user.name to &quot;&lt;your name or handle&gt;&quot;
+and user.email to &quot;&lt;your GitHub noreply email&gt;&quot;. Use full paths in every
+command. Don't create any other file, and don't commit or push anything.
+Don't read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
 </code></pre>
 <p>(Use your GitHub noreply address, from GitHub → Settings → Emails, so a
 personal email never enters the history.)</p>
-<p>✅ <strong>Check:</strong> <code>git init</code> says it created an empty repository in <code>.../priority-guard/app/.git/</code>.</p>
+<p>✅ <strong>Check:</strong> git's output says it created an empty repository in <code>.../priority-guard/app/.git/</code>.</p>
 <p>⚠️ <strong>If your instructor says your SDK version refuses a folder that isn't
-empty:</strong> they'll give you the reordered steps: <code>now-sdk init</code> first, then
-<code>git init</code> and the allow list. The allow list must still come <strong>before the
+empty:</strong> they'll give you the reordered steps: <code>now-sdk init</code> first (<strong>⌨️ You</strong>, in
+window 2), then <code>git init</code> and the allow list. The allow list must still come <strong>before the
 first commit</strong>.</p>
 <h3 id="m5--step-2--an-allow-list-before-the-first-commit">Step 2 — An allow list, before the first commit</h3>
 <p><strong>Why this step:</strong> Most <code>.gitignore</code> files (the file that tells git what to
@@ -1488,19 +1555,23 @@ leave out) ban things they've seen before, but sensitive material has no fixed
 shape. An <strong>allow list</strong> only has to know what the repo is for: everything
 else is invisible to git. It must be in place before the first commit, because
 once a file is committed it stays in the history.</p>
-<p>All in <strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>), except item 3.</p>
 <ol>
-<li>Get a local copy of the kit, at the version you installed, outside the
-workspace:<pre><code>gh repo clone gapietro/prove-it-kit ~/projects/prove-it-kit
+<li><strong>🤖 Claude:</strong> get a local copy of the kit, at the version you installed,
+outside the workspace, then copy the allow list and start a README:<pre><code>Clone the public repo gapietro/prove-it-kit to ~/projects/prove-it-kit
+with gh repo clone, then detach it at the tag v0.1.3:
 git -C ~/projects/prove-it-kit switch --detach v0.1.3
+Then copy ~/projects/prove-it-kit/templates/gitignore.allowlist to
+~/projects/priority-guard/app/.gitignore, and create
+~/projects/priority-guard/app/README.md containing exactly one line:
+# Priority Guard
+Use full paths. The app repo stays on main: don't stage, commit or push
+anything. Don't read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
 </code></pre>
 </li>
-<li>Copy the allow list, and start a README:<pre><code>cp ~/projects/prove-it-kit/templates/gitignore.allowlist .gitignore
-echo &quot;# Priority Guard&quot; &gt; README.md
-</code></pre>
-</li>
-<li><strong>✏️ Editor:</strong> open <code>.gitignore</code> and read it. Find the line <code>/*</code>. That line hides
-everything; the <code>!</code> lines let things back in.</li>
+<li><strong>✏️ Editor:</strong> open <code>~/projects/priority-guard/app/.gitignore</code> and read
+it. Find the line <code>/*</code>. That line hides everything; the <code>!</code> lines let
+things back in.</li>
 </ol>
 <p>✅ <strong>Check:</strong> you can point to the line that hides everything, and to the
 lines that admit <code>README.md</code> and <code>.gitignore</code>.</p>
@@ -1510,9 +1581,13 @@ written inside them. The guard is a small script git runs before every commit
 (every saved snapshot of your work), and it looks for things like passwords
 and tokens. Without it, a secret typed into an allowed file would go straight
 in.</p>
-<p><strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>):</p>
-<pre><code>cp ~/projects/prove-it-kit/hooks/pre-commit-guard.sh &quot;$(git rev-parse --git-path hooks)/pre-commit&quot;
-chmod +x &quot;$(git rev-parse --git-path hooks)/pre-commit&quot;
+<p><strong>🤖 Claude:</strong></p>
+<pre><code>Install the kit's commit guard in the app repo. Run exactly this, as one
+command:
+cd ~/projects/priority-guard/app &amp;&amp; cp ~/projects/prove-it-kit/hooks/pre-commit-guard.sh &quot;$(git rev-parse --git-path hooks)/pre-commit&quot; &amp;&amp; chmod +x &quot;$(git rev-parse --git-path hooks)/pre-commit&quot;
+Don't edit the script. Stay on main; don't stage, commit or push anything.
+Don't read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
 </code></pre>
 <p>✅ <strong>Check:</strong> <code>.git/hooks/pre-commit</code> exists. It runs before every commit.</p>
 <h3 id="m5--step-4---try-to-beat-the-guard">Step 4 — 🔮 Try to beat the guard</h3>
@@ -1521,8 +1596,12 @@ prediction down first shows you what you really expected, not what you
 remember expecting once you've seen the result. Then you try to get a fake
 secret past the guard, so you know how it behaves before you trust it with
 real code.</p>
-<p>First predict, in <code>LOG.md</code>: will the guard stop a commit that contains a
-token? Then, in <strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>): <strong>type</strong> these (don't paste):</p>
+<p>First predict, in <code>LOG.md</code> (<strong>✏️ Editor</strong>): will the guard stop a commit
+that contains a token? Then, in <strong>⌨️ You</strong> (window 2, <code>~/projects/priority-guard/app</code>),
+go to the repo:</p>
+<pre><code>cd ~/projects/priority-guard/app
+</code></pre>
+<p>and <strong>type</strong> these (don't paste):</p>
 <pre><code>git add .gitignore README.md
 echo 'FAKE_TOKEN=do-not-use-0000' &gt;&gt; README.md
 git add README.md
@@ -1534,7 +1613,7 @@ was stopped. Write it in <code>LOG.md</code>.</p>
 <p>⚠️ <strong>If you see…</strong> <em>the commit went through:</em> that's the most important
 finding of the day, and a real <strong>catch</strong>. The guard can't be trusted. Tell
 your instructor, and don't push anything until it's understood.</p>
-<p>Now remove the fake token and commit cleanly:</p>
+<p>Now remove the fake token and commit cleanly, still in <strong>⌨️ You</strong>:</p>
 <pre><code>echo &quot;# Priority Guard&quot; &gt; README.md
 git add README.md
 git commit -m &quot;chore: initial scaffold&quot;
@@ -1548,9 +1627,11 @@ downloaded packages stay out of git. If the empty project doesn't build,
 nothing you add to it will.</p>
 <ol>
 <li>
-<p><strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>): create the ServiceNow project. Give <code>init</code> every answer as a
-flag, so it asks you nothing:</p>
-<pre><code>now-sdk init --appName &quot;Priority Guard&quot; --packageName priority-guard --scopeName &lt;SCOPE&gt; --template typescript.basic --auth &lt;PDI_ALIAS&gt;
+<p><strong>⌨️ You</strong> (window 2, <code>~/projects/priority-guard/app</code>): create the
+ServiceNow project. <code>init</code> signs in to your instance, so you run it
+yourself, not Claude. It gets every answer as a flag, so it asks nothing:</p>
+<pre><code>cd ~/projects/priority-guard/app
+now-sdk init --appName &quot;Priority Guard&quot; --packageName priority-guard --scopeName &lt;SCOPE&gt; --template typescript.basic --auth &lt;PDI_ALIAS&gt;
 </code></pre>
 <table>
 <thead>
@@ -1595,39 +1676,60 @@ that a newer SDK version is available is fine: don't upgrade mid-lab.</p>
 the table above. If it asks for a template, choose <strong>typescript.basic</strong>.</p>
 </li>
 <li>
-<p><strong>Restore the allow list</strong>, still in <strong>⌨️ Shell</strong>. <code>now-sdk init</code> writes
-its own short <code>.gitignore</code> over yours (SDK 4.12 does this every time). Put
-the kit's allow list back:</p>
-<pre><code>cp ~/projects/prove-it-kit/templates/gitignore.allowlist .gitignore
-grep -n '^/\*' .gitignore
+<p><strong>Restore the allow list.</strong> <code>now-sdk init</code> writes its own short
+<code>.gitignore</code> over yours (SDK 4.12 does this every time). Put the kit's
+allow list back.</p>
+<p><strong>🤖 Claude:</strong></p>
+<pre><code>now-sdk init replaced ~/projects/priority-guard/app/.gitignore with its
+own. Copy ~/projects/prove-it-kit/templates/gitignore.allowlist over it
+again. Change nothing else. Stay on main; don't stage, commit or push
+anything. Don't read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
+</code></pre>
+<p><strong>🔍 Check:</strong></p>
+<pre><code>Run exactly this and show me the raw output, unedited:
+grep -n '^/\*' ~/projects/priority-guard/app/.gitignore
 </code></pre>
 <p><code>grep</code> must print <strong>exactly one line</strong>, the <code>/*</code>. Nothing was committed
 with the SDK's version, so nothing leaked.</p>
 </li>
 <li>
-<p><strong>⌨️ Shell, in terminal window 1</strong> (the window you'll use for Claude):
-start Claude <strong>in the repo</strong>. From now on, Claude always runs here. The
-last line starts <strong>🤖 Claude</strong>:</p>
+<p><strong>Move Claude into the repo.</strong> <strong>🤖 Claude</strong> (window 1): type <code>/exit</code>.
+Then <strong>⌨️ You</strong> (window 1): start Claude again <strong>in the repo</strong>. From now on,
+Claude always runs here:</p>
 <pre><code>cd ~/projects/priority-guard/app
 claude
 </code></pre>
-<p><strong>🤖 Claude:</strong> type this prompt:</p>
-<pre><code>now-sdk init just created files here. Compare them with the allow lines
-already in .gitignore. Propose any allow line to append at the end: only
-what belongs in source control for this SDK project. Not dist, not
-node_modules, nothing that holds credentials. Show me the list first.
-Don't write it yet.
+<p><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>): type this prompt:</p>
+<pre><code>now-sdk init just created files in ~/projects/priority-guard/app.
+Compare them with the allow lines already in
+~/projects/priority-guard/app/.gitignore. Propose any allow line to
+append at the end: only what belongs in source control for this SDK
+project. Not dist, not node_modules, nothing that holds credentials.
+Show me the list first. Don't write it yet. Stay on main; don't stage,
+commit or push anything. Don't read anything outside
+~/projects/priority-guard and ~/projects/prove-it-kit.
 </code></pre>
 <p>Read the proposal. It's <strong>your</strong> decision. If you agree, type <code>confirm</code>
 (in Claude).</p>
 </li>
 <li>
-<p><strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>):</p>
-<pre><code>npm install
+<p><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>):</p>
+<pre><code>Install the packages and build the empty project. This session runs in
+~/projects/priority-guard/app, so run, from there:
+npm install
+then
 now-sdk build
-git status --short
-git check-ignore -v dist
-git check-ignore -v node_modules
+If the build fails, show me the error and stop: don't change any file to
+fix it. Never run now-sdk auth. Stay on main; don't stage, commit or push
+anything. Don't read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
+</code></pre>
+<p><strong>🔍 Check:</strong></p>
+<pre><code>Run exactly this and show me the raw output, unedited:
+git -C ~/projects/priority-guard/app status --short
+git -C ~/projects/priority-guard/app check-ignore -v dist
+git -C ~/projects/priority-guard/app check-ignore -v node_modules
 </code></pre>
 </li>
 </ol>
@@ -1641,15 +1743,21 @@ Claude works to your scope, your instance and your design every time, instead
 of guessing. Reading it yourself means you know what Claude has been told to
 do.</p>
 <ol>
-<li><strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>): copy the kit's starter rules:<pre><code>cp ~/projects/prove-it-kit/templates/CLAUDE.md ./CLAUDE.md
+<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>): copy the kit's starter rules:<pre><code>Copy ~/projects/prove-it-kit/templates/CLAUDE.md to
+~/projects/priority-guard/app/CLAUDE.md. Don't change it yet. Stay on
+main; don't stage, commit or push anything. Don't read anything outside
+~/projects/priority-guard and ~/projects/prove-it-kit.
 </code></pre>
 <strong>✏️ Editor:</strong> open <code>.gitignore</code> and add <code>!/CLAUDE.md</code> at the very end, <strong>by hand</strong>.</li>
-<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>): type (with your values):<pre><code>Fill in the Project facts in CLAUDE.md and keep the rules as they
-are. Scope &lt;SCOPE&gt;. Instance alias &lt;PDI_ALIAS&gt;. The design record will be
-docs/DESIGN-PriorityGuard.md. That is the contract. The LLD at
-docs/LLD-PriorityGuard.md is background, frozen at sign-off: if they
-disagree, the design record wins. The workspace is one folder up and nothing
-from it comes in except by an allow line. No hostnames, no credentials.
+<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>): type (with your values):<pre><code>Fill in the Project facts in ~/projects/priority-guard/app/CLAUDE.md and
+keep the rules as they are. Scope &lt;SCOPE&gt;. Instance alias &lt;PDI_ALIAS&gt;.
+The design record will be docs/DESIGN-PriorityGuard.md. That is the
+contract. The LLD at docs/LLD-PriorityGuard.md is background, frozen at
+sign-off: if they disagree, the design record wins. The workspace is one
+folder up and nothing from it comes in except by an allow line. No
+hostnames, no credentials. Stay on main; don't stage, commit or push
+anything. Don't read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
 </code></pre>
 </li>
 <li><strong>✏️ Editor:</strong> read <code>CLAUDE.md</code> top to bottom. Find the <strong>Ship ritual</strong> section. That's
@@ -1665,18 +1773,29 @@ app goes to whatever instance is the default. That's a real <strong>catch</stron
 every file going in, so nothing gets out that you can't explain. A private
 repo keeps the customer's design off the public internet. After this, changes
 reach <code>main</code> only through review.</p>
-<p><strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>):</p>
-<pre><code>git add .
-git ls-files
+<p><strong>🔍 Check</strong> (<code>~/projects/priority-guard/app</code>): list what <strong>would</strong> be added,
+without staging anything:</p>
+<pre><code>Run exactly this and show me the raw output, unedited:
+git -C ~/projects/priority-guard/app add -n .
+</code></pre>
+<p>(<code>-n</code> is a dry run: it only prints the names.) Read <strong>every</strong> file name in
+the raw output. If a file shouldn't go in, stop and tell Claude which one;
+fix <code>.gitignore</code> by hand (<strong>✏️ Editor</strong>) before going on, then run the check
+again.</p>
+<p><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>), only once you've read the list:</p>
+<pre><code>In ~/projects/priority-guard/app, stage everything with
+git -C ~/projects/priority-guard/app add . and commit on main with the
+message &quot;chore: SDK project and CLAUDE.md&quot;. Then create the private GitHub
+repo and push, by running exactly:
+gh repo create &lt;APP_REPO&gt; --private --source ~/projects/priority-guard/app --remote=origin --push
+Push nothing else. Don't read anything outside ~/projects/priority-guard
+and ~/projects/prove-it-kit.
 </code></pre>
 <p>(<code>git add .</code> is safe here only because the allow list decides what git can
-see.) Read <strong>every</strong> file name. Anything you can't explain doesn't go in.</p>
-<pre><code>git commit -m &quot;chore: SDK project and CLAUDE.md&quot;
-gh repo create &lt;APP_REPO&gt; --private --source=. --remote=origin --push
-</code></pre>
-<p>✅ <strong>Check:</strong> the GitHub page shows your repo with a <strong>Private</strong> badge. <strong>This
-is the last commit that goes straight to <code>main</code>.</strong> From now on, everything
-goes on a branch and through review.</p>
+see, and you've just read that list.)</p>
+<p>✅ <strong>Check</strong> (<strong>🌐 Browser</strong>): the GitHub page shows your repo with a
+<strong>Private</strong> badge. <strong>This is the last commit that goes straight to <code>main</code>.</strong>
+From now on, everything goes on a branch and through review.</p>
 <h3 id="m5--step-8--restart-and-start-the-plan-branch">Step 8 — Restart, and start the plan branch</h3>
 <p><strong>Why this step:</strong> Claude reads <code>CLAUDE.md</code> only when it starts, so it needs a
 restart to pick up the rules you just wrote. The plan then goes on its own
@@ -1684,13 +1803,17 @@ branch, a separate line of changes, so <code>main</code> (the main copy) only ch
 through review. Checking the repo name first makes sure you're pointed at the
 right place.</p>
 <ol>
-<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>): type <code>/exit</code>. That
-returns window 1 to a shell. <strong>⌨️ Shell, in that same window:</strong> start
-Claude again, so it reads the new <code>CLAUDE.md</code>:<pre><code>claude
+<li><strong>🤖 Claude</strong> (window 1): type <code>/exit</code>. That returns window 1 to a shell.
+<strong>⌨️ You</strong> (window 1, <code>~/projects/priority-guard/app</code>): start Claude
+again, so it reads the new <code>CLAUDE.md</code>:<pre><code>claude
 </code></pre>
 </li>
-<li><strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>):<pre><code>gh repo view --json nameWithOwner -q .nameWithOwner
-git switch -c docs/plan
+<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>):<pre><code>Run gh repo view --json nameWithOwner -q .nameWithOwner (this session
+runs in ~/projects/priority-guard/app) and show me its raw output. Then create and switch to a new branch:
+git -C ~/projects/priority-guard/app switch -c docs/plan
+Everything from here to the end of this module goes on docs/plan. Don't
+commit to main, and don't push. Don't read anything outside
+~/projects/priority-guard and ~/projects/prove-it-kit.
 </code></pre>
 </li>
 </ol>
@@ -1708,19 +1831,24 @@ the workspace: they're the customer's material, and the design cites them
 without copying them. <strong>The design record is the contract</strong> the code is
 held to. The LLD is background, frozen when you signed it: if a design
 amendment changes something later, the design record wins.</p>
-<p>All in <strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>): except the one <strong>✏️ Editor</strong> change.</p>
-<p>First check the LLD has no instance names in it. This must print nothing:</p>
-<pre><code>grep -n -i 'service-now' ../docs/LLD-PriorityGuard.md
+<p>First check the LLD has no instance names in it. <strong>🔍 Check</strong>
+(<code>~/projects/priority-guard/app</code>); the raw output must be empty:</p>
+<pre><code>Run exactly this and show me the raw output, unedited:
+grep -n -i 'service-now' ~/projects/priority-guard/docs/LLD-PriorityGuard.md
 </code></pre>
-<p>Then:</p>
-<pre><code>mkdir -p docs
-cp ../docs/DESIGN-PriorityGuard.md ../docs/LLD-PriorityGuard.md docs/
-</code></pre>
-<p><strong>✏️ Editor:</strong> open <code>.gitignore</code> and add <code>!/docs/</code> at the very end, by hand.
-Then, back in <strong>⌨️ Shell</strong>:</p>
-<pre><code>rm ../docs/DESIGN-PriorityGuard.md ../docs/LLD-PriorityGuard.md
-git add .gitignore docs/DESIGN-PriorityGuard.md docs/LLD-PriorityGuard.md
-git commit -m &quot;docs: signed design record and LLD&quot;
+<p><strong>✏️ Editor:</strong> open <code>.gitignore</code> and add <code>!/docs/</code> at the very end, by hand.</p>
+<p>Then <strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>):</p>
+<pre><code>On branch docs/plan in ~/projects/priority-guard/app: create the folder
+~/projects/priority-guard/app/docs and copy these two files into it,
+unchanged:
+~/projects/priority-guard/docs/DESIGN-PriorityGuard.md
+~/projects/priority-guard/docs/LLD-PriorityGuard.md
+Stage only .gitignore, docs/DESIGN-PriorityGuard.md and
+docs/LLD-PriorityGuard.md, and commit with the message &quot;docs: signed design
+record and LLD&quot;. Only once that commit has succeeded, delete the two
+originals from ~/projects/priority-guard/docs. If the commit fails, stop and
+delete nothing. Don't commit to main, and don't push. Don't read anything outside
+~/projects/priority-guard and ~/projects/prove-it-kit.
 </code></pre>
 <p>✅ <strong>Check:</strong> there's one copy of each, in the repo, committed on
 <code>docs/plan</code>. Don't push yet.</p>
@@ -1737,8 +1865,10 @@ shows a <strong>preview</strong>. It files nothing yet. If it asks to write <cod
 one folder up, allow that one file.</p>
 <p>⚠️ <strong>If you see…</strong> <em>it refuses because the record is unsigned:</em> it names the
 gap, for example an empty cell in §9 Approval. Fill it in <strong>by hand</strong> (<strong>✏️
-Editor</strong>), commit it on this branch (<strong>⌨️ Shell</strong>), and run the command again
-(<strong>🤖 Claude</strong>).</p>
+Editor</strong>), then have Claude commit it on this branch (<strong>🤖 Claude</strong>: &quot;Commit
+only docs/DESIGN-PriorityGuard.md on docs/plan in
+~/projects/priority-guard/app. Don't commit to main, and don't push.&quot;), and
+run the command again (<strong>🤖 Claude</strong>).</p>
 <p>Check the preview, and write yes or no for each:</p>
 <ol>
 <li>Every story names the gate it's holding up, or is marked for the register.</li>
@@ -1768,8 +1898,9 @@ ends with <code>!/BACKLOG.md</code>.</p>
 gate, and it has to come from the live list on GitHub, not from memory.
 Checking it against <code>BACKLOG.md</code> confirms the plan was filed the way you saw
 it in the preview.</p>
-<p><strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>):</p>
-<pre><code>gh issue list --state open --label &quot;gate:merge&quot; --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != &quot;register&quot;))] | length'
+<p><strong>⌨️ You</strong> (window 2, <code>~/projects/priority-guard/app</code>):</p>
+<pre><code>cd ~/projects/priority-guard/app
+gh issue list --state open --label &quot;gate:merge&quot; --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != &quot;register&quot;))] | length'
 head -5 BACKLOG.md
 </code></pre>
 <p>✅ <strong>Check:</strong> the number from GitHub and the count in <code>BACKLOG.md</code> agree.
@@ -1784,11 +1915,15 @@ so the next session, or a teammate, starts from a file instead of from memory.</
 <li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>): type the session close:<pre><code>We're stopping here. Update SESSION-NOTE.md: what's proven, what's
 open, the exact next step, and the top three next items.
 </code></pre>
-</li>
+If Claude offers to commit or push the note, say no: it's committed in
+item 3, on <code>docs/plan</code>.</li>
 <li><strong>✏️ Editor:</strong> it's a new file, so it needs its own allow line. Add this at
 the very end of <code>.gitignore</code>, by hand: <code>!/SESSION-NOTE.md</code></li>
-<li><strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>):<pre><code>git add .gitignore SESSION-NOTE.md
-git commit -m &quot;docs: first session note&quot;
+<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>):<pre><code>On branch docs/plan in ~/projects/priority-guard/app, stage only
+.gitignore and SESSION-NOTE.md, and commit with the message
+&quot;docs: first session note&quot;. Don't commit to main, and don't push. Don't
+read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
 </code></pre>
 </li>
 </ol>
@@ -1807,9 +1942,14 @@ the ritual on something small before you use it on code.</p>
 </code></pre>
 <p>Watch the ritual run: push, pull request, review, fixes once, merge when
 green, branch deleted.</p>
+<p>Then <strong>🔍 Check</strong> (<code>~/projects/priority-guard/app</code>):</p>
+<pre><code>Run exactly this and show me the raw output, unedited:
+git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull &amp;&amp; git -C ~/projects/priority-guard/app status --short
+</code></pre>
 <p>✅ <strong>Check:</strong> the pull request is merged on GitHub. <strong>No story was closed</strong> by
-it, and the count from step 12 hasn't changed: the plan isn't a story. In
-<strong>⌨️ Shell</strong>, <code>git switch main &amp;&amp; git pull</code> works and <code>git status</code> is clean.</p>
+it, and the count from step 12 hasn't changed: the plan isn't a story. The
+raw output shows the switch to <code>main</code> and the pull worked, and <code>git status</code>
+lists nothing: it's clean.</p>
 <hr />
 <h2 id="m5--log-it">Log it</h2>
 <ul>
@@ -1868,7 +2008,7 @@ write, and code Claude wrote and was sure of. Does it find something real?</p>
 <h2 id="m6--before-you-start">Before you start</h2>
 <ul>
 <li class="task"><span class="box" aria-hidden="true">☐</span> Module 5 is done: the plan is merged and <code>main</code> is clean.</li>
-<li class="task"><span class="box" aria-hidden="true">☐</span> <code>gh issue list</code> shows your stories.</li>
+<li class="task"><span class="box" aria-hidden="true">☐</span> Your stories are filed. You check this in step 1, once Claude is open.</li>
 <li class="task"><span class="box" aria-hidden="true">☐</span> Your PDI is awake.</li>
 <li class="task"><span class="box" aria-hidden="true">☐</span> You have <strong>two terminal windows</strong> open, side by side, as in Module 5.</li>
 </ul>
@@ -1884,13 +2024,18 @@ write, and code Claude wrote and was sure of. Does it find something real?</p>
 </thead>
 <tbody>
 <tr>
-<td><strong>⌨️ Shell</strong></td>
-<td>Terminal window 2: a normal terminal for <code>git</code>, <code>gh</code>, <code>now-sdk</code> and <code>npm</code>. Never Claude</td>
+<td><strong>🤖 Claude</strong></td>
+<td>Terminal window 1: Claude Code, started with <code>claude</code>. Type the prompt or kit command shown, or <code>/exit</code> to quit Claude; Claude runs any commands it needs</td>
 <td><code>~/projects/priority-guard/app</code></td>
 </tr>
 <tr>
-<td><strong>🤖 Claude</strong></td>
-<td>Terminal window 1: Claude Code, started with <code>claude</code>. Type prompts and kit commands here, never shell commands</td>
+<td><strong>🔍 Check</strong></td>
+<td>Terminal window 1: a prompt that asks Claude to run one check command. Read the <strong>raw output</strong> of the command itself, not Claude's summary of it</td>
+<td><code>~/projects/priority-guard/app</code></td>
+</tr>
+<tr>
+<td><strong>⌨️ You</strong></td>
+<td>A normal terminal where <strong>you</strong> type the command yourself, never Claude: window 2, or window 1 before you start Claude</td>
 <td><code>~/projects/priority-guard/app</code></td>
 </tr>
 <tr>
@@ -1912,8 +2057,17 @@ write, and code Claude wrote and was sure of. Does it find something real?</p>
 <p><strong>Why this step:</strong> Each session starts from the files, not from what you or
 Claude remember. Pulling <code>main</code> first means you start from the latest merged
 work, and re-checking blockers stops Claude trusting a note that's out of date.</p>
-<p><strong>⌨️ Shell:</strong> <code>cd ~/projects/priority-guard/app &amp;&amp; git switch main &amp;&amp; git pull</code>.</p>
-<p><strong>🤖 Claude:</strong> start Claude in <code>~/projects/priority-guard/app</code> and type the session open:</p>
+<p><strong>🤖 Claude:</strong> if a session is still open from Module 5, type <code>/exit</code>.</p>
+<p><strong>⌨️ You</strong> (<code>~/projects/priority-guard/app</code>), in window 1: start Claude.</p>
+<pre><code>cd ~/projects/priority-guard/app &amp;&amp; claude
+</code></pre>
+<p><strong>🤖 Claude:</strong> bring <code>main</code> up to date:</p>
+<pre><code>Run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+</code></pre>
+<p><strong>🔍 Check:</strong> confirm your stories are filed:</p>
+<pre><code>Run exactly this and show me the raw output, unedited: gh issue list
+</code></pre>
+<p><strong>🤖 Claude:</strong> type the session open:</p>
 <pre><code>Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
 blocker they mention. Then tell me the top three items by gate distance.
 </code></pre>
@@ -1996,9 +2150,10 @@ Claude coordinates several helpers, called <strong>sub-agents</strong>, that run
 loop on the next stories at the same time. The checks don't change: every
 story is still tested first, reviewed and merged on green. What changes is
 your job. You stop typing commands and start reading the evidence.</p>
-<p><strong>⌨️ Shell:</strong> <code>git switch main &amp;&amp; git pull</code>.</p>
-<p><strong>🤖 Claude:</strong> run <code>/clear</code> (or start a fresh session), then the session open
-from step 1. Then type this prompt. Choose the <strong>Stop when</strong> line that fits,
+<p><strong>🤖 Claude:</strong> run <code>/clear</code> (or start a fresh session: <strong>🤖 Claude:</strong> type
+<code>/exit</code>, then <strong>⌨️ You:</strong> <code>claude</code>), then step 1's prompt
+that brings <code>main</code> up to date, then the session open from step 1. Then type
+this prompt. Choose the <strong>Stop when</strong> line that fits,
 and delete the other:</p>
 <pre><code>Run the build loop on the next stories for me, using sub-agents to go faster.
 You are the coordinator: plan, delegate, merge and report. Don't write
@@ -2058,7 +2213,10 @@ findings.</li>
 <li>Does <strong>anything</strong> in this story let the priority go lower than the floor?</li>
 </ul>
 </li>
-<li><strong>⌨️ Shell:</strong> <code>git switch main &amp;&amp; git pull</code>, then <code>npm test</code>. Everything passes.</li>
+<li><strong>⌨️ You</strong> (<code>~/projects/priority-guard/app</code>), in window 2, not Claude:<pre><code>cd ~/projects/priority-guard/app &amp;&amp; git switch main &amp;&amp; git pull
+npm test
+</code></pre>
+Everything passes.</li>
 </ol>
 <p>✅ <strong>Check:</strong> every story in scope is merged, each through its own pull request
 with a review. Nothing merged with a failing test. Stopped stories, if any, are
@@ -2086,13 +2244,17 @@ them.</p>
 app on your instance, so you can see what it does on the real platform.
 Building from a clean, up-to-date <code>main</code> means you install exactly what was
 reviewed.</p>
-<p><strong>⌨️ Shell</strong>, on a clean, up-to-date <code>main</code>:</p>
-<pre><code>now-sdk build
-now-sdk install --auth &lt;PDI_ALIAS&gt;
+<p><strong>🤖 Claude:</strong> build on a clean, up-to-date <code>main</code>:</p>
+<pre><code>Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+</code></pre>
+<p><strong>⌨️ You</strong> (<code>~/projects/priority-guard/app</code>), in window 2, once the build
+succeeds. The instance is yours, so you install it yourself:</p>
+<pre><code>cd ~/projects/priority-guard/app &amp;&amp; now-sdk install --auth &lt;PDI_ALIAS&gt;
 </code></pre>
 <p>Always <code>--auth</code>. Never <code>--alias</code>: on <code>install</code> it's silently ignored, and the
 app goes to whatever instance is the default.</p>
-<p>✅ <strong>Check:</strong> the install succeeds and prints a link to your app.</p>
+<p>✅ <strong>Check:</strong> the build succeeds, then the install succeeds and prints a link
+to your app.</p>
 <h3 id="m6--step-10--try-it-live-as-an-ordinary-agent">Step 10 — Try it live, as an ordinary agent</h3>
 <p><strong>Why this step:</strong> Passing tests on your laptop don't prove the app works on
 the instance. You test as an ordinary agent, not as admin, because an admin
@@ -2131,9 +2293,10 @@ Stories that need the instance (an install, a live check, the demo) stop and
 come back to you: do those by hand, as below. Leave the <code>gate:handoff</code>
 stories open: Module 8 closes them.</p>
 <p><strong>Which gate is next.</strong> The gates go in order: <code>merge</code>, <code>install</code>, <code>demo</code>,
-<code>handoff</code>. The next one is the <strong>first whose count isn't zero</strong>. Run this
-for each in order in <strong>⌨️ Shell</strong>, swapping in the gate's name, in lower case:</p>
-<pre><code>gh issue list --state open --label &quot;gate:&lt;gate&gt;&quot; --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != &quot;register&quot;))] | length'
+<code>handoff</code>. The next one is the <strong>first whose count isn't zero</strong>. Check
+each in order (<strong>🔍 Check</strong>), swapping in the gate's name, in lower case, and
+read the number in the raw output:</p>
+<pre><code>Run exactly this and show me the raw output, unedited: gh issue list --state open --label &quot;gate:&lt;gate&gt;&quot; --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != &quot;register&quot;))] | length'
 </code></pre>
 <p><code>BACKLOG.md</code> is a snapshot from when the plan was filed. Closing stories
 doesn't update it, so it goes stale. <strong>The live count is the truth.</strong></p>
@@ -2163,7 +2326,7 @@ definitions. A term with no test caps the grade.</li>
 <li><strong>Seed the demo data as source</strong> in the app (<code>src/</code>), as your design says.
 The grade checks for it.</li>
 <li>After any story that changes what's on the instance, <strong>build and install</strong>
-again (step 9, <strong>⌨️ Shell</strong>), and re-run your live checks. Add checks as stories land:
+again (step 9: <strong>🤖 Claude</strong> builds, <strong>⌨️ You</strong> install), and re-run your live checks. Add checks as stories land:
 an override with a reason, a Tier 1 override waiting for approval, and the
 weekly count.</li>
 <li><strong>The INSTALL and DEMO stories need evidence</strong>, or the grade can't count
@@ -2236,11 +2399,12 @@ incident below its floor. Keep the list. You'll compare it with the
 reviewer's in step 3.</p>
 <h3 id="m7--step-2--start-a-reviewer-with-no-context">Step 2 — Start a reviewer with no context</h3>
 <p><strong>Why this step:</strong> You know what you meant the code to do, so you tend to test what you meant. A reviewer with no history knows only the rule, so it tries things you didn't think to try.</p>
-<p>Quit any open Claude session. Start a new one in <code>~/projects/priority-guard/app</code>:</p>
-<pre><code>claude
+<p><strong>🤖 Claude:</strong> if a session is open, type <code>/exit</code>.
+<strong>⌨️ You</strong> (<code>~/projects/priority-guard/app</code>): start a new one:</p>
+<pre><code>cd ~/projects/priority-guard/app &amp;&amp; claude
 </code></pre>
-<p><strong>Don't</strong> run the session open. This reviewer shouldn't know what you
-intended, only what must hold. Type:</p>
+<p><strong>🤖 Claude:</strong> <strong>don't</strong> run the session open. This reviewer shouldn't know
+what you intended, only what must hold. Type:</p>
 <pre><code>You are reviewing someone else's work. One rule must hold: an incident on a
 critical service can never be saved below that service's floor. Try to
 break it. Don't read the summary; re-run the checks yourself. Look at the
@@ -2271,9 +2435,10 @@ through on your board as stories, each naming the gate it holds up. On a
 real project you'd repeat with a new reviewer until a round finds nothing.</li>
 <li><strong>Building the whole app:</strong> fix <strong>every</strong> attempt that got through, through
 the loop (or Part C if it changes the design). Don't file new stories by
-hand: a fix is a branch and <code>ship it</code>. Then reinstall, re-run your live
-checks, and add a fresh comment to the closed DEMO story saying what
-changed and that the checks pass again. Any open issue on the DEMO gate
+hand: a fix is a branch and <code>ship it</code>. Then reinstall (Module 6 step 9:
+<strong>🤖 Claude</strong> builds, <strong>⌨️ You</strong> install), re-run your live checks, and
+add a fresh comment to the closed DEMO story saying what changed and that
+the checks pass again. Any open issue on the DEMO gate
 turns Module 8's grade into a preview.</li>
 </ol>
 <p>✅ <strong>Check:</strong> you've written down how many attempts there were, how many got
@@ -2299,7 +2464,8 @@ agent can change.</li>
 <p>⚠️ <strong>If you see…</strong> <em>an attempt gets through:</em> that's a <strong>catch</strong>, found by your
 partner on a live instance. Write the exact steps. Swap back, and fix it in
 Part A's way: a failing test that reproduces it, then the fix, through the
-loop, then re-install and re-try the same steps.</p>
+loop, then re-install (Module 6 step 9: <strong>🤖 Claude</strong> builds, <strong>⌨️ You</strong>
+install) and re-try the same steps.</p>
 <h3 id="m7--step-5--swap-back-and-attack-theirs">Step 5 — Swap back, and attack theirs</h3>
 <p><strong>Why this step:</strong> Now you're the outsider. Looking for holes in someone else's app shows you how easy it is to miss your own.</p>
 <p>Do the same on your partner's computer, as their agent user.</p>
@@ -2311,25 +2477,30 @@ says, for example a new rule about which changes the floor must survive.</p>
 <h3 id="m7--step-6--amend-the-design-then-build">Step 6 — Amend the design, then build</h3>
 <p><strong>Why this step:</strong> The signed design is the agreement about what the app does. If a fix changes that, the design changes first and you sign it, so the code never quietly drifts from what was agreed.</p>
 <ol>
-<li>Start a branch for the amendment, from a clean <code>main</code>:<pre><code>git switch main &amp;&amp; git pull
-git switch -c docs/amend-floor
+<li>Leave the reviewer session first: it was set up to attack, not to build.
+<strong>🤖 Claude:</strong> type <code>/exit</code>. <strong>⌨️ You</strong> (<code>~/projects/priority-guard/app</code>):
+start a fresh project session:<pre><code>cd ~/projects/priority-guard/app &amp;&amp; claude
+</code></pre>
+<strong>🤖 Claude:</strong> start a branch for the amendment, from a clean <code>main</code>:<pre><code>Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull &amp;&amp; git -C ~/projects/priority-guard/app switch -c docs/amend-floor and show me the output. Commit nothing.
 </code></pre>
 </li>
-<li>In Claude, run the session open, then:<pre><code>/prove-it:design-challenge amend docs/DESIGN-PriorityGuard.md
+<li><strong>🤖 Claude:</strong> run the session open, then:<pre><code>/prove-it:design-challenge amend docs/DESIGN-PriorityGuard.md
 </code></pre>
 </li>
 <li>It asks what changed and why, <strong>one question per turn</strong>. Answer with what
 you found and what you want the design to say. Then answer its questions.</li>
 <li>It reads back the changed terms. If they're right, type <code>Confirmed.</code></li>
-<li>Open <code>docs/DESIGN-PriorityGuard.md</code> in your <strong>editor</strong>. In <strong>§10</strong>, the drift
+<li><strong>✏️ Editor:</strong> open <code>docs/DESIGN-PriorityGuard.md</code>. In <strong>§10</strong>, the drift
 log has one row per added or changed term, with <strong>Signed by</strong> left blank.
 Fill in each <strong>Signed by</strong> cell yourself. The kit never signs, and the
 build plan refuses an unsigned row.</li>
-<li><code>ship it</code> to merge the amendment.</li>
-<li>Turn the amendment into a story:<pre><code>/prove-it:build-plan docs/DESIGN-PriorityGuard.md
+<li><strong>🤖 Claude:</strong> <code>ship it</code> to merge the amendment.</li>
+<li><strong>🤖 Claude:</strong> turn the amendment into a story:<pre><code>/prove-it:build-plan docs/DESIGN-PriorityGuard.md
 </code></pre>
 Type <code>approve</code> at the preview, then <code>apply now</code>.</li>
-<li><strong>Then</strong> build the fix as a normal story, through the loop. The build plan
+<li><strong>✏️ Editor:</strong> read <code>.gitignore</code>. The build plan may have added allow
+lines: check each one before it's committed.
+<strong>🤖 Claude:</strong> <strong>then</strong> build the fix as a normal story, through the loop. The build plan
 left <code>BACKLOG.md</code> and <code>.gitignore</code> changed on <code>main</code>: commit them as the
 first commit on that story's branch.</li>
 </ol>
@@ -2379,25 +2550,30 @@ who wrote it. Does yours get you to the cause, from the symptom alone?</p>
 <li class="task"><span class="box" aria-hidden="true">☐</span> No Claude session is open yet: you start one in step 2.</li>
 </ul>
 <h3 id="m8--where-each-step-happens">Where each step happens</h3>
-<p>This module moves between Claude, your own commands, your editor and the
-browser. Every action is labelled with <strong>where</strong> you do it:</p>
+<p>This module moves between Claude, your own terminal, your editor and the
+browser. Every action is labelled with <strong>who</strong> does it, and <strong>where</strong>:</p>
 <table>
 <thead>
 <tr>
 <th>Label</th>
-<th>What it is</th>
+<th>What you do</th>
 <th>Folder</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>⌨️ Shell</strong></td>
-<td>A normal terminal for <code>git</code> and <code>gh</code>. Never Claude</td>
+<td><strong>🤖 Claude</strong></td>
+<td>Type the prompt into Claude Code, or <code>/exit</code> to quit it. Claude runs the commands. Step 8 uses a <strong>fresh</strong> session with no memory of the build</td>
 <td><code>~/projects/priority-guard/app</code></td>
 </tr>
 <tr>
-<td><strong>🤖 Claude</strong></td>
-<td>Claude Code, started with <code>claude</code>. Type prompts and kit commands here, never shell commands. Step 8 uses a <strong>fresh</strong> session with no memory of the build</td>
+<td><strong>⌨️ You</strong></td>
+<td>Type it yourself, in a normal terminal: starting Claude, and the step 8 session start</td>
+<td><code>~/projects/priority-guard/app</code></td>
+</tr>
+<tr>
+<td><strong>🔍 Check</strong></td>
+<td>Claude runs a check; <strong>you read its raw output</strong>, not Claude's summary of it</td>
 <td><code>~/projects/priority-guard/app</code></td>
 </tr>
 <tr>
@@ -2426,7 +2602,7 @@ permissions than the build and tests: reading the repo's guard script,
 writing temporary files outside the repo, and running <code>git ls-files</code>,
 <code>git log -p</code> and <code>grep</code>.</p>
 <ol>
-<li><strong>⌨️ Shell:</strong> start Claude in the repo:<pre><code>cd ~/projects/priority-guard/app
+<li><strong>⌨️ You:</strong> start Claude in the repo:<pre><code>cd ~/projects/priority-guard/app
 claude
 </code></pre>
 </li>
@@ -2476,9 +2652,10 @@ the rest is.</li>
 <p><strong>🤖 Claude:</strong> it offers to file the findings as stories. Type <code>approve</code>, then
 <code>Dry run first.</code>, read it, then <code>apply</code>.</p>
 <p>Then put the grade into the repo. The grade added <code>GRADE.md</code>'s allow line but
-didn't commit anything. <strong>🤖 Claude:</strong></p>
+didn't commit anything. <strong>✏️ Editor:</strong> read <code>.gitignore</code> first: it should now
+end with <code>!/GRADE.md</code>, and nothing else should be new. <strong>🤖 Claude:</strong></p>
 <pre><code>Commit GRADE.md, .gitignore and BACKLOG.md together on a new branch,
-then ship it.
+chore/grade, never on main, then ship it.
 </code></pre>
 <p>✅ <strong>Check:</strong> the findings are on your board, each naming the gate it holds
 up, and the pull request with <code>GRADE.md</code> is merged. <strong>A finding becomes a
@@ -2503,33 +2680,39 @@ builder&quot; or &quot;check the code&quot;.</p>
 <p><strong>🤖 Claude:</strong></p>
 <pre><code>ship it
 </code></pre>
-<p>When it's merged, <strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>):</p>
-<pre><code>git switch main &amp;&amp; git pull
-git log -1 --format=%h
+<p>When it's merged, <strong>🤖 Claude:</strong></p>
+<pre><code>Switch ~/projects/priority-guard/app to main and pull. Don't change any file.
 </code></pre>
-<p><strong>✏️ Editor:</strong> write that hash in <code>LOG.md</code> as the <strong>frozen runbook</strong>. From now on, the
+<p><strong>🔍 Check:</strong></p>
+<pre><code>Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app log -1 --format=%h
+</code></pre>
+<p><strong>✏️ Editor:</strong> write that hash, as the tool printed it, in <code>LOG.md</code> as the <strong>frozen runbook</strong>. From now on, the
 runbook doesn't change until the drill is over.</p>
 <p>✅ <strong>Check:</strong> <code>RUNBOOK.md</code> is on <code>main</code>, and you've written down the hash.</p>
 <hr />
 <h2 id="m8--part-c--the-drill-swap-with-your-partner">Part C — The drill (swap with your partner)</h2>
 <h3 id="m8--step-7--your-partner-plants-while-youre-away">Step 7 — Your partner plants, while you're away</h3>
 <p><strong>Why this step:</strong> Real failures turn up without warning, from someone else's change. Having your partner choose and plant the problem means you can't know the answer in advance.</p>
+<p>Before you leave, quit the session from step 2. <strong>🤖 Claude:</strong> type <code>/exit</code>.</p>
 <p><strong>You leave the room</strong> (or at least turn away from the screen). Your partner
-sits at your computer and does this:</p>
+sits at your computer and does this. Every action below is <strong>your
+partner's</strong>, not yours:</p>
 <ol>
-<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>): starts Claude and types:<pre><code>/prove-it:handoff plant
+<li><strong>⌨️ Your partner</strong> (<code>~/projects/priority-guard/app</code>): starts Claude with <code>claude</code>.
+<strong>🤖 Claude (your partner types):</strong><pre><code>/prove-it:handoff plant
 </code></pre>
 </li>
-<li>Reads the proposal. The kit suggests <strong>one</strong> realistic failure and writes a
+<li><strong>Your partner</strong> reads the proposal. The kit suggests <strong>one</strong> realistic failure and writes a
 <strong>drill card</strong> in the workspace, outside the repo, with the steps to plant
 it, the symptom, and the exact steps to restore it. The kit never changes
 the instance itself.</li>
-<li><strong>✏️ Editor:</strong> writes down the <strong>before</strong> state of whatever they're about to change, on
+<li><strong>✏️ Editor (your partner):</strong> writes down the <strong>before</strong> state of whatever they're about to change, on
 the card, so the restore can be checked.</li>
-<li><strong>🌐 Browser</strong> (your <strong>admin</strong> profile): plants it, exactly as the card says.
-<strong>✏️ Editor:</strong> fills in <strong>Planted by</strong> with a role, <code>partner</code>, never a name, and
+<li><strong>🌐 Browser (your partner)</strong>, in your <strong>admin</strong> profile: plants it, exactly as the card says.
+<strong>✏️ Editor (your partner):</strong> fills in <strong>Planted by</strong> with a role, <code>partner</code>, never a name, and
 <strong>Planted on</strong>.</li>
-<li><strong>🤖 Claude:</strong> quits Claude (<code>/exit</code>). Then writes you a one-line <strong>symptom report</strong>, the
+<li><strong>🤖 Claude (your partner types):</strong> <code>/exit</code>, to quit Claude. Then your
+partner writes you a one-line <strong>symptom report</strong>, the
 way a real user would: what they saw, not why. For example: &quot;I logged an
 incident on Payroll at P4 and it stayed at P4.&quot;</li>
 </ol>
@@ -2538,7 +2721,7 @@ incident on Payroll at P4 and it stayed at P4.&quot;</li>
 <p><strong>Why this step:</strong> This is the real test of the runbook. A Claude session with no memory of the build stands in for a stranger, so you see whether the runbook alone gets someone from the symptom to the cause.</p>
 <p>Back at your own computer, with <strong>no</strong> Claude session open:</p>
 <ol>
-<li><strong>⌨️ Shell</strong>, in the window you'll use for Claude: start a <strong>fresh</strong> session
+<li><strong>⌨️ You</strong>, in the window you'll use for Claude: start a <strong>fresh</strong> session
 with no memory of the build. The last line starts <strong>🤖 Claude</strong>:<pre><code>cd ~/projects/priority-guard/app
 git switch main &amp;&amp; git pull
 CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 claude
@@ -2566,8 +2749,9 @@ the runbook fix is merged, it's a catch for <code>drill</code>.</p>
 checks it against the before state, and fills in <strong>Restored on</strong>.</li>
 <li><strong>🌐 Browser</strong> (your <strong>agent</strong> profile): re-run Module 6 step 10: a critical incident at
 impact 3 and urgency 3 must save at P1 or P2.</li>
-<li><strong>🤖 Claude:</strong> quit the diagnose session (<code>/exit</code>). Start the <strong>project</strong> session again,
-in <code>~/projects/priority-guard/app</code>, with plain <code>claude</code>, and type:<pre><code>/prove-it:handoff verdict
+<li><strong>🤖 Claude:</strong> quit the diagnose session: type <code>/exit</code>. <strong>⌨️ You:</strong> start the
+<strong>project</strong> session again, in <code>~/projects/priority-guard/app</code>, with plain <code>claude</code>.
+<strong>🤖 Claude:</strong> type:<pre><code>/prove-it:handoff verdict
 </code></pre>
 </li>
 <li><strong>✏️ Editor:</strong> open <code>HANDOFF.md</code> and find the verdict: <strong>READY</strong> or <strong>NOT READY</strong>.</li>
@@ -2582,28 +2766,35 @@ has <strong>Restored on</strong> filled in.</p>
 <h3 id="m8--step-10--if-you-built-the-whole-app-close-the-handoff-stories">Step 10 — If you built the whole app: close the HANDOFF stories</h3>
 <p><strong>Why this step:</strong> Open stories make the board say the handoff isn't done. Closing each one with its evidence records what proved it, so anyone reading later can check.</p>
 <p>The plan filed stories on the HANDOFF gate back in Module 5, from your
-design's HANDOFF row. Nothing has closed them yet. <strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>),
-for each open one:</p>
-<pre><code>gh issue list --state open --label &quot;gate:handoff&quot; --json number,title
+design's HANDOFF row. Nothing has closed them yet. <strong>🔍 Check:</strong></p>
+<pre><code>Run exactly this and show me the raw output, unedited: gh issue list --state open --label &quot;gate:handoff&quot; --json number,title
 </code></pre>
-<p>Close it with a comment that records the evidence: the <strong>frozen runbook
+<p>Close each one with a comment that records the evidence: the <strong>frozen runbook
 commit</strong> (step 6), the drill's result (step 8), and the verdict (step 9). If
 you planted the failure yourself (option B), say so in the comment: it's a
-weaker test of &quot;someone else can diagnose it&quot;.</p>
-<p>✅ <strong>Check:</strong> the <code>gate:handoff</code> count (Module 6 step 12's command) is zero.</p>
+weaker test of &quot;someone else can diagnose it&quot;. <strong>🤖 Claude</strong>, with the
+numbers from the raw output and your own comment:</p>
+<pre><code>Close issues &lt;NUMBERS&gt; with gh issue close, each with exactly this
+comment, and nothing else: &quot;&lt;EVIDENCE&gt;&quot;. Don't close any other issue.
+</code></pre>
+<p>✅ <strong>Check:</strong> the <code>gate:handoff</code> count (Module 6 step 12's command) is zero.
+<strong>🔍 Check:</strong></p>
+<pre><code>Run exactly this and show me the raw output, unedited: gh issue list --state open --label &quot;gate:handoff&quot; --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != &quot;register&quot;))] | length'
+</code></pre>
 <h3 id="m8--step-11--if-you-built-the-whole-app-grade-again-at-handoff">Step 11 — If you built the whole app: grade again at HANDOFF</h3>
 <p><strong>Why this step:</strong> The first grade came before the handoff work. Grading again at the end says whether the finished app could be owned by someone else.</p>
 <ol>
-<li><strong>✏️ Editor:</strong> write the <strong>DEMO grade's commit</strong> in <code>LOG.md</code> first: the next grade
+<li>Record the <strong>DEMO grade's commit</strong> first: the next grade
 rewrites <code>GRADE.md</code>, so the first one survives only in the history.
-<strong>⌨️ Shell</strong> (<code>~/projects/priority-guard/app</code>):<pre><code>git log -1 --format=%h -- GRADE.md
+<strong>🔍 Check:</strong><pre><code>Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app log -1 --format=%h -- GRADE.md
 </code></pre>
-</li>
+<strong>✏️ Editor:</strong> write that hash, as the tool printed it, in <code>LOG.md</code>.</li>
 <li><strong>🤖 Claude:</strong> run <code>/prove-it:grade</code> again, and choose the <strong>HANDOFF</strong> milestone. This is
 the grade that says whether the finished app could be owned by someone
 else.</li>
 <li>Read it, then file its findings the same way as step 4 (<code>approve</code>,
-<code>Dry run first.</code>, <code>apply</code>), and merge <code>GRADE.md</code> the same way.</li>
+<code>Dry run first.</code>, <code>apply</code>), and merge <code>GRADE.md</code> the same way, on a new
+branch named <code>chore/grade-handoff</code> in place of <code>chore/grade</code>.</li>
 </ol>
 <p>Any findings it files are new stories on earlier gates. <strong>This run ends
 here</strong>: list them in <code>LOG.md</code> as the next work, but don't work them now.</p>
@@ -2630,7 +2821,7 @@ work.</p>
 <hr />
 <h2 id="m9--step-1--count-your-catches">Step 1 — Count your catches</h2>
 <p><strong>Why this step:</strong> Memory makes some catches feel bigger and forgets others. Counting from your notes gives you numbers you can show and stand behind.</p>
-<p>In a normal terminal:</p>
+<p><strong>⌨️ You</strong> (any folder):</p>
 <pre><code>wc -l ~/projects/priority-guard-notes/catches.md
 </code></pre>
 <p>Then count them by what caught them:</p>
@@ -2804,7 +2995,8 @@ platform team.</p>
 <p><strong>Never reuse the workshop's folders.</strong> A second brief in <code>brief/</code>, or the
 workshop's <code>CONSULT.md</code>, would confuse the kit.</p>
 <ol>
-<li>Choose a short name for your app, for example <code>access-review</code>. Then:<pre><code>mkdir -p ~/projects/&lt;app&gt;/brief ~/projects/&lt;app&gt;-notes
+<li>Choose a short name for your app, for example <code>access-review</code>. Then,
+<strong>⌨️ You</strong> (any folder):<pre><code>mkdir -p ~/projects/&lt;app&gt;/brief ~/projects/&lt;app&gt;-notes
 touch ~/projects/&lt;app&gt;-notes/LOG.md ~/projects/&lt;app&gt;-notes/catches.md
 </code></pre>
 Wherever a module says <code>~/projects/priority-guard</code>, use <code>~/projects/&lt;app&gt;</code>. Wherever it
@@ -2870,7 +3062,7 @@ decisions</strong>, <strong>Acceptance</strong>.</li>
 <h3 id="own--review-it-module-1-on-your-own-inputs">Review it (Module 1, on your own inputs)</h3>
 <p><strong>Why this step:</strong> Every line should trace back to something the customer said, so you don't build guesses.</p>
 <p>Put your inputs and your PRD in a review folder and run Module 1's steps,
-with this trace prompt:</p>
+with this trace prompt (<strong>🤖 Claude</strong>, in the review folder):</p>
 <pre><code>Trace &lt;your PRD file&gt; against the input files here. For every capability
 and requirement in the PRD, quote the input sentence that supports it, or
 say &quot;no source&quot;. Then list every input statement that changes what gets
@@ -2907,7 +3099,7 @@ or agent (its reason), the <strong>ownership</strong> table (one owner per table
 thinnest piece a real user can use from start to finish. Everything else is
 deferred, not dropped.</p>
 <ol>
-<li>In Claude, in <code>~/projects/&lt;app&gt;</code>:<pre><code>Read brief/ and CONSULT.md. Propose two or three end-to-end slices. Each
+<li><strong>🤖 Claude</strong> (<code>~/projects/&lt;app&gt;</code>):<pre><code>Read brief/ and CONSULT.md. Propose two or three end-to-end slices. Each
 slice must: let a real user do one complete thing; be about 5 to 8
 stories; use no generative AI; avoid anything the consult marked not
 ready or conditional, or listed under Open decisions; and avoid
@@ -2919,7 +3111,7 @@ tests. Don't write any file.
 <li>Choose one. Prefer the slice that <strong>tests your riskiest assumption first</strong>,
 not the easiest one. <strong>Keep it small now:</strong> cutting it later is costly
 (section 5).</li>
-<li>Write <code>SLICE.md</code> in <code>~/projects/&lt;app&gt;</code>, <strong>by hand</strong>: the capabilities in the slice,
+<li><strong>✏️ Editor:</strong> write <code>SLICE.md</code> in <code>~/projects/&lt;app&gt;</code>, <strong>by hand</strong>: the capabilities in the slice,
 the ones deferred, the one thing a real user will be able to do, and your
 <strong>live check</strong>, the steps an ordinary user follows to see it work.</li>
 <li>Get the real owner's OK on what's deferred, in writing.</li>
@@ -3036,8 +3228,8 @@ grade or verdict left open. Add one line: what you'll build next.</p>
 <p><strong>Why this step:</strong> The open-story count shows where you really are, so nobody has to guess.</p>
 <p>The plan files one milestone per gate: <strong>MERGE → INSTALL → DEMO → HANDOFF</strong>.
 The next gate is the one <code>BACKLOG.md</code> names at the top. Count what stands in
-its way, swapping in its name:</p>
-<pre><code>gh issue list --state open --label &quot;gate:&lt;next gate&gt;&quot; --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != &quot;register&quot;))] | length'
+its way, swapping in its name. <strong>🔍 Check:</strong></p>
+<pre><code>Run exactly this and show me the raw output, unedited: gh issue list --state open --label &quot;gate:&lt;next gate&gt;&quot; --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != &quot;register&quot;))] | length'
 </code></pre>
 <p>Keep running the build loop, one story at a time, until it's zero. Then
 move to the next gate. Nothing closes milestones for you. <strong>The count is the
@@ -3116,7 +3308,7 @@ counting, and its plan keys need a different prefix. Instead:</p>
 workspace) before running anything that rewrites it.</li>
 <li>Add an <strong>LLD addendum</strong> for the new slice: research and the same LLD
 sections, for the new capabilities only.</li>
-<li>Extend the <strong>same</strong> design:<pre><code>/prove-it:design-challenge amend docs/DESIGN-&lt;Feature&gt;.md
+<li>Extend the <strong>same</strong> design, <strong>🤖 Claude:</strong><pre><code>/prove-it:design-challenge amend docs/DESIGN-&lt;Feature&gt;.md
 </code></pre>
 The new terms continue the numbering, and the real owner signs the new
 drift rows.</li>

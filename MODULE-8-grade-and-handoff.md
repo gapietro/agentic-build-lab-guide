@@ -37,13 +37,14 @@ who wrote it. Does yours get you to the cause, from the symptom alone?
 
 ### Where each step happens
 
-This module moves between Claude, your own commands, your editor and the
-browser. Every action is labelled with **where** you do it:
+This module moves between Claude, your own terminal, your editor and the
+browser. Every action is labelled with **who** does it, and **where**:
 
-| Label | What it is | Folder |
+| Label | What you do | Folder |
 |---|---|---|
-| **⌨️ Shell** | A normal terminal for `git` and `gh`. Never Claude | `~/projects/priority-guard/app` |
-| **🤖 Claude** | Claude Code, started with `claude`. Type prompts and kit commands here, never shell commands. Step 8 uses a **fresh** session with no memory of the build | `~/projects/priority-guard/app` |
+| **🤖 Claude** | Type the prompt into Claude Code, or `/exit` to quit it. Claude runs the commands. Step 8 uses a **fresh** session with no memory of the build | `~/projects/priority-guard/app` |
+| **⌨️ You** | Type it yourself, in a normal terminal: starting Claude, and the step 8 session start | `~/projects/priority-guard/app` |
+| **🔍 Check** | Claude runs a check; **you read its raw output**, not Claude's summary of it | `~/projects/priority-guard/app` |
 | **✏️ Editor** | Your text editor, for reading files and for changes you make **by hand** | — |
 | **🌐 Browser** | Your instance, in the **admin** or **agent** browser profile the step names | — |
 
@@ -69,7 +70,7 @@ permissions than the build and tests: reading the repo's guard script,
 writing temporary files outside the repo, and running `git ls-files`,
 `git log -p` and `grep`.
 
-1. **⌨️ Shell:** start Claude in the repo:
+1. **⌨️ You:** start Claude in the repo:
    ```
    cd ~/projects/priority-guard/app
    claude
@@ -134,10 +135,11 @@ Part B.
 `Dry run first.`, read it, then `apply`.
 
 Then put the grade into the repo. The grade added `GRADE.md`'s allow line but
-didn't commit anything. **🤖 Claude:**
+didn't commit anything. **✏️ Editor:** read `.gitignore` first: it should now
+end with `!/GRADE.md`, and nothing else should be new. **🤖 Claude:**
 ```
 Commit GRADE.md, .gitignore and BACKLOG.md together on a new branch,
-then ship it.
+chore/grade, never on main, then ship it.
 ```
 
 ✅ **Check:** the findings are on your board, each naming the gate it holds
@@ -174,12 +176,15 @@ builder" or "check the code".
 ```
 ship it
 ```
-When it's merged, **⌨️ Shell** (`~/projects/priority-guard/app`):
+When it's merged, **🤖 Claude:**
 ```
-git switch main && git pull
-git log -1 --format=%h
+Switch ~/projects/priority-guard/app to main and pull. Don't change any file.
 ```
-**✏️ Editor:** write that hash in `LOG.md` as the **frozen runbook**. From now on, the
+**🔍 Check:**
+```
+Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app log -1 --format=%h
+```
+**✏️ Editor:** write that hash, as the tool printed it, in `LOG.md` as the **frozen runbook**. From now on, the
 runbook doesn't change until the drill is over.
 
 ✅ **Check:** `RUNBOOK.md` is on `main`, and you've written down the hash.
@@ -192,23 +197,28 @@ runbook doesn't change until the drill is over.
 
 **Why this step:** Real failures turn up without warning, from someone else's change. Having your partner choose and plant the problem means you can't know the answer in advance.
 
-**You leave the room** (or at least turn away from the screen). Your partner
-sits at your computer and does this:
+Before you leave, quit the session from step 2. **🤖 Claude:** type `/exit`.
 
-1. **🤖 Claude** (`~/projects/priority-guard/app`): starts Claude and types:
+**You leave the room** (or at least turn away from the screen). Your partner
+sits at your computer and does this. Every action below is **your
+partner's**, not yours:
+
+1. **⌨️ Your partner** (`~/projects/priority-guard/app`): starts Claude with `claude`.
+   **🤖 Claude (your partner types):**
    ```
    /prove-it:handoff plant
    ```
-2. Reads the proposal. The kit suggests **one** realistic failure and writes a
+2. **Your partner** reads the proposal. The kit suggests **one** realistic failure and writes a
    **drill card** in the workspace, outside the repo, with the steps to plant
    it, the symptom, and the exact steps to restore it. The kit never changes
    the instance itself.
-3. **✏️ Editor:** writes down the **before** state of whatever they're about to change, on
+3. **✏️ Editor (your partner):** writes down the **before** state of whatever they're about to change, on
    the card, so the restore can be checked.
-4. **🌐 Browser** (your **admin** profile): plants it, exactly as the card says.
-   **✏️ Editor:** fills in **Planted by** with a role, `partner`, never a name, and
+4. **🌐 Browser (your partner)**, in your **admin** profile: plants it, exactly as the card says.
+   **✏️ Editor (your partner):** fills in **Planted by** with a role, `partner`, never a name, and
    **Planted on**.
-5. **🤖 Claude:** quits Claude (`/exit`). Then writes you a one-line **symptom report**, the
+5. **🤖 Claude (your partner types):** `/exit`, to quit Claude. Then your
+   partner writes you a one-line **symptom report**, the
    way a real user would: what they saw, not why. For example: "I logged an
    incident on Payroll at P4 and it stayed at P4."
 
@@ -220,7 +230,7 @@ Then do the same on your partner's computer.
 
 Back at your own computer, with **no** Claude session open:
 
-1. **⌨️ Shell**, in the window you'll use for Claude: start a **fresh** session
+1. **⌨️ You**, in the window you'll use for Claude: start a **fresh** session
    with no memory of the build. The last line starts **🤖 Claude**:
    ```
    cd ~/projects/priority-guard/app
@@ -253,8 +263,9 @@ the runbook fix is merged, it's a catch for `drill`.
    checks it against the before state, and fills in **Restored on**.
 2. **🌐 Browser** (your **agent** profile): re-run Module 6 step 10: a critical incident at
    impact 3 and urgency 3 must save at P1 or P2.
-3. **🤖 Claude:** quit the diagnose session (`/exit`). Start the **project** session again,
-   in `~/projects/priority-guard/app`, with plain `claude`, and type:
+3. **🤖 Claude:** quit the diagnose session: type `/exit`. **⌨️ You:** start the
+   **project** session again, in `~/projects/priority-guard/app`, with plain `claude`.
+   **🤖 Claude:** type:
    ```
    /prove-it:handoff verdict
    ```
@@ -275,33 +286,43 @@ has **Restored on** filled in.
 **Why this step:** Open stories make the board say the handoff isn't done. Closing each one with its evidence records what proved it, so anyone reading later can check.
 
 The plan filed stories on the HANDOFF gate back in Module 5, from your
-design's HANDOFF row. Nothing has closed them yet. **⌨️ Shell** (`~/projects/priority-guard/app`),
-for each open one:
+design's HANDOFF row. Nothing has closed them yet. **🔍 Check:**
 ```
-gh issue list --state open --label "gate:handoff" --json number,title
+Run exactly this and show me the raw output, unedited: gh issue list --state open --label "gate:handoff" --json number,title
 ```
-Close it with a comment that records the evidence: the **frozen runbook
+Close each one with a comment that records the evidence: the **frozen runbook
 commit** (step 6), the drill's result (step 8), and the verdict (step 9). If
 you planted the failure yourself (option B), say so in the comment: it's a
-weaker test of "someone else can diagnose it".
+weaker test of "someone else can diagnose it". **🤖 Claude**, with the
+numbers from the raw output and your own comment:
+```
+Close issues <NUMBERS> with gh issue close, each with exactly this
+comment, and nothing else: "<EVIDENCE>". Don't close any other issue.
+```
 
 ✅ **Check:** the `gate:handoff` count (Module 6 step 12's command) is zero.
+**🔍 Check:**
+```
+Run exactly this and show me the raw output, unedited: gh issue list --state open --label "gate:handoff" --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != "register"))] | length'
+```
 
 ### Step 11 — If you built the whole app: grade again at HANDOFF
 
 **Why this step:** The first grade came before the handoff work. Grading again at the end says whether the finished app could be owned by someone else.
 
-1. **✏️ Editor:** write the **DEMO grade's commit** in `LOG.md` first: the next grade
+1. Record the **DEMO grade's commit** first: the next grade
    rewrites `GRADE.md`, so the first one survives only in the history.
-   **⌨️ Shell** (`~/projects/priority-guard/app`):
+   **🔍 Check:**
    ```
-   git log -1 --format=%h -- GRADE.md
+   Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app log -1 --format=%h -- GRADE.md
    ```
+   **✏️ Editor:** write that hash, as the tool printed it, in `LOG.md`.
 2. **🤖 Claude:** run `/prove-it:grade` again, and choose the **HANDOFF** milestone. This is
    the grade that says whether the finished app could be owned by someone
    else.
 3. Read it, then file its findings the same way as step 4 (`approve`,
-   `Dry run first.`, `apply`), and merge `GRADE.md` the same way.
+   `Dry run first.`, `apply`), and merge `GRADE.md` the same way, on a new
+   branch named `chore/grade-handoff` in place of `chore/grade`.
 
 Any findings it files are new stories on earlier gates. **This run ends
 here**: list them in `LOG.md` as the next work, but don't work them now.

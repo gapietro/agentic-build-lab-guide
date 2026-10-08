@@ -18,7 +18,7 @@ work.
 
 **Why this step:** Memory makes some catches feel bigger and forgets others. Counting from your notes gives you numbers you can show and stand behind.
 
-In a normal terminal:
+**⌨️ You** (any folder):
 ```
 wc -l ~/projects/priority-guard-notes/catches.md
 ```

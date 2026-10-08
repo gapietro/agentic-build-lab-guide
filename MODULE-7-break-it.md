@@ -52,12 +52,13 @@ reviewer's in step 3.
 
 **Why this step:** You know what you meant the code to do, so you tend to test what you meant. A reviewer with no history knows only the rule, so it tries things you didn't think to try.
 
-Quit any open Claude session. Start a new one in `~/projects/priority-guard/app`:
+**🤖 Claude:** if a session is open, type `/exit`.
+**⌨️ You** (`~/projects/priority-guard/app`): start a new one:
 ```
-claude
+cd ~/projects/priority-guard/app && claude
 ```
-**Don't** run the session open. This reviewer shouldn't know what you
-intended, only what must hold. Type:
+**🤖 Claude:** **don't** run the session open. This reviewer shouldn't know
+what you intended, only what must hold. Type:
 ```
 You are reviewing someone else's work. One rule must hold: an incident on a
 critical service can never be saved below that service's floor. Try to
@@ -92,9 +93,10 @@ Copy the list into your log, with how many attempts got through.
    real project you'd repeat with a new reviewer until a round finds nothing.
 4. **Building the whole app:** fix **every** attempt that got through, through
    the loop (or Part C if it changes the design). Don't file new stories by
-   hand: a fix is a branch and `ship it`. Then reinstall, re-run your live
-   checks, and add a fresh comment to the closed DEMO story saying what
-   changed and that the checks pass again. Any open issue on the DEMO gate
+   hand: a fix is a branch and `ship it`. Then reinstall (Module 6 step 9:
+   **🤖 Claude** builds, **⌨️ You** install), re-run your live checks, and
+   add a fresh comment to the closed DEMO story saying what changed and that
+   the checks pass again. Any open issue on the DEMO gate
    turns Module 8's grade into a preview.
 
 ✅ **Check:** you've written down how many attempts there were, how many got
@@ -126,7 +128,8 @@ Things worth trying, if your partner runs out of ideas:
 ⚠️ **If you see…** *an attempt gets through:* that's a **catch**, found by your
 partner on a live instance. Write the exact steps. Swap back, and fix it in
 Part A's way: a failing test that reproduces it, then the fix, through the
-loop, then re-install and re-try the same steps.
+loop, then re-install (Module 6 step 9: **🤖 Claude** builds, **⌨️ You**
+install) and re-try the same steps.
 
 ### Step 5 — Swap back, and attack theirs
 
@@ -146,29 +149,36 @@ says, for example a new rule about which changes the floor must survive.
 
 **Why this step:** The signed design is the agreement about what the app does. If a fix changes that, the design changes first and you sign it, so the code never quietly drifts from what was agreed.
 
-1. Start a branch for the amendment, from a clean `main`:
+1. Leave the reviewer session first: it was set up to attack, not to build.
+   **🤖 Claude:** type `/exit`. **⌨️ You** (`~/projects/priority-guard/app`):
+   start a fresh project session:
    ```
-   git switch main && git pull
-   git switch -c docs/amend-floor
+   cd ~/projects/priority-guard/app && claude
    ```
-2. In Claude, run the session open, then:
+   **🤖 Claude:** start a branch for the amendment, from a clean `main`:
+   ```
+   Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull && git -C ~/projects/priority-guard/app switch -c docs/amend-floor and show me the output. Commit nothing.
+   ```
+2. **🤖 Claude:** run the session open, then:
    ```
    /prove-it:design-challenge amend docs/DESIGN-PriorityGuard.md
    ```
 3. It asks what changed and why, **one question per turn**. Answer with what
    you found and what you want the design to say. Then answer its questions.
 4. It reads back the changed terms. If they're right, type `Confirmed.`
-5. Open `docs/DESIGN-PriorityGuard.md` in your **editor**. In **§10**, the drift
+5. **✏️ Editor:** open `docs/DESIGN-PriorityGuard.md`. In **§10**, the drift
    log has one row per added or changed term, with **Signed by** left blank.
    Fill in each **Signed by** cell yourself. The kit never signs, and the
    build plan refuses an unsigned row.
-6. `ship it` to merge the amendment.
-7. Turn the amendment into a story:
+6. **🤖 Claude:** `ship it` to merge the amendment.
+7. **🤖 Claude:** turn the amendment into a story:
    ```
    /prove-it:build-plan docs/DESIGN-PriorityGuard.md
    ```
    Type `approve` at the preview, then `apply now`.
-8. **Then** build the fix as a normal story, through the loop. The build plan
+8. **✏️ Editor:** read `.gitignore`. The build plan may have added allow
+   lines: check each one before it's committed.
+   **🤖 Claude:** **then** build the fix as a normal story, through the loop. The build plan
    left `BACKLOG.md` and `.gitignore` changed on `main`: commit them as the
    first commit on that story's branch.
 

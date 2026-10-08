@@ -54,7 +54,7 @@ write, and code Claude wrote and was sure of. Does it find something real?
 ## Before you start
 
 - [ ] Module 5 is done: the plan is merged and `main` is clean.
-- [ ] `gh issue list` shows your stories.
+- [ ] Your stories are filed. You check this in step 1, once Claude is open.
 - [ ] Your PDI is awake.
 - [ ] You have **two terminal windows** open, side by side, as in Module 5.
 
@@ -64,8 +64,9 @@ Every action is labelled with **where** you do it, as in Module 5:
 
 | Label | What it is | Folder |
 |---|---|---|
-| **⌨️ Shell** | Terminal window 2: a normal terminal for `git`, `gh`, `now-sdk` and `npm`. Never Claude | `~/projects/priority-guard/app` |
-| **🤖 Claude** | Terminal window 1: Claude Code, started with `claude`. Type prompts and kit commands here, never shell commands | `~/projects/priority-guard/app` |
+| **🤖 Claude** | Terminal window 1: Claude Code, started with `claude`. Type the prompt or kit command shown, or `/exit` to quit Claude; Claude runs any commands it needs | `~/projects/priority-guard/app` |
+| **🔍 Check** | Terminal window 1: a prompt that asks Claude to run one check command. Read the **raw output** of the command itself, not Claude's summary of it | `~/projects/priority-guard/app` |
+| **⌨️ You** | A normal terminal where **you** type the command yourself, never Claude: window 2, or window 1 before you start Claude | `~/projects/priority-guard/app` |
 | **✏️ Editor** | Your text editor, for files you write or read **yourself**, such as `LOG.md` | — |
 | **🌐 Browser** | GitHub, and your PDI in your **admin** or **agent** browser profile | — |
 
@@ -81,9 +82,23 @@ If a block doesn't start with a label, it belongs to the label just above it.
 Claude remember. Pulling `main` first means you start from the latest merged
 work, and re-checking blockers stops Claude trusting a note that's out of date.
 
-**⌨️ Shell:** `cd ~/projects/priority-guard/app && git switch main && git pull`.
+**🤖 Claude:** if a session is still open from Module 5, type `/exit`.
 
-**🤖 Claude:** start Claude in `~/projects/priority-guard/app` and type the session open:
+**⌨️ You** (`~/projects/priority-guard/app`), in window 1: start Claude.
+```
+cd ~/projects/priority-guard/app && claude
+```
+
+**🤖 Claude:** bring `main` up to date:
+```
+Run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+```
+**🔍 Check:** confirm your stories are filed:
+```
+Run exactly this and show me the raw output, unedited: gh issue list
+```
+
+**🤖 Claude:** type the session open:
 ```
 Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
 blocker they mention. Then tell me the top three items by gate distance.
@@ -204,10 +219,10 @@ loop on the next stories at the same time. The checks don't change: every
 story is still tested first, reviewed and merged on green. What changes is
 your job. You stop typing commands and start reading the evidence.
 
-**⌨️ Shell:** `git switch main && git pull`.
-
-**🤖 Claude:** run `/clear` (or start a fresh session), then the session open
-from step 1. Then type this prompt. Choose the **Stop when** line that fits,
+**🤖 Claude:** run `/clear` (or start a fresh session: **🤖 Claude:** type
+`/exit`, then **⌨️ You:** `claude`), then step 1's prompt
+that brings `main` up to date, then the session open from step 1. Then type
+this prompt. Choose the **Stop when** line that fits,
 and delete the other:
 
 ```
@@ -269,7 +284,12 @@ When it reports, read the table, then check the evidence yourself:
    - **When** does the rule run: before the incident is saved?
    - What does it write in the work note?
    - Does **anything** in this story let the priority go lower than the floor?
-3. **⌨️ Shell:** `git switch main && git pull`, then `npm test`. Everything passes.
+3. **⌨️ You** (`~/projects/priority-guard/app`), in window 2, not Claude:
+   ```
+   cd ~/projects/priority-guard/app && git switch main && git pull
+   npm test
+   ```
+   Everything passes.
 
 ✅ **Check:** every story in scope is merged, each through its own pull request
 with a review. Nothing merged with a failing test. Stopped stories, if any, are
@@ -300,15 +320,21 @@ app on your instance, so you can see what it does on the real platform.
 Building from a clean, up-to-date `main` means you install exactly what was
 reviewed.
 
-**⌨️ Shell**, on a clean, up-to-date `main`:
+**🤖 Claude:** build on a clean, up-to-date `main`:
 ```
-now-sdk build
-now-sdk install --auth <PDI_ALIAS>
+Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+```
+
+**⌨️ You** (`~/projects/priority-guard/app`), in window 2, once the build
+succeeds. The instance is yours, so you install it yourself:
+```
+cd ~/projects/priority-guard/app && now-sdk install --auth <PDI_ALIAS>
 ```
 Always `--auth`. Never `--alias`: on `install` it's silently ignored, and the
 app goes to whatever instance is the default.
 
-✅ **Check:** the install succeeds and prints a link to your app.
+✅ **Check:** the build succeeds, then the install succeeds and prints a link
+to your app.
 
 ### Step 10 — Try it live, as an ordinary agent
 
@@ -359,10 +385,11 @@ come back to you: do those by hand, as below. Leave the `gate:handoff`
 stories open: Module 8 closes them.
 
 **Which gate is next.** The gates go in order: `merge`, `install`, `demo`,
-`handoff`. The next one is the **first whose count isn't zero**. Run this
-for each in order in **⌨️ Shell**, swapping in the gate's name, in lower case:
+`handoff`. The next one is the **first whose count isn't zero**. Check
+each in order (**🔍 Check**), swapping in the gate's name, in lower case, and
+read the number in the raw output:
 ```
-gh issue list --state open --label "gate:<gate>" --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != "register"))] | length'
+Run exactly this and show me the raw output, unedited: gh issue list --state open --label "gate:<gate>" --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != "register"))] | length'
 ```
 `BACKLOG.md` is a snapshot from when the plan was filed. Closing stories
 doesn't update it, so it goes stale. **The live count is the truth.**
@@ -392,7 +419,7 @@ Along the way:
 - **Seed the demo data as source** in the app (`src/`), as your design says.
   The grade checks for it.
 - After any story that changes what's on the instance, **build and install**
-  again (step 9, **⌨️ Shell**), and re-run your live checks. Add checks as stories land:
+  again (step 9: **🤖 Claude** builds, **⌨️ You** install), and re-run your live checks. Add checks as stories land:
   an override with a reason, a Tier 1 override waiting for approval, and the
   weekly count.
 - **The INSTALL and DEMO stories need evidence**, or the grade can't count

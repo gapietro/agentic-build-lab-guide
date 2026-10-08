@@ -34,11 +34,11 @@ You've never seen the guard fire. In step 4 you try to beat it.
     **must not exist yet**.
   - `<SCOPE>`: your app's scope: your instance's vendor prefix, then `pg_`
     and your initials, for example `x_123456_pg_ga`. **18 characters at
-    most.** Find the prefix in your admin profile: type
+    most.** Find the prefix in your admin profile (**🌐 Browser**): type
     `sys_properties.list` in the filter navigator and look up
     `glide.appcreator.company.code`. The scope is `x_<that value>_pg_<initials>`.
-- [ ] You have **two terminal windows** open, side by side. Name them in
-      your head as below; every step says which one to use.
+- [ ] You have **two terminal windows** open, side by side. Window 1 is for
+      Claude, window 2 is a normal terminal. Every step says which one to use.
 
 ### Where each step happens
 
@@ -47,12 +47,19 @@ action is labelled with **where** you do it:
 
 | Label | What it is | Folder |
 |---|---|---|
-| **⌨️ Shell** | Terminal window 2: a normal terminal for `git`, `gh`, `now-sdk`, `npm` and `cp`. Never Claude | `~/projects/priority-guard/app` (from step 1 on) |
-| **🤖 Claude** | Terminal window 1: Claude Code, started with `claude`. Type prompts and kit commands here, never shell commands | `~/projects/priority-guard/app` (from step 5 on) |
-| **✏️ Editor** | Your text editor, for changes you make **by hand** | — |
+| **🤖 Claude** | Terminal window 1: Claude Code, started with `claude`. Type the prompt or kit command shown, or `/exit` to quit Claude; Claude runs the commands | `~/projects/priority-guard` in steps 1–5.2, then `~/projects/priority-guard/app` |
+| **🔍 Check** | Terminal window 1: a prompt that asks Claude to run one check command. Read the **raw output** of the command itself, not Claude's summary of it | Same as 🤖 Claude |
+| **⌨️ You** | A normal terminal where **you** type the command yourself, never Claude: window 2, or window 1 when you start Claude | The folder in brackets |
+| **✏️ Editor** | Your text editor, for changes you make **by hand**, such as allow lines and `LOG.md` | — |
+| **🌐 Browser** | GitHub, and your PDI in your **admin** browser profile | — |
 
-Claude isn't used in steps 1–4. If a block doesn't start with a label, it
-belongs to the label just above it.
+Claude does the routine typing from step 1 on. Its shell goes back to the
+folder Claude was started in after every command, so every prompt uses full
+paths. You type the guard test (step 4), the SDK project setup (step 5.1)
+and the first honest count (step 12) yourself. Allow lines are your
+decision: Claude may propose or add one, but none goes in unread. You read
+`.gitignore` before each commit that changes it. If a block doesn't start
+with a label, it belongs to the label just above it.
 
 ---
 
@@ -65,22 +72,31 @@ saved changes, kept apart from the customer's material one folder up. Setting
 your name and a GitHub noreply email now means every change says who made it,
 without putting your personal email online.
 
-**⌨️ Shell** (start in `~/projects/priority-guard`):
+**⌨️ You** (window 1, `~/projects/priority-guard`): start Claude in the
+workspace. It does steps 1–3 from here.
 ```
 cd ~/projects/priority-guard
-mkdir app && cd app
-git init -b main
-git config user.name "<your name or handle>"
-git config user.email "<your GitHub noreply email>"
+claude
+```
+
+**🤖 Claude:** type this prompt (with your values):
+```
+Create the folder ~/projects/priority-guard/app and make it a new git
+repository whose first branch is main: git init -b main. Then, for that
+repository only (not --global), set user.name to "<your name or handle>"
+and user.email to "<your GitHub noreply email>". Use full paths in every
+command. Don't create any other file, and don't commit or push anything.
+Don't read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
 ```
 (Use your GitHub noreply address, from GitHub → Settings → Emails, so a
 personal email never enters the history.)
 
-✅ **Check:** `git init` says it created an empty repository in `.../priority-guard/app/.git/`.
+✅ **Check:** git's output says it created an empty repository in `.../priority-guard/app/.git/`.
 
 ⚠️ **If your instructor says your SDK version refuses a folder that isn't
-empty:** they'll give you the reordered steps: `now-sdk init` first, then
-`git init` and the allow list. The allow list must still come **before the
+empty:** they'll give you the reordered steps: `now-sdk init` first (**⌨️ You**, in
+window 2), then `git init` and the allow list. The allow list must still come **before the
 first commit**.
 
 ### Step 2 — An allow list, before the first commit
@@ -91,21 +107,23 @@ shape. An **allow list** only has to know what the repo is for: everything
 else is invisible to git. It must be in place before the first commit, because
 once a file is committed it stays in the history.
 
-All in **⌨️ Shell** (`~/projects/priority-guard/app`), except item 3.
-
-1. Get a local copy of the kit, at the version you installed, outside the
-   workspace:
+1. **🤖 Claude:** get a local copy of the kit, at the version you installed,
+   outside the workspace, then copy the allow list and start a README:
    ```
-   gh repo clone gapietro/prove-it-kit ~/projects/prove-it-kit
+   Clone the public repo gapietro/prove-it-kit to ~/projects/prove-it-kit
+   with gh repo clone, then detach it at the tag v0.1.3:
    git -C ~/projects/prove-it-kit switch --detach v0.1.3
+   Then copy ~/projects/prove-it-kit/templates/gitignore.allowlist to
+   ~/projects/priority-guard/app/.gitignore, and create
+   ~/projects/priority-guard/app/README.md containing exactly one line:
+   # Priority Guard
+   Use full paths. The app repo stays on main: don't stage, commit or push
+   anything. Don't read anything outside ~/projects/priority-guard and
+   ~/projects/prove-it-kit.
    ```
-2. Copy the allow list, and start a README:
-   ```
-   cp ~/projects/prove-it-kit/templates/gitignore.allowlist .gitignore
-   echo "# Priority Guard" > README.md
-   ```
-3. **✏️ Editor:** open `.gitignore` and read it. Find the line `/*`. That line hides
-   everything; the `!` lines let things back in.
+2. **✏️ Editor:** open `~/projects/priority-guard/app/.gitignore` and read
+   it. Find the line `/*`. That line hides everything; the `!` lines let
+   things back in.
 
 ✅ **Check:** you can point to the line that hides everything, and to the
 lines that admit `README.md` and `.gitignore`.
@@ -118,10 +136,14 @@ written inside them. The guard is a small script git runs before every commit
 and tokens. Without it, a secret typed into an allowed file would go straight
 in.
 
-**⌨️ Shell** (`~/projects/priority-guard/app`):
+**🤖 Claude:**
 ```
-cp ~/projects/prove-it-kit/hooks/pre-commit-guard.sh "$(git rev-parse --git-path hooks)/pre-commit"
-chmod +x "$(git rev-parse --git-path hooks)/pre-commit"
+Install the kit's commit guard in the app repo. Run exactly this, as one
+command:
+cd ~/projects/priority-guard/app && cp ~/projects/prove-it-kit/hooks/pre-commit-guard.sh "$(git rev-parse --git-path hooks)/pre-commit" && chmod +x "$(git rev-parse --git-path hooks)/pre-commit"
+Don't edit the script. Stay on main; don't stage, commit or push anything.
+Don't read anything outside ~/projects/priority-guard and
+~/projects/prove-it-kit.
 ```
 
 ✅ **Check:** `.git/hooks/pre-commit` exists. It runs before every commit.
@@ -134,8 +156,13 @@ remember expecting once you've seen the result. Then you try to get a fake
 secret past the guard, so you know how it behaves before you trust it with
 real code.
 
-First predict, in `LOG.md`: will the guard stop a commit that contains a
-token? Then, in **⌨️ Shell** (`~/projects/priority-guard/app`): **type** these (don't paste):
+First predict, in `LOG.md` (**✏️ Editor**): will the guard stop a commit
+that contains a token? Then, in **⌨️ You** (window 2, `~/projects/priority-guard/app`),
+go to the repo:
+```
+cd ~/projects/priority-guard/app
+```
+and **type** these (don't paste):
 ```
 git add .gitignore README.md
 echo 'FAKE_TOKEN=do-not-use-0000' >> README.md
@@ -151,7 +178,7 @@ was stopped. Write it in `LOG.md`.
 finding of the day, and a real **catch**. The guard can't be trusted. Tell
 your instructor, and don't push anything until it's understood.
 
-Now remove the fake token and commit cleanly:
+Now remove the fake token and commit cleanly, still in **⌨️ You**:
 ```
 echo "# Priority Guard" > README.md
 git add README.md
@@ -168,9 +195,11 @@ you also check the fence is still in place and that build output and
 downloaded packages stay out of git. If the empty project doesn't build,
 nothing you add to it will.
 
-1. **⌨️ Shell** (`~/projects/priority-guard/app`): create the ServiceNow project. Give `init` every answer as a
-   flag, so it asks you nothing:
+1. **⌨️ You** (window 2, `~/projects/priority-guard/app`): create the
+   ServiceNow project. `init` signs in to your instance, so you run it
+   yourself, not Claude. It gets every answer as a flag, so it asks nothing:
    ```
+   cd ~/projects/priority-guard/app
    now-sdk init --appName "Priority Guard" --packageName priority-guard --scopeName <SCOPE> --template typescript.basic --auth <PDI_ALIAS>
    ```
 
@@ -188,39 +217,63 @@ nothing you add to it will.
 
    ⚠️ **If you see…** *it still asks questions:* answer with the values in
    the table above. If it asks for a template, choose **typescript.basic**.
-2. **Restore the allow list**, still in **⌨️ Shell**. `now-sdk init` writes
-   its own short `.gitignore` over yours (SDK 4.12 does this every time). Put
-   the kit's allow list back:
+2. **Restore the allow list.** `now-sdk init` writes its own short
+   `.gitignore` over yours (SDK 4.12 does this every time). Put the kit's
+   allow list back.
+
+   **🤖 Claude:**
    ```
-   cp ~/projects/prove-it-kit/templates/gitignore.allowlist .gitignore
-   grep -n '^/\*' .gitignore
+   now-sdk init replaced ~/projects/priority-guard/app/.gitignore with its
+   own. Copy ~/projects/prove-it-kit/templates/gitignore.allowlist over it
+   again. Change nothing else. Stay on main; don't stage, commit or push
+   anything. Don't read anything outside ~/projects/priority-guard and
+   ~/projects/prove-it-kit.
+   ```
+   **🔍 Check:**
+   ```
+   Run exactly this and show me the raw output, unedited:
+   grep -n '^/\*' ~/projects/priority-guard/app/.gitignore
    ```
    `grep` must print **exactly one line**, the `/*`. Nothing was committed
    with the SDK's version, so nothing leaked.
-3. **⌨️ Shell, in terminal window 1** (the window you'll use for Claude):
-   start Claude **in the repo**. From now on, Claude always runs here. The
-   last line starts **🤖 Claude**:
+3. **Move Claude into the repo.** **🤖 Claude** (window 1): type `/exit`.
+   Then **⌨️ You** (window 1): start Claude again **in the repo**. From now on,
+   Claude always runs here:
    ```
    cd ~/projects/priority-guard/app
    claude
    ```
-   **🤖 Claude:** type this prompt:
+   **🤖 Claude** (`~/projects/priority-guard/app`): type this prompt:
    ```
-   now-sdk init just created files here. Compare them with the allow lines
-   already in .gitignore. Propose any allow line to append at the end: only
-   what belongs in source control for this SDK project. Not dist, not
-   node_modules, nothing that holds credentials. Show me the list first.
-   Don't write it yet.
+   now-sdk init just created files in ~/projects/priority-guard/app.
+   Compare them with the allow lines already in
+   ~/projects/priority-guard/app/.gitignore. Propose any allow line to
+   append at the end: only what belongs in source control for this SDK
+   project. Not dist, not node_modules, nothing that holds credentials.
+   Show me the list first. Don't write it yet. Stay on main; don't stage,
+   commit or push anything. Don't read anything outside
+   ~/projects/priority-guard and ~/projects/prove-it-kit.
    ```
    Read the proposal. It's **your** decision. If you agree, type `confirm`
    (in Claude).
-4. **⌨️ Shell** (`~/projects/priority-guard/app`):
+4. **🤖 Claude** (`~/projects/priority-guard/app`):
    ```
+   Install the packages and build the empty project. This session runs in
+   ~/projects/priority-guard/app, so run, from there:
    npm install
+   then
    now-sdk build
-   git status --short
-   git check-ignore -v dist
-   git check-ignore -v node_modules
+   If the build fails, show me the error and stop: don't change any file to
+   fix it. Never run now-sdk auth. Stay on main; don't stage, commit or push
+   anything. Don't read anything outside ~/projects/priority-guard and
+   ~/projects/prove-it-kit.
+   ```
+   **🔍 Check:**
+   ```
+   Run exactly this and show me the raw output, unedited:
+   git -C ~/projects/priority-guard/app status --short
+   git -C ~/projects/priority-guard/app check-ignore -v dist
+   git -C ~/projects/priority-guard/app check-ignore -v node_modules
    ```
 
 ✅ **Check:** the build finishes without errors. `git status --short` shows
@@ -235,19 +288,25 @@ Claude works to your scope, your instance and your design every time, instead
 of guessing. Reading it yourself means you know what Claude has been told to
 do.
 
-1. **⌨️ Shell** (`~/projects/priority-guard/app`): copy the kit's starter rules:
+1. **🤖 Claude** (`~/projects/priority-guard/app`): copy the kit's starter rules:
    ```
-   cp ~/projects/prove-it-kit/templates/CLAUDE.md ./CLAUDE.md
+   Copy ~/projects/prove-it-kit/templates/CLAUDE.md to
+   ~/projects/priority-guard/app/CLAUDE.md. Don't change it yet. Stay on
+   main; don't stage, commit or push anything. Don't read anything outside
+   ~/projects/priority-guard and ~/projects/prove-it-kit.
    ```
    **✏️ Editor:** open `.gitignore` and add `!/CLAUDE.md` at the very end, **by hand**.
 2. **🤖 Claude** (`~/projects/priority-guard/app`): type (with your values):
    ```
-   Fill in the Project facts in CLAUDE.md and keep the rules as they
-   are. Scope <SCOPE>. Instance alias <PDI_ALIAS>. The design record will be
-   docs/DESIGN-PriorityGuard.md. That is the contract. The LLD at
-   docs/LLD-PriorityGuard.md is background, frozen at sign-off: if they
-   disagree, the design record wins. The workspace is one folder up and nothing
-   from it comes in except by an allow line. No hostnames, no credentials.
+   Fill in the Project facts in ~/projects/priority-guard/app/CLAUDE.md and
+   keep the rules as they are. Scope <SCOPE>. Instance alias <PDI_ALIAS>.
+   The design record will be docs/DESIGN-PriorityGuard.md. That is the
+   contract. The LLD at docs/LLD-PriorityGuard.md is background, frozen at
+   sign-off: if they disagree, the design record wins. The workspace is one
+   folder up and nothing from it comes in except by an allow line. No
+   hostnames, no credentials. Stay on main; don't stage, commit or push
+   anything. Don't read anything outside ~/projects/priority-guard and
+   ~/projects/prove-it-kit.
    ```
 3. **✏️ Editor:** read `CLAUDE.md` top to bottom. Find the **Ship ritual** section. That's
    where `ship it` comes from.
@@ -266,21 +325,33 @@ every file going in, so nothing gets out that you can't explain. A private
 repo keeps the customer's design off the public internet. After this, changes
 reach `main` only through review.
 
-**⌨️ Shell** (`~/projects/priority-guard/app`):
+**🔍 Check** (`~/projects/priority-guard/app`): list what **would** be added,
+without staging anything:
 ```
-git add .
-git ls-files
+Run exactly this and show me the raw output, unedited:
+git -C ~/projects/priority-guard/app add -n .
+```
+(`-n` is a dry run: it only prints the names.) Read **every** file name in
+the raw output. If a file shouldn't go in, stop and tell Claude which one;
+fix `.gitignore` by hand (**✏️ Editor**) before going on, then run the check
+again.
+
+**🤖 Claude** (`~/projects/priority-guard/app`), only once you've read the list:
+```
+In ~/projects/priority-guard/app, stage everything with
+git -C ~/projects/priority-guard/app add . and commit on main with the
+message "chore: SDK project and CLAUDE.md". Then create the private GitHub
+repo and push, by running exactly:
+gh repo create <APP_REPO> --private --source ~/projects/priority-guard/app --remote=origin --push
+Push nothing else. Don't read anything outside ~/projects/priority-guard
+and ~/projects/prove-it-kit.
 ```
 (`git add .` is safe here only because the allow list decides what git can
-see.) Read **every** file name. Anything you can't explain doesn't go in.
-```
-git commit -m "chore: SDK project and CLAUDE.md"
-gh repo create <APP_REPO> --private --source=. --remote=origin --push
-```
+see, and you've just read that list.)
 
-✅ **Check:** the GitHub page shows your repo with a **Private** badge. **This
-is the last commit that goes straight to `main`.** From now on, everything
-goes on a branch and through review.
+✅ **Check** (**🌐 Browser**): the GitHub page shows your repo with a
+**Private** badge. **This is the last commit that goes straight to `main`.**
+From now on, everything goes on a branch and through review.
 
 ### Step 8 — Restart, and start the plan branch
 
@@ -290,16 +361,20 @@ branch, a separate line of changes, so `main` (the main copy) only changes
 through review. Checking the repo name first makes sure you're pointed at the
 right place.
 
-1. **🤖 Claude** (`~/projects/priority-guard/app`): type `/exit`. That
-   returns window 1 to a shell. **⌨️ Shell, in that same window:** start
-   Claude again, so it reads the new `CLAUDE.md`:
+1. **🤖 Claude** (window 1): type `/exit`. That returns window 1 to a shell.
+   **⌨️ You** (window 1, `~/projects/priority-guard/app`): start Claude
+   again, so it reads the new `CLAUDE.md`:
    ```
    claude
    ```
-2. **⌨️ Shell** (`~/projects/priority-guard/app`):
+2. **🤖 Claude** (`~/projects/priority-guard/app`):
    ```
-   gh repo view --json nameWithOwner -q .nameWithOwner
-   git switch -c docs/plan
+   Run gh repo view --json nameWithOwner -q .nameWithOwner (this session
+   runs in ~/projects/priority-guard/app) and show me its raw output. Then create and switch to a new branch:
+   git -C ~/projects/priority-guard/app switch -c docs/plan
+   Everything from here to the end of this module goes on docs/plan. Don't
+   commit to main, and don't push. Don't read anything outside
+   ~/projects/priority-guard and ~/projects/prove-it-kit.
    ```
 
 ✅ **Check:** `gh repo view` prints exactly `<APP_REPO>`, and you're on a new
@@ -320,23 +395,27 @@ without copying them. **The design record is the contract** the code is
 held to. The LLD is background, frozen when you signed it: if a design
 amendment changes something later, the design record wins.
 
-All in **⌨️ Shell** (`~/projects/priority-guard/app`): except the one **✏️ Editor** change.
-
-First check the LLD has no instance names in it. This must print nothing:
+First check the LLD has no instance names in it. **🔍 Check**
+(`~/projects/priority-guard/app`); the raw output must be empty:
 ```
-grep -n -i 'service-now' ../docs/LLD-PriorityGuard.md
-```
-Then:
-```
-mkdir -p docs
-cp ../docs/DESIGN-PriorityGuard.md ../docs/LLD-PriorityGuard.md docs/
+Run exactly this and show me the raw output, unedited:
+grep -n -i 'service-now' ~/projects/priority-guard/docs/LLD-PriorityGuard.md
 ```
 **✏️ Editor:** open `.gitignore` and add `!/docs/` at the very end, by hand.
-Then, back in **⌨️ Shell**:
+
+Then **🤖 Claude** (`~/projects/priority-guard/app`):
 ```
-rm ../docs/DESIGN-PriorityGuard.md ../docs/LLD-PriorityGuard.md
-git add .gitignore docs/DESIGN-PriorityGuard.md docs/LLD-PriorityGuard.md
-git commit -m "docs: signed design record and LLD"
+On branch docs/plan in ~/projects/priority-guard/app: create the folder
+~/projects/priority-guard/app/docs and copy these two files into it,
+unchanged:
+~/projects/priority-guard/docs/DESIGN-PriorityGuard.md
+~/projects/priority-guard/docs/LLD-PriorityGuard.md
+Stage only .gitignore, docs/DESIGN-PriorityGuard.md and
+docs/LLD-PriorityGuard.md, and commit with the message "docs: signed design
+record and LLD". Only once that commit has succeeded, delete the two
+originals from ~/projects/priority-guard/docs. If the commit fails, stop and
+delete nothing. Don't commit to main, and don't push. Don't read anything outside
+~/projects/priority-guard and ~/projects/prove-it-kit.
 ```
 
 ✅ **Check:** there's one copy of each, in the repo, committed on
@@ -359,8 +438,10 @@ one folder up, allow that one file.
 
 ⚠️ **If you see…** *it refuses because the record is unsigned:* it names the
 gap, for example an empty cell in §9 Approval. Fill it in **by hand** (**✏️
-Editor**), commit it on this branch (**⌨️ Shell**), and run the command again
-(**🤖 Claude**).
+Editor**), then have Claude commit it on this branch (**🤖 Claude**: "Commit
+only docs/DESIGN-PriorityGuard.md on docs/plan in
+~/projects/priority-guard/app. Don't commit to main, and don't push."), and
+run the command again (**🤖 Claude**).
 
 Check the preview, and write yes or no for each:
 1. Every story names the gate it's holding up, or is marked for the register.
@@ -399,8 +480,9 @@ gate, and it has to come from the live list on GitHub, not from memory.
 Checking it against `BACKLOG.md` confirms the plan was filed the way you saw
 it in the preview.
 
-**⌨️ Shell** (`~/projects/priority-guard/app`):
+**⌨️ You** (window 2, `~/projects/priority-guard/app`):
 ```
+cd ~/projects/priority-guard/app
 gh issue list --state open --label "gate:merge" --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != "register"))] | length'
 head -5 BACKLOG.md
 ```
@@ -421,12 +503,17 @@ so the next session, or a teammate, starts from a file instead of from memory.
    We're stopping here. Update SESSION-NOTE.md: what's proven, what's
    open, the exact next step, and the top three next items.
    ```
+   If Claude offers to commit or push the note, say no: it's committed in
+   item 3, on `docs/plan`.
 2. **✏️ Editor:** it's a new file, so it needs its own allow line. Add this at
    the very end of `.gitignore`, by hand: `!/SESSION-NOTE.md`
-3. **⌨️ Shell** (`~/projects/priority-guard/app`):
+3. **🤖 Claude** (`~/projects/priority-guard/app`):
    ```
-   git add .gitignore SESSION-NOTE.md
-   git commit -m "docs: first session note"
+   On branch docs/plan in ~/projects/priority-guard/app, stage only
+   .gitignore and SESSION-NOTE.md, and commit with the message
+   "docs: first session note". Don't commit to main, and don't push. Don't
+   read anything outside ~/projects/priority-guard and
+   ~/projects/prove-it-kit.
    ```
 
 ✅ **Check:** `SESSION-NOTE.md` lists what's proven, what's open, the next
@@ -450,9 +537,16 @@ ship it
 Watch the ritual run: push, pull request, review, fixes once, merge when
 green, branch deleted.
 
+Then **🔍 Check** (`~/projects/priority-guard/app`):
+```
+Run exactly this and show me the raw output, unedited:
+git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull && git -C ~/projects/priority-guard/app status --short
+```
+
 ✅ **Check:** the pull request is merged on GitHub. **No story was closed** by
-it, and the count from step 12 hasn't changed: the plan isn't a story. In
-**⌨️ Shell**, `git switch main && git pull` works and `git status` is clean.
+it, and the count from step 12 hasn't changed: the plan isn't a story. The
+raw output shows the switch to `main` and the pull worked, and `git status`
+lists nothing: it's clean.
 
 ---
 
