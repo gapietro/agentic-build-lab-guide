@@ -88,7 +88,7 @@ Claude's summary. If it says `… +N lines`, press **Ctrl+O** to see it all.
 - **1. Yes** for `git`, `gh`, `npm`, `node` and `now-sdk build`, and for files in
   `~/projects/priority-guard` or the kit's copy, `~/projects/prove-it-kit`.
 - **No** for `now-sdk auth`, `now-sdk install`, anything that names your
-  instance, and anything in your notes or this guide's folder.
+  instance, and anything in this guide's folder.
 - Not sure? **No**, then ask Claude what it was for.
 - **Never choose "Yes, and don't ask again".** The asking is the check.
 
@@ -112,7 +112,7 @@ Claude's summary. If it says `… +N lines`, press **Ctrl+O** to see it all.
 Some steps ask for one exact word, such as `confirmed` or `ship it`. Type it
 exactly as shown, on its own.
 
-## Your folders and your log
+## Your folders and your catches
 
 After Module 0, `~/projects` holds:
 ```
@@ -120,20 +120,17 @@ agentic-build-lab-guide/   this guide: you read it, Claude never does
 priority-guard/            your workspace: Claude works here
   app/                     your app's repo
   brief/                   the PRD, from Module 1
-priority-guard-notes/      your notes: Claude never reads them
-  LOG.md                   predictions and notes
   catches.md               one line per catch
 prove-it-kit/              a copy of the kit
 ```
 
-Each catch is one line in `catches.md`:
+You write no notes. At the end of each module, a **Log it** prompt has
+Claude draft that module's catches, one line each, and you confirm them:
 ```
 <module> | <what caught it> | <what it caught, and what was done>
 ```
 For example: `1 | prd | The PRD asked for something no input mentioned; I
-took it out`. "What caught it" is one of `prd`, `consult`, `research`,
-`design`, `guard`, `test`, `review`, `partner`, `grade`, `drill`. Keep that
-file to catch lines only: Module 9 counts them.
+took it out`. Module 9 counts them.
 
 <details><summary>ℹ️ New to ServiceNow? Four moves cover every step</summary>
 

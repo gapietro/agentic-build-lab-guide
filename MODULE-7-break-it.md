@@ -7,9 +7,9 @@
 A fresh reviewer, told only that the floor must hold, tries to break it.
 **The catch:** users change incidents in ways your tests never imagined.
 
-### 1. 🔮 Predict the attacks
+### 1. 🔮 Guess the attacks
 
-✏️ **Editor:** in `LOG.md`, write three ways you'd beat the floor.
+Guess first: three ways you'd beat the floor.
 
 ### 2. Start a fresh reviewer
 
@@ -35,8 +35,8 @@ nothing, push nothing, never run now-sdk install or now-sdk auth.
 
 ### 3. Compare with yours
 
-Tick each prediction it tried. For any it missed, 🤖 **Claude:**
-`Also try: <a line from your LOG.md>. Commit a test for it.`
+Did it try each of your three? For any it missed, 🤖 **Claude:**
+`Also try: <your attack, in a few words>. Commit a test for it.`
 
 ### 4. Go back to a clean main
 
@@ -62,5 +62,5 @@ git switch main && git status --short
 
 - A clean `main`; the reviewer's tests on `test/break-floor`, never merged.
 
-**Log it:** in `LOG.md`, each attempt that got through as an **open finding**,
-with its failing test's name; a catch (`7 | review | …`) once its fix merges.
+**Log it:** nothing yet. An attempt that got through is a failing test on
+`test/break-floor`, and a catch once its fix merges, after the workshop.

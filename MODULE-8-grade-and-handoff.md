@@ -7,10 +7,9 @@ runs the build and the tests before it scores, and anything it couldn't run
 is **unverified** and scores zero. **The catch:** what does a stranger find
 that you didn't?
 
-### 1. 🔮 Predict the grade
+### 1. 🔮 Guess the grade
 
-✏️ **Editor:** in `LOG.md`, write the score out of 100 you expect, and the
-one weakness you think it will find.
+Guess first: the score out of 100, and the one weakness it will find.
 
 ### 2. Start Claude on a clean main
 
@@ -47,8 +46,7 @@ Then type `/prove-it:grade`. Don't explain the app to it: it reads the repo
 cold.
 - **It lists your milestones** and asks which one: reply `merge`.
 - **It says `This milestone is not reached`** and asks whether to grade
-  anyway: reply `yes`. That makes it a preview. ✏️ Write "preview" in
-  `LOG.md`.
+  anyway: reply `yes`. That makes it a preview.
 
 ### 4. Answer its questions
 
@@ -66,7 +64,7 @@ item and any **cap**. If you replied `yes` above, it's headed
 ### 5. Read it like a stranger would
 
 ✏️ **Editor:** in `GRADE.md`, compare the score and the main weakness with
-your prediction. Then find:
+your guess. Then find:
 - each **unverified** row under **Rubric**, and why it couldn't check it;
 - each row under **Caps applied**: one serious problem limits the whole
   score, however good the rest is.
@@ -106,8 +104,8 @@ naming the gate it holds up, and `git status --short` prints nothing.
 - Its findings filed as stories, and listed in `BACKLOG.md`.
 - A clean `main`.
 
-**Log it:** a finding is a catch, `8 | grade | …`, only once its fix is
-merged. Most aren't today: list them in `LOG.md` as open findings.
+**Log it:** nothing yet. A grade finding is a story on GitHub, and a catch
+once its fix merges, after the workshop.
 
 The real grade, the runbook, the drill and the verdict are on
 [After the workshop](AFTER-THE-WORKSHOP.md).

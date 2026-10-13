@@ -6,10 +6,10 @@ You review a PRD drafted from two inputs, and the customer accepts it.
 **The catch:** is everything in the PRD backed by an input, and everything
 important in the inputs in the PRD?
 
-### 1. Read the inputs yourself, then 🔮 predict
+### 1. Read the inputs yourself, then 🔮 guess
 
 ✏️ **Editor:** read `agentic-build-lab-guide/files/inputs/USE-CASE.md` and
-`WORKSHOP-NOTES.md`. Before you open the PRD, note in `LOG.md` what it needs.
+`WORKSHOP-NOTES.md`. Before you open the PRD, guess what it needs.
 
 ### 2. Have Claude trace the PRD
 
@@ -36,7 +36,7 @@ check every **"no source"** and every statement **left out** yourself.
 
 ### 4. Decide each gap, and edit by hand
 
-🤖 **Claude:** type `/exit`. Then, for each real gap:
+For each real gap:
 - **No input asked for it:** take it out.
 - **An input asked, the PRD dropped it:** put it back in its capability.
   Never add a capability number.
@@ -45,7 +45,21 @@ check every **"no source"** and every statement **left out** yourself.
 
 ✏️ **Editor:** edit `priority-guard-prd-review/PRD-PriorityGuard.md`.
 
-### 5. Get the customer's acceptance
+### 5. Log it
+
+🤖 **Claude:**
+```
+Log this module's catches: real problems the process found, in this
+session or this module's pull requests, that got fixed or changed a
+decision. One line each, as "1 | <what caught it> | <what, and what was
+done>", where what caught it is one of prd, consult, research, design,
+guard, test, review, partner, grade, drill. Show me the lines, then append
+the ones I confirm or add to ~/projects/priority-guard/catches.md.
+```
+Confirm a line for each gap you fixed in step 4, such as `1 | prd | The PRD
+asked for something no input mentioned; I took it out`. Then type `/exit`.
+
+### 6. Get the customer's acceptance
 
 At about **09:25** your instructor, as the customer, answers the room's open
 decisions once. Not ready then? Ask for the answers when you get here.
@@ -64,6 +78,5 @@ says `None.`, **8. Acceptance** is filled in, and no capability is renumbered.
 
 ## You now have
 
-- `~/projects/priority-guard/brief/PRD-PriorityGuard.md`, accepted.
-
-**Log it:** `1 | prd | <what the PRD said or missed, and what you changed>`
+- `~/projects/priority-guard/brief/PRD-PriorityGuard.md`, accepted, and
+  this module's catches in `catches.md`.

@@ -12,16 +12,15 @@ before the plan is filed. **The catch:** does its review find something real?
 ⌨️ **Terminal:** this window becomes the Claude window. Run
 `cd ~/projects/priority-guard/app`, then `claude`.
 
-🤖 **Claude:** paste this, then type your scope from `LOG.md`, such as
-`x_123456_pg_ga`, and press **Enter**:
+🤖 **Claude:**
 ```
 Copy ~/projects/prove-it-kit/templates/CLAUDE.md to CLAUDE.md and fill in
-its Project facts; keep the rules. Instance alias lab-pdi.
+its Project facts, with the scope from now.config.json; keep the rules.
+Instance alias lab-pdi.
 The design record will be docs/DESIGN-PriorityGuard.md: the contract. The
 LLD, docs/LLD-PriorityGuard.md, is background, frozen at sign-off: if they
 disagree, the design record wins. The workspace is one folder up. No
 hostnames, no credentials. Leave .gitignore to me, and commit nothing.
-Scope:
 ```
 ✏️ **Editor:** read `CLAUDE.md`. `ship it` comes from its **Ship ritual**.
 
@@ -83,7 +82,7 @@ succeeds, delete the two originals.
 It shows a **preview** and files nothing. If it asks to write `plan.json`
 one folder up, allow it.
 
-✏️ **Editor:** in `LOG.md`, answer yes or no:
+Read the preview, and answer each yes or no:
 1. Every story names its gate, or is `register` (blocks no gate).
 2. Priority comes only from closeness to the next gate.
 3. Every "done when" can be checked.
@@ -138,11 +137,23 @@ git switch main && git pull && git status --short
 ✅ `git status --short` prints nothing. 🌐 The pull request is merged, and
 no issue is closed: the plan isn't a story.
 
+### 8. Log it
+
+🤖 **Claude:**
+```
+Log this module's catches: real problems the process found, in this
+session or this module's pull requests, that got fixed or changed a
+decision. One line each, as "5 | <what caught it> | <what, and what was
+done>", where what caught it is one of prd, consult, research, design,
+guard, test, review, partner, grade, drill. Show me the lines, then append
+the ones I confirm or add to ~/projects/priority-guard/catches.md.
+```
+Confirm a `review` line for each real finding on the plan's pull request
+that got fixed.
+
 ## You now have
 
 - A private `priority-guard` repo whose clean `main` holds `CLAUDE.md`, the
   signed design and LLD in `docs/`, `BACKLOG.md` and `SESSION-NOTE.md`.
-- Your stories on GitHub, and your first honest count.
-
-**Log it:** `5 | review | <a real finding on the plan's pull request, now
-fixed>`
+- Your stories on GitHub, your first honest count, and this module's
+  catches in `catches.md`.

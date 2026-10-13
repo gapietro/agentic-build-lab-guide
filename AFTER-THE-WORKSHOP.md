@@ -29,9 +29,8 @@ claude plugin disable <name>
 5. §6: tests as an ordinary agent.
 6. §7: matches your Module 3 script.
 
-Behaviour changes go to
-[Part 3](#part-3--change-the-design-when-a-fix-needs-it), others to
-`LOG.md`, never into the signed LLD.
+Never edit the signed LLD: a behaviour change goes to
+[Part 3](#part-3--change-the-design-when-a-fix-needs-it).
 
 ### 2. Find the next gate
 
@@ -91,8 +90,8 @@ After the first install, 🌐 **Browser**, **Admin** profile:
 1. In `sys_user.list`, create `im.demo` with roles `itil` and your override
    role (in your design, starting with `<SCOPE>`), and `owner.demo` with
    `itil`.
-2. **Set Password** on each, unticking **Require password change**. Keep
-   them in `LOG.md`.
+2. **Set Password** on each: set one, note it, untick **Require password
+   change**.
 3. In `cmdb_ci_service.list`, set your critical service's **Owned by** to
    `owner.demo`.
 4. Tick **Tier 1** on its critical services row, if there is one.
@@ -155,9 +154,8 @@ tests, so one that gets through fails. Try every value of any finite input
 set. Commit the tests there. Fix nothing, push nothing, and never run
 now-sdk install or now-sdk auth.
 ```
-✅ Its tests are on `test/break-floor`. ✏️ In `LOG.md`, list what got
-through. ⌨️ In your window: `git switch main && git status --short` ✅
-prints nothing.
+✅ Its tests are on `test/break-floor`: the failing ones got through. ⌨️ In
+your window: `git switch main && git status --short` ✅ prints nothing.
 
 ### 2. Fix what got through
 
@@ -178,8 +176,8 @@ check live.
 
 Your partner, at your computer in your **Agent** profile as `agent.demo`,
 tries to save an incident on your critical service at priority 3, 4 or 5
-without an override. Note each attempt; **don't help.** One got through?
-Note its exact steps, swap back, and do step 2 for it. Then attack theirs.
+without an override. **Don't help.** One got through? Note its exact steps,
+swap back, and do step 2 for it. Then attack theirs.
 
 <details><summary>ℹ️ Hints, only after 10 stuck minutes</summary>
 
@@ -221,8 +219,8 @@ first, `ship it`. Build, install and check live.
 
 ### 1. 🔮 Grade at DEMO
 
-Once `merge`, `install` and `demo` print 0. ✏️ In `LOG.md`, write the score
-you expect. ⌨️ In your window:
+Once `merge`, `install` and `demo` print 0. Guess the score first. ⌨️ In
+your window:
 ```
 cd ~/projects/priority-guard/app
 git switch main && git pull && git status --short
@@ -249,9 +247,8 @@ git diff .gitignore
 `+!/HANDOFF.md`.
 
 🤖 `Commit RUNBOOK.md, HANDOFF.md and .gitignore on a new branch
-docs/runbook, then ship it.` Once merged, in your window:
-`git switch main && git pull && git log -1 --format=%h`. ✏️ Write it in
-`LOG.md` as the **frozen runbook**: unchanged until the drill ends.
+docs/runbook, then ship it.` Once merged, the runbook is **frozen**: don't
+change it until the drill ends.
 
 ### 3. Your partner plants
 
@@ -265,8 +262,7 @@ your computer:
 3. 🤖 `/exit`. Writes you a symptom report, such as `My P4 incident on
    Email stayed at P4.`
 
-No partner? Plant it yourself, write `builder`, and note in `LOG.md` it's
-a weaker drill.
+No partner? Plant it yourself and write `builder`: it's a weaker drill.
 
 ### 4. Diagnose from the runbook
 
@@ -281,7 +277,7 @@ CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 claude
 ```
 🌐 **Admin** profile: open each screen it asks for; type what it shows,
 word for word. ✅ It names a cause; your partner says if it's the planted
-one. If not, note what the runbook lacked.
+one.
 
 ### 5. Restore, then verdict
 
@@ -300,25 +296,36 @@ one. If not, note what the runbook lacked.
 
 🤖 **Claude**, with the numbers of the stories your evidence meets:
 ```
-Close issues <numbers> with gh issue close, each with exactly this comment:
-"Runbook frozen at <frozen runbook>. Partner-planted drill diagnosed from it alone.
+Close issues <numbers> with gh issue close, each with exactly this comment,
+where HASH is the short hash of the last commit that changed RUNBOOK.md:
+"Runbook frozen at HASH. Partner-planted drill diagnosed from it alone.
 Verdict: READY." Close no other issue.
 ```
 ✅ The same command lists only stories your evidence doesn't meet yet.
 
 ### 7. Grade at HANDOFF
 
-⌨️ In your window:
-`git switch main && git pull && git log -1 --format=%h -- GRADE.md`. ✏️
-Note it in `LOG.md` as the DEMO grade.
+⌨️ In your window: `git switch main && git pull`.
 
 🤖 **Claude:** `/prove-it:grade handoff`, then as at DEMO: `lab-pdi`, **1**,
 `approve`, `Dry run first.`, `apply`, and `Commit GRADE.md and BACKLOG.md on
-a new branch chore/grade-handoff, then ship it.` ✏️ List its findings in
-`LOG.md` as next work. Stop.
+a new branch chore/grade-handoff, then ship it.` Its findings are your next
+work.
+
+### 8. Log it
+
+🤖 **Claude:**
+```
+Log the catches since the workshop: real problems the process found, in
+this repo's pull requests, issues and HANDOFF.md, that got fixed or changed
+a decision. One line each, as "<module> | <what caught it> | <what, and
+what was done>": module 6 for the build, 7 for attacks, 8 for the grade and
+the drill; what caught it is one of prd, consult, research, design, guard,
+test, review, partner, grade, drill. Show me the lines, then append the
+ones I confirm or add to ~/projects/priority-guard/catches.md.
+```
+Confirm a line only once its fix is merged.
 
 ## You now have
 
-A finished app, handed over. **Log it**, once each fix is merged:
-`6 | review`, `6 | test`, `7 | review`, `7 | partner`, `8 | grade`,
-`8 | drill`.
+A finished app, handed over, and its catches in `catches.md`.

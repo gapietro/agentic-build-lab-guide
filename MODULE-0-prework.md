@@ -172,14 +172,13 @@ claude plugin install prove-it@prove-it
 
 ⌨️ **Terminal:**
 ```
-mkdir -p ~/projects/priority-guard/brief ~/projects/priority-guard-notes
-touch ~/projects/priority-guard-notes/LOG.md ~/projects/priority-guard-notes/catches.md
+mkdir -p ~/projects/priority-guard/brief
+touch ~/projects/priority-guard/catches.md
 ```
-`priority-guard` is your workspace. `priority-guard-notes` is yours alone:
-Claude never reads it.
+`priority-guard` is your workspace; Claude logs catches in `catches.md`.
 
 ✏️ **Editor:** in VS Code, choose **File > Open Folder…** and open the
-`projects` folder in your home folder. Keep it open: your `LOG.md` is there.
+`projects` folder in your home folder. Keep it open.
 
 ### 11. Check nothing else is loaded
 
@@ -199,7 +198,12 @@ ls ~/.claude/CLAUDE.md
 
 <details><summary>🛟 Other plugins, MCP servers or a CLAUDE.md are listed</summary>
 
-Switch each off, and note it in `LOG.md` for Module 9 to undo.
+⌨️ **Terminal:** save the list first, so Module 9 can switch them back on:
+```
+mkdir -p ~/projects/priority-guard-notes
+claude plugin list > ~/projects/priority-guard-notes/plugins-before-lab.txt
+```
+Then switch each off:
 - Plugin: `claude plugin disable <name>`
 - `CLAUDE.md`: `mv ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.off`
 - Server `plugin:…`: disable that plugin. `claude.ai …`: tell your
@@ -227,7 +231,7 @@ file you haven't named, and a guard checks each commit for secrets.
    `glide.appcreator.company.code` and press **Enter**. Its **Value** is
    your vendor prefix, such as `123456`.
 2. Your scope is `x_<prefix>_pg_<your initials>`, such as `x_123456_pg_ga`,
-   at most 18 characters. ✏️ Write it in `LOG.md`.
+   at most 18 characters.
 
 ### 13. Create the app
 
@@ -274,14 +278,13 @@ build fails. Commit nothing.
 
 <details><summary>🛟 The build failed</summary>
 
-Copy the first error line into `LOG.md` and tell your instructor. Don't let
-Claude change files to make it pass.
+Tell your instructor the first error line. Don't let Claude change files to
+make it pass.
 </details>
 
 ### 15. 🔮 Try to beat the guard
 
-✏️ **Editor:** in `LOG.md`, write one line: will the guard stop a commit
-with a token in it?
+Guess first: will the guard stop a commit with a token in it?
 
 ⌨️ **Terminal**, still in `~/projects/priority-guard/app`:
 ```
@@ -294,12 +297,15 @@ git commit -m "chore: initial scaffold"
 tracked unless admitted below.` The commit is **blocked**:
 `BLOCKED: README.md has 1 added line(s) that look like a secret.`
 
-That's the guard working, not a catch. Write it in `LOG.md`.
+That's the guard working, not a catch.
 
 <details><summary>🛟 The commit went through</summary>
 
-The guard can't be trusted: that's a real catch. Write `0 | guard | …` in
-`catches.md`, push nothing, and tell your instructor.
+The guard can't be trusted: that's a real catch. Push nothing, and tell
+your instructor. ⌨️ **Terminal:** log it:
+```
+echo '0 | guard | the guard let a fake token through' >> ~/projects/priority-guard/catches.md
+```
 </details>
 
 ### 16. Commit for real
@@ -316,11 +322,9 @@ git commit -m "chore: initial scaffold"
 
 - A PDI with demo data, and `agent.demo` logged in to your **Agent** profile.
 - The tools, signed in, with the lab settings and the kit `v0.1.3`.
-- `~/projects/priority-guard`, holding only `app/` and an empty `brief/`.
+- `~/projects/priority-guard`, holding only `app/`, an empty `brief/` and an
+  empty `catches.md`.
 - In `app/`: one commit, the allow list, the guard, and an SDK project that
   builds. Its files stay uncommitted until Module 5.
-- In `LOG.md`: your scope and the guard's result.
 
 Anything missing? Tell your instructor at least two days before the day.
-
-**Log it:** nothing in `catches.md` yet, unless the guard let the token in.

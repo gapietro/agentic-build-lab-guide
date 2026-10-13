@@ -2,14 +2,14 @@
 
 *⏱ 15 min · 15:55*
 
-Count your catches from your notes, not memory, and decide what to take home.
+Count your catches from the file, not memory, and decide what to take home.
 
 ### 1. Count your catches
 
 ⌨️ **Terminal**, in your window:
 ```
-grep -c '|' ~/projects/priority-guard-notes/catches.md
-grep '|' ~/projects/priority-guard-notes/catches.md | cut -d'|' -f2 | tr -d ' ' | sort | uniq -c
+grep -c '|' ~/projects/priority-guard/catches.md
+grep '|' ~/projects/priority-guard/catches.md | cut -d'|' -f2 | tr -d ' ' | sort | uniq -c
 ```
 ✅ Your total, then a count per kind, such as `3 design`.
 
@@ -22,9 +22,9 @@ Add your counts to your instructor's columns. Then ask together:
 3. **Which came from an inspection?** `review` and `grade` today, `partner`
    and `drill` later. Your own tests had passed first.
 
-### 3. Write down what's real
+### 3. Sort out what's real
 
-✏️ **Editor:** in `LOG.md`, write three short lists:
+Sort your app into three short lists:
 - **Real:** what you saw work live, as `agent.demo`.
 - **Staged:** what ran only on demo data, or only in tests.
 - **Not built:** capability 6, the override (4), the weekly count (5), what
@@ -32,9 +32,9 @@ Add your counts to your instructor's columns. Then ask together:
 
 ### 4. Take it home
 
-✏️ **Editor:** in `LOG.md`, write one sentence each: the next real work
-you'll build this way, the one stage you'd keep, and the building block
-you're missing at work. Short of time? Do it at home.
+Decide, in one sentence each: the next real work you'll build this way, the
+one stage you'd keep, and the building block you're missing at work. Short
+of time? Do it at home.
 
 ## The three things to remember
 
@@ -58,9 +58,10 @@ node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check
 
 ### 6. Switch back on what Module 0 switched off
 
-⌨️ **Terminal:** only what `LOG.md` lists:
-- `mv ~/.claude/CLAUDE.md.off ~/.claude/CLAUDE.md`
-- `claude plugin enable <name>`, for each plugin
+⌨️ **Terminal:** only what Module 0 step 11 switched off:
+- `mv ~/.claude/CLAUDE.md.off ~/.claude/CLAUDE.md`, if that file exists
+- `claude plugin enable <name>`, for each plugin enabled in
+  `~/projects/priority-guard-notes/plugins-before-lab.txt`
 - MCP servers: as `~/projects/priority-guard-notes/mcp-before-lab.txt` shows
 
 ### 7. Remove the kit and the SDK login
@@ -74,6 +75,6 @@ now-sdk auth --delete lab-pdi
 
 ## You now have
 
-- Your catches counted, your notes in `LOG.md`, your machine as before.
+- Your catches counted, and your machine as before.
 - Coming back for [After the workshop](AFTER-THE-WORKSHOP.md)? First run
   `node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs`.

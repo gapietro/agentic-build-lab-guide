@@ -6,10 +6,10 @@ Nothing gets built: the consult advises how to build each capability.
 **The catch:** capability 2 says the priority never goes below the floor;
 capability 6 asks AI to "adjust the priority". Will the consult see the clash?
 
-### 1. 🔮 Predict the answer
+### 1. 🔮 Guess first
 
-✏️ **Editor:** in `LOG.md`, write one line: which capabilities need AI?
-Anything you'd refuse to build?
+Which capabilities need AI? Anything you'd refuse to build? Keep your guess
+in your head: step 5 checks it.
 
 ### 2. Start the consult
 
@@ -23,8 +23,8 @@ cd ~/projects/priority-guard && claude
 
 <details><summary>🛟 It writes CONSULT.md before you confirm</summary>
 
-The kit broke its rule. Note it in `LOG.md`, tell your instructor, type
-`/exit`, run `rm CONSULT.md` and `claude`, and type `/prove-it:consult` again.
+The kit broke its rule. Tell your instructor, type `/exit`, run
+`rm CONSULT.md` and `claude`, and type `/prove-it:consult` again.
 </details>
 
 ### 3. Answer in one message
@@ -51,12 +51,13 @@ suggests: research comes first. If that shows as grey text, ignore it:
 ```
 ls -A ~/projects/priority-guard
 ```
-✅ It lists `app`, `brief` and `CONSULT.md`, and maybe `.claude`.
+✅ It lists `app`, `brief`, `catches.md` and `CONSULT.md`, and maybe
+`.claude`.
 
 <details><summary>🛟 It shows an error, or stalls</summary>
 
-Press **Esc** and type `/prove-it:consult` again, noting it in `LOG.md`.
-Third failure? Stop and ask your instructor.
+Press **Esc** and type `/prove-it:consult` again. Third failure? Stop and
+ask your instructor.
 </details>
 
 ### 5. Read it like a reviewer
@@ -82,13 +83,23 @@ below the floor? If it can, what should change?
 ```
 Update CONSULT.md: capability 6 <the new decision>, with that reason.
 ```
-Either way, type `/exit`.
+
+### 7. Log it
+
+🤖 **Claude:**
+```
+Log this module's catches: real problems the process found, in this
+session or this module's pull requests, that got fixed or changed a
+decision. One line each, as "2 | <what caught it> | <what, and what was
+done>", where what caught it is one of prd, consult, research, design,
+guard, test, review, partner, grade, drill. Show me the lines, then append
+the ones I confirm or add to ~/projects/priority-guard/catches.md.
+```
+Confirm a line only if the consult raised it before you pushed back, such
+as `2 | consult | capability 6 could lower a priority below the floor`.
+Your own answers and corrections aren't catches. Then type `/exit`.
 
 ## You now have
 
-- `CONSULT.md` in `~/projects/priority-guard`; your prediction in `LOG.md`.
-
-**Log it** only if the consult raised it unprompted:
-`2 | consult | capability 6 could lower a priority below the floor`
-Changed only after you pushed back? Write in `LOG.md` that you caught it.
-Your answers and corrections aren't catches.
+- `CONSULT.md` in `~/projects/priority-guard`, and this module's catches in
+  `catches.md`.

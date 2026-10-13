@@ -23,12 +23,10 @@ blocker they mention. Then tell me the top three items by gate distance.
 
 ### 2. 🔮 Take the top story
 
-✏️ **Editor:** write the top three in `LOG.md`.
-
 🤖 **Claude:** type `Take the top one.`, even if it isn't the floor.
 
-Claude restates the story in five bullets. ✏️ **Editor:** first, write three
-test cases for it in `LOG.md`, one unusual.
+Claude restates the story in five bullets. First, guess three test cases for
+it, one unusual: step 3 compares.
 
 🤖 **Claude:** if the bullets match your design, type `confirm`. If not, say
 what's wrong.
@@ -66,8 +64,8 @@ floor function, if any?
 ### 5. Ship it
 
 🤖 **Claude:** type `ship it`, then read every `/code-review` finding in
-Claude's output, not on the pull request. None? Write "review clean" in
-`LOG.md`. Wrong? Tell Claude why, in one line.
+Claude's output, not on the pull request. Wrong? Tell Claude why, in one
+line.
 
 🌐 **Browser:** open the pull request Claude links. ✅ It shows **Merged**.
 
@@ -117,10 +115,10 @@ git switch main && git pull && npm test
 <details><summary>🛟 A pull request skipped a check, or the batch stopped</summary>
 
 - **No failing run, or no findings:** 🤖 `Run /code-review on pull request
-  #<n>.` Note it.
+  #<n>.`
 - **Stopped early:** type `/exit`, then `claude`, then the same prompt.
-- **Stopped for a design change:** leave it open, note it, tell your
-  instructor. The wiring story? Skip steps 9 to 11.
+- **Stopped for a design change:** leave it open, and tell your instructor.
+  The wiring story? Skip steps 9 to 11.
 </details>
 
 ## Part 3 — Install and try it live (14:00)
@@ -144,8 +142,9 @@ same two lines again.
 ### 9. Switch the app on
 
 🌐 **Browser**, **Admin** profile: in `sys_properties.list`, filter **Name**
-by your `<SCOPE>` from `LOG.md`. If one's **Description** says it switches
-the floor on, set its **Value** to `true` and click **Update**.
+by your `<SCOPE>`, the `scope` line in `app/now.config.json`, such as
+`x_123456_pg_ga`. If one's **Description** says it switches the floor on,
+set its **Value** to `true` and click **Update**.
 
 <details><summary>🛟 It's read-only, with a banner about another app</summary>
 
@@ -160,8 +159,7 @@ globe, top right), set **Value**, then switch back to **Global**.
    the table labelled like "Critical service".
 2. Open `<that name>.list` and click **New**.
 3. Set **Service** to one such as **Email**, **Floor** to **2**, tick
-   **Active**, and **Submit**. ✏️ Note it in `LOG.md` as your critical
-   service.
+   **Active**, and **Submit**. That's your critical service.
 
 ### 11. Make an incident as `agent.demo`
 
@@ -211,10 +209,22 @@ git switch main && git pull && git status --short
 ```
 ✅ `git status --short` prints nothing.
 
+### 13. Log it
+
+🤖 **Claude:**
+```
+Log this module's catches: real problems the process found, in this
+session or this module's pull requests, that got fixed or changed a
+decision. One line each, as "6 | <what caught it> | <what, and what was
+done>", where what caught it is one of prd, consult, research, design,
+guard, test, review, partner, grade, drill. Show me the lines, then append
+the ones I confirm or add to ~/projects/priority-guard/catches.md.
+```
+Confirm a `review` line per fixed review finding, step 5's included, and a
+`test` line per real live defect. Missing one? Tell Claude to add it.
+
 ## You now have
 
 - Your stories up to the wiring story, merged, and the floor working live.
-- The session note merged, and a clean `main`.
-
-**Log it:** `6 | review | <what it found>` per real finding fixed, and
-`6 | test | <what went red for a real reason>` per live defect.
+- The session note merged, a clean `main`, and this module's catches in
+  `catches.md`.

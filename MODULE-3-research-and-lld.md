@@ -6,10 +6,9 @@ Check Claude's research on your instance, then sign the low-level design
 (LLD). **The catch:** Claude's research will be confident and mostly right.
 Which of its claims does your instance contradict, or not support?
 
-### 1. 🔮 Predict, then ask Claude for the facts
+### 1. 🔮 Guess, then ask Claude for the facts
 
-✏️ **Editor:** in `LOG.md`, write the two platform facts you think this
-design depends on most.
+Guess first: which two platform facts does this design depend on most?
 
 ⌨️ **Terminal:**
 ```
@@ -27,7 +26,7 @@ its logic. For each, say how sure you are and how I can check it on my
 instance by reading records only. Mark the five the design depends on
 most. Design nothing, run nothing, write no file.
 ```
-Compare with your prediction.
+Compare with your guess.
 
 ### 2. Get a read-only script
 
@@ -98,42 +97,31 @@ decision. Show me a summary first; don't write the file yet.
 ```
 Fix the summary if needed, then type `Looks right. Write the file.`
 
-### 6. Review and sign it by hand
+### 6. Log it
 
-🤖 **Claude:** type `/exit`. ✏️ **Editor:** open
-`priority-guard/docs/LLD-PriorityGuard.md`. Check that §1 lists every PRD
-capability as built, or deferred with a reason; that §7 matches the script
-output and your checks by hand; and that no `<…>` is left. Fix anything
-yourself. Then sign §9: in its empty row `| | | | |`, type your name,
-`developer`, today's date (YYYY-MM-DD) and your name again. Don't add a row.
-
-### 7. Write your Module 4 positions
-
-✏️ **Editor:** copy this into `LOG.md` and fill it in from your LLD.
+🤖 **Claude:**
 ```
-Feature name: PriorityGuard
-My design, 3-4 sentences (what, tables, who owns each write):
-Central rule, as short sentences, one idea each:
-When the floor runs, and what it must survive:
-Who can change the critical services list:
-Who can override, and what it records:
-Can an override be edited or deleted:
-Tier 1 approval:
-Capability 6 (smart urgency):
-Never changes the priority matrix or SLA definitions. Also never:
-Who sees the weekly count:
-Demo data (from LLD §6):
-MERGE passes when: every change reviewed, all checks green
-INSTALL passes when: installs cleanly on your PDI, a live check passes
-DEMO passes when: the floor works live, as an ordinary agent
-HANDOFF passes when: someone else diagnoses a failure from the runbook alone
+Log this module's catches: real problems the process found, in this
+session or this module's pull requests, that got fixed or changed a
+decision. One line each, as "3 | <what caught it> | <what, and what was
+done>", where what caught it is one of prd, consult, research, design,
+guard, test, review, partner, grade, drill. Show me the lines, then append
+the ones I confirm or add to ~/projects/priority-guard/catches.md.
 ```
+Confirm a `research` line for each claim your instance contradicted or didn't
+support, if it changed your LLD. Then type `/exit`.
+
+### 7. Review and sign it by hand
+
+✏️ **Editor:** open `priority-guard/docs/LLD-PriorityGuard.md`. Check that
+§1 lists every PRD capability as built, or deferred with a reason; that §7
+matches the script output and your checks by hand; and that no `<…>` is
+left. Fix anything yourself. Then sign §9: in its empty row `| | | | |`,
+type your name, `developer`, today's date (YYYY-MM-DD) and your name again.
+Don't add a row.
 
 ## You now have
 
-- `docs/LLD-PriorityGuard.md`, signed by you.
-- Your Module 4 positions in `LOG.md`.
+- `docs/LLD-PriorityGuard.md`, signed by you, and this module's catches in
+  `catches.md`.
 - The full LLD review is on [After the workshop](AFTER-THE-WORKSHOP.md).
-
-**Log it:** `3 | research | <the claim, and what your instance showed>`, for
-each claim that changed your LLD.
