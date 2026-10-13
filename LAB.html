@@ -1125,22 +1125,43 @@ installed. Note which ones. Ideally, disable them for this lab (Step 6
 shows how).</p>
 <h3 id="m0--step-6--check-the-bench-is-clean">Step 6 — Check the bench is clean</h3>
 <p><strong>Why this step:</strong> Anything extra Claude can see, such as a personal instruction file or a connection to another tool, changes how it behaves. Checking now means what you see in the lab comes from the lab, not from your own setup.</p>
-<p><strong>🤖 Claude:</strong> run <code>/plugin</code>, then <code>/mcp</code>. Press <strong>Esc</strong> to close each
-one. Then quit Claude with <code>/exit</code>.</p>
-<p><strong>⌨️ You:</strong> the same checks from the terminal (use these if <code>/mcp</code> isn't
-recognised in your version):</p>
+<p>There are three separate checks. Do them <strong>one at a time</strong>, and finish
+each one before you start the next.</p>
+<p><strong>6a. Plugins. 🤖 Claude:</strong></p>
+<ol>
+<li>Type <code>/plugin</code> and press <strong>Enter</strong>. A menu opens.</li>
+<li>Look at the <strong>Installed</strong> list.
+✅ <strong>Check:</strong> the only plugin there is <code>prove-it</code>.</li>
+<li>Press <strong>Esc</strong> until the menu closes and you're back at Claude's normal
+prompt (the <code>&gt;</code> where you type to Claude).</li>
+</ol>
+<p><strong>6b. MCP servers. 🤖 Claude:</strong> only when you're back at the normal
+prompt:</p>
+<ol>
+<li>Type <code>/mcp</code> and press <strong>Enter</strong>.
+✅ <strong>Check:</strong> it says there are no MCP servers.</li>
+<li>Press <strong>Esc</strong> to close it.</li>
+</ol>
+<p>⚠️ <strong>If you see…</strong> <em>nothing happens when you type <code>/mcp</code>, or it searches
+the plugin list instead:</em> you're still inside the <code>/plugin</code> menu. Press
+<strong>Esc</strong> until the menu is gone, then type <code>/mcp</code> again.</p>
+<p><strong>6c. Quit Claude. 🤖 Claude:</strong> type <code>/exit</code>.</p>
+<p><strong>6d. Personal instruction file. ⌨️ You:</strong> in a normal terminal:</p>
+<pre><code>ls ~/.claude/CLAUDE.md
+</code></pre>
+<p>✅ <strong>Check:</strong> <code>ls</code> says the file doesn't exist. It prints
+<code>ls: /Users/&lt;you&gt;/.claude/CLAUDE.md: No such file or directory</code>.</p>
+<p><strong>⌨️ You (another way to do 6a and 6b):</strong> the same checks can be run from
+the terminal. Use these if <code>/mcp</code> isn't recognised in your version:</p>
 <pre><code>claude plugin list
 claude mcp list
-ls ~/.claude/CLAUDE.md
 </code></pre>
 <ul>
 <li><code>claude plugin list</code> shows which plugins are installed and switched on.</li>
 <li><code>claude mcp list</code> shows connections to other tools (MCP servers).</li>
-<li><code>ls ~/.claude/CLAUDE.md</code> checks for a personal instruction file.</li>
 </ul>
 <p>✅ <strong>Check:</strong> only <code>prove-it</code> is installed and switched on. No MCP servers
-are listed. <code>ls</code> says the file doesn't exist: it prints
-<code>ls: /Users/&lt;you&gt;/.claude/CLAUDE.md: No such file or directory</code>.</p>
+are listed.</p>
 <p>⚠️ <strong>If you see…</strong> <em>a personal <code>CLAUDE.md</code>, MCP servers or other plugins:</em>
 they'll shape what Claude does in the lab. Use a separate user account, or
 switch them off for the workshop like this. <strong>Write each change in
@@ -1165,7 +1186,7 @@ claude mcp remove &lt;name&gt;
 file in your notes folder. Run <code>claude mcp list</code> again to check they've
 gone. If one won't go, tell your instructor.</li>
 </ul>
-<p>Then run the checks at the top of this step again.</p>
+<p>Then do checks 6a to 6d again.</p>
 <h3 id="m0--step-7--a-second-browser-profile">Step 7 — A second browser profile</h3>
 <p><strong>Why this step:</strong> You'll need to see the app the way an everyday user sees it, not as an admin who can do anything. A second browser profile lets you stay logged in as both at once.</p>
 <p>A <strong>browser profile</strong> is a separate set of logins inside your browser. You

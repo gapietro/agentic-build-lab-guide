@@ -372,23 +372,46 @@ shows how).
 
 **Why this step:** Anything extra Claude can see, such as a personal instruction file or a connection to another tool, changes how it behaves. Checking now means what you see in the lab comes from the lab, not from your own setup.
 
-**🤖 Claude:** run `/plugin`, then `/mcp`. Press **Esc** to close each
-one. Then quit Claude with `/exit`.
+There are three separate checks. Do them **one at a time**, and finish
+each one before you start the next.
 
-**⌨️ You:** the same checks from the terminal (use these if `/mcp` isn't
-recognised in your version):
+**6a. Plugins. 🤖 Claude:**
+1. Type `/plugin` and press **Enter**. A menu opens.
+2. Look at the **Installed** list.
+   ✅ **Check:** the only plugin there is `prove-it`.
+3. Press **Esc** until the menu closes and you're back at Claude's normal
+   prompt (the `>` where you type to Claude).
+
+**6b. MCP servers. 🤖 Claude:** only when you're back at the normal
+prompt:
+1. Type `/mcp` and press **Enter**.
+   ✅ **Check:** it says there are no MCP servers.
+2. Press **Esc** to close it.
+
+⚠️ **If you see…** *nothing happens when you type `/mcp`, or it searches
+the plugin list instead:* you're still inside the `/plugin` menu. Press
+**Esc** until the menu is gone, then type `/mcp` again.
+
+**6c. Quit Claude. 🤖 Claude:** type `/exit`.
+
+**6d. Personal instruction file. ⌨️ You:** in a normal terminal:
+```
+ls ~/.claude/CLAUDE.md
+```
+✅ **Check:** `ls` says the file doesn't exist. It prints
+`ls: /Users/<you>/.claude/CLAUDE.md: No such file or directory`.
+
+**⌨️ You (another way to do 6a and 6b):** the same checks can be run from
+the terminal. Use these if `/mcp` isn't recognised in your version:
 ```
 claude plugin list
 claude mcp list
-ls ~/.claude/CLAUDE.md
 ```
 - `claude plugin list` shows which plugins are installed and switched on.
 - `claude mcp list` shows connections to other tools (MCP servers).
-- `ls ~/.claude/CLAUDE.md` checks for a personal instruction file.
 
 ✅ **Check:** only `prove-it` is installed and switched on. No MCP servers
-are listed. `ls` says the file doesn't exist: it prints
-`ls: /Users/<you>/.claude/CLAUDE.md: No such file or directory`.
+are listed.
 
 ⚠️ **If you see…** *a personal `CLAUDE.md`, MCP servers or other plugins:*
 they'll shape what Claude does in the lab. Use a separate user account, or
@@ -419,7 +442,7 @@ after the lab ("Put your machine back", at the end of Module 9).
   file in your notes folder. Run `claude mcp list` again to check they've
   gone. If one won't go, tell your instructor.
 
-Then run the checks at the top of this step again.
+Then do checks 6a to 6d again.
 
 ### Step 7 — A second browser profile
 
