@@ -276,8 +276,15 @@ you eat.
 
 1. **Start clean.** **🤖 Claude:** type `/clear` (or start a fresh session:
    **🤖 Claude:** type `/exit`, then **⌨️ You:** `claude`).
-2. **🤖 Claude:** step 1's prompt that brings `main` up to date, then the
-   session open from step 1.
+2. **🤖 Claude:** bring `main` up to date:
+   ```
+   Run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+   ```
+   Then the session open:
+   ```
+   Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+   blocker they mention. Then tell me the top three items by gate distance.
+   ```
 3. **🤖 Claude:** paste **one** of the two prompts below. They are the same
    except for the **Stop when** line. **Copy the one you need**, whole:
    - **Workshop:** stop once the wiring story is merged.
@@ -421,8 +428,15 @@ the next gate's count is zero).
   or hit a usage limit): nothing is lost. Open pull requests and merged
   stories stay on GitHub, and the next run carries on from them.
   1. **🤖 Claude:** type `/exit`. **⌨️ You** (window 1): `claude`.
-  2. **🤖 Claude:** step 1's prompt that brings `main` up to date, then the
-     session open.
+  2. **🤖 Claude:** bring `main` up to date:
+     ```
+     Run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+     ```
+     Then the session open:
+     ```
+     Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+     blocker they mention. Then tell me the top three items by gate distance.
+     ```
   3. **🤖 Claude:** paste the **same** prompt as before.
   4. **✏️ Editor:** note in `LOG.md` that the run stopped, where, and why.
 - *a story stopped for a design change:* don't let it change the design to
@@ -437,8 +451,8 @@ the next gate's count is zero).
   run one story at a time, and note it.
 
 **Catches:** each real review finding that got fixed and merged is a catch for
-`review`, exactly as in step 6. Read the findings yourself before you count
-them.
+`review`. A finding you disagree with, or a style nit, isn't. Read the
+findings yourself before you count them.
 
 ### Step 9 — Build and install
 
@@ -569,9 +583,24 @@ Don't fix it by hand on the instance. Fix it through the loop:
    hand." is only for the coordinator's batch run.)
 2. **🤖 Claude:** `Take the top one.` (or `Take issue #<n>.`, with the new
    issue's number). Read the five bullets, then `confirm`.
-3. Tests first (red), then the fix (green), as in steps 4 and 5. Then
-   `ship it`, and read the review as in step 6.
-4. Build and install again (step 9), then redo item 3 above.
+3. **🤖 Claude:** tests first:
+   ```
+   Tests first. Start each test's name with the design term it proves, like "C<n>: the floor can raise a priority, never lower it", using the term's real number from docs/DESIGN-PriorityGuard.md.
+   Show me them failing before any implementation.
+   ```
+   Check they fail (red). Then let Claude write the fix until they pass
+   (green). Then type `ship it`, and read every finding the `/code-review`
+   run lists in Claude's output before it merges.
+4. Build and install again.
+   **🤖 Claude** builds:
+   ```
+   Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+   ```
+   Then **⌨️ You** (window 2) install, once the build succeeds:
+   ```
+   cd ~/projects/priority-guard/app && now-sdk install --auth <PDI_ALIAS>
+   ```
+   Then create the incident again, exactly as in item 3 above.
 
 ⚠️ **If you see…** *the priority went up, but there's no work note:* that's a
 real defect too, and a **catch** for `test` once fixed. Work notes are a
@@ -677,9 +706,17 @@ Along the way:
 - **Seed the demo data as source** in the app (`src/`), as your design says.
   The grade checks for it.
 - After any story that changes what's on the instance, **build and install**
-  again (step 9: **🤖 Claude** builds, **⌨️ You** install), and re-run your live checks. Add checks as stories land:
-  an override with a reason, a Tier 1 override waiting for approval, and the
-  weekly count.
+  again, and re-run your live checks.
+  **🤖 Claude** builds:
+  ```
+  Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+  ```
+  Then **⌨️ You** (window 2) install, once the build succeeds:
+  ```
+  cd ~/projects/priority-guard/app && now-sdk install --auth <PDI_ALIAS>
+  ```
+  Add checks as stories land: an override with a reason, a Tier 1 override
+  waiting for approval, and the weekly count.
 - **The INSTALL and DEMO stories need evidence**, or the grade can't count
   those gates:
   - close the **INSTALL** story with a comment recording the install and the
@@ -687,9 +724,18 @@ Along the way:
   - for **DEMO**, show the working app, live, to whoever plays the customer,
     as an ordinary agent, then close the story with a comment recording who
     saw what, as which user, and when.
-- **Between stories,** a session close updates `SESSION-NOTE.md` on `main`.
-  Commit it exactly as in step 11: on its own branch `docs/session-note`,
-  then `ship it`, so `main` stays clean.
+- **Between stories,** close the session so `SESSION-NOTE.md` is up to
+  date. **🤖 Claude:**
+  ```
+  We're stopping here. Update SESSION-NOTE.md: what's proven, what's
+  open, the exact next step, and the top three next items.
+  ```
+  The note is now changed on `main`. Commit it on its own branch, so `main`
+  stays clean. **🤖 Claude:**
+  ```
+  Commit only SESSION-NOTE.md in ~/projects/priority-guard/app on a new
+  branch docs/session-note, never on main, then ship it.
+  ```
 
 ✅ **Check:** the MERGE, INSTALL and DEMO counts are zero, the app is installed
 from the latest `main`, every live check passes as the right user, and the

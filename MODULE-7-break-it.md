@@ -148,15 +148,22 @@ Then leave the reviewer. **🤖 Claude:** type `/exit`.
    ```
    cd ~/projects/priority-guard/app && claude
    ```
-   **🤖 Claude:** bring `main` up to date (Module 6 step 1's prompt), then
-   run the session open.
+   **🤖 Claude:** bring `main` up to date:
+   ```
+   Run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+   ```
+   Then the session open:
+   ```
+   Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+   blocker they mention. Then tell me the top three items by gate distance.
+   ```
 3. For **each** attack that got through:
    - It's a **catch** once its fix is merged. Log it.
    - **Does fixing it need a design change?** For example, the reviewer asks
      whether an incident manager may override below the floor without a
      reason. That's a decision, not code. Go to Part C.
-   - Otherwise, build the fix as a story, through the loop (Module 6 steps
-     4–7). Its branch starts from `main`, and copies in **only** that
+   - Otherwise, build the fix through the loop: a failing test first, then
+     the fix, then `ship it`. Its branch starts from `main`, and copies in **only** that
      attack's failing test, never the whole of `test/break-floor`. Nothing
      red is ever merged: the fix makes that test pass first.
      **🤖 Claude** (replace `<short-name>` with a few words, for example
@@ -171,7 +178,8 @@ Then leave the reviewer. **🤖 Claude:** type `/exit`.
      now-sdk install or now-sdk auth.
      ```
      Read the bullets, type `confirm`, and watch the red, then green run.
-     Then `ship it`, and read the review as in Module 6 step 6.
+     Then type `ship it`, and read every finding the `/code-review` run
+     lists in Claude's output before it merges.
 4. **Not building the whole app? Stop after one fix.** File the other attacks that got
    through as stories, so they aren't lost. **🤖 Claude:**
    ```
@@ -187,10 +195,18 @@ Then leave the reviewer. **🤖 Claude:** type `/exit`.
    you'd repeat with a new reviewer until a round finds nothing.
 5. **Building the whole app:** fix **every** attempt that got through, through
    the loop, as in item 3 (or Part C if it changes the design). A fix doesn't
-   need an issue filed by hand: a fix is a branch and `ship it`. Then reinstall (Module 6 step 9:
-   **🤖 Claude** builds, **⌨️ You** install), re-run your live checks, and
-   add a fresh comment to the closed DEMO story saying what changed and that
-   the checks pass again. Any open issue on the DEMO gate
+   need an issue filed by hand: a fix is a branch and `ship it`. Then build
+   and install again.
+   **🤖 Claude** builds:
+   ```
+   Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+   ```
+   Then **⌨️ You** (window 2) install, once the build succeeds:
+   ```
+   cd ~/projects/priority-guard/app && now-sdk install --auth <PDI_ALIAS>
+   ```
+   Re-run your live checks, and add a fresh comment to the closed DEMO story
+   saying what changed and that the checks pass again. Any open issue on the DEMO gate
    turns Module 8's grade into a preview.
 
 `test/break-floor` stays on your computer only, as the reviewer's record.
@@ -228,7 +244,16 @@ trying.
 
 ⚠️ **If you see…** *an attempt gets through:* that's a **catch**, found by your
 partner on a live instance. Write the exact steps. Swap back, and fix it in
-Part A's way, in a normal session (step 3, item 2). **🤖 Claude:**
+a normal session. **⌨️ You** (window 1): start one:
+```
+cd ~/projects/priority-guard/app
+claude
+```
+**🤖 Claude:** bring `main` up to date:
+```
+Run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+```
+Then **🤖 Claude:**
 ```
 Create a new branch fix/<short-name> from main in
 ~/projects/priority-guard/app, never on main. Restate the fix in five
@@ -237,8 +262,17 @@ steps, its name starting with the design term it tests, and show me it
 failing: <the exact steps>. Then fix the code until the whole suite passes.
 Never run now-sdk install or now-sdk auth.
 ```
-Then `ship it`, re-install (Module 6 step 9: **🤖 Claude** builds, **⌨️ You**
-install), and re-try the same steps.
+Then type `ship it`, and read every finding before it merges. Then build
+and install again.
+**🤖 Claude** builds:
+```
+Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+```
+Then **⌨️ You** (window 2) install, once the build succeeds:
+```
+cd ~/projects/priority-guard/app && now-sdk install --auth <PDI_ALIAS>
+```
+Then re-try the same steps.
 
 ### Step 5 — Swap back, and attack theirs
 
@@ -271,7 +305,12 @@ changes the floor must survive. That something is one of:
    ```
    Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull && git -C ~/projects/priority-guard/app switch -c docs/amend-floor and show me the output. Commit nothing.
    ```
-2. **🤖 Claude:** run the session open, then:
+2. **🤖 Claude:** the session open:
+   ```
+   Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+   blocker they mention. Then tell me the top three items by gate distance.
+   ```
+   Then:
    ```
    /prove-it:design-challenge amend docs/DESIGN-PriorityGuard.md
    ```
@@ -287,8 +326,11 @@ changes the floor must survive. That something is one of:
    Commit only docs/DESIGN-PriorityGuard.md in ~/projects/priority-guard/app
    on the branch docs/amend-floor, never on main, then ship it.
    ```
-7. **🤖 Claude:** once it's merged, bring `main` up to date (Module 6 step
-   1's prompt). Then turn the amendment into a story:
+7. **🤖 Claude:** once it's merged, bring `main` up to date:
+   ```
+   Run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+   ```
+   Then turn the amendment into a story:
    ```
    /prove-it:build-plan docs/DESIGN-PriorityGuard.md
    ```
@@ -303,9 +345,15 @@ changes the floor must survive. That something is one of:
    ~/projects/priority-guard/app on a new branch docs/amend-plan, never on
    main, then ship it.
    ```
-9. **🤖 Claude:** **then** build the fix as a normal story, through the loop
-   (Module 6 steps 2–7): `Take issue #<n>.`, with the new story's number,
-   then `confirm`, tests first, `ship it`.
+9. **🤖 Claude:** **then** build the fix as a normal story, through the
+   loop. Type `Take issue #<n>.`, with the new story's number. Read the five
+   bullets, then type `confirm`. Then tests first:
+   ```
+   Tests first. Start each test's name with the design term it proves, like "C<n>: the floor can raise a priority, never lower it", using the term's real number from docs/DESIGN-PriorityGuard.md.
+   Show me them failing before any implementation.
+   ```
+   Check they fail (red), let Claude write the fix until they pass (green),
+   then type `ship it` and read every finding before it merges.
 
 ✅ **Check:** the design has a new or changed term, numbered, and every new
 drift row is signed by you. Nothing was renumbered or deleted. The fix was

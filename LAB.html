@@ -3342,8 +3342,12 @@ what gets cut to make the time.</li>
 <ol>
 <li><strong>Start clean.</strong> <strong>🤖 Claude:</strong> type <code>/clear</code> (or start a fresh session:
 <strong>🤖 Claude:</strong> type <code>/exit</code>, then <strong>⌨️ You:</strong> <code>claude</code>).</li>
-<li><strong>🤖 Claude:</strong> step 1's prompt that brings <code>main</code> up to date, then the
-session open from step 1.</li>
+<li><strong>🤖 Claude:</strong> bring <code>main</code> up to date:<pre><code>Run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+</code></pre>
+Then the session open:<pre><code>Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+blocker they mention. Then tell me the top three items by gate distance.
+</code></pre>
+</li>
 <li><strong>🤖 Claude:</strong> paste <strong>one</strong> of the two prompts below. They are the same
 except for the <strong>Stop when</strong> line. <strong>Copy the one you need</strong>, whole:
 <ul>
@@ -3488,8 +3492,12 @@ or hit a usage limit): nothing is lost. Open pull requests and merged
 stories stay on GitHub, and the next run carries on from them.
 <ol>
 <li><strong>🤖 Claude:</strong> type <code>/exit</code>. <strong>⌨️ You</strong> (window 1): <code>claude</code>.</li>
-<li><strong>🤖 Claude:</strong> step 1's prompt that brings <code>main</code> up to date, then the
-session open.</li>
+<li><strong>🤖 Claude:</strong> bring <code>main</code> up to date:<pre><code>Run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+</code></pre>
+Then the session open:<pre><code>Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+blocker they mention. Then tell me the top three items by gate distance.
+</code></pre>
+</li>
 <li><strong>🤖 Claude:</strong> paste the <strong>same</strong> prompt as before.</li>
 <li><strong>✏️ Editor:</strong> note in <code>LOG.md</code> that the run stopped, where, and why.</li>
 </ol>
@@ -3506,8 +3514,8 @@ expected:</em> several sub-agents use usage faster than one session. Tell it to
 run one story at a time, and note it.</li>
 </ul>
 <p><strong>Catches:</strong> each real review finding that got fixed and merged is a catch for
-<code>review</code>, exactly as in step 6. Read the findings yourself before you count
-them.</p>
+<code>review</code>. A finding you disagree with, or a style nit, isn't. Read the
+findings yourself before you count them.</p>
 <h3 id="m6--step-9--build-and-install">Step 9 — Build and install</h3>
 <p><strong>Why this step:</strong> Tests prove the code works on its own. Installing puts the
 app on your instance, so you can see what it does on the real platform.
@@ -3636,9 +3644,18 @@ count the issue. (Step 8's rule &quot;Don't create, close or re-label issues by
 hand.&quot; is only for the coordinator's batch run.)</li>
 <li><strong>🤖 Claude:</strong> <code>Take the top one.</code> (or <code>Take issue #&lt;n&gt;.</code>, with the new
 issue's number). Read the five bullets, then <code>confirm</code>.</li>
-<li>Tests first (red), then the fix (green), as in steps 4 and 5. Then
-<code>ship it</code>, and read the review as in step 6.</li>
-<li>Build and install again (step 9), then redo item 3 above.</li>
+<li><strong>🤖 Claude:</strong> tests first:<pre><code>Tests first. Start each test's name with the design term it proves, like &quot;C&lt;n&gt;: the floor can raise a priority, never lower it&quot;, using the term's real number from docs/DESIGN-PriorityGuard.md.
+Show me them failing before any implementation.
+</code></pre>
+Check they fail (red). Then let Claude write the fix until they pass
+(green). Then type <code>ship it</code>, and read every finding the <code>/code-review</code>
+run lists in Claude's output before it merges.</li>
+<li>Build and install again.
+<strong>🤖 Claude</strong> builds:<pre><code>Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+</code></pre>
+Then <strong>⌨️ You</strong> (window 2) install, once the build succeeds:<pre><code>cd ~/projects/priority-guard/app &amp;&amp; now-sdk install --auth &lt;PDI_ALIAS&gt;
+</code></pre>
+Then create the incident again, exactly as in item 3 above.</li>
 </ol>
 <p>⚠️ <strong>If you see…</strong> <em>the priority went up, but there's no work note:</em> that's a
 real defect too, and a <strong>catch</strong> for <code>test</code> once fixed. Work notes are a
@@ -3731,9 +3748,13 @@ definitions. A term with no test caps the grade.</li>
 <li><strong>Seed the demo data as source</strong> in the app (<code>src/</code>), as your design says.
 The grade checks for it.</li>
 <li>After any story that changes what's on the instance, <strong>build and install</strong>
-again (step 9: <strong>🤖 Claude</strong> builds, <strong>⌨️ You</strong> install), and re-run your live checks. Add checks as stories land:
-an override with a reason, a Tier 1 override waiting for approval, and the
-weekly count.</li>
+again, and re-run your live checks.
+<strong>🤖 Claude</strong> builds:<pre><code>Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+</code></pre>
+Then <strong>⌨️ You</strong> (window 2) install, once the build succeeds:<pre><code>cd ~/projects/priority-guard/app &amp;&amp; now-sdk install --auth &lt;PDI_ALIAS&gt;
+</code></pre>
+Add checks as stories land: an override with a reason, a Tier 1 override
+waiting for approval, and the weekly count.</li>
 <li><strong>The INSTALL and DEMO stories need evidence</strong>, or the grade can't count
 those gates:
 <ul>
@@ -3744,9 +3765,15 @@ as an ordinary agent, then close the story with a comment recording who
 saw what, as which user, and when.</li>
 </ul>
 </li>
-<li><strong>Between stories,</strong> a session close updates <code>SESSION-NOTE.md</code> on <code>main</code>.
-Commit it exactly as in step 11: on its own branch <code>docs/session-note</code>,
-then <code>ship it</code>, so <code>main</code> stays clean.</li>
+<li><strong>Between stories,</strong> close the session so <code>SESSION-NOTE.md</code> is up to
+date. <strong>🤖 Claude:</strong><pre><code>We're stopping here. Update SESSION-NOTE.md: what's proven, what's
+open, the exact next step, and the top three next items.
+</code></pre>
+The note is now changed on <code>main</code>. Commit it on its own branch, so <code>main</code>
+stays clean. <strong>🤖 Claude:</strong><pre><code>Commit only SESSION-NOTE.md in ~/projects/priority-guard/app on a new
+branch docs/session-note, never on main, then ship it.
+</code></pre>
+</li>
 </ul>
 <p>✅ <strong>Check:</strong> the MERGE, INSTALL and DEMO counts are zero, the app is installed
 from the latest <code>main</code>, every live check passes as the right user, and the
@@ -3879,16 +3906,20 @@ do these two again. Never commit them on <code>main</code>.</p>
 <strong>🤖 Claude:</strong> type <code>/exit</code>. <strong>⌨️ You</strong> (window 1): start a normal
 session:<pre><code>cd ~/projects/priority-guard/app &amp;&amp; claude
 </code></pre>
-<strong>🤖 Claude:</strong> bring <code>main</code> up to date (Module 6 step 1's prompt), then
-run the session open.</li>
+<strong>🤖 Claude:</strong> bring <code>main</code> up to date:<pre><code>Run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+</code></pre>
+Then the session open:<pre><code>Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+blocker they mention. Then tell me the top three items by gate distance.
+</code></pre>
+</li>
 <li>For <strong>each</strong> attack that got through:
 <ul>
 <li>It's a <strong>catch</strong> once its fix is merged. Log it.</li>
 <li><strong>Does fixing it need a design change?</strong> For example, the reviewer asks
 whether an incident manager may override below the floor without a
 reason. That's a decision, not code. Go to Part C.</li>
-<li>Otherwise, build the fix as a story, through the loop (Module 6 steps
-4–7). Its branch starts from <code>main</code>, and copies in <strong>only</strong> that
+<li>Otherwise, build the fix through the loop: a failing test first, then
+the fix, then <code>ship it</code>. Its branch starts from <code>main</code>, and copies in <strong>only</strong> that
 attack's failing test, never the whole of <code>test/break-floor</code>. Nothing
 red is ever merged: the fix makes that test pass first.
 <strong>🤖 Claude</strong> (replace <code>&lt;short-name&gt;</code> with a few words, for example
@@ -3901,7 +3932,8 @@ passes. Don't merge test/break-floor and don't push it. Never run
 now-sdk install or now-sdk auth.
 </code></pre>
 Read the bullets, type <code>confirm</code>, and watch the red, then green run.
-Then <code>ship it</code>, and read the review as in Module 6 step 6.</li>
+Then type <code>ship it</code>, and read every finding the <code>/code-review</code> run
+lists in Claude's output before it merges.</li>
 </ul>
 </li>
 <li><strong>Not building the whole app? Stop after one fix.</strong> File the other attacks that got
@@ -3917,10 +3949,14 @@ hand.&quot; is only for the coordinator's batch run.) Read the list, then say ye
 you'd repeat with a new reviewer until a round finds nothing.</li>
 <li><strong>Building the whole app:</strong> fix <strong>every</strong> attempt that got through, through
 the loop, as in item 3 (or Part C if it changes the design). A fix doesn't
-need an issue filed by hand: a fix is a branch and <code>ship it</code>. Then reinstall (Module 6 step 9:
-<strong>🤖 Claude</strong> builds, <strong>⌨️ You</strong> install), re-run your live checks, and
-add a fresh comment to the closed DEMO story saying what changed and that
-the checks pass again. Any open issue on the DEMO gate
+need an issue filed by hand: a fix is a branch and <code>ship it</code>. Then build
+and install again.
+<strong>🤖 Claude</strong> builds:<pre><code>Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+</code></pre>
+Then <strong>⌨️ You</strong> (window 2) install, once the build succeeds:<pre><code>cd ~/projects/priority-guard/app &amp;&amp; now-sdk install --auth &lt;PDI_ALIAS&gt;
+</code></pre>
+Re-run your live checks, and add a fresh comment to the closed DEMO story
+saying what changed and that the checks pass again. Any open issue on the DEMO gate
 turns Module 8's grade into a preview.</li>
 </ol>
 <p><code>test/break-floor</code> stays on your computer only, as the reviewer's record.
@@ -3950,7 +3986,14 @@ agent can change.</li>
 <p>✅ <strong>Check:</strong> your log lists every attempt and its result.</p>
 <p>⚠️ <strong>If you see…</strong> <em>an attempt gets through:</em> that's a <strong>catch</strong>, found by your
 partner on a live instance. Write the exact steps. Swap back, and fix it in
-Part A's way, in a normal session (step 3, item 2). <strong>🤖 Claude:</strong></p>
+a normal session. <strong>⌨️ You</strong> (window 1): start one:</p>
+<pre><code>cd ~/projects/priority-guard/app
+claude
+</code></pre>
+<p><strong>🤖 Claude:</strong> bring <code>main</code> up to date:</p>
+<pre><code>Run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+</code></pre>
+<p>Then <strong>🤖 Claude:</strong></p>
 <pre><code>Create a new branch fix/&lt;short-name&gt; from main in
 ~/projects/priority-guard/app, never on main. Restate the fix in five
 bullets and wait for my confirm. Then write a test that reproduces these
@@ -3958,8 +4001,15 @@ steps, its name starting with the design term it tests, and show me it
 failing: &lt;the exact steps&gt;. Then fix the code until the whole suite passes.
 Never run now-sdk install or now-sdk auth.
 </code></pre>
-<p>Then <code>ship it</code>, re-install (Module 6 step 9: <strong>🤖 Claude</strong> builds, <strong>⌨️ You</strong>
-install), and re-try the same steps.</p>
+<p>Then type <code>ship it</code>, and read every finding before it merges. Then build
+and install again.
+<strong>🤖 Claude</strong> builds:</p>
+<pre><code>Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, then now-sdk build (this session runs in ~/projects/priority-guard/app), and show me the output. Don't run now-sdk install.
+</code></pre>
+<p>Then <strong>⌨️ You</strong> (window 2) install, once the build succeeds:</p>
+<pre><code>cd ~/projects/priority-guard/app &amp;&amp; now-sdk install --auth &lt;PDI_ALIAS&gt;
+</code></pre>
+<p>Then re-try the same steps.</p>
 <h3 id="m7--step-5--swap-back-and-attack-theirs">Step 5 — Swap back, and attack theirs</h3>
 <p><strong>Why this step:</strong> Now you're the outsider. Looking for holes in someone else's app shows you how easy it is to miss your own.</p>
 <p>Do the same on your partner's computer, as their agent user.</p>
@@ -3983,7 +4033,10 @@ to attack, not to build. <strong>🤖 Claude:</strong> type <code>/exit</code>. 
 <strong>🤖 Claude:</strong> start a branch for the amendment, from a clean <code>main</code>:<pre><code>Run git -C ~/projects/priority-guard/app status. If the working tree isn't clean, stop and tell me. Otherwise run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull &amp;&amp; git -C ~/projects/priority-guard/app switch -c docs/amend-floor and show me the output. Commit nothing.
 </code></pre>
 </li>
-<li><strong>🤖 Claude:</strong> run the session open, then:<pre><code>/prove-it:design-challenge amend docs/DESIGN-PriorityGuard.md
+<li><strong>🤖 Claude:</strong> the session open:<pre><code>Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+blocker they mention. Then tell me the top three items by gate distance.
+</code></pre>
+Then:<pre><code>/prove-it:design-challenge amend docs/DESIGN-PriorityGuard.md
 </code></pre>
 </li>
 <li>It asks what changed and why, <strong>one question per turn</strong>. Answer with what
@@ -3997,8 +4050,9 @@ build plan refuses an unsigned row.</li>
 on the branch docs/amend-floor, never on main, then ship it.
 </code></pre>
 </li>
-<li><strong>🤖 Claude:</strong> once it's merged, bring <code>main</code> up to date (Module 6 step
-1's prompt). Then turn the amendment into a story:<pre><code>/prove-it:build-plan docs/DESIGN-PriorityGuard.md
+<li><strong>🤖 Claude:</strong> once it's merged, bring <code>main</code> up to date:<pre><code>Run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+</code></pre>
+Then turn the amendment into a story:<pre><code>/prove-it:build-plan docs/DESIGN-PriorityGuard.md
 </code></pre>
 Type <code>approve</code> at the preview. When it asks &quot;Dry run first, or apply
 now?&quot;, type <code>apply now</code>. Note the new story's issue number.</li>
@@ -4010,9 +4064,13 @@ changed anyway, ask Claude why before it's committed. The build plan left
 main, then ship it.
 </code></pre>
 </li>
-<li><strong>🤖 Claude:</strong> <strong>then</strong> build the fix as a normal story, through the loop
-(Module 6 steps 2–7): <code>Take issue #&lt;n&gt;.</code>, with the new story's number,
-then <code>confirm</code>, tests first, <code>ship it</code>.</li>
+<li><strong>🤖 Claude:</strong> <strong>then</strong> build the fix as a normal story, through the
+loop. Type <code>Take issue #&lt;n&gt;.</code>, with the new story's number. Read the five
+bullets, then type <code>confirm</code>. Then tests first:<pre><code>Tests first. Start each test's name with the design term it proves, like &quot;C&lt;n&gt;: the floor can raise a priority, never lower it&quot;, using the term's real number from docs/DESIGN-PriorityGuard.md.
+Show me them failing before any implementation.
+</code></pre>
+Check they fail (red), let Claude write the fix until they pass (green),
+then type <code>ship it</code> and read every finding before it merges.</li>
 </ol>
 <p>✅ <strong>Check:</strong> the design has a new or changed term, numbered, and every new
 drift row is signed by you. Nothing was renumbered or deleted. The fix was
@@ -4130,9 +4188,16 @@ claude
 <p><strong>🔍 Check</strong> that you're on a clean <code>main</code>:</p>
 <pre><code>Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app branch --show-current &amp;&amp; git -C ~/projects/priority-guard/app status --short
 </code></pre>
-<p>✅ <strong>Check:</strong> it prints <code>main</code> and nothing else. If it prints another branch,
-or lists files, stop, and get back to a clean <code>main</code> first: Module 7
-step 3 (&quot;In the workshop, stop here&quot;) shows how.</p>
+<p>✅ <strong>Check:</strong> it prints <code>main</code> and nothing else.</p>
+<p>⚠️ <strong>If you see…</strong> <em>another branch name, or a list of files:</em> get back to a
+clean <code>main</code> before you grade. <strong>🤖 Claude:</strong></p>
+<pre><code>Run git -C ~/projects/priority-guard/app switch main and show me the output. Change nothing else.
+</code></pre>
+<p>Then run the 🔍 Check above again. Still lists files? They're leftovers
+from Module 7's reviewer. <strong>🤖 Claude:</strong></p>
+<pre><code>Switch ~/projects/priority-guard/app to test/break-floor, commit the files git status lists there, then switch back to main. Never commit them on main.
+</code></pre>
+<p>Then run the 🔍 Check again: it must print <code>main</code> and nothing else.</p>
 <p>⚠️ <strong>If you see…</strong> <em>Claude asks permission for a read-only command like
 <code>git ls-files</code>, <code>git log</code>, <code>grep</code> or <code>sed</code> during the grade:</em> choose <strong>1</strong>
 (<strong>Yes</strong>). <strong>Never</strong> choose &quot;don't ask again&quot;: that saves a lasting rule,
@@ -4141,7 +4206,11 @@ and it can land in a settings file inside the repo.</p>
 score. Keep this Claude session open for step 3.</p>
 <h3 id="m8--step-3--run-the-grade">Step 3 — Run the grade</h3>
 <p><strong>Why this step:</strong> A grader who doesn't know you can't be talked round. It runs the build and the tests itself, so the score shows what works, not what you say works.</p>
-<p><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>, the session from step 2): run the session open, then type:</p>
+<p><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>, the session from step 2): the session open:</p>
+<pre><code>Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+blocker they mention. Then tell me the top three items by gate distance.
+</code></pre>
+<p>Then type:</p>
 <pre><code>/prove-it:grade
 </code></pre>
 <p>With no milestone named, it lists your milestones and asks which one to
@@ -4211,14 +4280,41 @@ milestone as on the day. If it still says the milestone isn't reached,
 answer <strong>yes</strong> and note in your log that it's a preview again, as in
 step 3: it only becomes real once every story on that milestone is built.</li>
 </ul>
-<p>Run steps 1 to 4 again, starting a fresh session as in step 2, with one
-change: in step 4, commit on a new branch named <strong><code>chore/grade-demo</code></strong> in
-place of <code>chore/grade</code>.</p>
+<p>Then grade again, the same way as on the day:</p>
+<ol>
+<li><strong>✏️ Editor:</strong> in <code>LOG.md</code>, write the score you expect now.</li>
+<li><strong>⌨️ You</strong> (window 1): start a fresh session in the repo:<pre><code>cd ~/projects/priority-guard/app
+claude
+</code></pre>
+<strong>🔍 Check</strong> you're on a clean <code>main</code>:<pre><code>Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app branch --show-current &amp;&amp; git -C ~/projects/priority-guard/app status --short
+</code></pre>
+It prints <code>main</code> and nothing else. If it prints another branch,
+<strong>🤖 Claude:</strong><pre><code>Run git -C ~/projects/priority-guard/app switch main and show me the output. Change nothing else.
+</code></pre>
+and check again.</li>
+<li><strong>🤖 Claude:</strong> the session open:<pre><code>Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+blocker they mention. Then tell me the top three items by gate distance.
+</code></pre>
+Then type <code>/prove-it:grade</code> and choose the milestone above. When it
+asks <em>&quot;Which alias should I install to?&quot;</em>, reply with only your
+<code>&lt;PDI_ALIAS&gt;</code>, and allow that one <code>now-sdk install --auth &lt;PDI_ALIAS&gt;</code>
+(choose <strong>1</strong>, never 2).</li>
+<li><strong>🤖 Claude:</strong> when it offers to file the findings, type <code>approve</code>, then
+<code>Dry run first.</code>, read it, then <code>apply</code>. <strong>✏️ Editor:</strong> read <code>.gitignore</code>:
+nothing should be new this time. Then <strong>🤖 Claude:</strong><pre><code>Commit GRADE.md, BACKLOG.md, and .gitignore only if it changed, in
+~/projects/priority-guard/app together on a new branch,
+chore/grade-demo, never on main, then ship it.
+</code></pre>
+</li>
+</ol>
 <p>Its findings get filed as stories, and some may re-open an earlier gate.
 Work them through the loop until those counts are zero again, before
 Part B.</p>
-<p>✅ <strong>Check:</strong> the real grade's <code>GRADE.md</code> is merged from <code>chore/grade-demo</code>,
-and <code>main</code> is clean and up to date (the same 🔍 Check as above).</p>
+<p>✅ <strong>Check:</strong> the real grade's <code>GRADE.md</code> is merged from <code>chore/grade-demo</code>.
+<strong>🔍 Check</strong> that <code>main</code> is clean and up to date:</p>
+<pre><code>Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull &amp;&amp; git -C ~/projects/priority-guard/app status --short
+</code></pre>
+<p><code>git status --short</code> prints <strong>nothing</strong> after the pull.</p>
 <hr />
 <h2 id="m8--part-b--the-runbook">Part B — The runbook</h2>
 <p>⏭ <strong>After the workshop:</strong> all of Part B. The drill in Part C needs a
@@ -4226,12 +4322,19 @@ runbook that's frozen before anyone plants a failure, so write and freeze it
 first.</p>
 <h3 id="m8--step-5--write-it">Step 5 — Write it</h3>
 <p><strong>Why this step:</strong> The runbook is the instructions for whoever looks after the app next. If something breaks when you're not around, it's what they'll have to go on.</p>
-<p><strong>🤖 Claude:</strong> first bring <code>main</code> up to date. Coming back after the
-workshop, start a session as in step 2 first. Then type Module 6 step 1's
-prompt:</p>
+<p>Coming back after the workshop? <strong>⌨️ You</strong> (window 1): start a session in
+the repo first:</p>
+<pre><code>cd ~/projects/priority-guard/app
+claude
+</code></pre>
+<p><strong>🤖 Claude:</strong> bring <code>main</code> up to date:</p>
 <pre><code>Run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
 </code></pre>
-<p>Then run the session open, and type:</p>
+<p>Then the session open:</p>
+<pre><code>Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+blocker they mention. Then tell me the top three items by gate distance.
+</code></pre>
+<p>Then type:</p>
 <pre><code>/prove-it:handoff
 </code></pre>
 <p>With no argument, it checks two things: does every piece of the app point to
@@ -4344,8 +4447,14 @@ the runbook fix is merged, it's a catch for <code>drill</code>.</p>
 <ol>
 <li><strong>🌐 Browser:</strong> your partner restores the failure <strong>exactly</strong> as the drill card says,
 checks it against the before state, and fills in <strong>Restored on</strong>.</li>
-<li><strong>🌐 Browser</strong> (your <strong>agent</strong> profile): re-run Module 6 step 10: a critical incident at
-impact 3 and urgency 3 must save at P1 or P2.</li>
+<li><strong>🌐 Browser</strong> (your <strong>agent</strong> profile, logged in as <code>&lt;AGENT_USER&gt;</code>):
+check the floor works again. Type <code>incident.list</code> in the filter
+navigator, press <strong>Enter</strong>, and click <strong>New</strong>. Fill in <strong>Caller</strong> (any
+user) and <strong>Short description</strong>, set <strong>Service</strong> to your critical service,
+and set <strong>Impact</strong> to <strong>3 - Low</strong> and <strong>Urgency</strong> to <strong>3 - Low</strong>. Click
+<strong>Submit</strong>, then open the incident again from the list.
+✅ <strong>Check:</strong> <strong>Priority</strong> shows <strong>1 - Critical</strong> or <strong>2 - High</strong>, and the
+<strong>Activity</strong> stream has a work note explaining the raise.</li>
 <li><strong>🤖 Claude:</strong> quit the diagnose session: type <code>/exit</code>. <strong>⌨️ You:</strong> start the
 <strong>project</strong> session again, in <code>~/projects/priority-guard/app</code>, with plain <code>claude</code>.
 <strong>🤖 Claude:</strong> type:<pre><code>/prove-it:handoff verdict
@@ -4386,7 +4495,7 @@ a1b2c3d. Drill (option A, planted by partner): the diagnose session found
 the planted cause from RUNBOOK.md alone. Verdict: READY, in HANDOFF.md on
 main.&quot; Don't close any other issue.
 </code></pre>
-<p>✅ <strong>Check:</strong> the <code>gate:handoff</code> count (Module 6 step 12's command) is zero.
+<p>✅ <strong>Check:</strong> the <code>gate:handoff</code> count is zero.
 <strong>🔍 Check:</strong></p>
 <pre><code>Run exactly this and show me the raw output, unedited: gh issue list --state open --label &quot;gate:handoff&quot; --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != &quot;register&quot;))] | length'
 </code></pre>
@@ -4396,17 +4505,23 @@ main.&quot; Don't close any other issue.
 <ol>
 <li>Record the <strong>DEMO grade's commit</strong> first: the real grade you merged
 from <code>chore/grade-demo</code>. The next grade rewrites <code>GRADE.md</code>, so the
-DEMO grade survives only in the history. Run this on an up-to-date
-<code>main</code>, before the next grade.
-<strong>🔍 Check:</strong><pre><code>Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app log -1 --format=%h -- GRADE.md
+DEMO grade survives only in the history. First, <strong>🤖 Claude:</strong> bring
+<code>main</code> up to date:<pre><code>Run git -C ~/projects/priority-guard/app switch main &amp;&amp; git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+</code></pre>
+Then <strong>🔍 Check:</strong><pre><code>Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app log -1 --format=%h -- GRADE.md
 </code></pre>
 <strong>✏️ Editor:</strong> write that hash, as the tool printed it, in <code>LOG.md</code>.</li>
-<li><strong>🤖 Claude:</strong> run <code>/prove-it:grade</code> again, and choose the <strong>HANDOFF</strong> milestone. This is
-the grade that says whether the finished app could be owned by someone
-else.</li>
-<li>Read it, then file its findings the same way as step 4 (<code>approve</code>,
-<code>Dry run first.</code>, <code>apply</code>), and merge <code>GRADE.md</code> the same way, on a new
-branch named <code>chore/grade-handoff</code> in place of <code>chore/grade</code>.</li>
+<li><strong>🤖 Claude:</strong> type <code>/prove-it:grade</code> again, and choose the <strong>HANDOFF</strong>
+milestone. This is the grade that says whether the finished app could be
+owned by someone else. When it asks <em>&quot;Which alias should I install to?&quot;</em>,
+reply with only your <code>&lt;PDI_ALIAS&gt;</code>, and allow that one
+<code>now-sdk install --auth &lt;PDI_ALIAS&gt;</code> (choose <strong>1</strong>, never 2).</li>
+<li>Read it. When it offers to file the findings, type <code>approve</code>, then
+<code>Dry run first.</code>, read it, then <code>apply</code>. Then <strong>🤖 Claude:</strong><pre><code>Commit GRADE.md, BACKLOG.md, and .gitignore only if it changed, in
+~/projects/priority-guard/app together on a new branch,
+chore/grade-handoff, never on main, then ship it.
+</code></pre>
+</li>
 </ol>
 <p>Any findings it files are new stories on earlier gates. <strong>This run ends
 here</strong>: list them in <code>LOG.md</code> as the next work, but don't work them now.</p>

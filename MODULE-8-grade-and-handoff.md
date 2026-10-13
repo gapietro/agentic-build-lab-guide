@@ -92,9 +92,19 @@ claude
 ```
 Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app branch --show-current && git -C ~/projects/priority-guard/app status --short
 ```
-✅ **Check:** it prints `main` and nothing else. If it prints another branch,
-or lists files, stop, and get back to a clean `main` first: Module 7
-step 3 ("In the workshop, stop here") shows how.
+✅ **Check:** it prints `main` and nothing else.
+
+⚠️ **If you see…** *another branch name, or a list of files:* get back to a
+clean `main` before you grade. **🤖 Claude:**
+```
+Run git -C ~/projects/priority-guard/app switch main and show me the output. Change nothing else.
+```
+Then run the 🔍 Check above again. Still lists files? They're leftovers
+from Module 7's reviewer. **🤖 Claude:**
+```
+Switch ~/projects/priority-guard/app to test/break-floor, commit the files git status lists there, then switch back to main. Never commit them on main.
+```
+Then run the 🔍 Check again: it must print `main` and nothing else.
 
 ⚠️ **If you see…** *Claude asks permission for a read-only command like
 `git ls-files`, `git log`, `grep` or `sed` during the grade:* choose **1**
@@ -108,7 +118,12 @@ score. Keep this Claude session open for step 3.
 
 **Why this step:** A grader who doesn't know you can't be talked round. It runs the build and the tests itself, so the score shows what works, not what you say works.
 
-**🤖 Claude** (`~/projects/priority-guard/app`, the session from step 2): run the session open, then type:
+**🤖 Claude** (`~/projects/priority-guard/app`, the session from step 2): the session open:
+```
+Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+blocker they mention. Then tell me the top three items by gate distance.
+```
+Then type:
 ```
 /prove-it:grade
 ```
@@ -196,16 +211,51 @@ reached.
   answer **yes** and note in your log that it's a preview again, as in
   step 3: it only becomes real once every story on that milestone is built.
 
-Run steps 1 to 4 again, starting a fresh session as in step 2, with one
-change: in step 4, commit on a new branch named **`chore/grade-demo`** in
-place of `chore/grade`.
+Then grade again, the same way as on the day:
+1. **✏️ Editor:** in `LOG.md`, write the score you expect now.
+2. **⌨️ You** (window 1): start a fresh session in the repo:
+   ```
+   cd ~/projects/priority-guard/app
+   claude
+   ```
+   **🔍 Check** you're on a clean `main`:
+   ```
+   Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app branch --show-current && git -C ~/projects/priority-guard/app status --short
+   ```
+   It prints `main` and nothing else. If it prints another branch,
+   **🤖 Claude:**
+   ```
+   Run git -C ~/projects/priority-guard/app switch main and show me the output. Change nothing else.
+   ```
+   and check again.
+3. **🤖 Claude:** the session open:
+   ```
+   Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+   blocker they mention. Then tell me the top three items by gate distance.
+   ```
+   Then type `/prove-it:grade` and choose the milestone above. When it
+   asks *"Which alias should I install to?"*, reply with only your
+   `<PDI_ALIAS>`, and allow that one `now-sdk install --auth <PDI_ALIAS>`
+   (choose **1**, never 2).
+4. **🤖 Claude:** when it offers to file the findings, type `approve`, then
+   `Dry run first.`, read it, then `apply`. **✏️ Editor:** read `.gitignore`:
+   nothing should be new this time. Then **🤖 Claude:**
+   ```
+   Commit GRADE.md, BACKLOG.md, and .gitignore only if it changed, in
+   ~/projects/priority-guard/app together on a new branch,
+   chore/grade-demo, never on main, then ship it.
+   ```
 
 Its findings get filed as stories, and some may re-open an earlier gate.
 Work them through the loop until those counts are zero again, before
 Part B.
 
-✅ **Check:** the real grade's `GRADE.md` is merged from `chore/grade-demo`,
-and `main` is clean and up to date (the same 🔍 Check as above).
+✅ **Check:** the real grade's `GRADE.md` is merged from `chore/grade-demo`.
+**🔍 Check** that `main` is clean and up to date:
+```
+Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull && git -C ~/projects/priority-guard/app status --short
+```
+`git status --short` prints **nothing** after the pull.
 
 ---
 
@@ -219,13 +269,22 @@ first.
 
 **Why this step:** The runbook is the instructions for whoever looks after the app next. If something breaks when you're not around, it's what they'll have to go on.
 
-**🤖 Claude:** first bring `main` up to date. Coming back after the
-workshop, start a session as in step 2 first. Then type Module 6 step 1's
-prompt:
+Coming back after the workshop? **⌨️ You** (window 1): start a session in
+the repo first:
+```
+cd ~/projects/priority-guard/app
+claude
+```
+**🤖 Claude:** bring `main` up to date:
 ```
 Run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
 ```
-Then run the session open, and type:
+Then the session open:
+```
+Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
+blocker they mention. Then tell me the top three items by gate distance.
+```
+Then type:
 ```
 /prove-it:handoff
 ```
@@ -365,8 +424,14 @@ the runbook fix is merged, it's a catch for `drill`.
 
 1. **🌐 Browser:** your partner restores the failure **exactly** as the drill card says,
    checks it against the before state, and fills in **Restored on**.
-2. **🌐 Browser** (your **agent** profile): re-run Module 6 step 10: a critical incident at
-   impact 3 and urgency 3 must save at P1 or P2.
+2. **🌐 Browser** (your **agent** profile, logged in as `<AGENT_USER>`):
+   check the floor works again. Type `incident.list` in the filter
+   navigator, press **Enter**, and click **New**. Fill in **Caller** (any
+   user) and **Short description**, set **Service** to your critical service,
+   and set **Impact** to **3 - Low** and **Urgency** to **3 - Low**. Click
+   **Submit**, then open the incident again from the list.
+   ✅ **Check:** **Priority** shows **1 - Critical** or **2 - High**, and the
+   **Activity** stream has a work note explaining the raise.
 3. **🤖 Claude:** quit the diagnose session: type `/exit`. **⌨️ You:** start the
    **project** session again, in `~/projects/priority-guard/app`, with plain `claude`.
    **🤖 Claude:** type:
@@ -418,7 +483,7 @@ the planted cause from RUNBOOK.md alone. Verdict: READY, in HANDOFF.md on
 main." Don't close any other issue.
 ```
 
-✅ **Check:** the `gate:handoff` count (Module 6 step 12's command) is zero.
+✅ **Check:** the `gate:handoff` count is zero.
 **🔍 Check:**
 ```
 Run exactly this and show me the raw output, unedited: gh issue list --state open --label "gate:handoff" --limit 5000 --json labels --jq '[.[] | select(all(.labels[]; .name != "register"))] | length'
@@ -432,19 +497,28 @@ Run exactly this and show me the raw output, unedited: gh issue list --state ope
 
 1. Record the **DEMO grade's commit** first: the real grade you merged
    from `chore/grade-demo`. The next grade rewrites `GRADE.md`, so the
-   DEMO grade survives only in the history. Run this on an up-to-date
-   `main`, before the next grade.
-   **🔍 Check:**
+   DEMO grade survives only in the history. First, **🤖 Claude:** bring
+   `main` up to date:
+   ```
+   Run git -C ~/projects/priority-guard/app switch main && git -C ~/projects/priority-guard/app pull, and show me the output. Change nothing else.
+   ```
+   Then **🔍 Check:**
    ```
    Run exactly this and show me the raw output, unedited: git -C ~/projects/priority-guard/app log -1 --format=%h -- GRADE.md
    ```
    **✏️ Editor:** write that hash, as the tool printed it, in `LOG.md`.
-2. **🤖 Claude:** run `/prove-it:grade` again, and choose the **HANDOFF** milestone. This is
-   the grade that says whether the finished app could be owned by someone
-   else.
-3. Read it, then file its findings the same way as step 4 (`approve`,
-   `Dry run first.`, `apply`), and merge `GRADE.md` the same way, on a new
-   branch named `chore/grade-handoff` in place of `chore/grade`.
+2. **🤖 Claude:** type `/prove-it:grade` again, and choose the **HANDOFF**
+   milestone. This is the grade that says whether the finished app could be
+   owned by someone else. When it asks *"Which alias should I install to?"*,
+   reply with only your `<PDI_ALIAS>`, and allow that one
+   `now-sdk install --auth <PDI_ALIAS>` (choose **1**, never 2).
+3. Read it. When it offers to file the findings, type `approve`, then
+   `Dry run first.`, read it, then `apply`. Then **🤖 Claude:**
+   ```
+   Commit GRADE.md, BACKLOG.md, and .gitignore only if it changed, in
+   ~/projects/priority-guard/app together on a new branch,
+   chore/grade-handoff, never on main, then ship it.
+   ```
 
 Any findings it files are new stories on earlier gates. **This run ends
 here**: list them in `LOG.md` as the next work, but don't work them now.
