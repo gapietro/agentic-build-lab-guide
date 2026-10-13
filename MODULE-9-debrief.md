@@ -126,8 +126,7 @@ normal terminal, **⌨️ You**:
    is safe: the second time it changes nothing.
 
    **Coming back later** (for example, for the after-the-workshop track)?
-   Run the merge command from Module 0 Step 3 item 3 again. Don't copy
-   `settings.json.lab.bak` back by hand.
+   Run `node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs` again. Don't copy `settings.json.lab.bak` back by hand.
 2. **Anything you switched off in Module 0 Step 6.** Your `LOG.md` lists what
    you changed:
    - a personal `CLAUDE.md`: `mv ~/.claude/CLAUDE.md.off ~/.claude/CLAUDE.md`

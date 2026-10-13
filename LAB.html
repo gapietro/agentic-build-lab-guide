@@ -1166,9 +1166,15 @@ Enter quits Claude).</p>
 <p>✅ <strong>Check:</strong> under Claude's input box, the status line shows
 <code>⏵⏵ auto mode on</code>.</p>
 <p>⚠️ <strong>If you see…</strong> <em><code>⏸ manual mode on</code> instead:</em> auto mode is off.
-<strong>🤖 Claude:</strong> type <code>/exit</code>. <strong>⌨️ You:</strong> run the <code>--check</code> command from
-Step 3 item 3. If it says the lab settings aren't in place, run the merge
-command from Step 3 item 3 again, then start Claude again. If it says
+<strong>🤖 Claude:</strong> type <code>/exit</code>. <strong>⌨️ You:</strong> check the lab settings:</p>
+<pre><code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check
+</code></pre>
+<p>If it says the lab settings aren't in place, put them back, then start
+Claude again:</p>
+<pre><code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs
+claude
+</code></pre>
+<p>If it says
 they're in place, auto mode is off for another reason: your organisation
 turned it off (on a company Team or Enterprise seat), your account or
 Claude Code version doesn't have it, or the model you've selected doesn't
@@ -1265,8 +1271,13 @@ the plugin list instead:</em> you're still inside the <code>/plugin</code> menu.
 <p>⚠️ <strong>If you see…</strong> <em><code>prove-it</code> with another version (for example <code>0.1.2</code>):</em>
 the kit's marketplace was added earlier, without <code>#v0.1.3</code>. <strong>⌨️ You:</strong>
 <code>cd ~/projects/priority-guard &amp;&amp; claude</code>. Then <strong>🤖 Claude:</strong> type
-<code>/plugin marketplace remove prove-it</code>, and redo Step 5 from item 2. Then
-come back and do checks 6a to 6e again.</p>
+<code>/plugin marketplace remove prove-it</code>, then type these two lines again
+(approve and choose <strong>Install for you (user scope)</strong> as in Step 5):</p>
+<pre><code>/plugin marketplace add gapietro/prove-it-kit#v0.1.3
+</code></pre>
+<pre><code>/plugin install prove-it@prove-it
+</code></pre>
+<p>Then do checks 6a to 6e again.</p>
 <p><strong>⌨️ You (another way to do 6a and 6b):</strong> the same checks can be run from
 the terminal, in your workspace (<code>cd ~/projects/priority-guard</code> first:
 <code>claude mcp list</code> also shows servers set up for the folder you're in). Use
@@ -1299,9 +1310,8 @@ one other than <code>prove-it</code>, and choose <strong>Disable</strong>.</li>
 <li><strong>MCP servers:</strong> a server whose name starts with <code>claude.ai</code> comes from
 your Claude account, and <code>claude mcp remove</code> can't remove it: it means
 the lab settings aren't active yet. Close every Claude Code window and
-run the <code>--check</code> command from Step 3 item 3. If it says the lab settings
-aren't in place, run the merge command from Step 3 item 3, then check
-again. If it says they're in place and the server is still listed, tell
+run <code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check</code>. If it says the lab settings aren't in place, run
+<code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs</code>, then check again. If it says they're in place and the server is still listed, tell
 your instructor (a company seat can force it). A server
 whose name starts with <code>plugin:</code> comes from a plugin: switch that plugin
 off (the <strong>Other plugins</strong> bullet above). For any other server,
@@ -1428,10 +1438,6 @@ username, then your noreply email, with no <code>&lt;</code> or <code>&gt;</code
 the placeholder went in as typed. <strong>🤖 Claude:</strong> type the prompt from item 4
 again with your real values. It sets them again, and the 🔍 Check then
 shows the new ones.</p>
-<p>⚠️ <strong>If your instructor tells you, in the workshop invite, that <code>now-sdk init</code>
-needs an empty folder:</strong> use the order in 8.5's ⚠️ from the start: make the
-empty folder and run <code>now-sdk init</code> first (items 1 and 2 of that ⚠️), then
-8.1–8.4, then 8.5 from item 2 on.</p>
 <h4 id="m0--82--an-allow-list-before-the-first-commit">8.2 — An allow list, before the first commit</h4>
 <p><strong>Why this step:</strong> Most <code>.gitignore</code> files (the file that tells git what to
 leave out) ban things they've seen before, but sensitive material has no fixed
@@ -1567,29 +1573,14 @@ now-sdk init --appName &quot;Priority Guard&quot; --packageName priority-guard -
 </table>
 <p>✅ <strong>Check:</strong> it ends with <code>Application created successfully.</code> and the
 folder now has <code>now.config.json</code>, <code>package.json</code> and <code>src/</code>. A warning
-that a newer SDK version is available is fine: don't upgrade mid-lab.</p>
+that a newer SDK version is available is fine: don't upgrade mid-lab.
+Then go on to item 2. Nothing from 8.1–8.4 needs doing again: <code>init</code>
+adds its files next to your repo.</p>
 <p>⚠️ <strong>If you see…</strong> <em>it still asks questions:</em> answer with the values in
 the table above. If it asks for a template, choose <strong>typescript.basic</strong>.</p>
-<p>⚠️ <strong>If you see…</strong> <em><code>init</code> refuses to run, with an error saying the
-folder isn't empty:</em> your SDK version wants an empty folder. Start the
-folder again, in this order, and keep the allow list <strong>before the first
-commit</strong>:</p>
-<ol>
-<li><strong>⌨️ You</strong> (window 2): delete the app folder and make it again, empty.
-Nothing has been pushed, and the only commit is the 8.4 scaffold,
-which you redo:<pre><code>cd ~/projects/priority-guard
-rm -rf ~/projects/priority-guard/app
-mkdir -p ~/projects/priority-guard/app
-</code></pre>
-</li>
-<li><strong>⌨️ You</strong> (window 2): the <code>cd</code> and <code>now-sdk init</code> lines above.</li>
-<li><strong>🤖 Claude:</strong> 8.1's prompt from item 4 (<code>git init -b main</code>, your
-GitHub username and noreply email) and its 🔍 Check, then 8.2 (the
-allow list) and 8.3 (the guard).</li>
-<li><strong>⌨️ You:</strong> 8.4 (beat the guard, then the clean commit).</li>
-<li>Carry on from item 2 below.</li>
-</ol>
-<p>If anything else goes wrong, stop and tell your instructor, using the
+<p>⚠️ <strong>If you see…</strong> <em>an error, and no <code>Application created successfully.</code>:</em> copy the error into <code>LOG.md</code>, check your PDI is awake
+and that <code>&lt;SCOPE&gt;</code> and <code>&lt;PDI_ALIAS&gt;</code> are your own values, and run the
+two lines again. Still failing? Stop and tell your instructor, using the
 contact in the workshop invite.</p>
 </li>
 <li>
@@ -4534,8 +4525,7 @@ file is removed if nothing else is left. It also keeps a copy of the
 lab's settings, <code>settings.json.lab.bak</code>, for reference. Running it twice
 is safe: the second time it changes nothing.</p>
 <p><strong>Coming back later</strong> (for example, for the after-the-workshop track)?
-Run the merge command from Module 0 Step 3 item 3 again. Don't copy
-<code>settings.json.lab.bak</code> back by hand.</p>
+Run <code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs</code> again. Don't copy <code>settings.json.lab.bak</code> back by hand.</p>
 </li>
 <li>
 <p><strong>Anything you switched off in Module 0 Step 6.</strong> Your <code>LOG.md</code> lists what

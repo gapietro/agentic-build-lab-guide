@@ -408,9 +408,17 @@ creates.
    `⏵⏵ auto mode on`.
 
    ⚠️ **If you see…** *`⏸ manual mode on` instead:* auto mode is off.
-   **🤖 Claude:** type `/exit`. **⌨️ You:** run the `--check` command from
-   Step 3 item 3. If it says the lab settings aren't in place, run the merge
-   command from Step 3 item 3 again, then start Claude again. If it says
+   **🤖 Claude:** type `/exit`. **⌨️ You:** check the lab settings:
+   ```
+   node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check
+   ```
+   If it says the lab settings aren't in place, put them back, then start
+   Claude again:
+   ```
+   node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs
+   claude
+   ```
+   If it says
    they're in place, auto mode is off for another reason: your organisation
    turned it off (on a company Team or Enterprise seat), your account or
    Claude Code version doesn't have it, or the model you've selected doesn't
@@ -514,8 +522,15 @@ claude plugin list
 ⚠️ **If you see…** *`prove-it` with another version (for example `0.1.2`):*
 the kit's marketplace was added earlier, without `#v0.1.3`. **⌨️ You:**
 `cd ~/projects/priority-guard && claude`. Then **🤖 Claude:** type
-`/plugin marketplace remove prove-it`, and redo Step 5 from item 2. Then
-come back and do checks 6a to 6e again.
+`/plugin marketplace remove prove-it`, then type these two lines again
+(approve and choose **Install for you (user scope)** as in Step 5):
+```
+/plugin marketplace add gapietro/prove-it-kit#v0.1.3
+```
+```
+/plugin install prove-it@prove-it
+```
+Then do checks 6a to 6e again.
 
 **⌨️ You (another way to do 6a and 6b):** the same checks can be run from
 the terminal, in your workspace (`cd ~/projects/priority-guard` first:
@@ -553,9 +568,8 @@ after the lab ("Put your machine back", at the end of Module 9).
 - **MCP servers:** a server whose name starts with `claude.ai` comes from
   your Claude account, and `claude mcp remove` can't remove it: it means
   the lab settings aren't active yet. Close every Claude Code window and
-  run the `--check` command from Step 3 item 3. If it says the lab settings
-  aren't in place, run the merge command from Step 3 item 3, then check
-  again. If it says they're in place and the server is still listed, tell
+  run `node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check`. If it says the lab settings aren't in place, run
+  `node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs`, then check again. If it says they're in place and the server is still listed, tell
   your instructor (a company seat can force it). A server
   whose name starts with `plugin:` comes from a plugin: switch that plugin
   off (the **Other plugins** bullet above). For any other server,
@@ -696,11 +710,6 @@ the placeholder went in as typed. **🤖 Claude:** type the prompt from item 4
 again with your real values. It sets them again, and the 🔍 Check then
 shows the new ones.
 
-⚠️ **If your instructor tells you, in the workshop invite, that `now-sdk init`
-needs an empty folder:** use the order in 8.5's ⚠️ from the start: make the
-empty folder and run `now-sdk init` first (items 1 and 2 of that ⚠️), then
-8.1–8.4, then 8.5 from item 2 on.
-
 #### 8.2 — An allow list, before the first commit
 
 **Why this step:** Most `.gitignore` files (the file that tells git what to
@@ -832,30 +841,16 @@ nothing you add to it will.
    ✅ **Check:** it ends with `Application created successfully.` and the
    folder now has `now.config.json`, `package.json` and `src/`. A warning
    that a newer SDK version is available is fine: don't upgrade mid-lab.
+   Then go on to item 2. Nothing from 8.1–8.4 needs doing again: `init`
+   adds its files next to your repo.
 
    ⚠️ **If you see…** *it still asks questions:* answer with the values in
    the table above. If it asks for a template, choose **typescript.basic**.
 
-   ⚠️ **If you see…** *`init` refuses to run, with an error saying the
-   folder isn't empty:* your SDK version wants an empty folder. Start the
-   folder again, in this order, and keep the allow list **before the first
-   commit**:
-   1. **⌨️ You** (window 2): delete the app folder and make it again, empty.
-      Nothing has been pushed, and the only commit is the 8.4 scaffold,
-      which you redo:
-      ```
-      cd ~/projects/priority-guard
-      rm -rf ~/projects/priority-guard/app
-      mkdir -p ~/projects/priority-guard/app
-      ```
-   2. **⌨️ You** (window 2): the `cd` and `now-sdk init` lines above.
-   3. **🤖 Claude:** 8.1's prompt from item 4 (`git init -b main`, your
-      GitHub username and noreply email) and its 🔍 Check, then 8.2 (the
-      allow list) and 8.3 (the guard).
-   4. **⌨️ You:** 8.4 (beat the guard, then the clean commit).
-   5. Carry on from item 2 below.
-
-   If anything else goes wrong, stop and tell your instructor, using the
+   ⚠️ **If you see…** *an error, and no `Application created
+   successfully.`:* copy the error into `LOG.md`, check your PDI is awake
+   and that `<SCOPE>` and `<PDI_ALIAS>` are your own values, and run the
+   two lines again. Still failing? Stop and tell your instructor, using the
    contact in the workshop invite.
 2. **Restore the allow list.** `now-sdk init` writes its own short
    `.gitignore` over yours (SDK 4.12 does this every time). Put the kit's
