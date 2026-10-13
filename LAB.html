@@ -1377,9 +1377,9 @@ doesn't start with a label, it belongs to the label just above it.</p>
 <a href="#home">Lab home</a>, section 7, <em>When Claude asks permission</em>.</p>
 <h4 id="m0--81--choose-your-scope-and-create-the-app-folder">8.1 — Choose your scope, and create the app folder</h4>
 <p><strong>Why this step:</strong> The <strong>scope</strong> is your app's unique name on the instance;
-every part of the app starts with it. Your name and a GitHub noreply email
-on the repo mean every change says who made it, without putting your
-personal email online.</p>
+every part of the app starts with it. Your GitHub username and a GitHub
+noreply email on the repo mean every change says who made it, without
+putting your personal email online.</p>
 <ol>
 <li><strong>🌐 Browser</strong> (your <strong>Admin</strong> profile, logged in as admin): choose
 <code>&lt;SCOPE&gt;</code>. Type <code>sys_properties.list</code> in the filter navigator and press
@@ -1390,28 +1390,44 @@ instance's vendor prefix, for example <code>123456</code>. Your scope is
 <strong>18 characters at most</strong> (the SDK refuses longer). Your initials keep it
 unique if two people ever share an instance. Write it in your values
 table as <code>&lt;SCOPE&gt;</code>.</li>
-<li><strong>🌐 Browser:</strong> find your <strong>GitHub noreply email</strong>. On GitHub, open
-<strong>Settings → Emails</strong> and tick <strong>Keep my email addresses private</strong>. GitHub
-then shows your noreply address. It looks like
-<code>12345678+your-account@users.noreply.github.com</code>. Copy it exactly.</li>
+<li><strong>🌐 Browser:</strong> find your <strong>GitHub noreply email</strong> and your <strong>GitHub
+username</strong>. On GitHub, open <strong>Settings → Emails</strong> and tick <strong>Keep my
+email addresses private</strong>. GitHub then shows your noreply address. It
+looks like <code>12345678+sam-lee@users.noreply.github.com</code>. Copy it exactly.
+Your GitHub username is the part between the <code>+</code> and the <code>@</code> (in the
+example, <code>sam-lee</code>). Write both down: you need them in item 4.</li>
 <li><strong>⌨️ You</strong> (window 1): start Claude in the workspace. It does 8.1–8.3
 from here.<pre><code>cd ~/projects/priority-guard
 claude
 </code></pre>
 </li>
-<li><strong>🤖 Claude:</strong> type this prompt (with your values):<pre><code>Create the folder ~/projects/priority-guard/app and make it a new git
+<li><strong>🤖 Claude:</strong> type this prompt, with your own two values from item 2 in
+place of <code>&lt;your GitHub username&gt;</code> and <code>&lt;your GitHub noreply email&gt;</code>.
+Replace the angle brackets <code>&lt;</code> <code>&gt;</code> too, but keep the quotes:<pre><code>Create the folder ~/projects/priority-guard/app and make it a new git
 repository whose first branch is main: git init -b main. Then, for that
-repository only (not --global), set user.name to &quot;&lt;your name or handle&gt;&quot;
+repository only (not --global), set user.name to &quot;&lt;your GitHub username&gt;&quot;
 and user.email to &quot;&lt;your GitHub noreply email&gt;&quot;. Use full paths in every
 command. Don't create any other file, and don't commit or push anything.
 Don't read anything outside ~/projects/priority-guard and
 ~/projects/prove-it-kit.
 </code></pre>
+For example, the middle of it would read: <code>set user.name to &quot;sam-lee&quot; and user.email to &quot;12345678+sam-lee@users.noreply.github.com&quot;</code>.
+<code>user.name</code> is the name shown on every change you save in this repo.
+Using your GitHub username keeps it the same as your account. It
+becomes public when the repo goes to GitHub.</li>
+<li><strong>🔍 Check</strong> what git saved:<pre><code>Run exactly this and show me the raw output, unedited:
+git -C ~/projects/priority-guard/app config user.name &amp;&amp; git -C ~/projects/priority-guard/app config user.email
+</code></pre>
 </li>
 </ol>
 <p>✅ <strong>Check:</strong> <code>&lt;SCOPE&gt;</code> is in your values table and is 18 characters or
 fewer. Git's output says it created an empty repository in
-<code>.../priority-guard/app/.git/</code>.</p>
+<code>.../priority-guard/app/.git/</code>. The 🔍 Check prints two lines: your GitHub
+username, then your noreply email, with no <code>&lt;</code> or <code>&gt;</code> in either.</p>
+<p>⚠️ <strong>If you see…</strong> <em>a <code>&lt;</code>, a <code>&gt;</code>, or the words <code>your GitHub</code> in that output:</em>
+the placeholder went in as typed. <strong>🤖 Claude:</strong> type the prompt from item 4
+again with your real values. It sets them again, and the 🔍 Check then
+shows the new ones.</p>
 <p>⚠️ <strong>If your instructor tells you, in the workshop invite, that <code>now-sdk init</code>
 needs an empty folder:</strong> use the order in 8.5's ⚠️ from the start: make the
 empty folder and run <code>now-sdk init</code> first (items 1 and 2 of that ⚠️), then
@@ -1567,8 +1583,9 @@ mkdir -p ~/projects/priority-guard/app
 </code></pre>
 </li>
 <li><strong>⌨️ You</strong> (window 2): the <code>cd</code> and <code>now-sdk init</code> lines above.</li>
-<li><strong>🤖 Claude:</strong> 8.1's prompt (<code>git init -b main</code>, your name and
-email), then 8.2 (the allow list) and 8.3 (the guard).</li>
+<li><strong>🤖 Claude:</strong> 8.1's prompt from item 4 (<code>git init -b main</code>, your
+GitHub username and noreply email) and its 🔍 Check, then 8.2 (the
+allow list) and 8.3 (the guard).</li>
 <li><strong>⌨️ You:</strong> 8.4 (beat the guard, then the clean commit).</li>
 <li>Carry on from item 2 below.</li>
 </ol>

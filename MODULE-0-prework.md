@@ -638,9 +638,9 @@ doesn't start with a label, it belongs to the label just above it.
 #### 8.1 — Choose your scope, and create the app folder
 
 **Why this step:** The **scope** is your app's unique name on the instance;
-every part of the app starts with it. Your name and a GitHub noreply email
-on the repo mean every change says who made it, without putting your
-personal email online.
+every part of the app starts with it. Your GitHub username and a GitHub
+noreply email on the repo mean every change says who made it, without
+putting your personal email online.
 
 1. **🌐 Browser** (your **Admin** profile, logged in as admin): choose
    `<SCOPE>`. Type `sys_properties.list` in the filter navigator and press
@@ -651,30 +651,50 @@ personal email online.
    **18 characters at most** (the SDK refuses longer). Your initials keep it
    unique if two people ever share an instance. Write it in your values
    table as `<SCOPE>`.
-2. **🌐 Browser:** find your **GitHub noreply email**. On GitHub, open
-   **Settings → Emails** and tick **Keep my email addresses private**. GitHub
-   then shows your noreply address. It looks like
-   `12345678+your-account@users.noreply.github.com`. Copy it exactly.
+2. **🌐 Browser:** find your **GitHub noreply email** and your **GitHub
+   username**. On GitHub, open **Settings → Emails** and tick **Keep my
+   email addresses private**. GitHub then shows your noreply address. It
+   looks like `12345678+sam-lee@users.noreply.github.com`. Copy it exactly.
+   Your GitHub username is the part between the `+` and the `@` (in the
+   example, `sam-lee`). Write both down: you need them in item 4.
 3. **⌨️ You** (window 1): start Claude in the workspace. It does 8.1–8.3
    from here.
    ```
    cd ~/projects/priority-guard
    claude
    ```
-4. **🤖 Claude:** type this prompt (with your values):
+4. **🤖 Claude:** type this prompt, with your own two values from item 2 in
+   place of `<your GitHub username>` and `<your GitHub noreply email>`.
+   Replace the angle brackets `<` `>` too, but keep the quotes:
    ```
    Create the folder ~/projects/priority-guard/app and make it a new git
    repository whose first branch is main: git init -b main. Then, for that
-   repository only (not --global), set user.name to "<your name or handle>"
+   repository only (not --global), set user.name to "<your GitHub username>"
    and user.email to "<your GitHub noreply email>". Use full paths in every
    command. Don't create any other file, and don't commit or push anything.
    Don't read anything outside ~/projects/priority-guard and
    ~/projects/prove-it-kit.
    ```
+   For example, the middle of it would read: `set user.name to "sam-lee"
+   and user.email to "12345678+sam-lee@users.noreply.github.com"`.
+   `user.name` is the name shown on every change you save in this repo.
+   Using your GitHub username keeps it the same as your account. It
+   becomes public when the repo goes to GitHub.
+5. **🔍 Check** what git saved:
+   ```
+   Run exactly this and show me the raw output, unedited:
+   git -C ~/projects/priority-guard/app config user.name && git -C ~/projects/priority-guard/app config user.email
+   ```
 
 ✅ **Check:** `<SCOPE>` is in your values table and is 18 characters or
 fewer. Git's output says it created an empty repository in
-`.../priority-guard/app/.git/`.
+`.../priority-guard/app/.git/`. The 🔍 Check prints two lines: your GitHub
+username, then your noreply email, with no `<` or `>` in either.
+
+⚠️ **If you see…** *a `<`, a `>`, or the words `your GitHub` in that output:*
+the placeholder went in as typed. **🤖 Claude:** type the prompt from item 4
+again with your real values. It sets them again, and the 🔍 Check then
+shows the new ones.
 
 ⚠️ **If your instructor tells you, in the workshop invite, that `now-sdk init`
 needs an empty folder:** use the order in 8.5's ⚠️ from the start: make the
@@ -829,8 +849,9 @@ nothing you add to it will.
       mkdir -p ~/projects/priority-guard/app
       ```
    2. **⌨️ You** (window 2): the `cd` and `now-sdk init` lines above.
-   3. **🤖 Claude:** 8.1's prompt (`git init -b main`, your name and
-      email), then 8.2 (the allow list) and 8.3 (the guard).
+   3. **🤖 Claude:** 8.1's prompt from item 4 (`git init -b main`, your
+      GitHub username and noreply email) and its 🔍 Check, then 8.2 (the
+      allow list) and 8.3 (the guard).
    4. **⌨️ You:** 8.4 (beat the guard, then the clean commit).
    5. Carry on from item 2 below.
 
