@@ -223,7 +223,7 @@ instructions watch for that exact wording.
 |---|---|---|
 | `confirmed` | Module 2, after the consult restates the brief | The consult starts |
 | `Confirmed.` | Module 4, after the design challenge reads back the terms | It writes exactly those terms |
-| `Not agreed yet.` | Module 4, after a read-back you don't accept | It asks for your correction |
+| `Not agreed yet.` | Module 4, after a read-back you don't accept, with your correction in the same message | It makes your correction and reads the whole list back, with a new count |
 | `approve`, then `dry run`, then `apply` | Module 5, after the plan preview | Shows, then files, the plan on GitHub |
 | `approve`, then `Dry run first.`, then `apply` | Module 8, after the grade's findings | Shows, then files, the findings as stories |
 | `Take issue #<n>.` | Module 6 and Module 7, when a step names an issue to build (for example, a defect you just filed) | Starts that issue instead of the top one |

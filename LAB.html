@@ -507,8 +507,8 @@ instructions watch for that exact wording.</p>
 </tr>
 <tr>
 <td><code>Not agreed yet.</code></td>
-<td>Module 4, after a read-back you don't accept</td>
-<td>It asks for your correction</td>
+<td>Module 4, after a read-back you don't accept, with your correction in the same message</td>
+<td>It makes your correction and reads the whole list back, with a new count</td>
 </tr>
 <tr>
 <td><code>approve</code>, then <code>dry run</code>, then <code>apply</code></td>
@@ -827,6 +827,10 @@ demo business services.</p>
 PDI goes to sleep when you haven't used it for a while. Sign in at
 https://developer.servicenow.com and wake your instance from there. Waking
 takes a few minutes. Then reload your instance's address.</p>
+<p>⚠️ <strong>If you see…</strong> <em>the developer site says your instance was <strong>reclaimed</strong>
+(released after a long time unused):</em> request a new one, and tell your
+instructor before you go on. The new instance needs this step and Step 3
+item 5 again, and may have a different vendor prefix (Step 8.1).</p>
 <p>⚠️ <strong>If you see…</strong> <em>no business services:</em> tell your instructor. The lab needs
 at least three, and your instructor can give you a small set to load.</p>
 <h3 id="m0--step-2--the-tools">Step 2 — The tools</h3>
@@ -850,8 +854,8 @@ with Node.js.</p>
 <tbody>
 <tr>
 <td>Node.js</td>
-<td>Version <strong>20.18 or later</strong> (version 22 or 24 is fine). Download the <strong>LTS</strong> installer from https://nodejs.org and run it, or, if you use Homebrew, run <code>brew install node</code></td>
-<td><code>node --version</code> shows <code>v20.18</code> or higher, for example <code>v22.11.0</code></td>
+<td>Version <strong>22.22 or later</strong> (24 is fine): Claude Code needs at least 22. Download the <strong>LTS</strong> installer from https://nodejs.org and run it, or, if you use Homebrew, run <code>brew install node</code></td>
+<td><code>node --version</code> shows <code>v22.22</code> or higher, for example <code>v22.22.0</code> or <code>v24.11.0</code></td>
 </tr>
 <tr>
 <td>npm</td>
@@ -887,13 +891,18 @@ close the Terminal window and open a new one, then run the Check again (a new
 window picks up newly installed tools). Still not found? Run <code>echo $PATH</code>.
 The output should include <code>/usr/local/bin</code> (or <code>/opt/homebrew/bin</code> if you
 used Homebrew). If it doesn't, the installer will have told you how to add
-it; if you can't find that, tell your instructor.</p>
+it; if you can't find that, tell your instructor. Using nvm? Tools you
+install with <code>npm install -g</code> belong to one Node.js version. If
+<code>node --version</code> shows a different version from the one you installed them
+with, run the <code>npm install -g</code> commands again in this window.</p>
 <p>⚠️ <strong>If you see…</strong> <em><code>EACCES</code> or &quot;permission denied&quot; when you run
 <code>npm install -g</code>:</em> your computer won't let you install for everyone without
 an administrator's password. Two ways round it:</p>
 <ul>
 <li><strong>If you can</strong>, reinstall Node.js with Homebrew (<code>brew install node</code>) or
-nvm, then run the <code>npm install -g</code> command again. That avoids needing
+with nvm (run the install line from https://github.com/nvm-sh/nvm, <strong>close
+the Terminal window and open a new one</strong>, then run <code>nvm install 22</code>). Then
+run the <code>npm install -g</code> command again. That avoids needing
 administrator rights for every install.</li>
 <li><strong>If you can't</strong> (for example, your company manages your laptop), put
 <code>sudo</code> in front of the same command, for example:<pre><code>sudo npm install -g @servicenow/sdk
@@ -927,6 +936,20 @@ files and commands.</p>
 <li><em>How would you like to authenticate GitHub CLI?</em> <strong>Login with a web
 browser</strong>. It shows a one-time code. Press <strong>Enter</strong>, and your browser
 opens GitHub: type the code there and approve.</li>
+</ul>
+<p>When you've approved in the browser, the terminal finishes by itself. It
+prints a few lines, such as <code>✓ Authentication complete.</code> and
+<code>✓ Configured git protocol</code>, and ends with <code>✓ Logged in as &lt;your GitHub name&gt;</code>. Those lines are normal.</p>
+<p>⚠️ <strong>If you see…</strong> <em>(Linux only)</em></p>
+<ul>
+<li><em><code>! Authentication credentials saved in plain text</code>:</em> expected on a
+computer without a password store (keyring). Nothing needs fixing.</li>
+<li><em>GitHub accepted the code, but <code>gh auth login</code> keeps waiting, and lines
+starting <code>ERROR:</code> fill the terminal:</em> close the browser window <code>gh</code>
+opened. <code>gh</code> then finishes, and those lines are harmless.</li>
+<li><em>a message that it couldn't copy the code to the clipboard, suggesting
+<code>xsel</code> or <code>xclip</code>:</em> ignore it, and type the code into the browser
+yourself.</li>
 </ul>
 <p>Then run:</p>
 <pre><code>gh auth setup-git
@@ -983,8 +1006,8 @@ settings back.</li>
 including the Code tab of the Claude desktop app if you use it. They
 read the settings when they start, so one left open would keep running
 with the old settings and could confuse you later.</li>
-<li><strong>Undo it after the lab</strong> with one command. &quot;Put your machine back&quot;, at
-the end of Module 9, lists every step.</li>
+<li><strong>Undo it after the lab.</strong> &quot;Put your machine back&quot;, at the end of
+Module 9, lists every step.</li>
 </ul>
 <p>The cleanest option is still a separate user account on your computer
 (see &quot;Why a clean bench matters&quot; at the top of this module): then there's
@@ -998,8 +1021,10 @@ lab's settings there. <strong>⌨️ You:</strong></p>
 <li><strong>No settings file yet</strong> (most people): it creates one.</li>
 <li><strong>You already use Claude Code:</strong> it saves a copy of your file
 (<code>settings.json.before-lab.bak</code>), then <strong>adds</strong> the lab's settings and
-keeps all of yours, including any plugins you've installed. Nothing of
-yours is removed.</li>
+keeps all of yours, including any plugins you've installed. The copy
+is made only the first time, so running the command again never
+overwrites it. The one setting of yours it takes out (the copy keeps
+it) is one that switches auto mode off.</li>
 <li>It ends by printing <code>Lab settings in place.</code></li>
 </ul>
 <p>✅ <strong>Check:</strong> <strong>⌨️ You:</strong></p>
@@ -1015,15 +1040,40 @@ the line it names, then run the command again.</p>
 <li>
 <p><strong>Claude Code:</strong> run <code>claude</code> once and complete sign-in. You need a paid
 Claude plan (Pro, Max, Team or Enterprise) or a Claude Console account.
-The free plan doesn't include Claude Code. <strong>⌨️ You:</strong> start it in your
-home folder:</p>
+The free plan doesn't include Claude Code. A personal account is
+simplest. A company Team or Enterprise seat works, but your
+organisation's own settings can override the lab's: they can turn auto
+mode off, or add plugins and connections you can't switch off. Steps 5
+and 6 check for this. <strong>⌨️ You:</strong> start it in your home folder:</p>
 <pre><code>cd ~
 claude
 </code></pre>
 <p>You're only signing in here, so your home folder is fine. Follow its
-sign-in steps (it opens your browser). When it asks whether you trust
-this folder, choose <strong>Yes</strong>. Then <strong>🤖 Claude:</strong> type <code>/exit</code> and press
-<strong>Enter</strong> to quit Claude.</p>
+sign-in steps. The first time, it may show a few screens before you can
+type. If you've used Claude Code before, you may see only some of them,
+or none:</p>
+<ul>
+<li><em>Choose a text style (theme):</em> pick the one that's easiest to read, and
+press <strong>Enter</strong>.</li>
+<li><em>Select a login method:</em> choose your <strong>Claude account with a
+subscription</strong> (Pro, Max, Team or Enterprise) and press <strong>Enter</strong>.
+Choose the <strong>Anthropic Console account</strong> only if you pay by API usage.
+Don't choose <strong>3rd-party platform</strong>.</li>
+<li>Your browser opens so you can sign in. If it doesn't, press <code>c</code> to copy
+the sign-in link and open it in your browser. If the page then shows a
+code, paste it into the terminal where it says
+<code>Paste code here if prompted</code>.</li>
+<li><em>Login successful:</em> press <strong>Enter</strong> to continue.</li>
+<li><em>Security notes:</em> read them and press <strong>Enter</strong>.</li>
+<li><em>Do you trust the files in this folder?</em> Check which choice is
+highlighted before you press <strong>Enter</strong>: if it's <strong>No, exit</strong>, Enter
+quits Claude. Use the <strong>arrow keys</strong> to select <strong>Yes</strong>, then press
+<strong>Enter</strong>.</li>
+<li><em>Try the new fullscreen renderer?</em> If it asks, use the arrow keys to
+select <strong>Not now</strong> and press <strong>Enter</strong>. This guide describes the
+standard view.</li>
+</ul>
+<p>Then <strong>🤖 Claude:</strong> type <code>/exit</code> and press <strong>Enter</strong> to quit Claude.</p>
 <p><strong>How to tell you've left Claude:</strong> Claude's input box (with <code>&gt;</code> and a
 frame around it) is gone, and you see your normal terminal prompt again,
 usually ending in <code>%</code> or <code>$</code>. The next item must be typed there, never
@@ -1032,9 +1082,10 @@ inside Claude.</p>
 <li>
 <p><strong>Your PDI, in private</strong> (nobody watching your screen). Pick an
 <strong>alias</strong>: a short nickname you choose for this login, for example
-<code>mypdi</code>. Write it in your values table as <code>&lt;PDI_ALIAS&gt;</code>. <strong>⌨️ You</strong>, in a
-normal terminal (not inside Claude: see the end of item 4): run
-this, with your instance's address from Step 1 (for example
+<code>mypdi</code>. Write it in your values table as <code>&lt;PDI_ALIAS&gt;</code>. Your PDI must
+be awake: open its address in your browser first (see Step 1's ⚠️).
+<strong>⌨️ You</strong>, in a normal terminal (not inside Claude: see the end of
+item 4): run this, with your instance's address from Step 1 (for example
 <code>https://dev123456.service-now.com</code>) and your alias:</p>
 <pre><code>now-sdk auth --add https://&lt;your-instance&gt;.service-now.com --type basic --alias &lt;PDI_ALIAS&gt;
 </code></pre>
@@ -1050,6 +1101,16 @@ Claude only ever uses the alias name.</p>
 normal terminal, not in Claude, <code>now-sdk auth --list</code> shows your alias.
 Don't show that output to anyone or paste it anywhere: it names your
 instance.</p>
+<p>⚠️ <strong>If you see…</strong> <em>a line starting <code>[now-sdk] ERROR:</code> after
+<code>now-sdk auth --add</code>:</em> the sign-in failed, even though the command
+finished. Check your PDI is awake and your admin password is right, then
+run the <code>now-sdk auth --add</code> line again.</p>
+<p>⚠️ <strong>If you see…</strong> <em><code>now-sdk auth --list</code> says <code>No credentials found</code> right
+after a sign-in that looked fine:</em> the SDK says this both when nothing is
+saved and when it can't read your computer's password store (on a Mac, the
+Keychain). Run the <code>now-sdk auth --add</code> line again, then
+<code>now-sdk auth --list</code> straight away. Still missing? Open <strong>Keychain Access</strong>,
+make sure your <strong>login</strong> keychain is unlocked, and tell your instructor.</p>
 <h3 id="m0--step-4--your-two-folders">Step 4 — Your two folders</h3>
 <p><strong>Why this step:</strong> One folder is where the app gets built. The other holds your log and your list of catches. Keeping them apart means Claude doesn't read your notes as part of the project.</p>
 <p>Both go in <code>~/projects</code>, the same folder that holds this guide: <strong>next to</strong>
@@ -1094,24 +1155,59 @@ creates.</p>
 <h3 id="m0--step-5--install-the-kit-and-the-review-command">Step 5 — Install the kit and the review command</h3>
 <p><strong>Why this step:</strong> The kit is the set of commands that take you through the lab's stages, and <code>/code-review</code> checks code before it ships. Pinning the kit to one release means everyone in the room runs the same version, so results can be compared.</p>
 <ol>
-<li><strong>⌨️ You:</strong> start Claude Code in the workspace:<pre><code>cd ~/projects/priority-guard
+<li>
+<p><strong>⌨️ You:</strong> start Claude Code in the workspace:</p>
+<pre><code>cd ~/projects/priority-guard
 claude
 </code></pre>
-When it asks whether you trust this folder, choose <strong>Yes</strong>.</li>
-<li><strong>🤖 Claude:</strong> add the kit's marketplace, pinned to a release, then
-install the plugin. Type each line and press <strong>Enter</strong>:<pre><code>/plugin marketplace add gapietro/prove-it-kit#v0.1.3
+<p>When it asks whether you trust this folder, use the <strong>arrow keys</strong> to
+select <strong>Yes</strong>, then press <strong>Enter</strong> (if <strong>No, exit</strong> is highlighted,
+Enter quits Claude).</p>
+<p>✅ <strong>Check:</strong> under Claude's input box, the status line shows
+<code>⏵⏵ auto mode on</code>.</p>
+<p>⚠️ <strong>If you see…</strong> <em><code>⏸ manual mode on</code> instead:</em> auto mode is off.
+<strong>🤖 Claude:</strong> type <code>/exit</code>. <strong>⌨️ You:</strong> run the <code>--check</code> command from
+Step 3 item 3. If it says the lab settings aren't in place, run the merge
+command from Step 3 item 3 again, then start Claude again. If it says
+they're in place, auto mode is off for another reason: your organisation
+turned it off (on a company Team or Enterprise seat), your account or
+Claude Code version doesn't have it, or the model you've selected doesn't
+support it. You can still do the lab: Claude will ask before more
+actions, and the <em>When Claude asks permission</em> box in the
+<a href="#home--7-how-to-read-a-module">README, section 7</a> tells you what to
+choose. Tell your instructor before the day.</p>
+</li>
+<li>
+<p><strong>🤖 Claude:</strong> add the kit's marketplace, pinned to a release, then
+install the plugin. Type each line and press <strong>Enter</strong>:</p>
+<pre><code>/plugin marketplace add gapietro/prove-it-kit#v0.1.3
 </code></pre>
+<p>It prints a line such as <code>Successfully added marketplace: prove-it</code>, and
+may also print a line starting <code>Reloaded:</code>. Both are expected: the plugin
+isn't installed until the next line.</p>
 <pre><code>/plugin install prove-it@prove-it
 </code></pre>
-Approve the plugin trust warning, and choose <strong>Install for you (user
+<p>Approve the plugin trust warning, and choose <strong>Install for you (user
 scope)</strong>. Restart if Claude Code asks you to. <strong>To restart Claude:</strong>
 type <code>/exit</code>, then, in the same Terminal window (you're still in
-<code>~/projects/priority-guard</code>), type <code>claude</code> and press <strong>Enter</strong>.</li>
-<li><strong>🤖 Claude:</strong> type <code>/prove-it:</code> and <strong>don't press Enter.</strong> Look at the menu.</li>
-<li><strong>🤖 Claude:</strong> type <code>/code-review</code> and <strong>don't press Enter.</strong> Check that it appears. It's
+<code>~/projects/priority-guard</code>), type <code>claude</code> and press <strong>Enter</strong>.</p>
+<p>⚠️ <strong>If you see…</strong> <em><code>/plugin marketplace add</code> fails with &quot;not found&quot; or a
+permission error:</em> check you typed <code>gapietro/prove-it-kit#v0.1.3</code>
+exactly, and try again. Still failing? Note the exact error and tell
+your instructor.</p>
+</li>
+<li>
+<p><strong>🤖 Claude:</strong> type <code>/prove-it:</code> and <strong>don't press Enter.</strong> Look at the
+menu. When you've looked, press <strong>Esc</strong> once to close the menu, then
+press <strong>Backspace</strong> until the input line is empty.</p>
+</li>
+<li>
+<p><strong>🤖 Claude:</strong> type <code>/code-review</code> and <strong>don't press Enter.</strong> Check that it appears. It's
 built into Claude Code. <strong>Don't install the <code>code-review</code> plugin</strong> from a
 marketplace: that's a different tool, and <code>/plugin</code> must show only
-<code>prove-it</code>.</li>
+<code>prove-it</code>. Then press <strong>Esc</strong> once and <strong>Backspace</strong> until the input
+line is empty again.</p>
+</li>
 </ol>
 <p>✅ <strong>Check:</strong> the menu shows exactly five kit commands, <code>/prove-it:consult</code>,
 <code>/prove-it:design-challenge</code>, <code>/prove-it:build-plan</code>, <code>/prove-it:grade</code> and
@@ -1120,18 +1216,28 @@ marketplace: that's a different tool, and <code>/plugin</code> must show only
 older than 2.1.147. <strong>🤖 Claude:</strong> type <code>/exit</code>. <strong>⌨️ You:</strong> run
 <code>claude update</code>, check <code>claude --version</code> shows <code>2.1.147</code> or higher, then
 start Claude again with <code>claude</code>.</p>
+<p>⚠️ <strong>If you see…</strong> <em>only <code>/code-review:</code> followed by more text (with a
+colon):</em> that's the <code>code-review</code> plugin, not the built-in command. Switch
+it off: <strong>🤖 Claude:</strong> type <code>/exit</code>. <strong>⌨️ You:</strong> run <code>claude plugin list</code>
+to see its name, then <code>claude plugin disable &lt;name&gt;</code> with that name. Start
+<code>claude</code> again and type <code>/code-review</code> again.</p>
 <p>⚠️ <strong>If you see…</strong> <em>other commands besides the five:</em> other plugins are
 installed. Note which ones. Ideally, disable them for this lab (Step 6
 shows how).</p>
 <h3 id="m0--step-6--check-the-bench-is-clean">Step 6 — Check the bench is clean</h3>
 <p><strong>Why this step:</strong> Anything extra Claude can see, such as a personal instruction file or a connection to another tool, changes how it behaves. Checking now means what you see in the lab comes from the lab, not from your own setup.</p>
-<p>There are three separate checks. Do them <strong>one at a time</strong>, and finish
+<p>There are four separate checks. Do them <strong>one at a time</strong>, and finish
 each one before you start the next.</p>
 <p><strong>6a. Plugins. 🤖 Claude:</strong></p>
 <ol>
-<li>Type <code>/plugin</code> and press <strong>Enter</strong>. A menu opens.</li>
-<li>Look at the <strong>Installed</strong> list.
-✅ <strong>Check:</strong> the only plugin there is <code>prove-it</code>.</li>
+<li>Check Claude's input line is empty, then type <code>/plugin</code> and press
+<strong>Enter</strong>. A menu opens.</li>
+<li>Open the <strong>Installed</strong> tab (the menu may open on another tab: press
+<strong>Tab</strong> to move between tabs). Don't press <strong>Space</strong> or <strong>Enter</strong> on a
+plugin's row: <strong>Space</strong> switches the plugin off.
+✅ <strong>Check:</strong> among the plugins you installed (for example under
+<strong>User</strong>), the only one is <code>prove-it</code>. A <strong>Built-in</strong> group, if you see
+one, comes with Claude Code: leave it.</li>
 <li>Press <strong>Esc</strong> until the menu closes and you're back at Claude's normal
 prompt (the <code>&gt;</code> where you type to Claude).</li>
 </ol>
@@ -1151,8 +1257,20 @@ the plugin list instead:</em> you're still inside the <code>/plugin</code> menu.
 </code></pre>
 <p>✅ <strong>Check:</strong> <code>ls</code> says the file doesn't exist. It prints
 <code>ls: /Users/&lt;you&gt;/.claude/CLAUDE.md: No such file or directory</code>.</p>
+<p><strong>6e. Kit version. ⌨️ You:</strong> in the same terminal:</p>
+<pre><code>claude plugin list
+</code></pre>
+<p>✅ <strong>Check:</strong> <code>prove-it@prove-it</code> is listed, with <code>Version: 0.1.3</code> and
+<code>Status: ✔ enabled</code> under it.</p>
+<p>⚠️ <strong>If you see…</strong> <em><code>prove-it</code> with another version (for example <code>0.1.2</code>):</em>
+the kit's marketplace was added earlier, without <code>#v0.1.3</code>. <strong>⌨️ You:</strong>
+<code>cd ~/projects/priority-guard &amp;&amp; claude</code>. Then <strong>🤖 Claude:</strong> type
+<code>/plugin marketplace remove prove-it</code>, and redo Step 5 from item 2. Then
+come back and do checks 6a to 6e again.</p>
 <p><strong>⌨️ You (another way to do 6a and 6b):</strong> the same checks can be run from
-the terminal. Use these if <code>/mcp</code> isn't recognised in your version:</p>
+the terminal, in your workspace (<code>cd ~/projects/priority-guard</code> first:
+<code>claude mcp list</code> also shows servers set up for the folder you're in). Use
+these if <code>/mcp</code> isn't recognised in your version:</p>
 <pre><code>claude plugin list
 claude mcp list
 </code></pre>
@@ -1160,8 +1278,8 @@ claude mcp list
 <li><code>claude plugin list</code> shows which plugins are installed and switched on.</li>
 <li><code>claude mcp list</code> shows connections to other tools (MCP servers).</li>
 </ul>
-<p>✅ <strong>Check:</strong> only <code>prove-it</code> is installed and switched on. No MCP servers
-are listed.</p>
+<p>✅ <strong>Check:</strong> the only plugin you installed that's switched on is
+<code>prove-it</code>. No MCP servers are listed.</p>
 <p>⚠️ <strong>If you see…</strong> <em>a personal <code>CLAUDE.md</code>, MCP servers or other plugins:</em>
 they'll shape what Claude does in the lab. Use a separate user account, or
 switch them off for the workshop like this. <strong>Write each change in
@@ -1178,15 +1296,24 @@ shows:<pre><code>claude plugin disable &lt;name&gt;
 </code></pre>
 Or <strong>🤖 Claude:</strong> type <code>/plugin</code>, open the installed plugins, select each
 one other than <code>prove-it</code>, and choose <strong>Disable</strong>.</li>
-<li><strong>MCP servers:</strong> <strong>⌨️ You:</strong> first save each one's settings, so you can
-add it back after the lab, then remove it:<pre><code>claude mcp get &lt;name&gt; &gt;&gt; ~/projects/priority-guard-notes/mcp-before-lab.txt
+<li><strong>MCP servers:</strong> a server whose name starts with <code>claude.ai</code> comes from
+your Claude account, and <code>claude mcp remove</code> can't remove it: it means
+the lab settings aren't active yet. Close every Claude Code window and
+run the <code>--check</code> command from Step 3 item 3. If it says the lab settings
+aren't in place, run the merge command from Step 3 item 3, then check
+again. If it says they're in place and the server is still listed, tell
+your instructor (a company seat can force it). A server
+whose name starts with <code>plugin:</code> comes from a plugin: switch that plugin
+off (the <strong>Other plugins</strong> bullet above). For any other server,
+<strong>⌨️ You:</strong> first save its settings, so you can add it back after the
+lab, then remove it:<pre><code>claude mcp get &lt;name&gt; &gt;&gt; ~/projects/priority-guard-notes/mcp-before-lab.txt
 claude mcp remove &lt;name&gt;
 </code></pre>
 <code>claude mcp get</code> prints how the server was set up; <code>&gt;&gt;</code> adds that to a
 file in your notes folder. Run <code>claude mcp list</code> again to check they've
 gone. If one won't go, tell your instructor.</li>
 </ul>
-<p>Then do checks 6a to 6d again.</p>
+<p>Then do checks 6a to 6e again.</p>
 <h3 id="m0--step-7--a-second-browser-profile">Step 7 — A second browser profile</h3>
 <p><strong>Why this step:</strong> You'll need to see the app the way an everyday user sees it, not as an admin who can do anything. A second browser profile lets you stay logged in as both at once.</p>
 <p>A <strong>browser profile</strong> is a separate set of logins inside your browser. You
@@ -1298,8 +1425,10 @@ once a file is committed it stays in the history.</p>
 <ol>
 <li><strong>🤖 Claude:</strong> get a local copy of the kit, at the version you installed
 in Step 5, outside the workspace, then copy the allow list and start a
-README:<pre><code>Clone the public repo gapietro/prove-it-kit to ~/projects/prove-it-kit
-with gh repo clone, then detach it at the tag v0.1.3:
+README:<pre><code>If ~/projects/prove-it-kit doesn't exist yet, clone the public repo
+gapietro/prove-it-kit to it with gh repo clone. If it already exists,
+don't clone it again: run git -C ~/projects/prove-it-kit fetch --tags
+instead. Either way, then detach it at the tag v0.1.3:
 git -C ~/projects/prove-it-kit switch --detach v0.1.3
 Then copy ~/projects/prove-it-kit/templates/gitignore.allowlist to
 ~/projects/priority-guard/app/.gitignore, and create
@@ -1310,12 +1439,17 @@ anything. Don't read anything outside ~/projects/priority-guard and
 ~/projects/prove-it-kit.
 </code></pre>
 </li>
+<li><strong>🔍 Check</strong> that the kit copy is the right version:<pre><code>Run exactly this and show me the raw output, unedited:
+git -C ~/projects/prove-it-kit describe --tags
+</code></pre>
+It prints exactly <code>v0.1.3</code>. (An older copy would hand out older kit
+files.)</li>
 <li><strong>✏️ Editor:</strong> open <code>~/projects/priority-guard/app/.gitignore</code> and read
 it. Find the line <code>/*</code>. That line hides everything; the <code>!</code> lines let
 things back in.</li>
 </ol>
-<p>✅ <strong>Check:</strong> you can point to the line that hides everything, and to the
-lines that admit <code>README.md</code> and <code>.gitignore</code>.</p>
+<p>✅ <strong>Check:</strong> the kit copy is <code>v0.1.3</code>. You can point to the line that hides
+everything, and to the lines that admit <code>README.md</code> and <code>.gitignore</code>.</p>
 <h4 id="m0--83--install-the-guard">8.3 — Install the guard</h4>
 <p><strong>Why this step:</strong> The allow list decides which files get in, but not what's
 written inside them. The guard is a small script git runs before every commit
@@ -1483,7 +1617,9 @@ Claude always runs here:</p>
 <pre><code>cd ~/projects/priority-guard/app
 claude
 </code></pre>
-<p>When it asks whether you trust this folder, choose <strong>Yes</strong>.</p>
+<p>When it asks whether you trust this folder, use the <strong>arrow keys</strong> to
+select <strong>Yes</strong>, then press <strong>Enter</strong> (if <strong>No, exit</strong> is highlighted,
+Enter quits Claude).</p>
 <p><strong>🤖 Claude</strong> (<code>~/projects/priority-guard/app</code>): type this prompt:</p>
 <pre><code>now-sdk init just created files in ~/projects/priority-guard/app.
 Compare them with the allow lines already in
@@ -1661,6 +1797,9 @@ cp ~/projects/agentic-build-lab-guide/files/inputs/USE-CASE.md ~/projects/agenti
 cd ~/projects/priority-guard-prd-review
 claude
 </code></pre>
+<p>This is a new folder, so Claude asks whether you trust it. Use the <strong>arrow
+keys</strong> to select <strong>Yes</strong>, then press <strong>Enter</strong> (if <strong>No, exit</strong> is
+highlighted, Enter quits Claude).</p>
 <p><strong>🤖 Claude</strong> (<code>~/projects/priority-guard-prd-review</code>): type:</p>
 <pre><code>Trace PRD-PriorityGuard.md against the two input files here. For every
 capability and requirement in the PRD, quote the input sentence that
@@ -1757,12 +1896,15 @@ answers the architecture questions before any code exists:</p>
 <strong>agent</strong>?
 <ul>
 <li>Plain code does the same thing every time.</li>
-<li>An AI skill is one call to a language model, for when the problem is language.</li>
+<li>An AI skill is one call to a language model, for when the problem is
+language. <code>CONSULT.md</code> calls it a <strong>Now Assist skill</strong>.</li>
 <li>An agent decides its own next steps while it runs.</li>
 <li>Each costs more attention, and more money, than the one before.</li>
 </ul>
 </li>
-<li>Which tables and roles the app needs, and which code owns each table.</li>
+<li>Which tables and roles the app needs, and who owns each table: the one
+thing allowed to write it, usually a piece of code (it may name a role
+that writes through a form).</li>
 <li>What any AI would cost.</li>
 <li>Is the brief ready to build, or does someone need to decide something first?</li>
 </ul>
@@ -1807,7 +1949,9 @@ need AI?</li>
 claude
 </code></pre>
 </li>
-<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard</code>): type the command. It takes no arguments: it reads the one brief in <code>brief/</code>.<pre><code>/prove-it:consult
+<li><strong>🤖 Claude</strong> (<code>~/projects/priority-guard</code>): type exactly this, <strong>with
+nothing after it</strong> (anything after it is read as the brief's file path).
+With nothing after it, it reads the one brief in <code>brief/</code>.<pre><code>/prove-it:consult
 </code></pre>
 </li>
 </ol>
@@ -1824,6 +1968,9 @@ invent a business fact</strong> to keep things moving.</li>
 the number with no brackets.</li>
 <li>If a bullet says something the brief doesn't, type, for example,
 <code>Bullet 3 isn't in the brief. Drop it.</code></li>
+<li>If only <strong>part</strong> of a bullet isn't in the brief, type, for example,
+<code>In bullet 5, 'within a week' isn't in the brief. Remove that part.</code>
+Use your own bullet number and the extra words.</li>
 <li>If a bullet contradicts the floor (for example, it lets AI change the
 priority freely), type, for example,
 <code>Bullet 3 contradicts capability 2. Correct it.</code></li>
@@ -1831,21 +1978,31 @@ priority freely), type, for example,
 <li>If it asks whether your instance has Now Assist (or generative AI),
 type <code>No. Assume Now Assist isn't available.</code> The lab is built without
 it, so every pair gets the same consult.</li>
+<li>Put all your answers and corrections in <strong>one message</strong>, one line each.
+<strong>Enter</strong> sends the message, so press <strong>Shift+Enter</strong> for a new line (if
+that doesn't make a new line, type <code>\</code> and then press <strong>Enter</strong>). Press
+<strong>Enter</strong> only when everything is in.</li>
 </ul>
 </li>
-<li>When the restatement is right, type exactly (lower case, no full stop):<pre><code>confirmed
+<li>If you corrected anything, it restates the brief again and stops again.
+After answers alone, it may restate again or just ask you to confirm.
+Read any new bullets the same way. When the restatement is right, type
+exactly this, in a message on its own (lower case, no full stop):<pre><code>confirmed
 </code></pre>
 </li>
 </ol>
 <p>⚠️ <strong>If you see…</strong> <em>it writes <code>CONSULT.md</code> before you confirm:</em> that's the
-kit breaking its own rule, and a <strong>catch</strong>. Delete the file, run the consult
-again, and confirm when it asks. Log it.</p>
+kit breaking its own rule. It isn't a catch: the process didn't find a
+problem in your work. Write it in <code>LOG.md</code> and tell your instructor. Then
+delete the file, run the consult again, and confirm when it asks.</p>
 <h3 id="m2--step-3--let-it-run">Step 3 — Let it run</h3>
 <p><strong>Why this step:</strong> This is where the consult does its work and writes it down in <code>CONSULT.md</code>. Checking that <code>CONSULT.md</code> is the only thing it wrote keeps you in control: the consult advises, it doesn't change anything else.</p>
 <p>The consult works for several minutes. In auto mode it writes <code>CONSULT.md</code>
 without asking. If Claude Code does ask <em>Do you want to create CONSULT.md?</em>,
-choose <strong>1. Yes</strong>. If it asks to use your instance or your credentials,
-decline: the consult never needs them.</p>
+choose <strong>1. Yes</strong>. If it asks to write or change any other file, choose
+<strong>No</strong> (the last choice) and note it in <code>LOG.md</code>: the consult writes only
+<code>CONSULT.md</code>. If it asks to use your instance or your credentials, decline:
+the consult never needs them.</p>
 <p>When it's finished, check it wrote only that one file.</p>
 <p><strong>🔍 Check</strong> (<code>~/projects/priority-guard</code>): type:</p>
 <pre><code>Run exactly this and show me the raw output, unedited: ls -A ~/projects/priority-guard
@@ -1857,23 +2014,43 @@ and the lines starting with <strong>⎿</strong> under it. If you see <code>… 
 <a href="#home--7-how-to-read-a-module">the README, section 7</a>.)
 You should see <code>app</code>, <code>brief</code> and <code>CONSULT.md</code>. (<code>app</code> is your app's repo,
 from pre-work.) A <code>.claude</code> folder is fine too: that's Claude Code's own.
-Anything else, note it.</p>
+Anything else, note it in <code>LOG.md</code>.</p>
 <p>✅ <strong>Check:</strong> <code>CONSULT.md</code> exists in <code>~/projects/priority-guard</code>, next to <code>brief/</code>. It
-has a row for each of the <strong>six</strong> capabilities, each marked plain code, AI
-skill or agent, with a reason. It has a cost line and a readiness verdict.</p>
-<p>⚠️ <strong>If you see…</strong> <em>an error or a stall:</em> retry up to twice, and note each
-retry. On the third failure, stop and ask your instructor. That's the &quot;error
-brake&quot;: three failures on one approach means stop and find out why.</p>
+has a row for each of the <strong>six</strong> capabilities, each marked plain code, Now
+Assist skill or agent, with a reason. It has a <strong>Cost</strong> section, and a
+<strong>Readiness</strong> table that rates each requirement <strong>ready</strong>, <strong>conditional</strong>
+or <strong>not ready</strong>.</p>
+<p>The consult's closing message sums up its advice, including each
+capability's choice. Your prediction from Step 1 is already in <code>LOG.md</code>.
+Don't change it. If you do, write down that you did.</p>
+<p>⚠️ <strong>If you see…</strong></p>
+<ul>
+<li><em>an error or a stall:</em> retry up to twice, and note each retry in
+<code>LOG.md</code>. On the third failure, stop and ask your instructor. That's the
+&quot;error brake&quot;: three failures on one approach means stop and find out why.</li>
+<li><em>its closing message says &quot;Next: <code>/prove-it:design-challenge</code> reads this
+<code>CONSULT.md</code>&quot;:</em> that's the kit's usual next step. In this lab, research
+and the LLD come first (Module 3), and the design challenge is Module 4.
+Don't run it now.</li>
+<li><em>grey <code>/prove-it:design-challenge</code> text in the prompt box, which you didn't
+type:</em> that's Claude Code guessing your next prompt from the consult's last
+line. It can appear after any reply until you quit. Leave it: <strong>Tab</strong> or
+the <strong>Right arrow</strong> key would put it in the box. It disappears as soon as
+you start typing anything, whether that's Step 5's question or <code>/exit</code> in
+Step 6.</li>
+</ul>
 <h3 id="m2--step-4--read-it-like-a-reviewer">Step 4 — Read it like a reviewer</h3>
 <p><strong>Why this step:</strong> Advice is only useful if someone checks it. Reading <code>CONSULT.md</code> yourself, outside Claude, and against your prediction is how you spot advice you don't agree with.</p>
 <p>Open <code>CONSULT.md</code> in a text editor (not in Claude). Find:</p>
 <ol>
 <li><strong>Capability 6, &quot;Smart urgency&quot;.</strong> What did the consult recommend, and
 why?</li>
-<li><strong>Capabilities 2 and 4.</strong> Which code owns the decision to go below the
-floor?</li>
-<li><strong>The readiness verdict.</strong> Is anything marked as needing a decision
-first?</li>
+<li><strong>Capabilities 2 and 4.</strong> In the <strong>Data and ownership</strong> section, what
+owns the decision to go below the floor: which code (or, if it names
+one, which role working through a form)?</li>
+<li><strong>The Readiness table.</strong> Is any requirement rated <strong>conditional</strong> or
+<strong>not ready</strong>? What is it waiting for? (There's no single verdict: the
+brief is ready to build only if every row says <strong>ready</strong>.)</li>
 </ol>
 <p>Now compare with your prediction from step 1.</p>
 <p>✅ <strong>Check:</strong> you can say in one sentence what the consult did with
@@ -1904,7 +2081,8 @@ priority, or that capability 6 is deferred or reworked.</p>
 <h3 id="m2--step-6--close">Step 6 — Close</h3>
 <p><strong>Why this step:</strong> <code>CONSULT.md</code> is the record of what the consult advised, and Module 4 reads it later. Leaving it as it is keeps that record honest.</p>
 <ol>
-<li><strong>🤖 Claude:</strong> type <code>/exit</code> to quit Claude.</li>
+<li><strong>🤖 Claude:</strong> type <code>/exit</code> to quit Claude. If grey text is in the prompt
+box, it disappears as soon as you start typing <code>/exit</code>.</li>
 <li>Don't hand-edit <code>CONSULT.md</code>. Module 4 reads it as it is. A change
 Claude made at your request in Step 5 is fine.</li>
 </ol>
@@ -1915,6 +2093,10 @@ Claude made at your request in Step 5 is fine.</li>
 <li>In <code>catches.md</code>, only if the consult raised it itself:<pre><code>2 | consult | capability 6 could lower a priority below the floor
 </code></pre>
 </li>
+<li><strong>Not catches here</strong> (write them in <code>LOG.md</code> instead): anything you
+supplied (your answers, <code>Unknown. Record it as an open decision.</code>, your
+corrections to its bullets), an open decision on its own, a change it made
+only after you pushed back, or your prediction being wrong.</li>
 </ul>
 <p><strong>Next:</strong> <a href="#m3">Module 3</a>. The consult is advice. Before anyone
 designs in detail, you need facts about the platform. Nobody has
@@ -2409,18 +2591,29 @@ a file path):<pre><code>/prove-it:design-challenge
 <li>It asks you to describe the design in your own words. Type your sentences
 from your positions list.</li>
 </ol>
-<p>✅ <strong>Check:</strong> from now on, <strong>every turn ends with exactly one question.</strong></p>
+<p>✅ <strong>Check:</strong> from now on, <strong>every turn that needs your answer ends with
+exactly one question.</strong> The read-back (Step 4) ends with
+&quot;Confirm these N terms, or correct any.&quot; instead, and the last turn, after
+you confirm, asks nothing.</p>
 <h3 id="m4--step-3--answer-one-question-at-a-time">Step 3 — Answer, one question at a time</h3>
 <p><strong>Why this step:</strong> Each question is a chance to find a weak spot while it is
 still on paper, where it is cheap to fix. Answering from your list keeps the
 record consistent.</p>
 <p>Answer each question from your positions list. <strong>Keep each answer to one
 line or two.</strong> When it asks how something fails, or about security, answer
-from LLD §3, §5 and §7.</p>
+from LLD §3 (logic), §4 (security), §5 (failure modes) and §7 (research
+log).</p>
 <p><strong>Typing answers in Claude.</strong> Pressing <strong>Enter</strong> sends your message. For an
 answer of several lines, write it in your editor first and paste the whole
 answer in at once, or press <strong>Shift+Enter</strong> for a new line. If Shift+Enter
 doesn't make a new line in your terminal, type <code>\</code> and then press <strong>Enter</strong>.</p>
+<p><strong>Grey text you didn't type.</strong> After a question, the prompt box may show a
+reply in grey, for example <code>yes, use PriorityGuard</code>. That's Claude Code
+guessing your answer, and it often makes a design decision for you. It isn't
+your answer. Don't press <strong>Tab</strong> or the <strong>Right arrow</strong> key, which put it in
+the box. Type your own answer from your list: the grey text disappears as
+soon as you start typing. This holds
+for every turn of the challenge, including the read-back.</p>
 <p>When it asks about a capability the customer <strong>deferred</strong>, answer
 <code>Out of scope for this record; deferred to a later release.</code> Never answer
 <code>Not decided</code> for a deferred capability: that writes an OPEN term, and an
@@ -2432,8 +2625,8 @@ something your list doesn't cover:</p>
 </ul>
 <p><strong>Write down the questions that surprised you.</strong> Those are the ones the
 challenge exists for.</p>
-<p>✅ <strong>Check:</strong> at some point it has asked about failure, security, cost and
-milestones.</p>
+<p>✅ <strong>Check:</strong> at some point it has asked about failure, security, cost,
+boundaries (what the app won't do) and milestones.</p>
 <p>⚠️ <strong>If you see…</strong> <em>it's about to read the terms back, but it never asked
 about one of those topics:</em> type, with the topic in place of <code>&lt;topic&gt;</code>:</p>
 <pre><code>You haven't asked about &lt;topic&gt;. Ask before the read-back.
@@ -2443,18 +2636,36 @@ about one of those topics:</em> type, with the topic in place of <code>&lt;topic
 Anything wrong or missing here goes into the design as if you had agreed to
 it, so this is your last easy chance to fix it.</p>
 <p>When the questions are done, it reads back every <strong>numbered term</strong> and asks
-you to confirm. Read the whole list against your positions. Look for:</p>
+you to confirm. Read the whole list against your positions. Any question you
+answered with <code>Not decided. Record it as open.</code> is in the list too, marked
+<code>OPEN</code>. That's expected: the kit writes exactly the list you confirm, <code>OPEN</code>
+terms included. Look for:</p>
 <ol>
 <li><strong>Your central rule</strong> as separate, consecutive terms, one rule per term.</li>
 <li><strong>The platform posture terms:</strong> one owner per table; AI never runs while
 someone is saving; any AI feature installs switched off.</li>
 </ol>
+<p><strong>Expect to add some of these yourself.</strong> The kit only turns your answers
+into terms, and your positions list never mentions the posture terms, so the
+first read-back often leaves them out. It may also merge or reword your
+central rule. Adding them is the normal path, not a sign something went
+wrong, and not a catch.</p>
 <p>If anything is missing or wrong, reply starting with <code>Not agreed yet.</code> and
 say what to add or change, in one message. For example:</p>
 <pre><code>Not agreed yet. Add a term: an override can't be edited or deleted after it
 is saved. Read the terms back again.
 </code></pre>
-<p>It reads the list back again. Repeat until it's right.</p>
+<p>If your central rule or any posture term is missing, merged or weaker than
+you wrote it, type this, with your own central-rule sentences from <code>LOG.md</code>
+in place of the ones in quotes:</p>
+<pre><code>Not agreed yet. Add my central rule as consecutive terms, one sentence each,
+word for word: &quot;&lt;sentence 1&gt;&quot; &quot;&lt;sentence 2&gt;&quot; &quot;&lt;sentence 3&gt;&quot;. Add these as
+separate terms if they're missing: every table the app writes has one owner;
+AI never runs while someone is saving; any AI feature installs switched off.
+Replace any weaker term that says the same thing. Read the terms back again.
+</code></pre>
+<p>It reads the whole list back again, with its new count. Repeat until it's
+right.</p>
 <p>✅ <strong>Check:</strong> count the terms. Write the number in <code>LOG.md</code>.</p>
 <h3 id="m4--step-5--confirm">Step 5 — Confirm</h3>
 <p><strong>Why this step:</strong> Only you can agree to the design. Typing the word yourself
@@ -2468,7 +2679,9 @@ box: that's Claude Code guessing your next words, not you confirming. If
 it asks to create the design file, check the file name and choose
 <strong>1. Yes</strong>.</p>
 <p>✅ <strong>Check:</strong> <code>docs/DESIGN-PriorityGuard.md</code> exists, and it has the same
-number of terms you wrote down.</p>
+number of terms you wrote down. It ends by saying a person signs this, not
+the AI. If any terms are marked <code>OPEN</code>, write their numbers (for example
+<code>C9</code>) in <code>LOG.md</code>, or write <code>none</code>.</p>
 <h3 id="m4--step-6--read-it-and-sign-it">Step 6 — Read it and sign it</h3>
 <p><strong>Why this step:</strong> From here on, the code is held to this signed design. Reading
 every term first means you know what you are agreeing to. Signing by hand
@@ -2476,6 +2689,10 @@ means a person, not the AI, takes responsibility for it.</p>
 <p><strong>🤖 Claude:</strong> type <code>/exit</code> to quit Claude. Open <code>docs/DESIGN-PriorityGuard.md</code> in a text editor.</p>
 <ol>
 <li>Read every term. Is each one something you agreed?</li>
+<li>Any term marked <code>OPEN</code>? Each one fails the grade in Module 8. If you can
+decide it now from your LLD, replace <code>OPEN</code> with your answer, by hand,
+and note it in <code>LOG.md</code>. If only the business can decide, leave it: in
+Module 5 the build plan turns it into a story that asks for a decision.</li>
 <li>Find the <strong>rejected alternatives</strong>. Is &quot;let AI adjust the priority&quot; there,
 with a reason, if you rejected it?</li>
 <li>Sign it <strong>yourself, in the editor</strong>. Never ask Claude to. In <strong>§9
@@ -2499,6 +2716,12 @@ term you wouldn't otherwise have had), that's a catch for <code>design</code>. O
 line per real change, for example:<pre><code>4 | design | &lt;what the question exposed, and the term it added&gt;
 </code></pre>
 </li>
+<li><strong>Not catches</strong> (write them in <code>LOG.md</code> instead): a term <strong>you</strong> added or
+fixed at the read-back (Step 4), such as your central rule or a posture
+term; a gap the challenge found but left <code>OPEN</code>; and an <code>OPEN</code> term you
+decided yourself in Step 6. An <code>OPEN</code> gap becomes a catch only when it's
+decided later (through the build plan's ruling story) and the design
+changes because of it.</li>
 </ul>
 <p><strong>Next:</strong> <a href="#m5">Module 5</a>. The design is signed. Now
 the site gets a fence and a plan.</p>
@@ -2758,8 +2981,15 @@ run the command again (<strong>🤖 Claude</strong>).</p>
 interest.</li>
 <li>Each story has a &quot;done when&quot; you could actually check.</li>
 <li>Each story says what passing it <strong>doesn't</strong> prove.</li>
-<li>There's a story whose tests prove your central rule.</li>
+<li>Every term of your central rule (find their C numbers in §3 of
+<code>docs/DESIGN-PriorityGuard.md</code>) is in some story's done-when, which asks
+for tests named with that number. The preview's coverage line lists any
+term that no story asks tests to name: none of your central rule's terms
+may be on that list.</li>
 </ol>
+<p>⚠️ <strong>If you see…</strong> <em>a term listed as &quot;pending ruling — no test yet&quot;:</em> that's
+an <code>OPEN</code> term from Module 4. Its story asks for a decision, not code. That's
+expected, and isn't a &quot;no&quot;.</p>
 <p><strong>Any &quot;no&quot;?</strong> Before you type <code>approve</code>, tell Claude in <strong>one line</strong> what's
 wrong, for example &quot;Story 4 has no done-when you could check.&quot; It redrafts
 and shows a new preview. Answer the five questions again. <strong>Never approve
@@ -3764,9 +3994,10 @@ on the branch docs/amend-floor, never on main, then ship it.
 </code></pre>
 Type <code>approve</code> at the preview. When it asks &quot;Dry run first, or apply
 now?&quot;, type <code>apply now</code>. Note the new story's issue number.</li>
-<li><strong>✏️ Editor:</strong> read <code>.gitignore</code>. The build plan may have added allow
-lines: check each one before it's committed. The build plan left
-<code>BACKLOG.md</code> (and maybe <code>.gitignore</code>) changed on <code>main</code>. <strong>🤖 Claude:</strong><pre><code>Commit BACKLOG.md, and .gitignore if it changed, in
+<li><strong>✏️ Editor:</strong> read <code>.gitignore</code>. The build plan adds no allow line this
+time: <code>!/BACKLOG.md</code> has been there since Module 5. If <code>.gitignore</code>
+changed anyway, ask Claude why before it's committed. The build plan left
+<code>BACKLOG.md</code> changed on <code>main</code>. <strong>🤖 Claude:</strong><pre><code>Commit BACKLOG.md, and .gitignore if it changed, in
 ~/projects/priority-guard/app on a new branch docs/amend-plan, never on
 main, then ship it.
 </code></pre>
@@ -4267,13 +4498,31 @@ or a fresh machine: there, just delete that account when you're done.</p>
 <p>Close every Claude Code window first (type <code>/exit</code> in each). Then, in a
 normal terminal, <strong>⌨️ You</strong>:</p>
 <ol>
-<li><strong>Your Claude Code settings.</strong> This puts your own settings file back,
-exactly as it was (or removes the lab's one if you had none):<pre><code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --restore
+<li>
+<p><strong>Your Claude Code settings.</strong> First get the latest guide, so you run
+the newest version of the script. If you cloned the guide:</p>
+<pre><code>git -C ~/projects/agentic-build-lab-guide pull
 </code></pre>
-It keeps a copy of the lab's settings as <code>settings.json.lab.bak</code>, in case
-you come back to the after-the-workshop track.</li>
-<li><strong>Anything you switched off in Module 0 Step 6.</strong> Your <code>LOG.md</code> lists what
-you changed:
+<p>If you used the zip, get the newest <code>agentic-build-lab-guide.zip</code> from
+your instructor (or from whoever sent you the first one), and unzip it
+over your old copy with the command in the README, section 3. When it
+asks whether to replace a file, type <code>A</code> (all) and press <strong>Enter</strong>.
+Then put your own settings back:</p>
+<pre><code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --restore
+</code></pre>
+<p>If you had a settings file before the lab, it's put back exactly as it
+was. If you didn't, the lab's settings are taken out; anything Claude
+Code added by itself (such as the kit's plugin entry) stays, and the
+file is removed if nothing else is left. It also keeps a copy of the
+lab's settings, <code>settings.json.lab.bak</code>, for reference. Running it twice
+is safe: the second time it changes nothing.</p>
+<p><strong>Coming back later</strong> (for example, for the after-the-workshop track)?
+Run the merge command from Module 0 Step 3 item 3 again. Don't copy
+<code>settings.json.lab.bak</code> back by hand.</p>
+</li>
+<li>
+<p><strong>Anything you switched off in Module 0 Step 6.</strong> Your <code>LOG.md</code> lists what
+you changed:</p>
 <ul>
 <li>a personal <code>CLAUDE.md</code>: <code>mv ~/.claude/CLAUDE.md.off ~/.claude/CLAUDE.md</code></li>
 <li>each plugin you disabled: <code>claude plugin enable &lt;name&gt;</code></li>
@@ -4284,17 +4533,25 @@ each one was set up, and add it back the same way you first added it
 from that file).</li>
 </ul>
 </li>
-<li><strong>The kit (optional).</strong> If you won't use it again:
+<li>
+<p><strong>The kit (optional).</strong> If you won't use it again:
 <strong>🤖 Claude:</strong> <code>/plugin uninstall prove-it@prove-it</code>, then
-<code>/plugin marketplace remove prove-it</code>.</li>
-<li><strong>The ServiceNow SDK login (optional).</strong> If you won't use this instance
-again: <code>now-sdk auth --delete &lt;PDI_ALIAS&gt;</code>.</li>
-<li><strong>The lab's folders (optional).</strong> Your work lives in <code>~/projects</code> and on
-GitHub. Keep it, or delete the folders when you no longer need them.</li>
+<code>/plugin marketplace remove prove-it</code>.</p>
+</li>
+<li>
+<p><strong>The ServiceNow SDK login (optional).</strong> If you won't use this instance
+again: <code>now-sdk auth --delete &lt;PDI_ALIAS&gt;</code>.</p>
+</li>
+<li>
+<p><strong>The lab's folders (optional).</strong> Your work lives in <code>~/projects</code> and on
+GitHub. Keep it, or delete the folders when you no longer need them.</p>
+</li>
 </ol>
 <p>✅ <strong>Check:</strong> <code>node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check</code>
 now says the lab settings are <strong>not</strong> in place (unless you already had them
-before the lab), and <code>claude plugin list</code> shows your plugins as they were.
+before the lab), and <code>claude plugin list</code> shows your plugins as they were
+(plus <code>prove-it</code>, if you had no settings file before the lab and kept the
+kit in item 3).
 Your past conversations resume as before.</p>
 
 </section>
@@ -4517,11 +4774,14 @@ optional on your own app.</p>
 your own: if a bullet contradicts a rule your PRD states, type
 for example <code>Bullet 3 contradicts capability 1. Correct it.</code>, with your
 own bullet and capability numbers, no brackets.</li>
-<li>Step 4: instead of capabilities 6, 2 and 4, read <strong>every</strong> row marked AI skill
-or agent (its reason), the <strong>ownership</strong> table (one owner per table), every
-<strong>VERIFY</strong> item, and the <strong>readiness</strong> verdict.</li>
-<li>Step 5: for every row marked AI skill or agent, push back:
-<code>Capability N is marked [AI skill / agent]. Why can't plain code do it? If it can, change it.</code></li>
+<li>Step 4: instead of capabilities 6, 2 and 4, read <strong>every</strong> row marked Now
+Assist skill or agent (its reason), the <strong>Data and ownership</strong> table (one
+owner per table: usually a piece of code, sometimes a role working
+through a form),
+every <strong>VERIFY</strong> item, and every <strong>Readiness</strong> row rated conditional or
+not ready.</li>
+<li>Step 5: for every row marked Now Assist skill or agent, push back:
+<code>Capability N is marked [Now Assist skill / agent]. Why can't plain code do it? If it can, change it.</code></li>
 </ul>
 <h3 id="own--new--after-module-2--choose-one-slice">NEW · After Module 2 — Choose one slice</h3>
 <p><strong>Why this step:</strong> A small slice you finish beats a big one you don't, and trying the riskiest part first shows early whether the idea holds.</p>

@@ -77,6 +77,10 @@ cp ~/projects/agentic-build-lab-guide/files/inputs/USE-CASE.md ~/projects/agenti
 cd ~/projects/priority-guard-prd-review
 claude
 ```
+This is a new folder, so Claude asks whether you trust it. Use the **arrow
+keys** to select **Yes**, then press **Enter** (if **No, exit** is
+highlighted, Enter quits Claude).
+
 **🤖 Claude** (`~/projects/priority-guard-prd-review`): type:
 ```
 Trace PRD-PriorityGuard.md against the two input files here. For every

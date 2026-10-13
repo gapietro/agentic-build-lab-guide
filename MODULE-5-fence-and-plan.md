@@ -268,7 +268,15 @@ Check the preview, and write yes or no for each:
    interest.
 3. Each story has a "done when" you could actually check.
 4. Each story says what passing it **doesn't** prove.
-5. There's a story whose tests prove your central rule.
+5. Every term of your central rule (find their C numbers in §3 of
+   `docs/DESIGN-PriorityGuard.md`) is in some story's done-when, which asks
+   for tests named with that number. The preview's coverage line lists any
+   term that no story asks tests to name: none of your central rule's terms
+   may be on that list.
+
+⚠️ **If you see…** *a term listed as "pending ruling — no test yet":* that's
+an `OPEN` term from Module 4. Its story asks for a decision, not code. That's
+expected, and isn't a "no".
 
 **Any "no"?** Before you type `approve`, tell Claude in **one line** what's
 wrong, for example "Story 4 has no done-when you could check." It redrafts

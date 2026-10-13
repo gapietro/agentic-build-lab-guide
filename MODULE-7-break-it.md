@@ -294,9 +294,10 @@ changes the floor must survive. That something is one of:
    ```
    Type `approve` at the preview. When it asks "Dry run first, or apply
    now?", type `apply now`. Note the new story's issue number.
-8. **✏️ Editor:** read `.gitignore`. The build plan may have added allow
-   lines: check each one before it's committed. The build plan left
-   `BACKLOG.md` (and maybe `.gitignore`) changed on `main`. **🤖 Claude:**
+8. **✏️ Editor:** read `.gitignore`. The build plan adds no allow line this
+   time: `!/BACKLOG.md` has been there since Module 5. If `.gitignore`
+   changed anyway, ask Claude why before it's committed. The build plan left
+   `BACKLOG.md` changed on `main`. **🤖 Claude:**
    ```
    Commit BACKLOG.md, and .gitignore if it changed, in
    ~/projects/priority-guard/app on a new branch docs/amend-plan, never on

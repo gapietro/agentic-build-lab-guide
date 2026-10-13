@@ -105,13 +105,29 @@ or a fresh machine: there, just delete that account when you're done.
 Close every Claude Code window first (type `/exit` in each). Then, in a
 normal terminal, **⌨️ You**:
 
-1. **Your Claude Code settings.** This puts your own settings file back,
-   exactly as it was (or removes the lab's one if you had none):
+1. **Your Claude Code settings.** First get the latest guide, so you run
+   the newest version of the script. If you cloned the guide:
+   ```
+   git -C ~/projects/agentic-build-lab-guide pull
+   ```
+   If you used the zip, get the newest `agentic-build-lab-guide.zip` from
+   your instructor (or from whoever sent you the first one), and unzip it
+   over your old copy with the command in the README, section 3. When it
+   asks whether to replace a file, type `A` (all) and press **Enter**.
+   Then put your own settings back:
    ```
    node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --restore
    ```
-   It keeps a copy of the lab's settings as `settings.json.lab.bak`, in case
-   you come back to the after-the-workshop track.
+   If you had a settings file before the lab, it's put back exactly as it
+   was. If you didn't, the lab's settings are taken out; anything Claude
+   Code added by itself (such as the kit's plugin entry) stays, and the
+   file is removed if nothing else is left. It also keeps a copy of the
+   lab's settings, `settings.json.lab.bak`, for reference. Running it twice
+   is safe: the second time it changes nothing.
+
+   **Coming back later** (for example, for the after-the-workshop track)?
+   Run the merge command from Module 0 Step 3 item 3 again. Don't copy
+   `settings.json.lab.bak` back by hand.
 2. **Anything you switched off in Module 0 Step 6.** Your `LOG.md` lists what
    you changed:
    - a personal `CLAUDE.md`: `mv ~/.claude/CLAUDE.md.off ~/.claude/CLAUDE.md`
@@ -131,6 +147,8 @@ normal terminal, **⌨️ You**:
 
 ✅ **Check:** `node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check`
 now says the lab settings are **not** in place (unless you already had them
-before the lab), and `claude plugin list` shows your plugins as they were.
+before the lab), and `claude plugin list` shows your plugins as they were
+(plus `prove-it`, if you had no settings file before the lab and kept the
+kit in item 3).
 Your past conversations resume as before.
 

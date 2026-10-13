@@ -19,10 +19,13 @@ answers the architecture questions before any code exists:
 - For each of the six capabilities: **plain code**, an **AI skill**, or an
   **agent**?
   - Plain code does the same thing every time.
-  - An AI skill is one call to a language model, for when the problem is language.
+  - An AI skill is one call to a language model, for when the problem is
+    language. `CONSULT.md` calls it a **Now Assist skill**.
   - An agent decides its own next steps while it runs.
   - Each costs more attention, and more money, than the one before.
-- Which tables and roles the app needs, and which code owns each table.
+- Which tables and roles the app needs, and who owns each table: the one
+  thing allowed to write it, usually a piece of code (it may name a role
+  that writes through a form).
 - What any AI would cost.
 - Is the brief ready to build, or does someone need to decide something first?
 
@@ -79,7 +82,9 @@ There are no wrong answers. You'll compare them with the consult's in step 4.
    cd ~/projects/priority-guard
    claude
    ```
-2. **🤖 Claude** (`~/projects/priority-guard`): type the command. It takes no arguments: it reads the one brief in `brief/`.
+2. **🤖 Claude** (`~/projects/priority-guard`): type exactly this, **with
+   nothing after it** (anything after it is read as the brief's file path).
+   With nothing after it, it reads the one brief in `brief/`.
    ```
    /prove-it:consult
    ```
@@ -96,6 +101,9 @@ a few clarifying questions, asks you to reply `confirmed` or correct it, and
      the number with no brackets.
    - If a bullet says something the brief doesn't, type, for example,
      `Bullet 3 isn't in the brief. Drop it.`
+   - If only **part** of a bullet isn't in the brief, type, for example,
+     `In bullet 5, 'within a week' isn't in the brief. Remove that part.`
+     Use your own bullet number and the extra words.
    - If a bullet contradicts the floor (for example, it lets AI change the
      priority freely), type, for example,
      `Bullet 3 contradicts capability 2. Correct it.`
@@ -103,14 +111,22 @@ a few clarifying questions, asks you to reply `confirmed` or correct it, and
    - If it asks whether your instance has Now Assist (or generative AI),
      type `No. Assume Now Assist isn't available.` The lab is built without
      it, so every pair gets the same consult.
-4. When the restatement is right, type exactly (lower case, no full stop):
+   - Put all your answers and corrections in **one message**, one line each.
+     **Enter** sends the message, so press **Shift+Enter** for a new line (if
+     that doesn't make a new line, type `\` and then press **Enter**). Press
+     **Enter** only when everything is in.
+4. If you corrected anything, it restates the brief again and stops again.
+   After answers alone, it may restate again or just ask you to confirm.
+   Read any new bullets the same way. When the restatement is right, type
+   exactly this, in a message on its own (lower case, no full stop):
    ```
    confirmed
    ```
 
 ⚠️ **If you see…** *it writes `CONSULT.md` before you confirm:* that's the
-kit breaking its own rule, and a **catch**. Delete the file, run the consult
-again, and confirm when it asks. Log it.
+kit breaking its own rule. It isn't a catch: the process didn't find a
+problem in your work. Write it in `LOG.md` and tell your instructor. Then
+delete the file, run the consult again, and confirm when it asks.
 
 ### Step 3 — Let it run
 
@@ -118,8 +134,10 @@ again, and confirm when it asks. Log it.
 
 The consult works for several minutes. In auto mode it writes `CONSULT.md`
 without asking. If Claude Code does ask *Do you want to create CONSULT.md?*,
-choose **1. Yes**. If it asks to use your instance or your credentials,
-decline: the consult never needs them.
+choose **1. Yes**. If it asks to write or change any other file, choose
+**No** (the last choice) and note it in `LOG.md`: the consult writes only
+`CONSULT.md`. If it asks to use your instance or your credentials, decline:
+the consult never needs them.
 
 When it's finished, check it wrote only that one file.
 
@@ -134,15 +152,32 @@ and the lines starting with **⎿** under it. If you see `… +N lines`, press
 [the README, section 7](README.md#7-how-to-read-a-module).)
 You should see `app`, `brief` and `CONSULT.md`. (`app` is your app's repo,
 from pre-work.) A `.claude` folder is fine too: that's Claude Code's own.
-Anything else, note it.
+Anything else, note it in `LOG.md`.
 
 ✅ **Check:** `CONSULT.md` exists in `~/projects/priority-guard`, next to `brief/`. It
-has a row for each of the **six** capabilities, each marked plain code, AI
-skill or agent, with a reason. It has a cost line and a readiness verdict.
+has a row for each of the **six** capabilities, each marked plain code, Now
+Assist skill or agent, with a reason. It has a **Cost** section, and a
+**Readiness** table that rates each requirement **ready**, **conditional**
+or **not ready**.
 
-⚠️ **If you see…** *an error or a stall:* retry up to twice, and note each
-retry. On the third failure, stop and ask your instructor. That's the "error
-brake": three failures on one approach means stop and find out why.
+The consult's closing message sums up its advice, including each
+capability's choice. Your prediction from Step 1 is already in `LOG.md`.
+Don't change it. If you do, write down that you did.
+
+⚠️ **If you see…**
+- *an error or a stall:* retry up to twice, and note each retry in
+  `LOG.md`. On the third failure, stop and ask your instructor. That's the
+  "error brake": three failures on one approach means stop and find out why.
+- *its closing message says "Next: `/prove-it:design-challenge` reads this
+  `CONSULT.md`":* that's the kit's usual next step. In this lab, research
+  and the LLD come first (Module 3), and the design challenge is Module 4.
+  Don't run it now.
+- *grey `/prove-it:design-challenge` text in the prompt box, which you didn't
+  type:* that's Claude Code guessing your next prompt from the consult's last
+  line. It can appear after any reply until you quit. Leave it: **Tab** or
+  the **Right arrow** key would put it in the box. It disappears as soon as
+  you start typing anything, whether that's Step 5's question or `/exit` in
+  Step 6.
 
 ### Step 4 — Read it like a reviewer
 
@@ -152,10 +187,12 @@ Open `CONSULT.md` in a text editor (not in Claude). Find:
 
 1. **Capability 6, "Smart urgency".** What did the consult recommend, and
    why?
-2. **Capabilities 2 and 4.** Which code owns the decision to go below the
-   floor?
-3. **The readiness verdict.** Is anything marked as needing a decision
-   first?
+2. **Capabilities 2 and 4.** In the **Data and ownership** section, what
+   owns the decision to go below the floor: which code (or, if it names
+   one, which role working through a form)?
+3. **The Readiness table.** Is any requirement rated **conditional** or
+   **not ready**? What is it waiting for? (There's no single verdict: the
+   brief is ready to build only if every row says **ready**.)
 
 Now compare with your prediction from step 1.
 
@@ -194,7 +231,8 @@ priority, or that capability 6 is deferred or reworked.
 
 **Why this step:** `CONSULT.md` is the record of what the consult advised, and Module 4 reads it later. Leaving it as it is keeps that record honest.
 
-1. **🤖 Claude:** type `/exit` to quit Claude.
+1. **🤖 Claude:** type `/exit` to quit Claude. If grey text is in the prompt
+   box, it disappears as soon as you start typing `/exit`.
 2. Don't hand-edit `CONSULT.md`. Module 4 reads it as it is. A change
    Claude made at your request in Step 5 is fine.
 
@@ -207,6 +245,10 @@ priority, or that capability 6 is deferred or reworked.
   ```
   2 | consult | capability 6 could lower a priority below the floor
   ```
+- **Not catches here** (write them in `LOG.md` instead): anything you
+  supplied (your answers, `Unknown. Record it as an open decision.`, your
+  corrections to its bullets), an open decision on its own, a change it made
+  only after you pushed back, or your prediction being wrong.
 
 **Next:** [Module 3](MODULE-3-research-and-lld.md). The consult is advice. Before anyone
 designs in detail, you need facts about the platform. Nobody has

@@ -155,11 +155,14 @@ optional on your own app.
   your own: if a bullet contradicts a rule your PRD states, type
   for example `Bullet 3 contradicts capability 1. Correct it.`, with your
   own bullet and capability numbers, no brackets.
-- Step 4: instead of capabilities 6, 2 and 4, read **every** row marked AI skill
-  or agent (its reason), the **ownership** table (one owner per table), every
-  **VERIFY** item, and the **readiness** verdict.
-- Step 5: for every row marked AI skill or agent, push back:
-  `Capability N is marked [AI skill / agent]. Why can't plain code do it? If it can, change it.`
+- Step 4: instead of capabilities 6, 2 and 4, read **every** row marked Now
+  Assist skill or agent (its reason), the **Data and ownership** table (one
+  owner per table: usually a piece of code, sometimes a role working
+  through a form),
+  every **VERIFY** item, and every **Readiness** row rated conditional or
+  not ready.
+- Step 5: for every row marked Now Assist skill or agent, push back:
+  `Capability N is marked [Now Assist skill / agent]. Why can't plain code do it? If it can, change it.`
 
 ### NEW · After Module 2 — Choose one slice
 

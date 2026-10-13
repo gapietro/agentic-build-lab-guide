@@ -76,6 +76,11 @@ PDI goes to sleep when you haven't used it for a while. Sign in at
 https://developer.servicenow.com and wake your instance from there. Waking
 takes a few minutes. Then reload your instance's address.
 
+⚠️ **If you see…** *the developer site says your instance was **reclaimed**
+(released after a long time unused):* request a new one, and tell your
+instructor before you go on. The new instance needs this step and Step 3
+item 5 again, and may have a different vendor prefix (Step 8.1).
+
 ⚠️ **If you see…** *no business services:* tell your instructor. The lab needs
 at least three, and your instructor can give you a small set to load.
 
@@ -95,7 +100,7 @@ with Node.js.
 
 | Tool | Install | Check |
 |---|---|---|
-| Node.js | Version **20.18 or later** (version 22 or 24 is fine). Download the **LTS** installer from https://nodejs.org and run it, or, if you use Homebrew, run `brew install node` | `node --version` shows `v20.18` or higher, for example `v22.11.0` |
+| Node.js | Version **22.22 or later** (24 is fine): Claude Code needs at least 22. Download the **LTS** installer from https://nodejs.org and run it, or, if you use Homebrew, run `brew install node` | `node --version` shows `v22.22` or higher, for example `v22.22.0` or `v24.11.0` |
 | npm | Comes with Node.js: nothing extra to install | `npm --version` prints a number, for example `10.9.0` |
 | ServiceNow SDK | `npm install -g @servicenow/sdk` (`-g` means "global": installed once for your whole computer, not inside one folder) | `now-sdk --version` |
 | GitHub CLI | Download from https://cli.github.com, or run `brew install gh` | `gh --version` |
@@ -110,13 +115,18 @@ close the Terminal window and open a new one, then run the Check again (a new
 window picks up newly installed tools). Still not found? Run `echo $PATH`.
 The output should include `/usr/local/bin` (or `/opt/homebrew/bin` if you
 used Homebrew). If it doesn't, the installer will have told you how to add
-it; if you can't find that, tell your instructor.
+it; if you can't find that, tell your instructor. Using nvm? Tools you
+install with `npm install -g` belong to one Node.js version. If
+`node --version` shows a different version from the one you installed them
+with, run the `npm install -g` commands again in this window.
 
 ⚠️ **If you see…** *`EACCES` or "permission denied" when you run
 `npm install -g`:* your computer won't let you install for everyone without
 an administrator's password. Two ways round it:
 - **If you can**, reinstall Node.js with Homebrew (`brew install node`) or
-  nvm, then run the `npm install -g` command again. That avoids needing
+  with nvm (run the install line from https://github.com/nvm-sh/nvm, **close
+  the Terminal window and open a new one**, then run `nvm install 22`). Then
+  run the `npm install -g` command again. That avoids needing
   administrator rights for every install.
 - **If you can't** (for example, your company manages your laptop), put
   `sudo` in front of the same command, for example:
@@ -154,6 +164,21 @@ files and commands.
    - *How would you like to authenticate GitHub CLI?* **Login with a web
      browser**. It shows a one-time code. Press **Enter**, and your browser
      opens GitHub: type the code there and approve.
+
+   When you've approved in the browser, the terminal finishes by itself. It
+   prints a few lines, such as `✓ Authentication complete.` and
+   `✓ Configured git protocol`, and ends with `✓ Logged in as <your GitHub
+   name>`. Those lines are normal.
+
+   ⚠️ **If you see…** *(Linux only)*
+   - *`! Authentication credentials saved in plain text`:* expected on a
+     computer without a password store (keyring). Nothing needs fixing.
+   - *GitHub accepted the code, but `gh auth login` keeps waiting, and lines
+     starting `ERROR:` fill the terminal:* close the browser window `gh`
+     opened. `gh` then finishes, and those lines are harmless.
+   - *a message that it couldn't copy the code to the clipboard, suggesting
+     `xsel` or `xclip`:* ignore it, and type the code into the browser
+     yourself.
 
    Then run:
    ```
@@ -210,8 +235,8 @@ files and commands.
      including the Code tab of the Claude desktop app if you use it. They
      read the settings when they start, so one left open would keep running
      with the old settings and could confuse you later.
-   - **Undo it after the lab** with one command. "Put your machine back", at
-     the end of Module 9, lists every step.
+   - **Undo it after the lab.** "Put your machine back", at the end of
+     Module 9, lists every step.
 
    The cleanest option is still a separate user account on your computer
    (see "Why a clean bench matters" at the top of this module): then there's
@@ -226,8 +251,10 @@ files and commands.
    - **No settings file yet** (most people): it creates one.
    - **You already use Claude Code:** it saves a copy of your file
      (`settings.json.before-lab.bak`), then **adds** the lab's settings and
-     keeps all of yours, including any plugins you've installed. Nothing of
-     yours is removed.
+     keeps all of yours, including any plugins you've installed. The copy
+     is made only the first time, so running the command again never
+     overwrites it. The one setting of yours it takes out (the copy keeps
+     it) is one that switches auto mode off.
    - It ends by printing `Lab settings in place.`
 
    ✅ **Check:** **⌨️ You:**
@@ -243,16 +270,40 @@ files and commands.
    the line it names, then run the command again.
 4. **Claude Code:** run `claude` once and complete sign-in. You need a paid
    Claude plan (Pro, Max, Team or Enterprise) or a Claude Console account.
-   The free plan doesn't include Claude Code. **⌨️ You:** start it in your
-   home folder:
+   The free plan doesn't include Claude Code. A personal account is
+   simplest. A company Team or Enterprise seat works, but your
+   organisation's own settings can override the lab's: they can turn auto
+   mode off, or add plugins and connections you can't switch off. Steps 5
+   and 6 check for this. **⌨️ You:** start it in your home folder:
    ```
    cd ~
    claude
    ```
    You're only signing in here, so your home folder is fine. Follow its
-   sign-in steps (it opens your browser). When it asks whether you trust
-   this folder, choose **Yes**. Then **🤖 Claude:** type `/exit` and press
-   **Enter** to quit Claude.
+   sign-in steps. The first time, it may show a few screens before you can
+   type. If you've used Claude Code before, you may see only some of them,
+   or none:
+   - *Choose a text style (theme):* pick the one that's easiest to read, and
+     press **Enter**.
+   - *Select a login method:* choose your **Claude account with a
+     subscription** (Pro, Max, Team or Enterprise) and press **Enter**.
+     Choose the **Anthropic Console account** only if you pay by API usage.
+     Don't choose **3rd-party platform**.
+   - Your browser opens so you can sign in. If it doesn't, press `c` to copy
+     the sign-in link and open it in your browser. If the page then shows a
+     code, paste it into the terminal where it says
+     `Paste code here if prompted`.
+   - *Login successful:* press **Enter** to continue.
+   - *Security notes:* read them and press **Enter**.
+   - *Do you trust the files in this folder?* Check which choice is
+     highlighted before you press **Enter**: if it's **No, exit**, Enter
+     quits Claude. Use the **arrow keys** to select **Yes**, then press
+     **Enter**.
+   - *Try the new fullscreen renderer?* If it asks, use the arrow keys to
+     select **Not now** and press **Enter**. This guide describes the
+     standard view.
+
+   Then **🤖 Claude:** type `/exit` and press **Enter** to quit Claude.
 
    **How to tell you've left Claude:** Claude's input box (with `>` and a
    frame around it) is gone, and you see your normal terminal prompt again,
@@ -260,9 +311,10 @@ files and commands.
    inside Claude.
 5. **Your PDI, in private** (nobody watching your screen). Pick an
    **alias**: a short nickname you choose for this login, for example
-   `mypdi`. Write it in your values table as `<PDI_ALIAS>`. **⌨️ You**, in a
-   normal terminal (not inside Claude: see the end of item 4): run
-   this, with your instance's address from Step 1 (for example
+   `mypdi`. Write it in your values table as `<PDI_ALIAS>`. Your PDI must
+   be awake: open its address in your browser first (see Step 1's ⚠️).
+   **⌨️ You**, in a normal terminal (not inside Claude: see the end of
+   item 4): run this, with your instance's address from Step 1 (for example
    `https://dev123456.service-now.com`) and your alias:
    ```
    now-sdk auth --add https://<your-instance>.service-now.com --type basic --alias <PDI_ALIAS>
@@ -278,6 +330,18 @@ files and commands.
 normal terminal, not in Claude, `now-sdk auth --list` shows your alias.
 Don't show that output to anyone or paste it anywhere: it names your
 instance.
+
+⚠️ **If you see…** *a line starting `[now-sdk] ERROR:` after
+`now-sdk auth --add`:* the sign-in failed, even though the command
+finished. Check your PDI is awake and your admin password is right, then
+run the `now-sdk auth --add` line again.
+
+⚠️ **If you see…** *`now-sdk auth --list` says `No credentials found` right
+after a sign-in that looked fine:* the SDK says this both when nothing is
+saved and when it can't read your computer's password store (on a Mac, the
+Keychain). Run the `now-sdk auth --add` line again, then
+`now-sdk auth --list` straight away. Still missing? Open **Keychain Access**,
+make sure your **login** keychain is unlocked, and tell your instructor.
 
 ### Step 4 — Your two folders
 
@@ -336,12 +400,32 @@ creates.
    cd ~/projects/priority-guard
    claude
    ```
-   When it asks whether you trust this folder, choose **Yes**.
+   When it asks whether you trust this folder, use the **arrow keys** to
+   select **Yes**, then press **Enter** (if **No, exit** is highlighted,
+   Enter quits Claude).
+
+   ✅ **Check:** under Claude's input box, the status line shows
+   `⏵⏵ auto mode on`.
+
+   ⚠️ **If you see…** *`⏸ manual mode on` instead:* auto mode is off.
+   **🤖 Claude:** type `/exit`. **⌨️ You:** run the `--check` command from
+   Step 3 item 3. If it says the lab settings aren't in place, run the merge
+   command from Step 3 item 3 again, then start Claude again. If it says
+   they're in place, auto mode is off for another reason: your organisation
+   turned it off (on a company Team or Enterprise seat), your account or
+   Claude Code version doesn't have it, or the model you've selected doesn't
+   support it. You can still do the lab: Claude will ask before more
+   actions, and the *When Claude asks permission* box in the
+   [README, section 7](README.md#7-how-to-read-a-module) tells you what to
+   choose. Tell your instructor before the day.
 2. **🤖 Claude:** add the kit's marketplace, pinned to a release, then
    install the plugin. Type each line and press **Enter**:
    ```
    /plugin marketplace add gapietro/prove-it-kit#v0.1.3
    ```
+   It prints a line such as `Successfully added marketplace: prove-it`, and
+   may also print a line starting `Reloaded:`. Both are expected: the plugin
+   isn't installed until the next line.
    ```
    /plugin install prove-it@prove-it
    ```
@@ -349,11 +433,19 @@ creates.
    scope)**. Restart if Claude Code asks you to. **To restart Claude:**
    type `/exit`, then, in the same Terminal window (you're still in
    `~/projects/priority-guard`), type `claude` and press **Enter**.
-3. **🤖 Claude:** type `/prove-it:` and **don't press Enter.** Look at the menu.
+
+   ⚠️ **If you see…** *`/plugin marketplace add` fails with "not found" or a
+   permission error:* check you typed `gapietro/prove-it-kit#v0.1.3`
+   exactly, and try again. Still failing? Note the exact error and tell
+   your instructor.
+3. **🤖 Claude:** type `/prove-it:` and **don't press Enter.** Look at the
+   menu. When you've looked, press **Esc** once to close the menu, then
+   press **Backspace** until the input line is empty.
 4. **🤖 Claude:** type `/code-review` and **don't press Enter.** Check that it appears. It's
    built into Claude Code. **Don't install the `code-review` plugin** from a
    marketplace: that's a different tool, and `/plugin` must show only
-   `prove-it`.
+   `prove-it`. Then press **Esc** once and **Backspace** until the input
+   line is empty again.
 
 ✅ **Check:** the menu shows exactly five kit commands, `/prove-it:consult`,
 `/prove-it:design-challenge`, `/prove-it:build-plan`, `/prove-it:grade` and
@@ -364,6 +456,12 @@ older than 2.1.147. **🤖 Claude:** type `/exit`. **⌨️ You:** run
 `claude update`, check `claude --version` shows `2.1.147` or higher, then
 start Claude again with `claude`.
 
+⚠️ **If you see…** *only `/code-review:` followed by more text (with a
+colon):* that's the `code-review` plugin, not the built-in command. Switch
+it off: **🤖 Claude:** type `/exit`. **⌨️ You:** run `claude plugin list`
+to see its name, then `claude plugin disable <name>` with that name. Start
+`claude` again and type `/code-review` again.
+
 ⚠️ **If you see…** *other commands besides the five:* other plugins are
 installed. Note which ones. Ideally, disable them for this lab (Step 6
 shows how).
@@ -372,13 +470,18 @@ shows how).
 
 **Why this step:** Anything extra Claude can see, such as a personal instruction file or a connection to another tool, changes how it behaves. Checking now means what you see in the lab comes from the lab, not from your own setup.
 
-There are three separate checks. Do them **one at a time**, and finish
+There are four separate checks. Do them **one at a time**, and finish
 each one before you start the next.
 
 **6a. Plugins. 🤖 Claude:**
-1. Type `/plugin` and press **Enter**. A menu opens.
-2. Look at the **Installed** list.
-   ✅ **Check:** the only plugin there is `prove-it`.
+1. Check Claude's input line is empty, then type `/plugin` and press
+   **Enter**. A menu opens.
+2. Open the **Installed** tab (the menu may open on another tab: press
+   **Tab** to move between tabs). Don't press **Space** or **Enter** on a
+   plugin's row: **Space** switches the plugin off.
+   ✅ **Check:** among the plugins you installed (for example under
+   **User**), the only one is `prove-it`. A **Built-in** group, if you see
+   one, comes with Claude Code: leave it.
 3. Press **Esc** until the menu closes and you're back at Claude's normal
    prompt (the `>` where you type to Claude).
 
@@ -401,8 +504,23 @@ ls ~/.claude/CLAUDE.md
 ✅ **Check:** `ls` says the file doesn't exist. It prints
 `ls: /Users/<you>/.claude/CLAUDE.md: No such file or directory`.
 
+**6e. Kit version. ⌨️ You:** in the same terminal:
+```
+claude plugin list
+```
+✅ **Check:** `prove-it@prove-it` is listed, with `Version: 0.1.3` and
+`Status: ✔ enabled` under it.
+
+⚠️ **If you see…** *`prove-it` with another version (for example `0.1.2`):*
+the kit's marketplace was added earlier, without `#v0.1.3`. **⌨️ You:**
+`cd ~/projects/priority-guard && claude`. Then **🤖 Claude:** type
+`/plugin marketplace remove prove-it`, and redo Step 5 from item 2. Then
+come back and do checks 6a to 6e again.
+
 **⌨️ You (another way to do 6a and 6b):** the same checks can be run from
-the terminal. Use these if `/mcp` isn't recognised in your version:
+the terminal, in your workspace (`cd ~/projects/priority-guard` first:
+`claude mcp list` also shows servers set up for the folder you're in). Use
+these if `/mcp` isn't recognised in your version:
 ```
 claude plugin list
 claude mcp list
@@ -410,8 +528,8 @@ claude mcp list
 - `claude plugin list` shows which plugins are installed and switched on.
 - `claude mcp list` shows connections to other tools (MCP servers).
 
-✅ **Check:** only `prove-it` is installed and switched on. No MCP servers
-are listed.
+✅ **Check:** the only plugin you installed that's switched on is
+`prove-it`. No MCP servers are listed.
 
 ⚠️ **If you see…** *a personal `CLAUDE.md`, MCP servers or other plugins:*
 they'll shape what Claude does in the lab. Use a separate user account, or
@@ -432,8 +550,17 @@ after the lab ("Put your machine back", at the end of Module 9).
   ```
   Or **🤖 Claude:** type `/plugin`, open the installed plugins, select each
   one other than `prove-it`, and choose **Disable**.
-- **MCP servers:** **⌨️ You:** first save each one's settings, so you can
-  add it back after the lab, then remove it:
+- **MCP servers:** a server whose name starts with `claude.ai` comes from
+  your Claude account, and `claude mcp remove` can't remove it: it means
+  the lab settings aren't active yet. Close every Claude Code window and
+  run the `--check` command from Step 3 item 3. If it says the lab settings
+  aren't in place, run the merge command from Step 3 item 3, then check
+  again. If it says they're in place and the server is still listed, tell
+  your instructor (a company seat can force it). A server
+  whose name starts with `plugin:` comes from a plugin: switch that plugin
+  off (the **Other plugins** bullet above). For any other server,
+  **⌨️ You:** first save its settings, so you can add it back after the
+  lab, then remove it:
   ```
   claude mcp get <name> >> ~/projects/priority-guard-notes/mcp-before-lab.txt
   claude mcp remove <name>
@@ -442,7 +569,7 @@ after the lab ("Put your machine back", at the end of Module 9).
   file in your notes folder. Run `claude mcp list` again to check they've
   gone. If one won't go, tell your instructor.
 
-Then do checks 6a to 6d again.
+Then do checks 6a to 6e again.
 
 ### Step 7 — A second browser profile
 
@@ -566,8 +693,10 @@ once a file is committed it stays in the history.
    in Step 5, outside the workspace, then copy the allow list and start a
    README:
    ```
-   Clone the public repo gapietro/prove-it-kit to ~/projects/prove-it-kit
-   with gh repo clone, then detach it at the tag v0.1.3:
+   If ~/projects/prove-it-kit doesn't exist yet, clone the public repo
+   gapietro/prove-it-kit to it with gh repo clone. If it already exists,
+   don't clone it again: run git -C ~/projects/prove-it-kit fetch --tags
+   instead. Either way, then detach it at the tag v0.1.3:
    git -C ~/projects/prove-it-kit switch --detach v0.1.3
    Then copy ~/projects/prove-it-kit/templates/gitignore.allowlist to
    ~/projects/priority-guard/app/.gitignore, and create
@@ -577,12 +706,19 @@ once a file is committed it stays in the history.
    anything. Don't read anything outside ~/projects/priority-guard and
    ~/projects/prove-it-kit.
    ```
-2. **✏️ Editor:** open `~/projects/priority-guard/app/.gitignore` and read
+2. **🔍 Check** that the kit copy is the right version:
+   ```
+   Run exactly this and show me the raw output, unedited:
+   git -C ~/projects/prove-it-kit describe --tags
+   ```
+   It prints exactly `v0.1.3`. (An older copy would hand out older kit
+   files.)
+3. **✏️ Editor:** open `~/projects/priority-guard/app/.gitignore` and read
    it. Find the line `/*`. That line hides everything; the `!` lines let
    things back in.
 
-✅ **Check:** you can point to the line that hides everything, and to the
-lines that admit `README.md` and `.gitignore`.
+✅ **Check:** the kit copy is `v0.1.3`. You can point to the line that hides
+everything, and to the lines that admit `README.md` and `.gitignore`.
 
 #### 8.3 — Install the guard
 
@@ -747,7 +883,9 @@ nothing you add to it will.
    cd ~/projects/priority-guard/app
    claude
    ```
-   When it asks whether you trust this folder, choose **Yes**.
+   When it asks whether you trust this folder, use the **arrow keys** to
+   select **Yes**, then press **Enter** (if **No, exit** is highlighted,
+   Enter quits Claude).
 
    **🤖 Claude** (`~/projects/priority-guard/app`): type this prompt:
    ```
