@@ -219,7 +219,7 @@ Switch each off, and note it in `LOG.md` for Module 9 to undo.
 Your app's code gets its own repo, fenced in two ways: it ignores every
 file you haven't named, and a guard checks each commit for secrets.
 
-### 12. Look up your scope and your noreply email
+### 12. Look up your scope
 
 🌐 **Browser:**
 1. In your **Admin** profile, type `sys_properties.list` in the filter
@@ -228,9 +228,6 @@ file you haven't named, and a guard checks each commit for secrets.
    your vendor prefix, such as `123456`.
 2. Your scope is `x_<prefix>_pg_<your initials>`, such as `x_123456_pg_ga`,
    at most 18 characters. ✏️ Write it in `LOG.md`.
-3. On GitHub, open **Settings → Emails** and tick **Keep my email addresses
-   private**. Copy the noreply address it shows, such as
-   `12345678+sam-lee@users.noreply.github.com`.
 
 ### 13. Create the app
 
@@ -258,19 +255,18 @@ asks if you trust it:
 ```
 claude
 ```
-🤖 **Claude:** paste this, then type your noreply email from step 12, such
-as `12345678+sam-lee@users.noreply.github.com`, and press **Enter**:
+🤖 **Claude:** paste this and press **Enter**:
 ```
 Set up this folder as my app's repo. Make sure ~/projects/prove-it-kit is
 gapietro/prove-it-kit at tag v0.1.3: clone it if it's missing, otherwise
 fetch tags and switch to the tag. Run git init -b main. For this repo only,
-set user.email to the email below and user.name to my GitHub username, the
-part of it between + and @ (or before @ if it has no +). Replace .gitignore
-with the kit's templates/gitignore.allowlist. Install the kit's
-hooks/pre-commit-guard.sh as the pre-commit hook. Delete
-src/fluent/example.now.ts and src/server/script.ts and any import of them.
-Make README.md the single line "# Priority Guard". Then run npm install and
-now-sdk build, and stop if the build fails. Commit nothing. My email:
+set user.email to my GitHub noreply address, id+login@users.noreply.github.com,
+with my id and login from gh api user. Replace .gitignore with the kit's
+templates/gitignore.allowlist. Install the kit's hooks/pre-commit-guard.sh
+as the pre-commit hook. Delete src/fluent/example.now.ts and
+src/server/script.ts and any import of them. Make README.md the single line
+"# Priority Guard". Then run npm install and now-sdk build, and stop if the
+build fails. Commit nothing.
 ```
 ✅ The `now-sdk build` output ends with `Build completed successfully`.
 
@@ -313,22 +309,8 @@ The guard can't be trusted: that's a real catch. Write `0 | guard | …` in
 echo "# Priority Guard" > README.md
 git add README.md
 git commit -m "chore: initial scaffold"
-git log --format='%an <%ae> %s'
 ```
-✅ The last line shows your GitHub username, your noreply email and
-`chore: initial scaffold`, such as
-`sam-lee <12345678+sam-lee@users.noreply.github.com> chore: initial scaffold`.
-
-<details><summary>🛟 The name or email is wrong</summary>
-
-Run these with your own GitHub username and noreply email from step 12:
-```
-git config user.name sam-lee
-git config user.email 12345678+sam-lee@users.noreply.github.com
-git commit --amend --reset-author --no-edit
-git log --format='%an <%ae> %s'
-```
-</details>
+✅ Git prints `[main (root-commit) …] chore: initial scaffold`.
 
 ## You now have
 
