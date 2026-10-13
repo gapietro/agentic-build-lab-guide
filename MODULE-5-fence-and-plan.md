@@ -20,15 +20,13 @@ Instance alias lab-pdi.
 The design record will be docs/DESIGN-PriorityGuard.md: the contract. The
 LLD, docs/LLD-PriorityGuard.md, is background, frozen at sign-off: if they
 disagree, the design record wins. The workspace is one folder up. No
-hostnames, no credentials. Leave .gitignore to me, and commit nothing.
+hostnames, no credentials. At the end of .gitignore, add only these allow
+lines, one per line: !/CLAUDE.md, !/docs/, !/SESSION-NOTE.md. Commit
+nothing.
 ```
 ✏️ **Editor:** read `CLAUDE.md`. `ship it` comes from its **Ship ritual**.
 
-### 2. Admit the files, then read every name
-
-✏️ **Editor:** allow lines are your decision. At the end of `app/.gitignore`,
-add `!/CLAUDE.md`, `!/docs/` and `!/SESSION-NOTE.md` by hand, one per line,
-and press **Enter** after the last.
+### 2. Read every name
 
 ⌨️ **Terminal**, in your window (**Cmd+N**). `-n` makes `git add` a dry run:
 ```
@@ -42,14 +40,15 @@ grep -n -i 'service-now' CLAUDE.md ../docs/*.md
 
 <details><summary>🛟 Any other name is listed</summary>
 
-✏️ Delete the `.gitignore` line that admits it, then run `git add -n .`
-again.
+🤖 **Claude:** `Remove the .gitignore line that admits <the name listed>.`
+Then run `git add -n .` again.
 </details>
 
 <details><summary>🛟 grep prints a line</summary>
 
-✏️ At the line it names, replace your instance's host, such as
-`dev123456.service-now.com`, with `<instance>`. Run the `grep` again.
+🤖 **Claude:** `In CLAUDE.md and ../docs/*.md, replace my instance's host
+name, such as dev123456.service-now.com, with the text <instance>.` Then
+run the `grep` again.
 </details>
 
 ### 3. Commit, and go private on GitHub
@@ -95,9 +94,10 @@ answer the new preview. **Never approve a preview you answered no to.**
 
 <details><summary>🛟 It refuses: the record is unsigned</summary>
 
-✏️ Fill in the gap it names in `docs/DESIGN-PriorityGuard.md`. Then 🤖
-`Commit only docs/DESIGN-PriorityGuard.md on docs/plan.`, and run
-`/prove-it:build-plan docs/DESIGN-PriorityGuard.md` again.
+🤖 **Claude:** type `/clear`, then `I approve docs/DESIGN-PriorityGuard.md.
+Sign its empty §9 or §10 cells for me as <your name>, today, and commit only
+that file on docs/plan.` Then run `/prove-it:build-plan
+docs/DESIGN-PriorityGuard.md` again.
 </details>
 
 ### 6. File the plan, and take your first count

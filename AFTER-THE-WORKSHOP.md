@@ -199,10 +199,12 @@ docs/DESIGN-PriorityGuard.md`. At the read-back, type `Confirmed.`, or
 
 ### 2. Sign and merge it
 
-✏️ **Editor:** in `priority-guard/app/docs/DESIGN-PriorityGuard.md` §10,
-type your name in each blank **Signed by**. ✅ No term was renumbered or
-deleted. Then 🤖 `Commit docs/DESIGN-PriorityGuard.md on a new branch
-docs/amend-floor, then ship it.`
+🤖 **Claude:** type `/clear`, then, with your name:
+```
+I approve the amendment. In docs/DESIGN-PriorityGuard.md §10, sign each
+blank Signed by for me as <your name>. Then commit that file on a new
+branch docs/amend-floor, and ship it.
+```
 
 ### 3. File and build it
 
@@ -235,10 +237,13 @@ a preview. Build its findings as in Part 1.
 
 ### 2. Freeze a runbook
 
-🤖 **Claude**, fresh session: `/prove-it:handoff`. ✏️ In `RUNBOOK.md`,
-by hand, replace each `VERIFY` with a list name, such as
-`sys_properties.list`, and fix any index row pointing anywhere but platform
-screens and the app's own lists and logs. ⌨️ In your window:
+🤖 **Claude**, fresh session: `/prove-it:handoff`. Then:
+```
+In RUNBOOK.md, replace each VERIFY with the table list for that screen,
+such as sys_properties.list, and point every index row only at platform
+screens and the app's own lists and logs. Show me each change first.
+```
+Approve the changes, or correct them. ⌨️ In your window:
 ```
 grep -c VERIFY RUNBOOK.md
 git diff .gitignore

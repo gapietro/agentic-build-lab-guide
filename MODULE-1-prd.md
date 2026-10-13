@@ -34,16 +34,20 @@ Don't edit any file.
 ✏️ **Editor:** find the quoted sentence for **two** supported items, and
 check every **"no source"** and every statement **left out** yourself.
 
-### 4. Decide each gap, and edit by hand
+### 4. Decide each gap
 
-For each real gap:
-- **No input asked for it:** take it out.
-- **An input asked, the PRD dropped it:** put it back in its capability.
-  Never add a capability number.
-- **The inputs disagree, or leave who or how undecided:** list it under
-  **7. Open decisions**. Never pick a side.
+Decide each real gap as one line:
+- **No input asked for it:** `Take out <what>: no input asks for it.`
+- **An input asked, the PRD dropped it:** `Put <what> back in capability <n>.`
+- **The inputs disagree, or leave who or how undecided:** `List <what>
+  under 7. Open decisions.`
 
-✏️ **Editor:** edit `priority-guard-prd-review/PRD-PriorityGuard.md`.
+🤖 **Claude:** paste this, then your lines, and press **Enter**:
+```
+Edit PRD-PriorityGuard.md with my decisions below, and nothing else. Never
+add a capability number, and never pick a side where the inputs disagree.
+My decisions:
+```
 
 ### 5. Log it
 
@@ -57,24 +61,26 @@ guard, test, review, partner, grade, drill. Show me the lines, then append
 the ones I confirm or add to ~/projects/priority-guard/catches.md.
 ```
 Confirm a line for each gap you fixed in step 4, such as `1 | prd | The PRD
-asked for something no input mentioned; I took it out`. Then type `/exit`.
+asked for something no input mentioned; I took it out`.
 
 ### 6. Get the customer's acceptance
 
 At about **09:25** your instructor, as the customer, answers the room's open
 decisions once. Not ready then? Ask for the answers when you get here.
 
-✏️ **Editor:** put each answer in the capability it affects, and set
-**7. Open decisions** to `None.` Fill in **8. Acceptance**: the customer's
-name and role as given, today's date, and the name again as signature.
-
-⌨️ **Terminal:**
+🤖 **Claude:** paste this, then type the customer's answers, name and role:
+```
+Put the customer's answers below into the capabilities they affect, and set
+7. Open decisions to "None." Fill in 8. Acceptance with the customer's name
+and role, today's date, and the name again as signature. Change nothing
+else. The answers:
+```
+Type `/exit`. Then ⌨️ **Terminal:**
 ```
 cp ~/projects/priority-guard-prd-review/PRD-PriorityGuard.md ~/projects/priority-guard/brief/
 ls ~/projects/priority-guard/brief
 ```
-✅ `ls` prints only `PRD-PriorityGuard.md`. In it, **7. Open decisions**
-says `None.`, **8. Acceptance** is filled in, and no capability is renumbered.
+✅ `ls` prints only `PRD-PriorityGuard.md`.
 
 ## You now have
 

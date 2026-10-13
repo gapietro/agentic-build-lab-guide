@@ -82,21 +82,16 @@ the ones I confirm or add to ~/projects/priority-guard/catches.md.
 ```
 Confirm a `design` line for each question your LLD couldn't answer, such
 as who may edit the critical list, with the term it added. Terms you added
-at the read-back, and gaps left `OPEN`, aren't catches. Then type `/exit`.
+at the read-back, and gaps left `OPEN`, aren't catches. Then type `/clear`.
 
-### 6. Read and sign it
+### 6. Approve it
 
-✏️ **Editor:** read every term: is each one what you agreed?
-- An `OPEN` term your LLD answers: replace `OPEN` by hand. Leave the rest
-  for the build plan.
-- §8: each option you rejected is there, with its reason.
-
-In §9 Approval, fill in the empty row `| | | | |`: your name, `developer`,
-today's date, your name again, such as
-`| Sam Lee | developer | 2026-10-14 | Sam Lee |`. Don't add a row. Save.
-
-✅ All four cells are real, not `TBD`, `-` or `<…>`: the build plan refuses
-an empty cell.
+🤖 **Claude:** with your name, such as Sam Lee:
+```
+I approve docs/DESIGN-PriorityGuard.md. Sign its §9 Approval for me:
+<your name>, developer, today's date, <your name>.
+```
+Then type `/exit`.
 
 ## You now have
 

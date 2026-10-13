@@ -85,7 +85,7 @@ Check each mark against its output line, and correct any, such as
 `Fact 3: production only, not on dev.` "Couldn't check" suits what doesn't
 exist yet.
 
-### 5. Draft the LLD
+### 5. Draft and sign the LLD
 
 🤖 **Claude:**
 ```
@@ -95,7 +95,9 @@ capability. Section 7 lists every fact with my result, exactly as I
 reported it. Anything undecided goes in section 8: never invent a business
 decision. Show me a summary first; don't write the file yet.
 ```
-Fix the summary if needed, then type `Looks right. Write the file.`
+Fix the summary if needed. Then approve it, with your name, such as
+`Looks right. Write the file, and sign §9 for me: Sam Lee, developer,
+today's date, Sam Lee.`
 
 ### 6. Log it
 
@@ -110,15 +112,6 @@ the ones I confirm or add to ~/projects/priority-guard/catches.md.
 ```
 Confirm a `research` line for each claim your instance contradicted or didn't
 support, if it changed your LLD. Then type `/exit`.
-
-### 7. Review and sign it by hand
-
-✏️ **Editor:** open `priority-guard/docs/LLD-PriorityGuard.md`. Check that
-§1 lists every PRD capability as built, or deferred with a reason; that §7
-matches the script output and your checks by hand; and that no `<…>` is
-left. Fix anything yourself. Then sign §9: in its empty row `| | | | |`,
-type your name, `developer`, today's date (YYYY-MM-DD) and your name again.
-Don't add a row.
 
 ## You now have
 
