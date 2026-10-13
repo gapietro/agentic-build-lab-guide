@@ -1,153 +1,79 @@
 # Module 9 — What the process caught
 
-*Workshop · 15:55 · 15 minutes*
+*⏱ 15 min · 15:55*
 
-**In the workshop:** Step 1 (count) and Step 2 (the room's board), kept
-short. Steps 3 and 4 are quick: do them in the room, but if time is short,
-do Step 4 at home.
+Count your catches from your notes, not memory, and decide what to take home.
 
-[← Module 8](MODULE-8-grade-and-handoff.md) · [Lab home](README.md)
+### 1. Count your catches
 
----
-
-## What you'll do
-
-Count, from your notes and not from memory, everything the process stopped
-before it reached your app. Then decide what you'll take back to your own
-work.
-
----
-
-## Step 1 — Count your catches
-
-**Why this step:** Memory makes some catches feel bigger and forgets others. Counting from your notes gives you numbers you can show and stand behind.
-
-**⌨️ You** (any folder): count your catches. This counts the lines that
-contain a `|`, so a stray heading or blank line isn't counted:
+⌨️ **Terminal**, in your window:
 ```
 grep -c '|' ~/projects/priority-guard-notes/catches.md
-```
-Then count them by what caught them. `cut` takes the middle part of each
-line, `tr` removes the spaces around it (so `review` and ` review ` count as
-one), and `sort | uniq -c` counts each kind:
-```
 grep '|' ~/projects/priority-guard-notes/catches.md | cut -d'|' -f2 | tr -d ' ' | sort | uniq -c
 ```
+✅ Your total, then a count per kind, such as `3 design`.
 
-✅ **Check:** two numbers you can stand behind: your total, and your biggest
-single source of catches.
+### 2. Add yours to the room's board
 
-## Step 2 — The room's board
+Add your counts to your instructor's columns. Then ask together:
+1. **Which column is biggest?** There the process paid for itself.
+2. **Which came before any code?** `prd`, `consult`, `research`, `design`:
+   the cheapest.
+3. **Which came from an inspection?** `review` and `grade` today, `partner`
+   and `drill` later. Your own tests had passed first.
 
-**Why this step:** One person's numbers could be luck. The whole room's board shows where the process stopped problems most often.
+### 3. Write down what's real
 
-Your instructor puts a board up with one column per kind of catch:
-`prd`, `consult`, `research`, `design`, `guard`, `test`, `review`, `partner`,
-`grade`, `drill`. Add your counts. After one day, some columns, such as
-`partner` and `drill`, are usually empty: those come from the
-after-the-workshop parts.
+✏️ **Editor:** in `LOG.md`, write three short lists:
+- **Real:** what you saw work live, as `agent.demo`.
+- **Staged:** what ran only on demo data, or only in tests.
+- **Not built:** capability 6, the override (4), the weekly count (5), what
+  your grade left open, the runbook, the drill and the verdict.
 
-Look at the board together. Three questions:
-1. **Which column is biggest?** That's where the process paid for itself.
-2. **Which catches happened before any code existed?** (prd, consult,
-   research, design) Those were the cheapest ones.
-3. **Which catches came from an inspection, not from the builder's own
-   testing?** (review, partner, grade, drill) The builder's own tests had
-   passed before every one of them.
+### 4. Take it home
 
-## Step 3 — What's real, what's staged, what's not built
-
-**Why this step:** The most expensive mistake in a fast project is believing something's more ready than it is. Saying it out loud, in writing, is the habit.
-
-In `LOG.md`, write three short lists about **your** Priority Guard:
-- **Real:** what you saw work on the instance, as an ordinary agent.
-- **Staged:** what only ran on demo data, or only in tests.
-- **Not built:** capability 6 (smart urgency: the AI piece), plus
-  capability 4 (the override) and capability 5 (the weekly count) if you
-  stopped at the workshop slice, and anything your grade or verdict left
-  open. Add the after-the-workshop parts you haven't done yet: the runbook,
-  the drill and the verdict, at least.
-
-## Step 4 — Take it home
-
-If time is short, do this step at home.
-
-**Why this step:** A workshop only matters if it changes what you do next week. Writing down one next step, and what's missing to take it, makes it more likely to happen.
-
-Write one sentence for each:
-1. The **next real piece of work** you'll build this way.
-2. The **one stage** you'd keep even if you dropped all the others.
-3. The **building block** you're missing at work today: a dev instance, a
-   repo with review, a starter kit, an approver, or something else.
-
----
+✏️ **Editor:** in `LOG.md`, write one sentence each: the next real work
+you'll build this way, the one stage you'd keep, and the building block
+you're missing at work. Short of time? Do it at home.
 
 ## The three things to remember
 
-1. **The AI is the crew, not the inspector.** It types. People and checks
-   decide.
-2. **A check only counts if it could have failed.** You beat the guard, and
-   tried to break the floor and the app on purpose. That's how you know the
-   checks work.
-3. **Everything is written down.** Inputs, PRD, consult, LLD, signed design, plan,
-   tests, grade, and after the workshop the runbook and verdict. Someone else
-   could pick your app up tomorrow.
-
----
+1. **The AI is the crew, not the inspector.** People and checks decide.
+2. **A check only counts if it could have failed.**
+3. **Everything is written down.** Someone else could pick your app up.
 
 ## After the lab: put your machine back
 
-**Why this step:** Module 0 changed a few things on your computer so every
-pair worked the same way. This puts them back, so Claude Code behaves the way
-it did before the lab. Skip it if you did the lab in a separate user account
-or a fresh machine: there, just delete that account when you're done.
+Used a separate user account? Skip this part.
 
-Close every Claude Code window first (type `/exit` in each). Then, in a
-normal terminal, **⌨️ You**:
+### 5. Put your settings back
 
-1. **Your Claude Code settings.** First get the latest guide, so you run
-   the newest version of the script. If you cloned the guide:
-   ```
-   git -C ~/projects/agentic-build-lab-guide pull
-   ```
-   If you used the zip, get the newest `agentic-build-lab-guide.zip` from
-   your instructor (or from whoever sent you the first one), and unzip it
-   over your old copy with the command in the README, section 3. When it
-   asks whether to replace a file, type `A` (all) and press **Enter**.
-   Then put your own settings back:
-   ```
-   node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --restore
-   ```
-   If you had a settings file before the lab, it's put back exactly as it
-   was. If you didn't, the lab's settings are taken out; anything Claude
-   Code added by itself (such as the kit's plugin entry) stays, and the
-   file is removed if nothing else is left. It also keeps a copy of the
-   lab's settings, `settings.json.lab.bak`, for reference. Running it twice
-   is safe: the second time it changes nothing.
+⌨️ **Terminal**, with every Claude window closed (`/exit`):
+```
+git -C ~/projects/agentic-build-lab-guide pull
+node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --restore
+node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check
+```
+✅ The last command says `Lab settings NOT in place:`. That's what you want.
 
-   **Coming back later** (for example, for the after-the-workshop track)?
-   Run `node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs` again. Don't copy `settings.json.lab.bak` back by hand.
-2. **Anything you switched off in Module 0 Step 6.** Your `LOG.md` lists what
-   you changed:
-   - a personal `CLAUDE.md`: `mv ~/.claude/CLAUDE.md.off ~/.claude/CLAUDE.md`
-   - each plugin you disabled: `claude plugin enable <name>`
-   - each MCP server you removed: open
-     `~/projects/priority-guard-notes/mcp-before-lab.txt`, which holds how
-     each one was set up, and add it back the same way you first added it
-     (or ask Claude, once your settings are restored, to help you re-add it
-     from that file).
-3. **The kit (optional).** If you won't use it again:
-   **🤖 Claude:** `/plugin uninstall prove-it@prove-it`, then
-   `/plugin marketplace remove prove-it`.
-4. **The ServiceNow SDK login (optional).** If you won't use this instance
-   again: `now-sdk auth --delete <PDI_ALIAS>`.
-5. **The lab's folders (optional).** Your work lives in `~/projects` and on
-   GitHub. Keep it, or delete the folders when you no longer need them.
+### 6. Switch back on what Module 0 switched off
 
-✅ **Check:** `node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs --check`
-now says the lab settings are **not** in place (unless you already had them
-before the lab), and `claude plugin list` shows your plugins as they were
-(plus `prove-it`, if you had no settings file before the lab and kept the
-kit in item 3).
-Your past conversations resume as before.
+⌨️ **Terminal:** only what `LOG.md` lists:
+- `mv ~/.claude/CLAUDE.md.off ~/.claude/CLAUDE.md`
+- `claude plugin enable <name>`, for each plugin
+- MCP servers: as `~/projects/priority-guard-notes/mcp-before-lab.txt` shows
 
+### 7. Remove the kit and the SDK login
+
+⌨️ **Terminal**, only if you're done with the lab for good:
+```
+claude plugin uninstall prove-it@prove-it
+claude plugin marketplace remove prove-it
+now-sdk auth --delete lab-pdi
+```
+
+## You now have
+
+- Your catches counted, your notes in `LOG.md`, your machine as before.
+- Coming back for [After the workshop](AFTER-THE-WORKSHOP.md)? First run
+  `node ~/projects/agentic-build-lab-guide/files/merge-claude-settings.mjs`.
