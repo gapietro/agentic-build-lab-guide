@@ -49,6 +49,15 @@ check again.
 
 </details>
 
+<details><summary>🛟 Copying the script doesn't work</summary>
+
+Copying from Claude's window can break the script. Ask Claude for help, or
+have it write the script to a file. 🤖 **Claude:**
+`Write that script to research-script.js in this folder.` Then ✏️ **Editor:**
+open `priority-guard/research-script.js`, press **Cmd+A**, then **Cmd+C**.
+
+</details>
+
 ### 3. Run it in Scripts - Background
 
 🌐 **Browser**, **Admin** profile: type `sys.scripts.do` in the filter
