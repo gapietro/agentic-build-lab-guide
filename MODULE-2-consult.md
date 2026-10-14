@@ -74,12 +74,9 @@ ownership**), and any requirement not **ready**. Compare with your guess.
 ```
 Capability 2 says an incident on a critical service can never be saved
 below its floor. If AI adjusts the priority in capability 6, can it lower it
-below the floor? If it can, what should change?
-```
-🤖 If its advice changes, record it, with the new advice as
-`<the new decision>`, such as `is deferred`:
-```
-Update CONSULT.md: capability 6 <the new decision>, with that reason.
+below the floor? If it can, what should change? If your advice changes,
+update capability 6 in CONSULT.md with the new advice and its reason, and
+show me the change.
 ```
 
 ### 7. Log it
