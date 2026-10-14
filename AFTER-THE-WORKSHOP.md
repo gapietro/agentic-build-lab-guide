@@ -29,7 +29,7 @@ claude plugin disable <name>
 5. §6: tests as an ordinary agent.
 6. §7: matches your Module 3 script.
 
-Never edit the signed LLD: a behaviour change goes to
+Never edit the LLD: a behaviour change goes to
 [Part 3](#part-3--change-the-design-when-a-fix-needs-it).
 
 ### 2. Find the next gate
@@ -206,16 +206,15 @@ swap back, and do step 2 for it. Then attack theirs.
 ⌨️ In your window: `git switch main && git pull && git status --short`.
 ✅ It prints nothing. 🤖 **Claude**, fresh session in the repo, after the
 session open: `/prove-it:design-challenge amend
-docs/DESIGN-PriorityGuard.md`. At the read-back, type `Confirmed.`, or
-`Not agreed yet.` and what to change.
+docs/DESIGN-PriorityGuard.md`. At the read-back, type `Confirmed.` and then
+your name and role when it asks, or `Not agreed yet.` and what to change.
 
-### 2. Sign and merge it
+### 2. Merge it
 
 🤖 **Claude:** type `/clear`, then:
 ```
-I approve the amendment. Ask me my name, then in
-docs/DESIGN-PriorityGuard.md §10, sign each blank Signed by for me with it.
-Then commit that file on a new branch docs/amend-floor, and ship it.
+Commit docs/DESIGN-PriorityGuard.md on a new branch docs/amend-floor, and
+ship it.
 ```
 
 ### 3. File and build it

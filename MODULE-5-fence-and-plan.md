@@ -20,7 +20,7 @@ Copy ~/projects/prove-it-kit/templates/CLAUDE.md to CLAUDE.md and fill in
 its Project facts, with the scope from now.config.json; keep the rules.
 Instance alias lab-pdi.
 The design record will be docs/DESIGN-PriorityGuard.md: the contract. The
-LLD, docs/LLD-PriorityGuard.md, is background, frozen at sign-off: if they
+LLD, docs/LLD-PriorityGuard.md, is background, frozen once written: if they
 disagree, the design record wins. The workspace is one folder up. No
 hostnames, no credentials. At the end of .gitignore, add only these allow
 lines, one per line: !/CLAUDE.md, !/docs/, !/SESSION-NOTE.md. Commit
@@ -70,7 +70,7 @@ the last commit straight to `main`.
 ```
 Create and switch to a branch, docs/plan. Copy DESIGN-PriorityGuard.md and
 LLD-PriorityGuard.md from ../docs/ into docs/, unchanged, and commit just
-those two as "docs: signed design record and LLD". Only after that commit
+those two as "docs: design record and LLD". Only after that commit
 succeeds, delete the two originals.
 ```
 
@@ -96,9 +96,10 @@ answer the new preview. **Never approve a preview you answered no to.**
 
 <details><summary>🛟 It refuses: the record is unsigned</summary>
 
-🤖 **Claude:** type `/clear`, then `I approve docs/DESIGN-PriorityGuard.md.
-Ask me my name, then sign its empty §9 or §10 cells for me with it, today,
-and commit only that file on docs/plan.` Then run `/prove-it:build-plan
+🤖 **Claude:** type `/clear`, then `/prove-it:design-challenge amend
+docs/DESIGN-PriorityGuard.md`. Reply `Nothing new: confirm what's unsigned.`,
+then `Confirmed.` and your name and role. Then `Commit only
+docs/DESIGN-PriorityGuard.md on docs/plan.` and run `/prove-it:build-plan
 docs/DESIGN-PriorityGuard.md` again.
 </details>
 
@@ -160,6 +161,6 @@ that got fixed.
 ## You now have
 
 - A private `priority-guard` repo whose clean `main` holds `CLAUDE.md`, the
-  signed design and LLD in `docs/`, `BACKLOG.md` and `SESSION-NOTE.md`.
+  design record and LLD in `docs/`, `BACKLOG.md` and `SESSION-NOTE.md`.
 - Your stories on GitHub, your first honest count, and this module's
   catches in `catches.md`.

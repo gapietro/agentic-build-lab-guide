@@ -2,7 +2,7 @@
 
 *⏱ 75 min · 10:00*
 
-Check Claude's research on your instance, then sign the low-level design
+Check Claude's research on your instance, then write the low-level design
 (LLD). **The catch:** Claude's research will be confident and mostly right.
 Which of its claims does your instance contradict, or not support?
 
@@ -94,7 +94,7 @@ Check each mark against its output line, and correct any, such as
 `Fact 3: production only, not on dev.` "Couldn't check" suits what doesn't
 exist yet.
 
-### 5. Draft and sign the LLD
+### 5. Draft the LLD
 
 🤖 **Claude:**
 ```
@@ -104,9 +104,7 @@ capability. Section 7 lists every fact with my result, exactly as I
 reported it. Anything undecided goes in section 8: never invent a business
 decision. Show me a summary first; don't write the file yet.
 ```
-Fix the summary if needed. Then approve it: `Looks right. Ask me my name,
-then write the file and sign §9 for me: my name, developer, today's date,
-my name.`
+Fix the summary if needed. Then approve it: `Looks right. Write the file.`
 
 ### 6. Log it
 
@@ -124,6 +122,5 @@ support, if it changed your LLD. Then type `/exit`.
 
 ## You now have
 
-- `docs/LLD-PriorityGuard.md`, signed by you, and this module's catches in
-  `catches.md`.
+- `docs/LLD-PriorityGuard.md`, and this module's catches in `catches.md`.
 - The full LLD review is on [After the workshop](AFTER-THE-WORKSHOP.md).

@@ -52,9 +52,3 @@ Every platform fact this design relies on.
 ## 8. Open decisions
 
 Anything this LLD can't decide. Never guess a business decision.
-
-## 9. Sign-off
-
-| Name | Role | Date | Signature |
-|---|---|---|---|
-| | | | |

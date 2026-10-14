@@ -250,8 +250,8 @@ When the challenge asks about a **deferred** capability, answer
 `Out of scope for this record; deferred in SLICE.md.` Never answer
 `Not decided`: that writes an OPEN term, which fails the grade.
 
-**Who signs §9:** the real owner, with their name and role. It's their
-contract. You can't sign it for them.
+**Whose name goes in §9:** the real owner's. They confirm the read-back
+themselves and give their name and role: it's their contract.
 
 ### Module 5 — Fence and plan
 
@@ -408,8 +408,8 @@ counting, and its plan keys need a different prefix. Instead:
    ```
    /prove-it:design-challenge amend docs/DESIGN-<Feature>.md
    ```
-   The new terms continue the numbering, and the real owner signs the new
-   drift rows.
+   The new terms continue the numbering, and the real owner confirms them,
+   which puts their name on the new drift rows.
 4. Re-run the build plan for the new stories, then the build loop.
 5. Go back to Module 1 only if the **PRD** changes.
 

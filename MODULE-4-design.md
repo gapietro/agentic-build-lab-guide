@@ -2,9 +2,9 @@
 
 *⏱ 45 min · 11:25*
 
-Claude challenges your design, question by question; you sign the result.
-**The idea:** signed building plans. After signing, moving a wall needs a
-written change order. **The catch:** the challenge question your LLD can't
+Claude challenges your design, question by question; you confirm the
+result. **The idea:** agreed building plans. Once agreed, moving a wall needs
+a written change order. **The catch:** the challenge question your LLD can't
 answer.
 
 ### 1. Start the challenge
@@ -72,8 +72,11 @@ it's right.
 ```
 Confirmed.
 ```
+When it asks what name and role go on the approval, type yours, such as
+`Sam Lee, developer`.
+
 ✅ In VS Code, `priority-guard/docs/DESIGN-PriorityGuard.md` exists, with as
-many terms in §3 as the last read-back listed.
+many terms in §3 as the last read-back listed, and your name in §9.
 
 ### 5. Log it
 
@@ -88,26 +91,9 @@ the ones I confirm or add to ~/projects/priority-guard/catches.md.
 ```
 Confirm a `design` line for each question your LLD couldn't answer, such
 as who may edit the critical list, with the term it added. Terms you added
-at the read-back, and gaps left `OPEN`, aren't catches.
-
-### 6. Approve it
-
-🤖 **Claude:** type `/clear` first: the challenge's rules stop Claude signing
-for you. Then paste this, and give your name when it asks:
-```
-I approve docs/DESIGN-PriorityGuard.md. Ask me my name, then sign its §9
-Approval for me: my name, developer, today's date, my name.
-```
-
-<details><summary>🛟 It says it can't sign §9</summary>
-
-The challenge is still loaded. Type `/clear`, then paste the same box again.
-
-</details>
-
-Then type `/exit`.
+at the read-back, and gaps left `OPEN`, aren't catches. Then type `/exit`.
 
 ## You now have
 
-- `docs/DESIGN-PriorityGuard.md` in your workspace, signed by you, and this
-  module's catches in `catches.md`.
+- `docs/DESIGN-PriorityGuard.md` in your workspace, with your name in §9, and
+  this module's catches in `catches.md`.

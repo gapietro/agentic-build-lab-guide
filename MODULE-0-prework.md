@@ -166,7 +166,7 @@ then run the same command again.
 
 ⌨️ **Terminal:**
 ```
-claude plugin marketplace add 'gapietro/prove-it-kit#v0.1.3'
+claude plugin marketplace add 'gapietro/prove-it-kit#v0.1.4'
 claude plugin install prove-it@prove-it
 ```
 
@@ -194,7 +194,7 @@ claude plugin list
 claude mcp list
 ls ~/.claude/CLAUDE.md
 ```
-✅ The only enabled plugin is `prove-it@prove-it`, with `Version: 0.1.3`.
+✅ The only enabled plugin is `prove-it@prove-it`, with `Version: 0.1.4`.
 `claude mcp list` says `No MCP servers configured`. `ls` says
 `No such file or directory`.
 
@@ -215,7 +215,7 @@ Then switch each off:
 - `prove-it` at another version:
   ```
   claude plugin marketplace remove prove-it
-  claude plugin marketplace add 'gapietro/prove-it-kit#v0.1.3'
+  claude plugin marketplace add 'gapietro/prove-it-kit#v0.1.4'
   claude plugin install prove-it@prove-it
   ```
 </details>
@@ -264,7 +264,7 @@ cd ~/projects/priority-guard/app && claude
 🤖 **Claude:** paste this, type `go` after it, and press **Enter**:
 ```
 Set up this folder as my app's repo. Make sure ~/projects/prove-it-kit is
-gapietro/prove-it-kit at tag v0.1.3: clone it if it's missing, otherwise
+gapietro/prove-it-kit at tag v0.1.4: clone it if it's missing, otherwise
 fetch tags and switch to the tag. Run git init -b main. For this repo only,
 set user.email to my GitHub noreply address, id+login@users.noreply.github.com,
 with my id and login from gh api user. Replace .gitignore with the kit's
@@ -323,7 +323,7 @@ git commit -m "chore: initial scaffold"
 ## You now have
 
 - A PDI with demo data, and `agent.demo` logged in to your **Agent** profile.
-- The tools, signed in, with the lab settings and the kit `v0.1.3`.
+- The tools, signed in, with the lab settings and the kit `v0.1.4`.
 - `~/projects/priority-guard`, holding only `app/`, an empty `brief/` and an
   empty `catches.md`.
 - In `app/`: one commit, the allow list, the guard, and an SDK project that

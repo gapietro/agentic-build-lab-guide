@@ -18,9 +18,9 @@ mistake. Those moments are the lesson.
 | 08:50 · 10 min | Kickoff | The customer, the use case, and how the day runs |
 | 09:00 · 30 min | [1 · Inputs to PRD](MODULE-1-prd.md) | An accepted PRD |
 | 09:30 · 30 min | [2 · Consult](MODULE-2-consult.md) | `CONSULT.md`: what to build, and how |
-| 10:00 · 75 min | [3 · Research and LLD](MODULE-3-research-and-lld.md) | A signed low-level design |
+| 10:00 · 75 min | [3 · Research and LLD](MODULE-3-research-and-lld.md) | A low-level design |
 | 11:15 · 10 min | Break | |
-| 11:25 · 45 min | [4 · Design challenge](MODULE-4-design.md) | A signed design record |
+| 11:25 · 45 min | [4 · Design challenge](MODULE-4-design.md) | A design record |
 | 12:10 · 30 min | [5 · Fence and plan](MODULE-5-fence-and-plan.md) | A private repo and a plan on GitHub |
 | 12:40 · 30 min | [6 · Build loop](MODULE-6-build-loop.md) | Your first story, merged |
 | 13:10 · lunch | 6, continued | Claude builds the next stories while you eat |
@@ -107,7 +107,7 @@ Claude's summary. If it says `… +N lines`, press **Ctrl+O** to see it all.
   reviewed first.
 - **Story:** one small piece of work, filed as a GitHub issue.
 - **Gate:** a milestone that stories hold up: MERGE, INSTALL, DEMO, HANDOFF.
-- **Design term:** one numbered rule in your signed design, such as `C3`.
+- **Design term:** one numbered rule in your design record, such as `C3`.
   Every test names the term it proves.
 - **Catch:** a real problem the process found **and that got fixed**, or
   that changed a decision. A check firing on something you planted to test
