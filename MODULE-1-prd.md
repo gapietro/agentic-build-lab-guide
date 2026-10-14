@@ -66,22 +66,21 @@ asked for something no input mentioned; I took it out`.
 
 ### 5. Get the customer's acceptance
 
-At about **09:25** your instructor, as the customer, answers the room's open
-decisions once. Not ready then? Ask for the answers when you get here.
+⌨️ **Terminal**, in your window (**Cmd+N**): get the customer's answers.
+```
+cp ~/projects/agentic-build-lab-guide/files/CUSTOMER-ANSWERS.md ~/projects/priority-guard-prd-review/
+```
+🤖 **Claude:**
+```
+Apply CUSTOMER-ANSWERS.md to PRD-PriorityGuard.md: put each answer into
+the capabilities it affects, set 7. Open decisions to "None.", and fill in
+8. Acceptance from the file, with today's date. Ask me about any open
+decision it doesn't cover. Change nothing else. Then copy the PRD into
+~/projects/priority-guard/brief/.
+```
+Type `/exit`, then ⌨️ **Terminal:** `ls ~/projects/priority-guard/brief`
 
-🤖 **Claude:** paste this, then type the customer's answers, name and role:
-```
-Put the customer's answers below into the capabilities they affect, and set
-7. Open decisions to "None." Fill in 8. Acceptance with the customer's name
-and role, today's date, and the name again as signature. Change nothing
-else. The answers:
-```
-Type `/exit`. Then ⌨️ **Terminal:**
-```
-cp ~/projects/priority-guard-prd-review/PRD-PriorityGuard.md ~/projects/priority-guard/brief/
-ls ~/projects/priority-guard/brief
-```
-✅ `ls` prints only `PRD-PriorityGuard.md`.
+✅ It prints only `PRD-PriorityGuard.md`.
 
 ## You now have
 

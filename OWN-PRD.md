@@ -128,7 +128,7 @@ say "no source". Then list every input statement that changes what gets
 built but isn't in the PRD. Quote, don't paraphrase. Don't fix anything,
 and don't edit any file.
 ```
-- There's **no answer card**. Open decisions go to the real owner, and you
+- There's **no answers file**. Open decisions go to the real owner, and you
   wait for their answers. Never answer a business question for them.
 - **Acceptance** is the real owner's name, role, date and signature.
 - Copy the accepted PRD into `~/projects/<app>/brief/`, as the only file there.

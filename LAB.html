@@ -637,19 +637,18 @@ the ones I confirm or add to ~/projects/priority-guard/catches.md.
 </code></pre>
 <p>Confirm a line for each gap you fixed in step 3, such as <code>1 | prd | The PRD asked for something no input mentioned; I took it out</code>.</p>
 <h3 id="m1--5-get-the-customers-acceptance">5. Get the customer's acceptance</h3>
-<p>At about <strong>09:25</strong> your instructor, as the customer, answers the room's open
-decisions once. Not ready then? Ask for the answers when you get here.</p>
-<p>🤖 <strong>Claude:</strong> paste this, then type the customer's answers, name and role:</p>
-<pre><code>Put the customer's answers below into the capabilities they affect, and set
-7. Open decisions to &quot;None.&quot; Fill in 8. Acceptance with the customer's name
-and role, today's date, and the name again as signature. Change nothing
-else. The answers:
+<p>⌨️ <strong>Terminal</strong>, in your window (<strong>Cmd+N</strong>): get the customer's answers.</p>
+<pre><code>cp ~/projects/agentic-build-lab-guide/files/CUSTOMER-ANSWERS.md ~/projects/priority-guard-prd-review/
 </code></pre>
-<p>Type <code>/exit</code>. Then ⌨️ <strong>Terminal:</strong></p>
-<pre><code>cp ~/projects/priority-guard-prd-review/PRD-PriorityGuard.md ~/projects/priority-guard/brief/
-ls ~/projects/priority-guard/brief
+<p>🤖 <strong>Claude:</strong></p>
+<pre><code>Apply CUSTOMER-ANSWERS.md to PRD-PriorityGuard.md: put each answer into
+the capabilities it affects, set 7. Open decisions to &quot;None.&quot;, and fill in
+8. Acceptance from the file, with today's date. Ask me about any open
+decision it doesn't cover. Change nothing else. Then copy the PRD into
+~/projects/priority-guard/brief/.
 </code></pre>
-<p>✅ <code>ls</code> prints only <code>PRD-PriorityGuard.md</code>.</p>
+<p>Type <code>/exit</code>, then ⌨️ <strong>Terminal:</strong> <code>ls ~/projects/priority-guard/brief</code></p>
+<p>✅ It prints only <code>PRD-PriorityGuard.md</code>.</p>
 <h2 id="m1--you-now-have">You now have</h2>
 <ul>
 <li><code>~/projects/priority-guard/brief/PRD-PriorityGuard.md</code>, accepted, and
@@ -1862,7 +1861,7 @@ built but isn't in the PRD. Quote, don't paraphrase. Don't fix anything,
 and don't edit any file.
 </code></pre>
 <ul>
-<li>There's <strong>no answer card</strong>. Open decisions go to the real owner, and you
+<li>There's <strong>no answers file</strong>. Open decisions go to the real owner, and you
 wait for their answers. Never answer a business question for them.</li>
 <li><strong>Acceptance</strong> is the real owner's name, role, date and signature.</li>
 <li>Copy the accepted PRD into <code>~/projects/&lt;app&gt;/brief/</code>, as the only file there.</li>
