@@ -130,7 +130,11 @@ Then:
 On docs/plan, commit .gitignore, BACKLOG.md and SESSION-NOTE.md as
 "docs: backlog and first session note".
 ```
-Then type `ship it`. Watch: push, pull request, review, fixes once, merge.
+Then type this, alone:
+```
+ship it
+```
+Watch: push, pull request, review, fixes once, merge.
 
 ⌨️ **Terminal**, in your window:
 ```
