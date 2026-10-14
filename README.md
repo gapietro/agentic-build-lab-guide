@@ -15,6 +15,7 @@ mistake. Those moments are the lesson.
 | When | Module | You leave with |
 |---|---|---|
 | Before the day, 90 min | [0 · Pre-work](MODULE-0-prework.md) | Tools, your instance, your app's repo |
+| 08:50 · 10 min | Kickoff | The customer, the use case, and how the day runs |
 | 09:00 · 30 min | [1 · Inputs to PRD](MODULE-1-prd.md) | An accepted PRD |
 | 09:30 · 30 min | [2 · Consult](MODULE-2-consult.md) | `CONSULT.md`: what to build, and how |
 | 10:00 · 75 min | [3 · Research and LLD](MODULE-3-research-and-lld.md) | A signed low-level design |

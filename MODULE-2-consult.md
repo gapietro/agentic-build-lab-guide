@@ -50,8 +50,7 @@ suggests: research comes first. If that shows as grey text, ignore it:
 ```
 ls -A ~/projects/priority-guard
 ```
-✅ It lists `app`, `brief`, `catches.md` and `CONSULT.md`, and maybe
-`.claude`.
+✅ It lists `app`, `brief`, `catches.md` and `CONSULT.md`, and maybe `.claude`.
 
 <details><summary>🛟 It shows an error, or stalls</summary>
 
