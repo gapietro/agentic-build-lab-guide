@@ -827,8 +827,7 @@ capability. Section 7 lists every fact with my result, exactly as I
 reported it. Anything undecided goes in section 8: never invent a business
 decision. Show me a summary first; don't write the file yet.
 </code></pre>
-<p>Fix the summary if needed. Then approve it, with your name, such as
-<code>Looks right. Write the file, and sign §9 for me: Sam Lee, developer, today's date, Sam Lee.</code></p>
+<p>Fix the summary if needed. Then approve it: <code>Looks right. Ask me my name, then write the file and sign §9 for me: my name, developer, today's date, my name.</code></p>
 <h3 id="m3--6-log-it">6. Log it</h3>
 <p>🤖 <strong>Claude:</strong></p>
 <pre><code>Log this module's catches: real problems the process found, in this
@@ -915,12 +914,16 @@ the ones I confirm or add to ~/projects/priority-guard/catches.md.
 </code></pre>
 <p>Confirm a <code>design</code> line for each question your LLD couldn't answer, such
 as who may edit the critical list, with the term it added. Terms you added
-at the read-back, and gaps left <code>OPEN</code>, aren't catches. Then type <code>/clear</code>.</p>
+at the read-back, and gaps left <code>OPEN</code>, aren't catches.</p>
 <h3 id="m4--6-approve-it">6. Approve it</h3>
-<p>🤖 <strong>Claude:</strong> with your name, such as Sam Lee:</p>
-<pre><code>I approve docs/DESIGN-PriorityGuard.md. Sign its §9 Approval for me:
-&lt;your name&gt;, developer, today's date, &lt;your name&gt;.
+<p>🤖 <strong>Claude:</strong> type <code>/clear</code> first: the challenge's rules stop Claude signing
+for you. Then paste this, and give your name when it asks:</p>
+<pre><code>I approve docs/DESIGN-PriorityGuard.md. Ask me my name, then sign its §9
+Approval for me: my name, developer, today's date, my name.
 </code></pre>
+<details><summary>🛟 It says it can't sign §9</summary>
+<p>The challenge is still loaded. Type <code>/clear</code>, then paste the same box again.</p>
+</details>
 <p>Then type <code>/exit</code>.</p>
 <h2 id="m4--you-now-have">You now have</h2>
 <ul>
@@ -1001,7 +1004,7 @@ one folder up, allow it.</p>
 Claude in one line, such as &quot;Story 4's done-when can't be checked&quot;, and
 answer the new preview. <strong>Never approve a preview you answered no to.</strong></p>
 <details><summary>🛟 It refuses: the record is unsigned</summary>
-<p>🤖 <strong>Claude:</strong> type <code>/clear</code>, then <code>I approve docs/DESIGN-PriorityGuard.md. Sign its empty §9 or §10 cells for me as &lt;your name&gt;, today, and commit only that file on docs/plan.</code> Then run <code>/prove-it:build-plan docs/DESIGN-PriorityGuard.md</code> again.</p>
+<p>🤖 <strong>Claude:</strong> type <code>/clear</code>, then <code>I approve docs/DESIGN-PriorityGuard.md. Ask me my name, then sign its empty §9 or §10 cells for me with it, today, and commit only that file on docs/plan.</code> Then run <code>/prove-it:build-plan docs/DESIGN-PriorityGuard.md</code> again.</p>
 </details>
 <h3 id="m5--6-file-the-plan-and-take-your-first-count">6. File the plan, and take your first count</h3>
 <p>🤖 <strong>Claude:</strong> type <code>approve</code>, then <code>dry run</code> when it asks. Read what it
@@ -1589,10 +1592,10 @@ swap back, and do step 2 for it. Then attack theirs.</p>
 session open: <code>/prove-it:design-challenge amend docs/DESIGN-PriorityGuard.md</code>. At the read-back, type <code>Confirmed.</code>, or
 <code>Not agreed yet.</code> and what to change.</p>
 <h3 id="after--2-sign-and-merge-it">2. Sign and merge it</h3>
-<p>🤖 <strong>Claude:</strong> type <code>/clear</code>, then, with your name:</p>
-<pre><code>I approve the amendment. In docs/DESIGN-PriorityGuard.md §10, sign each
-blank Signed by for me as &lt;your name&gt;. Then commit that file on a new
-branch docs/amend-floor, and ship it.
+<p>🤖 <strong>Claude:</strong> type <code>/clear</code>, then:</p>
+<pre><code>I approve the amendment. Ask me my name, then in
+docs/DESIGN-PriorityGuard.md §10, sign each blank Signed by for me with it.
+Then commit that file on a new branch docs/amend-floor, and ship it.
 </code></pre>
 <h3 id="after--3-file-and-build-it">3. File and build it</h3>
 <p>Once merged, ⌨️ in your window:

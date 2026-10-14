@@ -95,8 +95,8 @@ answer the new preview. **Never approve a preview you answered no to.**
 <details><summary>🛟 It refuses: the record is unsigned</summary>
 
 🤖 **Claude:** type `/clear`, then `I approve docs/DESIGN-PriorityGuard.md.
-Sign its empty §9 or §10 cells for me as <your name>, today, and commit only
-that file on docs/plan.` Then run `/prove-it:build-plan
+Ask me my name, then sign its empty §9 or §10 cells for me with it, today,
+and commit only that file on docs/plan.` Then run `/prove-it:build-plan
 docs/DESIGN-PriorityGuard.md` again.
 </details>
 

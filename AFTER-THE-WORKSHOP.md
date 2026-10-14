@@ -208,11 +208,11 @@ docs/DESIGN-PriorityGuard.md`. At the read-back, type `Confirmed.`, or
 
 ### 2. Sign and merge it
 
-🤖 **Claude:** type `/clear`, then, with your name:
+🤖 **Claude:** type `/clear`, then:
 ```
-I approve the amendment. In docs/DESIGN-PriorityGuard.md §10, sign each
-blank Signed by for me as <your name>. Then commit that file on a new
-branch docs/amend-floor, and ship it.
+I approve the amendment. Ask me my name, then in
+docs/DESIGN-PriorityGuard.md §10, sign each blank Signed by for me with it.
+Then commit that file on a new branch docs/amend-floor, and ship it.
 ```
 
 ### 3. File and build it

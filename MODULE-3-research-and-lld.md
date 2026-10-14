@@ -104,9 +104,9 @@ capability. Section 7 lists every fact with my result, exactly as I
 reported it. Anything undecided goes in section 8: never invent a business
 decision. Show me a summary first; don't write the file yet.
 ```
-Fix the summary if needed. Then approve it, with your name, such as
-`Looks right. Write the file, and sign §9 for me: Sam Lee, developer,
-today's date, Sam Lee.`
+Fix the summary if needed. Then approve it: `Looks right. Ask me my name,
+then write the file and sign §9 for me: my name, developer, today's date,
+my name.`
 
 ### 6. Log it
 

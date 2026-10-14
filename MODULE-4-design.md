@@ -88,15 +88,23 @@ the ones I confirm or add to ~/projects/priority-guard/catches.md.
 ```
 Confirm a `design` line for each question your LLD couldn't answer, such
 as who may edit the critical list, with the term it added. Terms you added
-at the read-back, and gaps left `OPEN`, aren't catches. Then type `/clear`.
+at the read-back, and gaps left `OPEN`, aren't catches.
 
 ### 6. Approve it
 
-🤖 **Claude:** with your name, such as Sam Lee:
+🤖 **Claude:** type `/clear` first: the challenge's rules stop Claude signing
+for you. Then paste this, and give your name when it asks:
 ```
-I approve docs/DESIGN-PriorityGuard.md. Sign its §9 Approval for me:
-<your name>, developer, today's date, <your name>.
+I approve docs/DESIGN-PriorityGuard.md. Ask me my name, then sign its §9
+Approval for me: my name, developer, today's date, my name.
 ```
+
+<details><summary>🛟 It says it can't sign §9</summary>
+
+The challenge is still loaded. Type `/clear`, then paste the same box again.
+
+</details>
+
 Then type `/exit`.
 
 ## You now have
