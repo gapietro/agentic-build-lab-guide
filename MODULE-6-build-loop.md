@@ -30,14 +30,14 @@ it, one unusual: step 3 compares.
 
 ### 3. Confirm it, tests first
 
-🤖 **Claude:** if the bullets match your design, paste this. If not, say
-what's wrong first.
+🤖 **Claude:** if the bullets match your design, paste this, type `go` after
+it, and press **Enter**. If not, say what's wrong first.
 ```
-Confirmed. Build it tests first: start each test's name with the design
-term it proves, like "C<n>: the floor can raise a priority, never lower
-it", using the term's real number from docs/DESIGN-PriorityGuard.md. If the
-story proves no term, say so and name the tests after the story. Show me
-them failing, then stop before any implementation.
+Confirmed. Build this story tests first: start each test's name with the
+design term it proves, like "C<n>: the floor can raise a priority, never
+lower it", using the term's real number from docs/DESIGN-PriorityGuard.md.
+If the story proves no term, say so and name the tests after the story.
+Show me them failing, then stop before any implementation.
 ```
 ⌨️ **Terminal**, in your window:
 ```

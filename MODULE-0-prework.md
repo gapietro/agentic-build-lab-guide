@@ -261,7 +261,7 @@ asks if you trust it:
 ```
 cd ~/projects/priority-guard/app && claude
 ```
-🤖 **Claude:** paste this and press **Enter**:
+🤖 **Claude:** paste this, type `go` after it, and press **Enter**:
 ```
 Set up this folder as my app's repo. Make sure ~/projects/prove-it-kit is
 gapietro/prove-it-kit at tag v0.1.3: clone it if it's missing, otherwise

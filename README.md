@@ -69,7 +69,8 @@ While Claude runs in a Terminal window, that window is Claude's. For ⌨️
 steps, use a second window: press **Cmd+N**.
 
 Enter sends a message to Claude. For a new line inside one, type `\` and
-then press **Enter**.
+then press **Enter**. To send a 🤖 box, paste it into Claude, type `go` after
+it, and press **Enter**: Claude may hold off on pasted text alone.
 
 When Claude runs a command, Claude Code shows it on a line starting with ⏺,
 and its output under it, on lines starting with ⎿. Read that output, not

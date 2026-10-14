@@ -280,7 +280,8 @@ different. ℹ️ boxes say why, if you want to know.</p>
 <p>While Claude runs in a Terminal window, that window is Claude's. For ⌨️
 steps, use a second window: press <strong>Cmd+N</strong>.</p>
 <p>Enter sends a message to Claude. For a new line inside one, type <code>\</code> and
-then press <strong>Enter</strong>.</p>
+then press <strong>Enter</strong>. To send a 🤖 box, paste it into Claude, type <code>go</code> after
+it, and press <strong>Enter</strong>: Claude may hold off on pasted text alone.</p>
 <p>When Claude runs a command, Claude Code shows it on a line starting with ⏺,
 and its output under it, on lines starting with ⎿. Read that output, not
 Claude's summary. If it says <code>… +N lines</code>, press <strong>Ctrl+O</strong> to see it all.</p>
@@ -551,7 +552,7 @@ again. Still failing? Tell your instructor.</p>
 asks if you trust it:</p>
 <pre><code>cd ~/projects/priority-guard/app &amp;&amp; claude
 </code></pre>
-<p>🤖 <strong>Claude:</strong> paste this and press <strong>Enter</strong>:</p>
+<p>🤖 <strong>Claude:</strong> paste this, type <code>go</code> after it, and press <strong>Enter</strong>:</p>
 <pre><code>Set up this folder as my app's repo. Make sure ~/projects/prove-it-kit is
 gapietro/prove-it-kit at tag v0.1.3: clone it if it's missing, otherwise
 fetch tags and switch to the tag. Run git init -b main. For this repo only,
@@ -1078,13 +1079,13 @@ blocker they mention. Then tell me the top three items by gate distance.
 <p>Claude restates the story in five bullets. First, guess three test cases for
 it, one unusual: step 3 compares.</p>
 <h3 id="m6--3-confirm-it-tests-first">3. Confirm it, tests first</h3>
-<p>🤖 <strong>Claude:</strong> if the bullets match your design, paste this. If not, say
-what's wrong first.</p>
-<pre><code>Confirmed. Build it tests first: start each test's name with the design
-term it proves, like &quot;C&lt;n&gt;: the floor can raise a priority, never lower
-it&quot;, using the term's real number from docs/DESIGN-PriorityGuard.md. If the
-story proves no term, say so and name the tests after the story. Show me
-them failing, then stop before any implementation.
+<p>🤖 <strong>Claude:</strong> if the bullets match your design, paste this, type <code>go</code> after
+it, and press <strong>Enter</strong>. If not, say what's wrong first.</p>
+<pre><code>Confirmed. Build this story tests first: start each test's name with the
+design term it proves, like &quot;C&lt;n&gt;: the floor can raise a priority, never
+lower it&quot;, using the term's real number from docs/DESIGN-PriorityGuard.md.
+If the story proves no term, say so and name the tests after the story.
+Show me them failing, then stop before any implementation.
 </code></pre>
 <p>⌨️ <strong>Terminal</strong>, in your window:</p>
 <pre><code>git branch --show-current
