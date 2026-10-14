@@ -72,6 +72,15 @@ the live count of open stories on the next gate.
 🌐 **Browser:** ✅ each merged pull request shows the bullets, a failing then
 a passing run, and the findings.
 
+<details><summary>🛟 A story needs Now Assist</summary>
+
+🌐 **Admin** profile: type `Now Assist Admin` in the filter navigator. Listed?
+🤖 `My instance has Now Assist. Build it.` Not listed? 🤖
+`/prove-it:build-plan docs/DESIGN-PriorityGuard.md`, and at the preview:
+`Make the Now Assist story register, keeping its key.` Then `approve`, `apply
+now` and `Commit BACKLOG.md on a new branch docs/register-ai, then ship it.`
+</details>
+
 Stopped for a design change? Part 3. Before DEMO, 🤖 ask: `Which design
 terms, boundary terms too, have no test named with their id? Is the demo
 data seeded in src/?` Build any gap.
