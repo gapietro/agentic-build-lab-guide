@@ -18,20 +18,22 @@ mistake. Those moments are the lesson.
 | 09:00 · 30 min | [1 · Inputs to PRD](MODULE-1-prd.md) | An accepted PRD |
 | 09:30 · 30 min | [2 · Consult](MODULE-2-consult.md) | `CONSULT.md`: what to build, and how |
 | 10:00 · 75 min | [3 · Research and LLD](MODULE-3-research-and-lld.md) | A signed low-level design |
+| 11:15 · 10 min | Break | |
 | 11:25 · 45 min | [4 · Design challenge](MODULE-4-design.md) | A signed design record |
 | 12:10 · 30 min | [5 · Fence and plan](MODULE-5-fence-and-plan.md) | A private repo and a plan on GitHub |
 | 12:40 · 30 min | [6 · Build loop](MODULE-6-build-loop.md) | Your first story, merged |
 | 13:10 · lunch | 6, continued | Claude builds the next stories while you eat |
 | 14:00 · 45 min | 6, continued | The app installed and working |
 | 14:45 · 15 min | [7 · Break it](MODULE-7-break-it.md) *(optional)* | A list of attacks on your app |
+| 15:00 · 10 min | Break | |
 | 15:10 · 45 min | [8 · Grade](MODULE-8-grade-and-handoff.md) | `GRADE.md` |
 | 15:55 · 15 min | [9 · Debrief](MODULE-9-debrief.md) | Your count of catches |
 | Afterwards | [After the workshop](AFTER-THE-WORKSHOP.md) | A finished app, handed over |
 | Then | [Your own PRD](OWN-PRD.md), [to production](PROMOTE.md) | The method on your own work |
 
 Read it as one page at https://claude.ai/artifact/LLZPgYakMRU9hWxmhughrQ.
-Breaks at 11:15 and 15:00. The buffer, 16:10–17:00, is for catching up.
-Behind? Ask your instructor for a checkpoint to start the next module from.
+The buffer, 16:10–17:00, is for catching up. Behind? Ask your instructor
+for a checkpoint to start the next module from.
 
 You work alone on the day. Your partner joins you after the workshop, to
 attack your app and to test your runbook.
