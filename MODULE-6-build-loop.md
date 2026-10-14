@@ -81,22 +81,28 @@ Mac: `caffeinate -i`.
 🤖 **Claude:** paste this. Sub-agents are helpers Claude starts; a git
 worktree is a separate working copy, in its own folder.
 ```
-Run the build loop with sub-agents on the next gate's open stories, in board
-order, until the story wiring the floor into the incident table is merged.
-You only plan, delegate, merge and report. Per story: one sub-agent, own git
-worktree and branch; five-bullet restatement; tests first, named "C<n>: …",
-failing run saved; code until the whole suite passes; ship it as CLAUDE.md
-says, with bullets, both runs and every review finding in the pull request.
+Run the build loop with sub-agents through the open stories, in board order,
+across gates, until the story wiring the floor into the incident table is
+merged or no story is left that you can build. I'm at lunch: ask me nothing
+until the end, and never start a design change. Skip a story that needs
+instance work (running now-sdk or background scripts, or reading or writing
+live records; writing code is fine), a design change or a business decision.
+Build a story that depends on a skipped one if its code can still be written
+and tested; otherwise skip it too. You only plan, delegate, merge and report.
+Per story: one sub-agent, own git worktree and branch; a five-bullet
+restatement in the pull request, not confirmed with me; tests first, named
+"C<n>: …", failing run saved; code until the whole suite passes; ship it as
+CLAUDE.md says, with both runs and every review finding in the pull request.
 Parallel only without shared files. Merge one at a time, after updating from
 main and re-testing. Never merge red or skip /code-review. Three failures on
-one step stop that story, its pull request left open. Ask me before any
-design change, business decision or instance work. Never run now-sdk install
-or now-sdk auth. Don't create, close or relabel issues by hand. End with a
-table (story, pull request, failing/passing counts, findings and actions,
-outcome and why) and the next gate's live count of open stories.
+one step stop that story, its pull request left open. Never run now-sdk
+install or now-sdk auth. Don't create, close or relabel issues by hand. End
+with a table (story, pull request, failing/passing counts, findings and
+actions, outcome and why, skipped ones too) and the next gate's live count
+of open stories.
 ```
-Stay until a failing test run appears. Permission questions wait for you over
-lunch.
+Stay until a failing test run appears, or it stops with its table.
+Permission questions wait for you over lunch.
 
 ### 7. Read the evidence, after lunch
 
@@ -114,11 +120,13 @@ git switch main && git pull && npm test
 
 <details><summary>🛟 A pull request skipped a check, or the batch stopped</summary>
 
-- **No failing run, or no findings:** 🤖 `Run /code-review on pull request
-  #<n>.`
+- **No failing run, or no findings:** 🤖 `Run /code-review on each pull
+  request from the batch that has no failing run or no findings.`
 - **Stopped early:** type `/exit`, then `claude`, then the same prompt.
-- **Stopped for a design change:** leave it open, and tell your instructor.
-  The wiring story? Skip steps 9 to 11.
+- **Skipped stories:** instance work is yours in step 8. A design change
+  waits for After the workshop, Part 3.
+- **The wiring story isn't merged:** tell your instructor, and skip steps 9
+  to 11.
 </details>
 
 ## Part 3 — Install and try it live (14:00)

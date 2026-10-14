@@ -1113,22 +1113,28 @@ Claude's output, not on the pull request. Wrong? Tell Claude why, in one line.</
 Mac: <code>caffeinate -i</code>.</p>
 <p>🤖 <strong>Claude:</strong> paste this. Sub-agents are helpers Claude starts; a git
 worktree is a separate working copy, in its own folder.</p>
-<pre><code>Run the build loop with sub-agents on the next gate's open stories, in board
-order, until the story wiring the floor into the incident table is merged.
-You only plan, delegate, merge and report. Per story: one sub-agent, own git
-worktree and branch; five-bullet restatement; tests first, named &quot;C&lt;n&gt;: …&quot;,
-failing run saved; code until the whole suite passes; ship it as CLAUDE.md
-says, with bullets, both runs and every review finding in the pull request.
+<pre><code>Run the build loop with sub-agents through the open stories, in board order,
+across gates, until the story wiring the floor into the incident table is
+merged or no story is left that you can build. I'm at lunch: ask me nothing
+until the end, and never start a design change. Skip a story that needs
+instance work (running now-sdk or background scripts, or reading or writing
+live records; writing code is fine), a design change or a business decision.
+Build a story that depends on a skipped one if its code can still be written
+and tested; otherwise skip it too. You only plan, delegate, merge and report.
+Per story: one sub-agent, own git worktree and branch; a five-bullet
+restatement in the pull request, not confirmed with me; tests first, named
+&quot;C&lt;n&gt;: …&quot;, failing run saved; code until the whole suite passes; ship it as
+CLAUDE.md says, with both runs and every review finding in the pull request.
 Parallel only without shared files. Merge one at a time, after updating from
 main and re-testing. Never merge red or skip /code-review. Three failures on
-one step stop that story, its pull request left open. Ask me before any
-design change, business decision or instance work. Never run now-sdk install
-or now-sdk auth. Don't create, close or relabel issues by hand. End with a
-table (story, pull request, failing/passing counts, findings and actions,
-outcome and why) and the next gate's live count of open stories.
+one step stop that story, its pull request left open. Never run now-sdk
+install or now-sdk auth. Don't create, close or relabel issues by hand. End
+with a table (story, pull request, failing/passing counts, findings and
+actions, outcome and why, skipped ones too) and the next gate's live count
+of open stories.
 </code></pre>
-<p>Stay until a failing test run appears. Permission questions wait for you over
-lunch.</p>
+<p>Stay until a failing test run appears, or it stops with its table.
+Permission questions wait for you over lunch.</p>
 <h3 id="m6--7-read-the-evidence-after-lunch">7. Read the evidence, after lunch</h3>
 <p>Let it finish. 🌐 <strong>Browser:</strong> open its table's pull requests (<strong>Pull
 requests</strong>, <strong>Closed</strong>).
@@ -1141,10 +1147,12 @@ work note says, and nothing lets priority below the floor.</p>
 <p>✅ Every test passes.</p>
 <details><summary>🛟 A pull request skipped a check, or the batch stopped</summary>
 <ul>
-<li><strong>No failing run, or no findings:</strong> 🤖 <code>Run /code-review on pull request #&lt;n&gt;.</code></li>
+<li><strong>No failing run, or no findings:</strong> 🤖 <code>Run /code-review on each pull request from the batch that has no failing run or no findings.</code></li>
 <li><strong>Stopped early:</strong> type <code>/exit</code>, then <code>claude</code>, then the same prompt.</li>
-<li><strong>Stopped for a design change:</strong> leave it open, and tell your instructor.
-The wiring story? Skip steps 9 to 11.</li>
+<li><strong>Skipped stories:</strong> instance work is yours in step 8. A design change
+waits for After the workshop, Part 3.</li>
+<li><strong>The wiring story isn't merged:</strong> tell your instructor, and skip steps 9
+to 11.</li>
 </ul>
 </details>
 <h2 id="m6--part-3--install-and-try-it-live-1400">Part 3 — Install and try it live (14:00)</h2>
