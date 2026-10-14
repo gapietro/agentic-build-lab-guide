@@ -45,8 +45,7 @@ new branch, never `main`.
 
 <details><summary>🛟 It prints main</summary>
 
-🤖 **Claude:** `Never work on main. Create a new branch for this story
-first.`
+🤖 **Claude:** `Never work on main. Create a new branch for this story first.`
 </details>
 
 ✅ The tests run and **fail**. Compare them with your three.
@@ -64,8 +63,7 @@ floor function, if any?
 ### 5. Ship it
 
 🤖 **Claude:** type `ship it`, then read every `/code-review` finding in
-Claude's output, not on the pull request. Wrong? Tell Claude why, in one
-line.
+Claude's output, not on the pull request. Wrong? Tell Claude why, in one line.
 
 🌐 **Browser:** open the pull request Claude links. ✅ It shows **Merged**.
 

@@ -65,6 +65,8 @@ and run the checks again:
 npm install -g @servicenow/sdk @anthropic-ai/claude-code
 ```
 Install VS Code from https://code.visualstudio.com too: it's your editor.
+**Never installed tools like these?** That's fine: ask Claude at
+https://claude.ai, or any AI assistant, to walk you through it.
 
 <details><summary>🛟 An install or a check doesn't work</summary>
 
