@@ -257,7 +257,7 @@ again. Still failing? Tell your instructor.
 ⌨️ **Terminal:** start Claude in the app folder, and pick **Yes** when it
 asks if you trust it:
 ```
-claude
+cd ~/projects/priority-guard/app && claude
 ```
 🤖 **Claude:** paste this and press **Enter**:
 ```
