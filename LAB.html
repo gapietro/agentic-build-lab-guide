@@ -863,25 +863,25 @@ claude
 <p>🤖 <strong>Claude:</strong> type this, with nothing after it:</p>
 <pre><code>/prove-it:design-challenge
 </code></pre>
-<p>Reply <code>PriorityGuard</code> to the feature name, then describe your design from
-your signed LLD in three or four sentences: what it does, its tables, and
-who owns each write.</p>
+<p>🤖 When it asks you to confirm the feature name, paste this:</p>
+<pre><code>PriorityGuard. For every question from here on, give me 3 or 4 numbered
+answers drawn from docs/LLD-PriorityGuard.md and CONSULT.md, your
+recommended one first and &quot;Not decided. Record it as open.&quot; last. If my LLD
+doesn't answer the question, say so first. I'll reply with a number.
+</code></pre>
 <h3 id="m4--2-answer-each-question">2. Answer each question</h3>
-<p>Answer in one or two lines, from your LLD, §3–§5 and §7. Grey text in the
-input box is Claude Code's guess: type your own, never <strong>Tab</strong> or <strong>Right
-arrow</strong>. Three answers are exact:</p>
+<p>Check the options against your LLD, then reply with a number, usually <code>1</code>.
+If it says your LLD doesn't answer, that's the catch: pick the one you'd
+defend. Never press <strong>Tab</strong> or <strong>Right arrow</strong>: grey text is only a guess.</p>
 <ul>
-<li>A capability the customer deferred:
-<code>Out of scope for this record; deferred to a later release.</code> Never
-&quot;Not decided&quot; here: it would leave a decided deferral <code>OPEN</code>.</li>
-<li>Only the business can decide: <code>Not decided. Record it as open.</code></li>
-<li>Gates: <code>MERGE: every change reviewed, all checks green. INSTALL: installs cleanly on my PDI, a live check passes. DEMO: the floor works live, as an ordinary agent. HANDOFF: someone else diagnoses a failure from the runbook alone.</code></li>
+<li>A capability the customer deferred: pick the answer that defers it, never
+&quot;Not decided&quot;: that would leave a decided deferral <code>OPEN</code>.</li>
+<li>Gates: type this instead of a number: <code>MERGE: every change reviewed, all checks green. INSTALL: installs cleanly on my PDI, a live check passes. DEMO: the floor works live, as an ordinary agent. HANDOFF: someone else diagnoses a failure from the runbook alone.</code></li>
 </ul>
 <p>✅ Before the read-back, it has asked about failure, security, cost,
 boundaries and gates (milestones).</p>
 <details><summary>🛟 It skipped one</summary>
-<p>Type <code>You haven't asked about &lt;topic&gt;. Ask before the read-back.</code>, with the
-topic in place of <code>&lt;topic&gt;</code>.</p>
+<p>Type <code>Ask me about each topic you skipped, one at a time, before the read-back.</code></p>
 </details>
 <h3 id="m4--3-check-the-read-back">3. Check the read-back</h3>
 <p>It lists every term and asks <code>Confirm these N terms, or correct any.</code>

@@ -18,31 +18,33 @@ claude
 ```
 /prove-it:design-challenge
 ```
-Reply `PriorityGuard` to the feature name, then describe your design from
-your signed LLD in three or four sentences: what it does, its tables, and
-who owns each write.
+🤖 When it asks you to confirm the feature name, paste this:
+```
+PriorityGuard. For every question from here on, give me 3 or 4 numbered
+answers drawn from docs/LLD-PriorityGuard.md and CONSULT.md, your
+recommended one first and "Not decided. Record it as open." last. If my LLD
+doesn't answer the question, say so first. I'll reply with a number.
+```
 
 ### 2. Answer each question
 
-Answer in one or two lines, from your LLD, §3–§5 and §7. Grey text in the
-input box is Claude Code's guess: type your own, never **Tab** or **Right
-arrow**. Three answers are exact:
-- A capability the customer deferred:
-  `Out of scope for this record; deferred to a later release.` Never
-  "Not decided" here: it would leave a decided deferral `OPEN`.
-- Only the business can decide: `Not decided. Record it as open.`
-- Gates: `MERGE: every change reviewed, all checks green. INSTALL: installs
-  cleanly on my PDI, a live check passes. DEMO: the floor works live, as an
-  ordinary agent. HANDOFF: someone else diagnoses a failure from the runbook
-  alone.`
+Check the options against your LLD, then reply with a number, usually `1`.
+If it says your LLD doesn't answer, that's the catch: pick the one you'd
+defend. Never press **Tab** or **Right arrow**: grey text is only a guess.
+- A capability the customer deferred: pick the answer that defers it, never
+  "Not decided": that would leave a decided deferral `OPEN`.
+- Gates: type this instead of a number: `MERGE: every change reviewed, all
+  checks green. INSTALL: installs cleanly on my PDI, a live check passes.
+  DEMO: the floor works live, as an ordinary agent. HANDOFF: someone else
+  diagnoses a failure from the runbook alone.`
 
 ✅ Before the read-back, it has asked about failure, security, cost,
 boundaries and gates (milestones).
 
 <details><summary>🛟 It skipped one</summary>
 
-Type `You haven't asked about <topic>. Ask before the read-back.`, with the
-topic in place of `<topic>`.
+Type `Ask me about each topic you skipped, one at a time, before the
+read-back.`
 
 </details>
 
