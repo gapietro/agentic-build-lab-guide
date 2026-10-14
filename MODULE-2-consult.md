@@ -32,7 +32,7 @@ The kit broke its rule. Tell your instructor, type `/exit`, run
 Don't type `confirmed` yet. 🤖 **Claude:** paste this, for all its questions:
 ```
 My answers: size is about 8–10 stories; we build the first few in one
-afternoon. Assume Now Assist isn't available. Anything only the customer
+afternoon. Assume Now Assist is available. Anything only the customer
 can answer, record as an open decision; never guess. Yes, raise any other
 open decisions you find.
 ```
