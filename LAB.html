@@ -864,10 +864,13 @@ claude
 <pre><code>/prove-it:design-challenge
 </code></pre>
 <p>🤖 When it asks you to confirm the feature name, paste this:</p>
-<pre><code>PriorityGuard. For every question from here on, give me 3 or 4 numbered
-answers drawn from docs/LLD-PriorityGuard.md and CONSULT.md, your
-recommended one first and &quot;Not decided. Record it as open.&quot; last. If my LLD
-doesn't answer the question, say so first. I'll reply with a number.
+<pre><code>PriorityGuard. This is a one-day lab: keep it short. For every question, give
+me 3 or 4 numbered answers drawn from docs/LLD-PriorityGuard.md and
+CONSULT.md, your recommended one first and &quot;Not decided. Record it as open.&quot;
+last; if my LLD doesn't answer it, say so first. After my design, ask only
+one question each for failure, security, cost and boundaries, the one that
+matters most, then gates. At the read-back, cover everything you didn't ask
+with your recommended answer, marked (recommended), in about 15 terms.
 </code></pre>
 <h3 id="m4--2-answer-each-question">2. Answer each question</h3>
 <p>Check the options against your LLD, then reply with a number, usually <code>1</code>.
@@ -884,8 +887,9 @@ boundaries and gates (milestones).</p>
 <p>Type <code>Ask me about each topic you skipped, one at a time, before the read-back.</code></p>
 </details>
 <h3 id="m4--3-check-the-read-back">3. Check the read-back</h3>
-<p>It lists every term and asks <code>Confirm these N terms, or correct any.</code>
-Whatever it lists, 🤖 paste this (adding terms is normal, not a catch):</p>
+<p>It lists every term and asks <code>Confirm these N terms, or correct any.</code> Terms
+marked <code>(recommended)</code> are its picks for what it didn't ask: read those
+first. Whatever it lists, 🤖 paste this (adding terms is normal, not a catch):</p>
 <pre><code>Not agreed yet. Add these as separate terms if missing: every table the app
 writes has one owner; AI never runs while someone is saving; any AI feature
 installs switched off. Replace any weaker term that says the same. Add the

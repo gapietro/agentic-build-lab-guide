@@ -20,10 +20,13 @@ claude
 ```
 🤖 When it asks you to confirm the feature name, paste this:
 ```
-PriorityGuard. For every question from here on, give me 3 or 4 numbered
-answers drawn from docs/LLD-PriorityGuard.md and CONSULT.md, your
-recommended one first and "Not decided. Record it as open." last. If my LLD
-doesn't answer the question, say so first. I'll reply with a number.
+PriorityGuard. This is a one-day lab: keep it short. For every question, give
+me 3 or 4 numbered answers drawn from docs/LLD-PriorityGuard.md and
+CONSULT.md, your recommended one first and "Not decided. Record it as open."
+last; if my LLD doesn't answer it, say so first. After my design, ask only
+one question each for failure, security, cost and boundaries, the one that
+matters most, then gates. At the read-back, cover everything you didn't ask
+with your recommended answer, marked (recommended), in about 15 terms.
 ```
 
 ### 2. Answer each question
@@ -50,8 +53,9 @@ read-back.`
 
 ### 3. Check the read-back
 
-It lists every term and asks `Confirm these N terms, or correct any.`
-Whatever it lists, 🤖 paste this (adding terms is normal, not a catch):
+It lists every term and asks `Confirm these N terms, or correct any.` Terms
+marked `(recommended)` are its picks for what it didn't ask: read those
+first. Whatever it lists, 🤖 paste this (adding terms is normal, not a catch):
 ```
 Not agreed yet. Add these as separate terms if missing: every table the app
 writes has one owner; AI never runs while someone is saving; any AI feature
