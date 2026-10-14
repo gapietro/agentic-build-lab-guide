@@ -28,20 +28,22 @@ blocker they mention. Then tell me the top three items by gate distance.
 Claude restates the story in five bullets. First, guess three test cases for
 it, one unusual: step 3 compares.
 
-🤖 **Claude:** if the bullets match your design, type `confirm`. If not, say
-what's wrong.
+### 3. Confirm it, tests first
 
-### 3. Ask for tests first
-
-🤖 **Claude:**
+🤖 **Claude:** if the bullets match your design, paste this. If not, say
+what's wrong first.
 ```
-Tests first. Start each test's name with the design term it proves, like
-"C<n>: the floor can raise a priority, never lower it", using the term's
-real number from docs/DESIGN-PriorityGuard.md. Show me them failing before
-any implementation.
+Confirmed. Build it tests first: start each test's name with the design
+term it proves, like "C<n>: the floor can raise a priority, never lower
+it", using the term's real number from docs/DESIGN-PriorityGuard.md. If the
+story proves no term, say so and name the tests after the story. Show me
+them failing, then stop before any implementation.
 ```
-⌨️ **Terminal**, in your window: `git branch --show-current`. ✅ It prints a
-new branch, never `main`.
+⌨️ **Terminal**, in your window:
+```
+git branch --show-current
+```
+✅ It prints a new branch, never `main`.
 
 <details><summary>🛟 It prints main</summary>
 
