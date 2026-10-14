@@ -46,7 +46,10 @@ says. Only `handoff` left? Go to Part 2.
 
 ### 3. Build with sub-agents
 
-In the Claude window: `cd ~/projects/priority-guard/app && claude`.
+⌨️ **Terminal**, in the Claude window:
+```
+cd ~/projects/priority-guard/app && claude
+```
 🤖 **Claude:**
 ```
 Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any

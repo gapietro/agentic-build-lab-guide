@@ -940,8 +940,9 @@ plan. <strong>The idea:</strong> a check only counts if it could have failed, so
 every file name before it leaves your machine, and answer five questions
 before the plan is filed. <strong>The catch:</strong> does its review find something real?</p>
 <h3 id="m5--1-give-the-repo-its-rules">1. Give the repo its rules</h3>
-<p>⌨️ <strong>Terminal:</strong> this window becomes the Claude window. Run
-<code>cd ~/projects/priority-guard/app</code>, then <code>claude</code>.</p>
+<p>⌨️ <strong>Terminal:</strong> this window becomes the Claude window:</p>
+<pre><code>cd ~/projects/priority-guard/app &amp;&amp; claude
+</code></pre>
 <p>🤖 <strong>Claude:</strong></p>
 <pre><code>Copy ~/projects/prove-it-kit/templates/CLAUDE.md to CLAUDE.md and fill in
 its Project facts, with the scope from now.config.json; keep the rules.
@@ -1465,8 +1466,10 @@ done
 <p>✅ The next gate is the first count not at 0, whatever <code>BACKLOG.md</code>
 says. Only <code>handoff</code> left? Go to Part 2.</p>
 <h3 id="after--3-build-with-sub-agents">3. Build with sub-agents</h3>
-<p>In the Claude window: <code>cd ~/projects/priority-guard/app &amp;&amp; claude</code>.
-🤖 <strong>Claude:</strong></p>
+<p>⌨️ <strong>Terminal</strong>, in the Claude window:</p>
+<pre><code>cd ~/projects/priority-guard/app &amp;&amp; claude
+</code></pre>
+<p>🤖 <strong>Claude:</strong></p>
 <pre><code>Read BACKLOG.md and SESSION-NOTE.md. Re-check the live state of any
 blocker they mention. Then tell me the top three items by gate distance.
 </code></pre>

@@ -9,8 +9,10 @@ before the plan is filed. **The catch:** does its review find something real?
 
 ### 1. Give the repo its rules
 
-⌨️ **Terminal:** this window becomes the Claude window. Run
-`cd ~/projects/priority-guard/app`, then `claude`.
+⌨️ **Terminal:** this window becomes the Claude window:
+```
+cd ~/projects/priority-guard/app && claude
+```
 
 🤖 **Claude:**
 ```
