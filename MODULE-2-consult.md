@@ -19,7 +19,7 @@ cd ~/projects/priority-guard && claude
 ```
 🤖 **Claude:** type `/prove-it:consult`, with nothing after it.
 
-✅ It restates the brief in five bullets or fewer, and stops.
+✅ It restates the brief in five bullets or fewer, asks questions, and stops.
 
 <details><summary>🛟 It writes CONSULT.md before you confirm</summary>
 
@@ -27,18 +27,17 @@ The kit broke its rule. Tell your instructor, type `/exit`, run
 `rm CONSULT.md` and `claude`, and type `/prove-it:consult` again.
 </details>
 
-### 3. Answer in one message
+### 3. Answer its questions, then confirm
 
-Check each bullet against the PRD. Reply in **one message**, a line each:
-type `\` then **Enter** for a new line. Never invent a business fact.
-
-- Only the customer knows: `Unknown. Record it as an open decision.`
-- Size: `About 8–10 stories; we build the first few in one afternoon.`
-- Now Assist: `No. Assume Now Assist isn't available.`
-- Not in the brief: `Bullet <n> isn't in the brief. Drop it.`
-- Breaks the floor: `Bullet <n> contradicts capability 2. Correct it.`
-
-When the bullets are right, type `confirmed` alone.
+Don't type `confirmed` yet. 🤖 **Claude:** paste this, for all its questions:
+```
+My answers: size is about 8–10 stories; we build the first few in one
+afternoon. Assume Now Assist isn't available. Anything only the customer
+can answer, record as an open decision; never guess. Yes, raise any other
+open decisions you find.
+```
+It restates the brief. Read each bullet against the PRD; if one's wrong,
+tell it which and why. Then type `confirmed` alone.
 
 ### 4. Let it run
 
