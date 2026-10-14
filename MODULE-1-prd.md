@@ -29,27 +29,28 @@ changes what gets built but isn't in the PRD. Quote, don't paraphrase.
 Don't edit any file.
 ```
 
-### 3. Check the evidence yourself
+### 3. Decide each gap, with Claude
 
-✏️ **Editor:** find the quoted sentence for **two** supported items, and
-check every **"no source"** and every statement **left out** yourself.
-
-### 4. Decide each gap
-
-Decide each real gap as one line:
-- **No input asked for it:** `Take out <what>: no input asks for it.`
-- **An input asked, the PRD dropped it:** `Put <what> back in capability <n>.`
-- **The inputs disagree, or leave who or how undecided:** `List <what>
-  under 7. Open decisions.`
-
-🤖 **Claude:** paste this, then your lines, and press **Enter**:
+🤖 **Claude:**
 ```
-Edit PRD-PriorityGuard.md with my decisions below, and nothing else. Never
-add a capability number, and never pick a side where the inputs disagree.
-My decisions:
+Walk me through each "no source" and each statement left out, one at a
+time: quote the PRD line and the closest input sentence, say the gap in
+plain words, and recommend keep it, take it out, put it back in a
+capability, or list it under 7. Open decisions. Never add a capability or
+pick a side where the inputs disagree. Wait for my answer each time. Then
+list the changes; edit PRD-PriorityGuard.md only after I say go.
+```
+For each gap, check the two quotes, then reply `yes`, or what to do
+instead. Not sure? Ask `Why?`
+
+Short on time? 🤖 **Claude:**
+```
+Do the rest as you recommend, but stop on any take out or open decision.
 ```
 
-### 5. Log it
+✅ Claude lists the changes. Read the list, then type `go`.
+
+### 4. Log it
 
 🤖 **Claude:**
 ```
@@ -60,10 +61,10 @@ done>", where what caught it is one of prd, consult, research, design,
 guard, test, review, partner, grade, drill. Show me the lines, then append
 the ones I confirm or add to ~/projects/priority-guard/catches.md.
 ```
-Confirm a line for each gap you fixed in step 4, such as `1 | prd | The PRD
+Confirm a line for each gap you fixed in step 3, such as `1 | prd | The PRD
 asked for something no input mentioned; I took it out`.
 
-### 6. Get the customer's acceptance
+### 5. Get the customer's acceptance
 
 At about **09:25** your instructor, as the customer, answers the room's open
 decisions once. Not ready then? Ask for the answers when you get here.
