@@ -7,6 +7,16 @@
 A fresh reviewer, told only that the floor must hold, tries to break it.
 **The catch:** users change incidents in ways your tests never imagined.
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** before release, someone who didn't build the app tries to
+  break its most important rule.
+- **Why it matters:** the builder's tests check what the builder thought of.
+  Real users find the paths nobody planned for.
+- **Your mindset:** think like someone who wants to get around the rule, not
+  like the person who wrote it.
+</details>
+
 ### 1. 🔮 Guess the attacks
 
 Guess first: three ways you'd beat the floor.

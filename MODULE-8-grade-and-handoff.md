@@ -7,6 +7,16 @@ runs the build and the tests before it scores, and anything it couldn't run
 is **unverified** and scores zero. **The catch:** what does a stranger find
 that you didn't?
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** before a handover, someone who's never seen the app judges
+  whether a stranger could run, fix and trust it.
+- **Why it matters:** the builder can't see what's missing. A grader who runs
+  everything, and scores what it can't run as zero, can.
+- **Your mindset:** a low, honest score is worth more than a high one you
+  can't back up. Read it for what to fix.
+</details>
+
 ### 1. 🔮 Guess the grade
 
 Guess first: the score out of 100, and the one weakness it will find.

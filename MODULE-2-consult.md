@@ -6,6 +6,16 @@ Nothing gets built: the consult advises how to build each capability.
 **The catch:** capability 2 says the priority never goes below the floor;
 capability 6 asks AI to "adjust the priority". Will the consult see the clash?
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** before any code, an architect advises how to build each
+  request: plain code, one AI call, or an agent, with reasons.
+- **Why it matters:** that choice sets what the app costs to run, how
+  predictable it is, and what can go wrong. It's cheapest to change now.
+- **Your mindset:** you're the reviewer, not the author. Question each
+  recommendation as if you'll defend it to the customer.
+</details>
+
 ### 1. 🔮 Guess first
 
 Which capabilities need AI? Anything you'd refuse to build? Keep your guess
@@ -87,8 +97,8 @@ Log this module's catches: real problems the process found, in this
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as "2 | <what caught it> | <what, and what was
 done>", where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 ```
 Confirm a line only if the consult raised it before you pushed back, such
 as `2 | consult | capability 6 could lower a priority below the floor`.

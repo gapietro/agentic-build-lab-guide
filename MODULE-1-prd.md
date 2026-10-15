@@ -6,6 +6,16 @@ You review a PRD drafted from two inputs, and the customer accepts it.
 **The catch:** is everything in the PRD backed by an input, and everything
 important in the inputs in the PRD?
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** a PRD turns what the customer said into what gets built.
+  Someone checks it says what they asked for: no more, no less.
+- **Why it matters:** everything later is built from it. A line nobody asked
+  for gets built anyway; a request it lost never does.
+- **Your mindset:** trace it, don't trust it. Every line needs an input behind
+  it, however sensible it sounds.
+</details>
+
 ### 1. Read the inputs yourself, then 🔮 guess
 
 ✏️ **Editor:** read `agentic-build-lab-guide/files/inputs/USE-CASE.md` and
@@ -58,8 +68,8 @@ Log this module's catches: real problems the process found, in this
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as "1 | <what caught it> | <what, and what was
 done>", where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 ```
 Confirm a line for each gap you fixed in step 3, such as `1 | prd | The PRD
 asked for something no input mentioned; I took it out`.

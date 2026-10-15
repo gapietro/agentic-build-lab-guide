@@ -6,6 +6,16 @@ Check Claude's research on your instance, then write the low-level design
 (LLD). **The catch:** Claude's research will be confident and mostly right.
 Which of its claims does your instance contradict, or not support?
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** before anyone designs, someone checks what the platform
+  really does, on the customer's own instance, not from memory.
+- **Why it matters:** Claude's facts are confident guesses. One wrong one
+  breaks the build at install time, after the work is done.
+- **Your mindset:** you're the auditor. A claim is true only when your
+  instance shows it. "Couldn't check" is an honest answer.
+</details>
+
 ### 1. 🔮 Guess, then ask Claude for the facts
 
 Guess first: which two platform facts does this design depend on most?
@@ -114,8 +124,8 @@ Log this module's catches: real problems the process found, in this
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as "3 | <what caught it> | <what, and what was
 done>", where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 ```
 Confirm a `research` line for each claim your instance contradicted or didn't
 support, if it changed your LLD. Then type `/exit`.

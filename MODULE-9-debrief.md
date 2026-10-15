@@ -4,6 +4,16 @@
 
 Count your catches from the file, not memory, and decide what to take home.
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** after a build, the team counts what the process caught,
+  and where, to see which steps earned their time.
+- **Why it matters:** the count is the case for working this way, or against
+  it. Opinions don't settle that; the file does.
+- **Your mindset:** evidence, not memory. Count from the file, and be honest
+  about what's real, staged, or not built.
+</details>
+
 ### 1. Count your catches
 
 ⌨️ **Terminal**, in your window:

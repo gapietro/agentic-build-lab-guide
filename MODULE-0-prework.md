@@ -6,6 +6,16 @@ Set up your instance, your tools and your app's repo, so the day starts with
 the build. **The idea:** a check only counts if it could have failed. At the
 end you try to beat your repo's guard with a fake token.
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** the bench is set up before the build, so mistakes can't
+  leak out: secrets, stray files, the wrong instance.
+- **Why it matters:** your repo admits only files you name, and a guard checks
+  each commit. Set up once, they protect every commit after.
+- **Your mindset:** a safety check you've never seen fail is a hope, not a
+  check. Test it before you rely on it.
+</details>
+
 ## Part 1 — Your instance
 
 ### 1. Get a developer instance
@@ -284,6 +294,15 @@ Tell your instructor the first error line. Don't let Claude change files to
 make it pass.
 </details>
 
+<details><summary>🛟 Claude says npm's cache is broken, or owned by root</summary>
+
+⌨️ **Terminal**, in a second window (**Cmd+N**). Type your Mac's password
+when it asks:
+```
+sudo chown -R $(id -u):$(id -g) ~/.npm
+```
+</details>
+
 ### 15. 🔮 Try to beat the guard
 
 Guess first: will the guard stop a commit with a token in it?
@@ -326,7 +345,8 @@ git commit -m "chore: initial scaffold"
 - The tools, signed in, with the lab settings and the kit `v0.1.4`.
 - `~/projects/priority-guard`, holding only `app/`, an empty `brief/` and an
   empty `catches.md`.
-- In `app/`: one commit, the allow list, the guard, and an SDK project that
-  builds. Its files stay uncommitted until Module 5.
+- In `app/`: one commit, the allow list (`.gitignore`: `ls -a` shows it), the
+  guard, and an SDK project that builds. Its files stay uncommitted until
+  Module 5.
 
 Anything missing? Tell your instructor at least two days before the day.

@@ -7,6 +7,16 @@ live. **The idea:** the floor is plain code on plain data, with ServiceNow a
 thin layer outside, so its tests need no instance. **The catch:** does the
 `ship it` review find something real in code Claude was sure of?
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** every story is built the same way: tests first, seen
+  failing, then code until they pass, then a review.
+- **Why it matters:** a test you never saw fail proves nothing, and the
+  builder is the worst judge of their own code, Claude included.
+- **Your mindset:** Claude types; tests and reviews decide. Read the evidence,
+  not Claude's summary of it.
+</details>
+
 ## Part 1 — Your first story, by hand
 
 ### 1. Open the session
@@ -225,8 +235,8 @@ Log this module's catches: real problems the process found, in this
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as "6 | <what caught it> | <what, and what was
 done>", where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 ```
 Confirm a `review` line per fixed review finding, step 5's included, and a
 `test` line per real live defect. Missing one? Tell Claude to add it.

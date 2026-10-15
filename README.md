@@ -129,7 +129,8 @@ prove-it-kit/              a copy of the kit
 ```
 
 You write no notes. At the end of each module, a **Log it** prompt has
-Claude draft that module's catches, one line each, and you confirm them:
+Claude draft that module's catches, one line each. Reply `keep`, or say
+what to change:
 ```
 <module> | <what caught it> | <what it caught, and what was done>
 ```

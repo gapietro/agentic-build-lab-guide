@@ -7,6 +7,16 @@ plan. **The idea:** a check only counts if it could have failed, so you read
 every file name before it leaves your machine, and answer five questions
 before the plan is filed. **The catch:** does its review find something real?
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** before the first push, the repo gets its rules, and the
+  design becomes small stories, each tied to a milestone.
+- **Why it matters:** once something is on GitHub, it's hard to take back. A
+  plan ordered by what blocks the next milestone shows real progress.
+- **Your mindset:** you're the last check before anything leaves your machine.
+  Read every name; approve no plan you'd answer no to.
+</details>
+
 ### 1. Give the repo its rules
 
 ⌨️ **Terminal:** this window becomes the Claude window:
@@ -152,8 +162,8 @@ Log this module's catches: real problems the process found, in this
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as "5 | <what caught it> | <what, and what was
 done>", where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 ```
 Confirm a `review` line for each real finding on the plan's pull request
 that got fixed.

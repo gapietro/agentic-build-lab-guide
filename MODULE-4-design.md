@@ -7,6 +7,16 @@ result. **The idea:** agreed building plans. Once agreed, moving a wall needs
 a written change order. **The catch:** the challenge question your LLD can't
 answer.
 
+<details><summary>ℹ️ Why are we doing this?</summary>
+
+- **In real work:** before code, the design is questioned hard, then agreed as
+  the contract between the builder and the customer.
+- **Why it matters:** a gap found in a question costs a sentence; found in
+  code, a rebuild. After this, a change is a written amendment.
+- **Your mindset:** answer as the owner who'll have to defend each decision. A
+  question your design can't answer is a find.
+</details>
+
 ### 1. Start the challenge
 
 ⌨️ **Terminal:**
@@ -86,8 +96,8 @@ Log this module's catches: real problems the process found, in this
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as "4 | <what caught it> | <what, and what was
 done>", where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 ```
 Confirm a `design` line for each question your LLD couldn't answer, such
 as who may edit the critical list, with the term it added. Terms you added

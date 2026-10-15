@@ -337,8 +337,8 @@ this repo's pull requests, issues and HANDOFF.md, that got fixed or changed
 a decision. One line each, as "<module> | <what caught it> | <what, and
 what was done>": module 6 for the build, 7 for attacks, 8 for the grade and
 the drill; what caught it is one of prd, consult, research, design, guard,
-test, review, partner, grade, drill. Show me the lines, then append the
-ones I confirm or add to ~/projects/priority-guard/catches.md.
+test, review, partner, grade, drill. Show me the lines, and when I reply keep,
+append them to ~/projects/priority-guard/catches.md.
 ```
 Confirm a line only once its fix is merged.
 

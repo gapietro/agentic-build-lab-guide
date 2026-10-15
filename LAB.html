@@ -335,7 +335,8 @@ priority-guard/            your workspace: Claude works here
 prove-it-kit/              a copy of the kit
 </code></pre>
 <p>You write no notes. At the end of each module, a <strong>Log it</strong> prompt has
-Claude draft that module's catches, one line each, and you confirm them:</p>
+Claude draft that module's catches, one line each. Reply <code>keep</code>, or say
+what to change:</p>
 <pre><code>&lt;module&gt; | &lt;what caught it&gt; | &lt;what it caught, and what was done&gt;
 </code></pre>
 <p>For example: <code>1 | prd | The PRD asked for something no input mentioned; I took it out</code>. Module 9 counts them.</p>
@@ -359,6 +360,16 @@ press <strong>Enter</strong>.</li>
 <p>Set up your instance, your tools and your app's repo, so the day starts with
 the build. <strong>The idea:</strong> a check only counts if it could have failed. At the
 end you try to beat your repo's guard with a fake token.</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> the bench is set up before the build, so mistakes can't
+leak out: secrets, stray files, the wrong instance.</li>
+<li><strong>Why it matters:</strong> your repo admits only files you name, and a guard checks
+each commit. Set up once, they protect every commit after.</li>
+<li><strong>Your mindset:</strong> a safety check you've never seen fail is a hope, not a
+check. Test it before you rely on it.</li>
+</ul>
+</details>
 <h2 id="m0--part-1--your-instance">Part 1 — Your instance</h2>
 <h3 id="m0--1-get-a-developer-instance">1. Get a developer instance</h3>
 <p>🌐 <strong>Browser:</strong> at https://developer.servicenow.com, sign in and request a
@@ -570,6 +581,12 @@ build fails. Commit nothing.
 <p>Tell your instructor the first error line. Don't let Claude change files to
 make it pass.</p>
 </details>
+<details><summary>🛟 Claude says npm's cache is broken, or owned by root</summary>
+<p>⌨️ <strong>Terminal</strong>, in a second window (<strong>Cmd+N</strong>). Type your Mac's password
+when it asks:</p>
+<pre><code>sudo chown -R $(id -u):$(id -g) ~/.npm
+</code></pre>
+</details>
 <h3 id="m0--15--try-to-beat-the-guard">15. 🔮 Try to beat the guard</h3>
 <p>Guess first: will the guard stop a commit with a token in it?</p>
 <p>⌨️ <strong>Terminal</strong>, still in <code>~/projects/priority-guard/app</code>:</p>
@@ -600,8 +617,9 @@ git commit -m &quot;chore: initial scaffold&quot;
 <li>The tools, signed in, with the lab settings and the kit <code>v0.1.4</code>.</li>
 <li><code>~/projects/priority-guard</code>, holding only <code>app/</code>, an empty <code>brief/</code> and an
 empty <code>catches.md</code>.</li>
-<li>In <code>app/</code>: one commit, the allow list, the guard, and an SDK project that
-builds. Its files stay uncommitted until Module 5.</li>
+<li>In <code>app/</code>: one commit, the allow list (<code>.gitignore</code>: <code>ls -a</code> shows it), the
+guard, and an SDK project that builds. Its files stay uncommitted until
+Module 5.</li>
 </ul>
 <p>Anything missing? Tell your instructor at least two days before the day.</p>
 
@@ -612,6 +630,16 @@ builds. Its files stay uncommitted until Module 5.</li>
 <p>You review a PRD drafted from two inputs, and the customer accepts it.
 <strong>The catch:</strong> is everything in the PRD backed by an input, and everything
 important in the inputs in the PRD?</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> a PRD turns what the customer said into what gets built.
+Someone checks it says what they asked for: no more, no less.</li>
+<li><strong>Why it matters:</strong> everything later is built from it. A line nobody asked
+for gets built anyway; a request it lost never does.</li>
+<li><strong>Your mindset:</strong> trace it, don't trust it. Every line needs an input behind
+it, however sensible it sounds.</li>
+</ul>
+</details>
 <h3 id="m1--1-read-the-inputs-yourself-then--guess">1. Read the inputs yourself, then 🔮 guess</h3>
 <p>✏️ <strong>Editor:</strong> read <code>agentic-build-lab-guide/files/inputs/USE-CASE.md</code> and
 <code>WORKSHOP-NOTES.md</code>. Before you open the PRD, guess what it needs.</p>
@@ -650,8 +678,8 @@ instead. Not sure? Ask <code>Why?</code></p>
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as &quot;1 | &lt;what caught it&gt; | &lt;what, and what was
 done&gt;&quot;, where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 </code></pre>
 <p>Confirm a line for each gap you fixed in step 3, such as <code>1 | prd | The PRD asked for something no input mentioned; I took it out</code>.</p>
 <h3 id="m1--5-get-the-customers-acceptance">5. Get the customer's acceptance</h3>
@@ -680,6 +708,16 @@ this module's catches in <code>catches.md</code>.</li>
 <p>Nothing gets built: the consult advises how to build each capability.
 <strong>The catch:</strong> capability 2 says the priority never goes below the floor;
 capability 6 asks AI to &quot;adjust the priority&quot;. Will the consult see the clash?</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> before any code, an architect advises how to build each
+request: plain code, one AI call, or an agent, with reasons.</li>
+<li><strong>Why it matters:</strong> that choice sets what the app costs to run, how
+predictable it is, and what can go wrong. It's cheapest to change now.</li>
+<li><strong>Your mindset:</strong> you're the reviewer, not the author. Question each
+recommendation as if you'll defend it to the customer.</li>
+</ul>
+</details>
 <h3 id="m2--1--guess-first">1. 🔮 Guess first</h3>
 <p>Which capabilities need AI? Anything you'd refuse to build? Keep your guess
 in your head: step 5 checks it.</p>
@@ -735,8 +773,8 @@ show me the change.
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as &quot;2 | &lt;what caught it&gt; | &lt;what, and what was
 done&gt;&quot;, where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 </code></pre>
 <p>Confirm a line only if the consult raised it before you pushed back, such
 as <code>2 | consult | capability 6 could lower a priority below the floor</code>.
@@ -754,6 +792,16 @@ Your own answers and corrections aren't catches. Then type <code>/exit</code>.</
 <p>Check Claude's research on your instance, then write the low-level design
 (LLD). <strong>The catch:</strong> Claude's research will be confident and mostly right.
 Which of its claims does your instance contradict, or not support?</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> before anyone designs, someone checks what the platform
+really does, on the customer's own instance, not from memory.</li>
+<li><strong>Why it matters:</strong> Claude's facts are confident guesses. One wrong one
+breaks the build at install time, after the work is done.</li>
+<li><strong>Your mindset:</strong> you're the auditor. A claim is true only when your
+instance shows it. &quot;Couldn't check&quot; is an honest answer.</li>
+</ul>
+</details>
 <h3 id="m3--1--guess-then-ask-claude-for-the-facts">1. 🔮 Guess, then ask Claude for the facts</h3>
 <p>Guess first: which two platform facts does this design depend on most?</p>
 <p>⌨️ <strong>Terminal:</strong></p>
@@ -835,8 +883,8 @@ decision. Show me a summary first; don't write the file yet.
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as &quot;3 | &lt;what caught it&gt; | &lt;what, and what was
 done&gt;&quot;, where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 </code></pre>
 <p>Confirm a <code>research</code> line for each claim your instance contradicted or didn't
 support, if it changed your LLD. Then type <code>/exit</code>.</p>
@@ -854,6 +902,16 @@ support, if it changed your LLD. Then type <code>/exit</code>.</p>
 result. <strong>The idea:</strong> agreed building plans. Once agreed, moving a wall needs
 a written change order. <strong>The catch:</strong> the challenge question your LLD can't
 answer.</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> before code, the design is questioned hard, then agreed as
+the contract between the builder and the customer.</li>
+<li><strong>Why it matters:</strong> a gap found in a question costs a sentence; found in
+code, a rebuild. After this, a change is a written amendment.</li>
+<li><strong>Your mindset:</strong> answer as the owner who'll have to defend each decision. A
+question your design can't answer is a find.</li>
+</ul>
+</details>
 <h3 id="m4--1-start-the-challenge">1. Start the challenge</h3>
 <p>⌨️ <strong>Terminal:</strong></p>
 <pre><code>cd ~/projects/priority-guard
@@ -911,8 +969,8 @@ many terms in §3 as the last read-back listed, and your name in §9.</p>
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as &quot;4 | &lt;what caught it&gt; | &lt;what, and what was
 done&gt;&quot;, where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 </code></pre>
 <p>Confirm a <code>design</code> line for each question your LLD couldn't answer, such
 as who may edit the critical list, with the term it added. Terms you added
@@ -931,6 +989,16 @@ this module's catches in <code>catches.md</code>.</li>
 plan. <strong>The idea:</strong> a check only counts if it could have failed, so you read
 every file name before it leaves your machine, and answer five questions
 before the plan is filed. <strong>The catch:</strong> does its review find something real?</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> before the first push, the repo gets its rules, and the
+design becomes small stories, each tied to a milestone.</li>
+<li><strong>Why it matters:</strong> once something is on GitHub, it's hard to take back. A
+plan ordered by what blocks the next milestone shows real progress.</li>
+<li><strong>Your mindset:</strong> you're the last check before anything leaves your machine.
+Read every name; approve no plan you'd answer no to.</li>
+</ul>
+</details>
 <h3 id="m5--1-give-the-repo-its-rules">1. Give the repo its rules</h3>
 <p>⌨️ <strong>Terminal:</strong> this window becomes the Claude window:</p>
 <pre><code>cd ~/projects/priority-guard/app &amp;&amp; claude
@@ -1036,8 +1104,8 @@ no issue is closed: the plan isn't a story.</p>
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as &quot;5 | &lt;what caught it&gt; | &lt;what, and what was
 done&gt;&quot;, where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 </code></pre>
 <p>Confirm a <code>review</code> line for each real finding on the plan's pull request
 that got fixed.</p>
@@ -1057,6 +1125,16 @@ catches in <code>catches.md</code>.</li>
 live. <strong>The idea:</strong> the floor is plain code on plain data, with ServiceNow a
 thin layer outside, so its tests need no instance. <strong>The catch:</strong> does the
 <code>ship it</code> review find something real in code Claude was sure of?</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> every story is built the same way: tests first, seen
+failing, then code until they pass, then a review.</li>
+<li><strong>Why it matters:</strong> a test you never saw fail proves nothing, and the
+builder is the worst judge of their own code, Claude included.</li>
+<li><strong>Your mindset:</strong> Claude types; tests and reviews decide. Read the evidence,
+not Claude's summary of it.</li>
+</ul>
+</details>
 <h2 id="m6--part-1--your-first-story-by-hand">Part 1 — Your first story, by hand</h2>
 <h3 id="m6--1-open-the-session">1. Open the session</h3>
 <p>⌨️ <strong>Terminal</strong>, in the Claude window, after <code>/exit</code> if Claude is open:</p>
@@ -1218,8 +1296,8 @@ open, the exact next step, and the top three next items.
 session or this module's pull requests, that got fixed or changed a
 decision. One line each, as &quot;6 | &lt;what caught it&gt; | &lt;what, and what was
 done&gt;&quot;, where what caught it is one of prd, consult, research, design,
-guard, test, review, partner, grade, drill. Show me the lines, then append
-the ones I confirm or add to ~/projects/priority-guard/catches.md.
+guard, test, review, partner, grade, drill. Show me the lines, and when I
+reply keep, append them to ~/projects/priority-guard/catches.md.
 </code></pre>
 <p>Confirm a <code>review</code> line per fixed review finding, step 5's included, and a
 <code>test</code> line per real live defect. Missing one? Tell Claude to add it.</p>
@@ -1237,6 +1315,16 @@ the ones I confirm or add to ~/projects/priority-guard/catches.md.
 <p><strong>Short on time? Skip it:</strong> nothing later in the day depends on it.</p>
 <p>A fresh reviewer, told only that the floor must hold, tries to break it.
 <strong>The catch:</strong> users change incidents in ways your tests never imagined.</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> before release, someone who didn't build the app tries to
+break its most important rule.</li>
+<li><strong>Why it matters:</strong> the builder's tests check what the builder thought of.
+Real users find the paths nobody planned for.</li>
+<li><strong>Your mindset:</strong> think like someone who wants to get around the rule, not
+like the person who wrote it.</li>
+</ul>
+</details>
 <h3 id="m7--1--guess-the-attacks">1. 🔮 Guess the attacks</h3>
 <p>Guess first: three ways you'd beat the floor.</p>
 <h3 id="m7--2-start-a-fresh-reviewer">2. Start a fresh reviewer</h3>
@@ -1285,6 +1373,16 @@ nothing, push nothing, never run now-sdk install or now-sdk auth.
 runs the build and the tests before it scores, and anything it couldn't run
 is <strong>unverified</strong> and scores zero. <strong>The catch:</strong> what does a stranger find
 that you didn't?</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> before a handover, someone who's never seen the app judges
+whether a stranger could run, fix and trust it.</li>
+<li><strong>Why it matters:</strong> the builder can't see what's missing. A grader who runs
+everything, and scores what it can't run as zero, can.</li>
+<li><strong>Your mindset:</strong> a low, honest score is worth more than a high one you
+can't back up. Read it for what to fix.</li>
+</ul>
+</details>
 <h3 id="m8--1--guess-the-grade">1. 🔮 Guess the grade</h3>
 <p>Guess first: the score out of 100, and the one weakness it will find.</p>
 <h3 id="m8--2-start-claude-on-a-clean-main">2. Start Claude on a clean main</h3>
@@ -1371,6 +1469,16 @@ once its fix merges, after the workshop.</p>
 <h1 id="m9">Module 9 — What the process caught</h1><ol class="progress" aria-label="Module 9 of 9"><li class="done"><a href="#m0" title="0 · Pre-work">0</a></li><li class="done"><a href="#m1" title="1 · Inputs to PRD">1</a></li><li class="done"><a href="#m2" title="2 · Consult">2</a></li><li class="done"><a href="#m3" title="3 · Research and LLD">3</a></li><li class="done"><a href="#m4" title="4 · Design challenge">4</a></li><li class="done"><a href="#m5" title="5 · Fence and plan">5</a></li><li class="done"><a href="#m6" title="6 · Build loop">6</a></li><li class="done"><a href="#m7" title="7 · Break it">7</a></li><li class="done"><a href="#m8" title="8 · Grade">8</a></li><li class="now"><a href="#m9" title="9 · Debrief">9</a></li></ol>
 <p><em>⏱ 15 min · 15:55</em></p>
 <p>Count your catches from the file, not memory, and decide what to take home.</p>
+<details><summary>ℹ️ Why are we doing this?</summary>
+<ul>
+<li><strong>In real work:</strong> after a build, the team counts what the process caught,
+and where, to see which steps earned their time.</li>
+<li><strong>Why it matters:</strong> the count is the case for working this way, or against
+it. Opinions don't settle that; the file does.</li>
+<li><strong>Your mindset:</strong> evidence, not memory. Count from the file, and be honest
+about what's real, staged, or not built.</li>
+</ul>
+</details>
 <h3 id="m9--1-count-your-catches">1. Count your catches</h3>
 <p>⌨️ <strong>Terminal</strong>, in your window:</p>
 <pre><code>grep -c '|' ~/projects/priority-guard/catches.md
@@ -1694,8 +1802,8 @@ this repo's pull requests, issues and HANDOFF.md, that got fixed or changed
 a decision. One line each, as &quot;&lt;module&gt; | &lt;what caught it&gt; | &lt;what, and
 what was done&gt;&quot;: module 6 for the build, 7 for attacks, 8 for the grade and
 the drill; what caught it is one of prd, consult, research, design, guard,
-test, review, partner, grade, drill. Show me the lines, then append the
-ones I confirm or add to ~/projects/priority-guard/catches.md.
+test, review, partner, grade, drill. Show me the lines, and when I reply keep,
+append them to ~/projects/priority-guard/catches.md.
 </code></pre>
 <p>Confirm a line only once its fix is merged.</p>
 <h2 id="after--you-now-have">You now have</h2>
