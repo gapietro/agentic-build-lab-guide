@@ -90,8 +90,9 @@ couldn't check, or production only (in inputs/TECH-NOTES.md, not on my
 instance). Facts the script didn't look up are not checked.
 ```
 Check each mark against its output line, and correct any, such as
-`Fact 3: production only, not on dev.` "Couldn't check" suits what doesn't
-exist yet.
+`Fact 3: production only, not on dev.` A fact about something your app will
+create, such as its own table or role, finds nothing yet: correct it to
+`couldn't check`, not contradicted.
 
 ### 5. Draft the LLD
 
