@@ -62,8 +62,7 @@ open `priority-guard/research-script.js`, press **Cmd+A**, then **Cmd+C**.
 
 🌐 **Browser**, **Admin** profile: type `sys.scripts.do` in the filter
 navigator and press **Enter**. This page runs scripts as admin. Paste the
-script, tick **Execute in sandbox** only if your instructor says so, and
-click **Run script**.
+script and click **Run script**.
 
 ✅ One `*** Script:` line per fact, each looking up the fact it names, in the
 right table. A fact whose line looked elsewhere is **not checked**.
